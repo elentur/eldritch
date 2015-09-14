@@ -1,0 +1,10 @@
+startGame:Start Game
+joinGame:Join Game
+loadGame:Load Game
+options:Options
+exit:Exit
+cultis:Cultist
+back:Back
+accept:Accept
+close:close
+multiplayer:Accept other player.

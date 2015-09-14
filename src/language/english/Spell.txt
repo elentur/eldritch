@@ -1,0 +1,50 @@
+name_0:Blessing of Isis
+typ_0:RITUAL
+text_0:ACTION: Text  %  -1. If you pass, choose an investigator on your space that does not have a Blessed Condition to gain a Blessed Condition.
+back_0_0: 
+back_0_1:
+name_1:Clairvoyance
+typ_1:INCANTATION
+text_1:During the Encounter Phase, you may test  % . If you pass, you may choose to encounter a Clue as if you are on its space, ignoring Monster on that space.
+back_1_0: 
+back_1_1: 
+name_2:Conjuration
+typ_2:RITUAL
+text_2:ACTION: Test  %  +1. If you pass, you may gain 1 Item of Trinket Asset from the reserve with value equal to or less than your test result.
+back_2_0: 
+back_2_1: 
+name_3:Feed the Mind
+typ_3:RITUAL
+text_3:Action: Test  %  -1. If you pass, choose an Investigator on your space to improve 1 skill of his choice.
+back_3_0: 
+back_3_1: 
+name_4:Flesh Ward
+typ_4:INCANTATION
+text_4:Once per round, when an Investigator would lose health, you may test  %  . If you pass, prevent that Investigator from loosing up to 2 Health.
+back_4_0: 
+back_4_1: 
+name_5:Instill Bravery
+typ_5:INCANTATION
+text_5:Once per round, when an Investigator would lose Sanity, you may test  %  . If you pass, prevent that investigator from losing up to 2 Sanity.
+back_5_0: 
+back_5_1: 
+name_6:Mists of Releh
+typ_6:INCANTATION
+text_6:During the Encounter Phase, you may test  %  . If you pass, you may choose an encounter as if there are no Monsters on your space.
+back_6_0: 
+back_6_1: 
+name_7:Plumb the Void
+typ_7:RITAUL
+text_7:ACTION: Test  %  -1. If you pass, an Investigator of your choice may move to any space.
+back_7_0: 
+back_7_1: 
+name_8:Shriveling
+typ_8:RITUAL
+text_8:ACTION: Test  %  . If you pass, choose a Monster on your space to lose 2 Health.
+back_8_0: 
+back_8_1: 
+name_9:Wither
+typ_9:INCANTATION
+text_9:When resolving a Combat Encounter, you may test  %  . If you pass, gain +3  §  during that encounter.
+back_9_0: 
+back_9_1: 

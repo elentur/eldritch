@@ -1,0 +1,5 @@
+startGame:Neues Spiel
+joinGame:Spiel beitreten
+loadGame:Spiel laden
+options:Optionen
+exit:Beenden
