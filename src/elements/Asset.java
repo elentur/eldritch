@@ -64,4 +64,7 @@ private int price;
 		return names.get("typ_" + name.ordinal());
 
 	}
+	public String toString(){
+		return name.toString();
+	}
 }

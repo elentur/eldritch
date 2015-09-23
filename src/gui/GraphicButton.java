@@ -29,7 +29,7 @@ public class GraphicButton extends Group {
 		lblButton=new Label(text);
 		lblButton.setAlignment(Effects.fontPosLeft);
 		lblButton.setTextFill(Effects.fontColorDark);
-		lblButton.setFont(Effects.fontGraphicButton);
+		lblButton.styleProperty().bind(Effects.fontGraphicButton);
 		lblButton.setContentDisplay(ContentDisplay.LEFT);
 		lblButton.minWidthProperty().bind(btnButton.widthProperty());
 		lblButton.minHeightProperty().bind(btnButton.heightProperty());

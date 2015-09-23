@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public abstract class Token implements Element,Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,5 +27,5 @@ public abstract class Token implements Element,Serializable {
 	}
 	@Override
 	public abstract Image getPicture();
-	public abstract Rectangle getToken();
+	public abstract Shape getToken();
 }

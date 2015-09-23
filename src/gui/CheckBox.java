@@ -27,7 +27,7 @@ private Label lblText;
 		lblText = new Label();
 		lblText.setAlignment(Effects.fontPos);
 		lblText.setTextFill(Effects.fontColor);
-		lblText.setFont(Effects.fontMedium2);
+		lblText.styleProperty().bind(Effects.fontMedium2);
 		lblText.setPadding(new Insets(0,0,0,20));
 		lblText.translateXProperty().bind(picture.widthProperty());
 		this.getChildren().addAll(picture,lblText);

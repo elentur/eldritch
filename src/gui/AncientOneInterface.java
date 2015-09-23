@@ -41,6 +41,7 @@ public class AncientOneInterface extends Group {
 		graphicBack.setFill(new ImagePattern(MenueTextures.aOInterfaceBack));
 		graphicBack.widthProperty().bind(scene.widthProperty().divide(6));
 		graphicBack.heightProperty().bind(scene.widthProperty().divide(6));
+		graphicBack.setMouseTransparent(true);
 		
 		
 		graphic = new Rectangle();
@@ -50,8 +51,9 @@ public class AncientOneInterface extends Group {
 		graphic.setMouseTransparent(true);
 		lblDoom= new Label();
 		lblDoom.setAlignment(Effects.fontPos);
-		lblDoom.setFont(Effects.fontMedium);
+		lblDoom.styleProperty().bind(Effects.fontMedium);
 		lblDoom.setTextFill(Effects.fontColorGreen);
+		lblDoom.setMouseTransparent(true);
 		lblDoom.textProperty().bind(doomTracker.getDoomProperty().asString());
 		lblDoom.textProperty().addListener(a->{
 			if (doomTracker.getMaxDoom() > doomTracker.actualDoom()){
@@ -61,7 +63,7 @@ public class AncientOneInterface extends Group {
 			}
 		});
 		lblDoom.translateXProperty().bind(graphic.widthProperty().divide(1.6));
-		lblDoom.translateYProperty().bind(graphic.widthProperty().divide(2.2));
+		lblDoom.translateYProperty().bind(graphic.widthProperty().divide(2.3));
 		this.getChildren().addAll(graphicBack,ancientOnePicture,graphic,lblDoom);
 		this.setEffect(Effects.shadowBtn);
 	}

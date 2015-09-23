@@ -23,7 +23,7 @@ public class TextScreen extends Group {
 	private Label lblText;
 	private Rectangle picture;
 	private Scene scene;
-	private Button btnClose;
+	private OkCancelBtn btnClose;
 	
 	private Investigator investigator=null;
 	private ScrollPane scrollPane;
@@ -33,13 +33,8 @@ public class TextScreen extends Group {
 		scene = StageControll.getPrimaryStage().getScene();
 		Map<String,String> names = IO.readText(Global.language+"/Menu.txt");
 		
-		btnClose= new Button(names.get("close"));
-		btnClose.setOnMouseClicked(a->{
-			((Group)this.getParent()).getChildren().get(0).setDisable(false);
-			((Group)this.getParent()).getChildren().get(0).setEffect(null);
-			((Group)this.getParent()).getChildren().remove(this);
-			
-		});
+		btnClose= new OkCancelBtn(false);
+		btnClose.setNode(this);
 		btnClose.setVisible(CloseButton);
 		Animations.startFadeIn(this);
 		picture = new Rectangle();
@@ -50,7 +45,7 @@ public class TextScreen extends Group {
 		this.setEffect(Effects.shadowBtn);
 		
 		lblHeadline = new Label();
-		lblHeadline.setFont(Effects.fontMedium);
+		lblHeadline.styleProperty().bind(Effects.fontMedium);
 		lblHeadline.setTextFill(Effects.fontColorDark);
 		lblHeadline.setAlignment(Effects.fontPos);
 		lblHeadline.translateXProperty().bind(picture.widthProperty().divide(2.3));
@@ -59,7 +54,7 @@ public class TextScreen extends Group {
 		
 
 		lblText = new Label();
-		lblText.setFont(Effects.fontSmall);
+		lblText.styleProperty().bind(Effects.fontSmall);
 		lblText.setTextFill(Effects.fontColorDark);
 		lblText.setAlignment(Effects.fontPosLeft);
 		lblText.setWrapText(true);
@@ -106,7 +101,7 @@ public class TextScreen extends Group {
 	
 	}
 
-	public Button getCloseButton(){
+	public OkCancelBtn getCloseButton(){
 		if(btnClose.isVisible())return null;
 		return btnClose;
 	}

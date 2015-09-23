@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,13 +25,14 @@ public class Button extends Group {
 		
 		lblButton=new Label(text);
 		lblButton.setAlignment(Effects.fontPos);
+		lblButton.styleProperty().bind(Effects.fontBig);
 		lblButton.setTextFill(Effects.fontColor);
-		lblButton.setFont(Effects.font);
 		lblButton.minWidthProperty().bind(btnButton.widthProperty());
 		lblButton.minHeightProperty().bind(btnButton.heightProperty());
 		lblButton.setOnMouseEntered(a-> Effects.highlight(a));
 		lblButton.setOnMouseExited(a-> Effects.highlightOff(a));
 		this.getChildren().addAll(btnButton,lblButton);
+		        
 	}
 
 	public DoubleProperty widthProperty() {

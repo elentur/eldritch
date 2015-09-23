@@ -6,14 +6,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import elements.AmericaEncounter;
 import elements.Artifact;
+import elements.AsiaEncounter;
 import elements.Asset;
 import elements.ClueToken;
 import elements.Condition;
+import elements.DefaultEncounter;
+import elements.EuropeEncounter;
+import elements.Expedition;
 import elements.Gate;
 import elements.Investigator;
+import elements.Monster;
+import elements.Mystery;
+import elements.OtherWorld;
+import elements.Research;
+import elements.Special;
 import elements.Spell;
 import enums.AssetNames;
+import enums.FieldTyps;
+import enums.MonsterNames;
 import enums.Path;
 import enums.Space;
 import enums.SpellNames;
@@ -31,7 +43,7 @@ public class Build {
 		return new AncientOne(name);
 	}
 	
-	public static GameBoard buildGameBoard(List<Investigator> investigators){
+	public static GameBoard buildGameBoard(){
 		Map<Field,Space> fields= new HashMap<Field,Space>();
 		Field field1=new Field("1",Space.city,new Point(172,303),Other);
 		Field field2=new Field("2",Space.sea,new Point(93,637),Other);
@@ -229,22 +241,7 @@ public class Build {
 		fields.put(fieldTunguska, fieldTunguska.getSpace());
 		fields.put(fieldHimalaya, fieldHimalaya.getSpace());
 		
-		for(Investigator investigator: investigators){
-			if(investigator.getName()=="Charlie Kane") fieldSanFrancisco.addInvestigator(investigator);
-			if(investigator.getName()=="Akachi Onyele") field15.addInvestigator(investigator);
-			if(investigator.getName()=="Diana Stanley") field7.addInvestigator(investigator);
-			if(investigator.getName()=="Jacqueline Fine") field5.addInvestigator(investigator);
-			if(investigator.getName()=="Jim Culver") field6.addInvestigator(investigator);
-			if(investigator.getName()=="Leo Anderson") fieldBuenosAires.addInvestigator(investigator);
-			if(investigator.getName()=="Lily Chen") fieldShanghai.addInvestigator(investigator);
-			if(investigator.getName()=="Lola Hayes") fieldTokyo.addInvestigator(investigator);
-			if(investigator.getName()=="Mark Harrigen") field14.addInvestigator(investigator);
-			if(investigator.getName()=="Norman Withers") fieldArkham.addInvestigator(investigator);
-			if(investigator.getName()=="Silas Marsh") fieldSydney.addInvestigator(investigator);
-			if(investigator.getName()=="Trish Scarborough") field16.addInvestigator(investigator);
-		}
 		GameBoard gameBoard = new GameBoard(fields);
-		
 		return gameBoard;
 	}
 
@@ -262,9 +259,12 @@ public class Build {
 
 	public static Stack<Asset> buildAssetDeck() {
 		Stack<Asset> assetDeck = new Stack<Asset>(true);
-		
-		for(int i = 0; i <36;i++)
-			assetDeck.add(new Asset(AssetNames.values()[i]));
+		Asset asset=null;
+		for(int i = 0; i <36;i++){
+			asset = new Asset(AssetNames.values()[i]);
+			//System.out.println(i + ": " + asset);
+			assetDeck.add(asset);
+		}
 		
 		assetDeck.shuffle();	
 		return assetDeck;
@@ -280,26 +280,89 @@ public class Build {
 		return null;
 	}
 
-	public static Stack<ClueToken> buildCluePool() {
+	public static Stack<ClueToken> buildCluePool(GameBoard gameboard) {
 		Stack<ClueToken> clues = new Stack<ClueToken>(true);
-		for (int i = 1 ; i<22; i++){
-			clues.add(new ClueToken(""+i));
-		}
-		Map<String,String> names=IO.readText(Global.language+"/fields.txt");
-
-		for(String name: names.values()){
-			clues.add(new ClueToken(name));
+		for(Field field:gameboard.getFields().keySet()){
+			clues.add(new ClueToken(field));
 		}
 		clues.shuffle();
 		return clues;
 	}
 
-	public static Stack<Gate> buildGateStack() {
-		// TODO Auto-generated method stub
-		return new Stack<Gate>(true);
+	public static Stack<Gate> buildGateStack(GameBoard gameboard) {
+		Stack<Gate> gates = new Stack<Gate>(true);
+		for(Field field:gameboard.getFields().keySet()){
+			if(field.getFieldTyp()==FieldTyps.City ||
+					(field.getFieldTyp()==FieldTyps.Expedition &&(field.toString()=="pyramids" ||
+					field.toString()=="amazon"||
+					field.toString()=="tunguska"))){
+				//Monster noch adden
+				gates.add(new Gate(field));
+			}
+		}
+		gates.shuffle();
+		return gates;
 	}
 
+	public static Stack<Monster> buildMonsterPool(AncientOne ancient){
+		Stack<Monster> monsterPool = new Stack<Monster>(false);
+		for (int i = 1 ; i<28; i++){
+			monsterPool.add(new Monster(MonsterNames.values()[i]));
+		}
+		
+		monsterPool.add(new Monster(MonsterNames.ghoul));
+		monsterPool.add(new Monster(MonsterNames.goatSpawn));
+		for (int i = 0 ; i<5; i++){
+			monsterPool.add(ancient.getCultist1());
+		}
+		monsterPool.shuffle();
+		return monsterPool;
+	}
 
+	public static Stack<Mystery> buildMysteryDeck(AncientOne ancientOne) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<Research> buildResearchDeck(AncientOne ancientOne) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<Special> buildSpecialDeck(AncientOne ancientOne) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<Expedition> buildExpeditionDeck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<OtherWorld> buildOtherWorldDeck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<AmericaEncounter> buildAmeriacEncounterDeck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<EuropeEncounter> buildEuropeEncounterDeck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<AsiaEncounter> buildAsiaEncounterDeck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Stack<DefaultEncounter> buildDefaultEncounterDeck() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
 

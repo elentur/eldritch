@@ -12,6 +12,7 @@ import org.junit.Test;
 import elements.Investigator;
 import elements.Monster;
 import enums.FieldTyps;
+import enums.MonsterNames;
 import enums.Path;
 import enums.Skills;
 import enums.Space;
@@ -33,7 +34,7 @@ public class GameBoardTest {
 	Investigator investigator1= new Investigator("AkachiOnyele");
 	Investigator investigator2= new Investigator("CharlieKane");
 	Investigator investigator3= new Investigator("CharlieKane");
-	Monster monster1 = new Monster("Kultist", 2, 2, 1, 0, -1, new Event(),"Cthulhu");
+	Monster monster1 = new Monster(MonsterNames.cultist, 2, 2, 1, 0, -1, new Event(),"Cthulhu");
 	GameBoard gameBoard;
 	Map<Field,Space> fields= new HashMap<Field,Space>();
 	@Before

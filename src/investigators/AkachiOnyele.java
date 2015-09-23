@@ -36,7 +36,7 @@ public class AkachiOnyele {
 		return 7;
 	}
 	public static String buildName(){
-		return "Akachie Onyele";
+		return "Akachi Onyele";
 	}
 	
 	

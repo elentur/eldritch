@@ -48,7 +48,7 @@ public class Investigator extends Card {
 	private Image picture;
 	private  Rectangle flatToken;
 	private Map<String,String> names=null;
-
+private int player;
 	
 	private List<Actions> actions;
 	
@@ -93,16 +93,24 @@ public class Investigator extends Card {
 		this.inventory=(Stack<Item>) clazz.getMethod("buildInventory").invoke(null);
 		this.condition=new Stack<Condition>(false);
 		this.actions=new ArrayList<Actions>();
-		this.picture=(Image) clazz.getMethod("buildPicture").invoke(null);
-		this.flatToken= new Rectangle(0,0,new ImagePattern(getPicture()));
+		//this.picture=(Image) clazz.getMethod("buildPicture").invoke(null);
 		this.flatToken= new Rectangle(0,0,new ImagePattern(getPicture()));
 		this.flatToken.widthProperty().bind(StageControll.getPrimaryStage().getScene().widthProperty().divide(12));
 		this.flatToken.heightProperty().bind(StageControll.getPrimaryStage().getScene().widthProperty().divide(12));
 		this.flatToken.setStrokeWidth(6);
 		this.flatToken.setStrokeType(StrokeType.INSIDE);
+		this.player=0;
 		}catch(Exception e){
 			
 		}
+	}
+
+	public int getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(int player) {
+		this.player = player;
 	}
 
 	public String getOCCUPATION() {

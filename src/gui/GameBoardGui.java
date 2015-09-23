@@ -27,21 +27,29 @@ private List<FieldGui>  fields;
 		
 		Group group = new Group(gameBoard);
 			group.getChildren().addAll(fields);
-		ScrollPane scrollPane =  new ScrollPane();
-		scrollPane.maxWidthProperty().bind(scene.widthProperty());
-		scrollPane.minWidthProperty().bind(scene.widthProperty());
-		scrollPane.maxHeightProperty().bind(scene.heightProperty());
-		scrollPane.minHeightProperty().bind(scene.heightProperty());
+		Global.scrollPane =  new ScrollPane();
+		Global.scrollPane.maxWidthProperty().bind(scene.widthProperty());
+		Global.scrollPane.minWidthProperty().bind(scene.widthProperty());
+		Global.scrollPane.maxHeightProperty().bind(scene.heightProperty());
+		Global.scrollPane.minHeightProperty().bind(scene.heightProperty());
 		
-		scrollPane.getStylesheets().add("/gui/MyScrollBar.css");
-		scrollPane.setPannable(true);
-		scrollPane.setContent(group);
+		Global.scrollPane.getStylesheets().add("/gui/MyScrollBar.css");
+		Global.scrollPane.setPannable(true);
+		Global.scrollPane.setContent(group);
 
-		scrollPane.setFitToHeight(true);
-		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-	
-		this.getChildren().add(scrollPane);
+		Global.scrollPane.setFitToHeight(true);
+		Global.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		Global.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		//Global.scrollPane.setVmax(1797);
+		//Global.scrollPane.setHmax(2902);
+//		Global.scrollPane.setOnMouseClicked(a->{Global.lbldebug.setText(
+//				Global.scrollPane.getHvalue()+"   "+
+//						Global.scrollPane.getVvalue()
+//				);
+//		
+//		});
+//	
+		this.getChildren().addAll(Global.scrollPane);
 	}
 
 	private void buildFields() {

@@ -90,7 +90,7 @@ public class ItemGraphic extends Group {
 		lblName=new Label(card.getName());
 		lblName.setAlignment(Pos.CENTER);
 		lblName.setTextFill(Effects.fontColor);
-		lblName.setFont(Effects.fontMedium2);
+		lblName.styleProperty().bind(Effects.fontMedium2);
 		lblName.setTextAlignment(TextAlignment.CENTER);
 		lblName.maxWidthProperty().bind(namePicture.widthProperty().divide(2));
 		lblName.minWidthProperty().bind(namePicture.widthProperty().divide(2));
@@ -119,7 +119,7 @@ public class ItemGraphic extends Group {
 			lblPrice.setText(((Asset)card).getPrice()+"");
 			lblPrice.setAlignment(Effects.fontPos);
 			lblPrice.setTextFill(Effects.fontColorDark);
-			lblPrice.setFont(Effects.fontMedium);
+			lblPrice.styleProperty().bind(Effects.fontMedium);
 			lblPrice.maxWidthProperty().bind(pricePicture.widthProperty());
 			lblPrice.minWidthProperty().bind(pricePicture.widthProperty());
 			
@@ -128,7 +128,7 @@ public class ItemGraphic extends Group {
 		lblText=new Label(card.getTypText()+ "\n\n"+card.getText());
 		lblText.setAlignment(Effects.fontPos);
 		lblText.setTextFill(Effects.fontColorDark);
-		lblText.setFont(Effects.fontSmall);
+		lblText.styleProperty().bind(Effects.fontSmall);
 		//lblText.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 		lblText.setLineSpacing(-10);
 		lblText.setPadding(new Insets(10));

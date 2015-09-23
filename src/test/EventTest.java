@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +39,7 @@ public class EventTest {
 		AncientOne ancientOne = new AncientOne("Cthulhu");
 		game=new Game(ancientOne);
 		game.setInvestigators(investigators);
-		game.getGameBoard().getInvestigatorField(investigator2).setGate(new Gate(Omen.comet));
+		game.getGameBoard().getInvestigatorField(investigator2).setGate(game.getGateStack().drawNextCard());
 	}
 
 	@Test

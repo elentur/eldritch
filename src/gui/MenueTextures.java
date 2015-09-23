@@ -48,6 +48,8 @@ public class MenueTextures {
 	public static Image roundButton;
 	public static Image checkBoxOn;
 	public static Image checkBoxOff;
+	public static Image okBtn;
+	public static Image cancelBtn;
 	
 	
 	public static void load(){
@@ -92,8 +94,8 @@ public class MenueTextures {
 		roundButton = new Image("images/RoundButton.png",114,114, false, false, false);
 		checkBoxOn = new Image("images/CheckBoxOn.png",32,32, false, false, false);
 		checkBoxOff = new Image("images/CheckBoxOff.png",32,32, false, false, false);
-		
-	
+		okBtn= new Image("images/Ok.png",75,95, false, false, false);
+		cancelBtn= new Image("images/Cancel.png",75,95, false, false, false);
 	
 	}
 }

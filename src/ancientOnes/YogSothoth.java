@@ -7,6 +7,7 @@ import java.util.Map;
 import elements.Monster;
 import elements.Mystery;
 import elements.Mythos;
+import enums.MonsterNames;
 import gameBuild.Global;
 import gameItems.Stack;
 import gameMechanics.Event;
@@ -24,7 +25,7 @@ public class YogSothoth {
 	
 	public static Monster buildCultist1(){
 		Map<String,String> names=IO.readText(Global.language+"/Monster.txt");
-			Monster cultist1 = new Monster(names.get("cultistName"), 0, 1, 1, 0, 0,new Event("Bevor resolving the Strengthtest",loose,2,SANITY),"YogSothoth");
+			Monster cultist1 = new Monster(MonsterNames.cultist, 0, 1, 1, 0, 0,new Event("Bevor resolving the Strengthtest",loose,2,SANITY),"YogSothoth");
 		return cultist1;
 		
 	}

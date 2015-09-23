@@ -164,9 +164,10 @@ public class InvestigatorScreen {
 			rec.setStroke(Color.GREEN);
 			investigatorSheet.setInvestigator(investigator);
 			startEquipment.getChildren().clear();
-			for (Item item : investigator.getInventory().getStack()) {
-				startEquipment.getChildren().add(new ItemGraphic(item));
-			}
+//			for (Item item : investigator.getInventory().getStack()) {
+//				startEquipment.getChildren().add(new ItemGraphic(item));
+//			}
+			startEquipment.getChildren().addAll(investigator.getInventory().getNodes());
 			if (!investigator.getClues().isEmpty()) {
 				try {
 					startEquipment.getChildren().add(investigator.getClues().showNextCard().getToken());
@@ -178,7 +179,7 @@ public class InvestigatorScreen {
 				Label lblText = new Label(names.get("start"));
 				lblText.setAlignment(Effects.fontPos);
 				lblText.setTextFill(Effects.fontColorDark);
-				lblText.setFont(Effects.fontMedium2);
+				lblText.styleProperty().bind(Effects.fontMedium2);
 				lblText.minWidthProperty().bind(screen.widthProperty().divide(5.14).divide(1.45));
 				lblText.minHeightProperty().bind(screen.widthProperty().divide(6.81).divide(1.45));
 				lblText.maxWidthProperty().bind(screen.widthProperty().divide(5.14).divide(1.45));

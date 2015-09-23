@@ -10,7 +10,10 @@ import elements.Item;
 import enums.AssetNames;
 import enums.SpellNames;
 import elements.Asset;
+import elements.Card;
 import exceptions.CardNotFoundException;
+import gui.ItemGraphic;
+import javafx.scene.Node;
 /**
  * 
  * @author Marcus B�tz
@@ -53,7 +56,7 @@ public class Stack<T extends Element> implements Serializable {
 	public void shuffle(){
 		List<T> tmpStack = new ArrayList<T>(drawStack);
 		drawStack.clear();
-		Random rnd = new Random(1234);
+		Random rnd = new Random();
 		while(tmpStack.size()>0){
 			drawStack.add(tmpStack.remove(rnd.nextInt(tmpStack.size())));
 		}
@@ -230,5 +233,19 @@ public class Stack<T extends Element> implements Serializable {
 		}
 		
 		return s;
+	}
+
+	public Node[] getNodes() {
+		Node[] nodes = new Node[getSize()];
+		int i = 0;
+		for(T card : drawStack){
+			try{
+					nodes[i]=new ItemGraphic((Item)card);
+					i++;
+			}catch(Exception e){
+				System.out.println("Fehler in Stack getNodes");
+			}
+		}
+		return nodes;
 	}
 }

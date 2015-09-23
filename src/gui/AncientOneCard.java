@@ -29,7 +29,7 @@ public class AncientOneCard extends Group {
 	private Rectangle ancientOnePicture;
 	private Scene scene;
 	private MonsterToken grpCultist ;
-	private Button btnClose;
+	private OkCancelBtn btnClose;
 	private Label cultistName;
 	
 	private AncientOne ancientOne=null;
@@ -39,13 +39,8 @@ public class AncientOneCard extends Group {
 		scene = StageControll.getPrimaryStage().getScene();
 		Map<String,String> names = IO.readText(Global.language+"/Menu.txt");
 	
-		btnClose= new Button(names.get("close"));
-		btnClose.setOnMouseClicked(a->{
-			((Group)this.getParent()).getChildren().get(0).setDisable(false);
-			((Group)this.getParent()).getChildren().get(0).setEffect(null);
-			((Group)this.getParent()).getChildren().remove(this);
-			
-		});
+		btnClose= new OkCancelBtn(false);
+		btnClose.setNode(this);
 		btnClose.setVisible(CloseButton);
 		Animations.startFadeIn(this);
 		picture = new Rectangle();
@@ -62,7 +57,7 @@ public class AncientOneCard extends Group {
 		cultistName=new Label();
 		cultistName.translateXProperty().bind(picture.widthProperty().divide(6));
 		cultistName.translateYProperty().bind(picture.heightProperty().divide(2.6));
-		cultistName.setFont(Effects.fontSmall);
+		cultistName.styleProperty().bind(Effects.fontSmall);
 		cultistName.setTextFill(Effects.fontColorDark);
 		cultistName.setAlignment(Effects.fontPos);
 		
@@ -71,7 +66,7 @@ public class AncientOneCard extends Group {
 		grpCultist.translateYProperty().bind(picture.heightProperty().divide(2.4));
 		
 		lblHeadline = new Label();
-		lblHeadline.setFont(Effects.fontSmallCursive);
+		lblHeadline.styleProperty().bind(Effects.fontSmallCursive);
 		lblHeadline.setTextFill(Effects.fontColorDark);
 		lblHeadline.setAlignment(Effects.fontPos);
 		lblHeadline.translateXProperty().bind(picture.widthProperty().divide(2));
@@ -79,7 +74,7 @@ public class AncientOneCard extends Group {
 		lblHeadline.minWidthProperty().bind(picture.widthProperty().divide(2));
 		
 		lblDoom=new Label();
-		lblDoom.setFont(Effects.font);
+		lblDoom.styleProperty().bind(Effects.fontBig);
 		lblDoom.setTextFill(Effects.fontColor);
 		lblDoom.setAlignment(Effects.fontPos);
 		lblDoom.translateXProperty().bind(picture.translateXProperty().add(picture.widthProperty()));
@@ -88,7 +83,7 @@ public class AncientOneCard extends Group {
 	
 		
 		lblName = new Label();
-		lblName.setFont(Effects.font);
+		lblName.styleProperty().bind(Effects.fontBig);
 		lblName.setEffect(Effects.shadowBtn);
 		lblName.setTextFill(Effects.fontColor);
 		lblName.setAlignment(Effects.fontPos);
@@ -96,17 +91,17 @@ public class AncientOneCard extends Group {
 		lblName.translateYProperty().bind(picture.widthProperty().divide(4));
 		//lblName.minWidthProperty().bind(texts.widthProperty());
 		lblAtmosphereText = new Label();
-		lblAtmosphereText.setFont(Effects.fontSmallCursive);
+		lblAtmosphereText.styleProperty().bind(Effects.fontSmallCursive);
 		lblAtmosphereText.setTextFill(Effects.fontColorDark);
 		lblAtmosphereText.setAlignment(Effects.fontPosLeft);
 		lblAtmosphereText.setWrapText(true);
 		lblSpecialText= new Label();
-		lblSpecialText.setFont(Effects.fontSmall);
+		lblSpecialText.styleProperty().bind(Effects.fontSmall);
 		lblSpecialText.setTextFill(Effects.fontColorDark);
 		lblSpecialText.setAlignment(Effects.fontPosLeft);
 		lblSpecialText.setWrapText(true);
 		lblReckoningText= new Label();
-		lblReckoningText.setFont(Effects.fontSmall);
+		lblReckoningText.styleProperty().bind(Effects.fontSmall);
 		lblReckoningText.setTextFill(Effects.fontColorDark);
 		lblReckoningText.setAlignment(Effects.fontPosLeft);
 		lblReckoningText.setWrapText(true);
@@ -140,7 +135,7 @@ public class AncientOneCard extends Group {
 		
 		
 	}
-	public Button getCloseButton(){
+	public OkCancelBtn getCloseButton(){
 		if(btnClose.isVisible())return null;
 		return btnClose;
 	}

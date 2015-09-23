@@ -27,6 +27,12 @@ public class GameBoard implements Serializable {
 		return fields;
 	}
 	
+	public Field getField(String name){
+		for(Field field : fields.keySet()){
+			if (field.toString() ==name)return field;
+		}
+		return null;
+	}
 	
 	public Field getInvestigatorField(Investigator investigator){
 		for(Field field:fields.keySet()){
@@ -80,11 +86,12 @@ public class GameBoard implements Serializable {
 		}
 		return allInvestigatorFields;
 	}
-	public List<Field> nextInvestigatorField(Field field){
+	public Set<Field> nextInvestigatorField(Field field){
 		List<Field> fields = new ArrayList<Field>();
+		Set<Field> fieldSet= new HashSet<Field>();
 		if(field.getInvestigators().size()>0){
-			fields.add(field);
-			return fields;
+			fieldSet.add(field);
+			return fieldSet;
 		}
 		List<Field> allInvestigatorFields = getAllInvestigatorFields();
 		List<List<Field>> ways = new ArrayList<List<Field>>();
@@ -95,7 +102,11 @@ public class GameBoard implements Serializable {
 		for(List<Field> list:ways){
 			fields.add(list.get(0));
 		}
-		return fields;
+		
+		for(Field f:fields){
+			fieldSet.add(f);
+		}
+		return fieldSet;
 	}
 	
 	public List<List<Field>> shortestWays(Field start,Field end){
@@ -109,6 +120,7 @@ public class GameBoard implements Serializable {
 		Set<Field> visited = new HashSet<Field>();
 		ways = shortestWays(start,end,visited,ways);
 		ways = splitWays(ways,end);
+		
 		return reduceWays(ways, end);
 	}
 	

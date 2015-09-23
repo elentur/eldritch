@@ -25,7 +25,39 @@ public class Animations {
 	private static ParallelTransition closeScreen;
 	private static ParallelTransition openScreen;
 	private static FadeTransition fadeIn;
+	private static TranslateTransition inventoryUp;
+	private static TranslateTransition inventoryDown;
 	
+	
+	public static void init(){
+		scene=StageControll.getPrimaryStage().getScene();
+		inventoryUp = new TranslateTransition(Duration.millis(200));
+		inventoryUp.setFromY(scene.getHeight()/1.8);
+		inventoryUp.setToY(0);
+		inventoryDown = new TranslateTransition(Duration.millis(200));
+		inventoryDown.setFromY(0);
+		inventoryDown.setToY(scene.getHeight()/1.8);
+	}
+	public static void inventoryIn(Node node){
+		inventoryUp.setNode(node);
+		inventoryUp.playFromStart();
+	}
+	public static void inventoryOut(Node node){
+		inventoryDown.setNode(node);
+		inventoryDown.playFromStart();
+		inventoryDown.setOnFinished(a->{
+			((Group)node.getParent().getParent()).getChildren().remove(node.getParent());
+		});
+		
+	
+	}
+	
+	public static void PopOut(Node node){
+		fadeIn = new FadeTransition(Duration.millis(300),node);
+		fadeIn.setFromValue(0.0);
+		fadeIn.setToValue(1.0);
+		fadeIn.playFromStart();
+	}
 	public static void startFadeIn(Node node){
 		fadeIn = new FadeTransition(Duration.millis(300),node);
 		fadeIn.setFromValue(0.0);
@@ -106,7 +138,7 @@ public class Animations {
 	}
 	
 	private static void createBlendScreen() {
-		scene=StageControll.getPrimaryStage().getScene();
+		
 		root =(Group) scene.getRoot();
 		
 		blendscreenUp = new Rectangle();

@@ -1,0 +1,3 @@
+action:Action Phase
+mythos:Mythos Phase
+encounter:Encounter Phase

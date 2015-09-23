@@ -30,7 +30,7 @@ public class InvestigatorSheet extends Group {
 	private Rectangle picture;
 	private Rectangle investigatorPicture;
 	private Scene scene;
-	private Button btnClose;
+	private OkCancelBtn btnClose;
 	
 	private Investigator investigator=null;
 	
@@ -39,21 +39,20 @@ public class InvestigatorSheet extends Group {
 		scene = StageControll.getPrimaryStage().getScene();
 		Map<String,String> names = IO.readText(Global.language+"/Menu.txt");
 	
-		btnClose= new Button(names.get("close"));
-		btnClose.setOnMouseClicked(a->{
-			((Group)this.getParent()).getChildren().get(0).setDisable(false);
-			((Group)this.getParent()).getChildren().get(0).setEffect(null);
-			((Group)this.getParent()).getChildren().remove(this);
-			
-		});
+		btnClose= new OkCancelBtn(false);
+		btnClose.setNode(this);
 		btnClose.setVisible(CloseButton);
-		Animations.startFadeIn(this);
+			Animations.startFadeIn(this);
 		picture = new Rectangle();
 		picture.setFill(new ImagePattern(MenueTextures.investigatorSheet));
 		picture.widthProperty().bind(scene.widthProperty().divide(1.82*1.3));
 		picture.heightProperty().bind(scene.widthProperty().divide(2.26*1.3));
 		picture.setMouseTransparent(true);
 		this.setEffect(Effects.shadowBtn);
+		
+		btnClose.translateXProperty().bind(picture.widthProperty().subtract(btnClose.widthProperty()));
+		btnClose.translateYProperty().bind(picture.heightProperty().subtract(btnClose.heightProperty()));
+	
 		
 		investigatorPicture= new Rectangle();
 		investigatorPicture.widthProperty().bind(picture.widthProperty().divide(3));
@@ -65,7 +64,7 @@ public class InvestigatorSheet extends Group {
 		
 	
 		lblHealth = new Label();
-		lblHealth.setFont(Effects.font);
+		lblHealth.styleProperty().bind(Effects.fontBig);
 		lblHealth.setTextFill(Effects.fontColorRed);
 		lblHealth.setAlignment(Effects.fontPos);
 		lblHealth.translateXProperty().bind(picture.widthProperty().divide(1.57));
@@ -73,7 +72,7 @@ public class InvestigatorSheet extends Group {
 		lblHealth.setRotate(-5);
 		
 		lblSanity = new Label();
-		lblSanity.setFont(Effects.font);
+		lblSanity.styleProperty().bind(Effects.fontBig);
 		lblSanity.setTextFill(Effects.fontColorBlue);
 		lblSanity.setAlignment(Effects.fontPos);
 		lblSanity.translateXProperty().bind(picture.widthProperty().divide(1.19));
@@ -82,7 +81,7 @@ public class InvestigatorSheet extends Group {
 		
 		
 		lblName = new Label();
-		lblName.setFont(Effects.fontMedium);
+		lblName.styleProperty().bind(Effects.fontMedium);
 		lblName.setTextFill(Effects.fontColorDark);
 		lblName.setAlignment(Effects.fontPos);
 		lblName.translateXProperty().bind(picture.widthProperty().divide(1.8));
@@ -90,7 +89,7 @@ public class InvestigatorSheet extends Group {
 		lblName.setRotate(-2.5);
 		
 		lblOccupation = new Label();
-		lblOccupation.setFont(Effects.fontSmall);
+		lblOccupation.styleProperty().bind(Effects.fontSmall);
 		lblOccupation.setTextFill(Effects.fontColorDark);
 		lblOccupation.setAlignment(Effects.fontPos);
 		lblOccupation.translateXProperty().bind(picture.widthProperty().divide(1.6));
@@ -99,7 +98,7 @@ public class InvestigatorSheet extends Group {
 		
 		
 		lblAction = new Label();
-		lblAction.setFont(Effects.fontVerySmall);
+		lblAction.styleProperty().bind(Effects.fontVerySmall);
 		lblAction.setTextFill(Effects.fontColorDark);
 		lblAction.setAlignment(Effects.fontPos);
 		lblAction.translateXProperty().bind(picture.widthProperty().divide(1.9));
@@ -109,7 +108,7 @@ public class InvestigatorSheet extends Group {
 		lblAction.setRotate(-2.5);
 		
 		lblAbility = new Label();
-		lblAbility.setFont(Effects.fontVerySmall);
+		lblAbility.styleProperty().bind(Effects.fontVerySmall);
 		lblAbility.setTextFill(Effects.fontColorDark);
 		lblAbility.setAlignment(Effects.fontPos);
 		lblAbility.translateXProperty().bind(picture.widthProperty().divide(1.9));
@@ -119,7 +118,7 @@ public class InvestigatorSheet extends Group {
 		lblAbility.setRotate(-2.5);
 		
 		lblQuote = new Label();
-		lblQuote.setFont(Effects.fontVerySmallCursive);
+		lblQuote.styleProperty().bind(Effects.fontVerySmallCursive);
 		lblQuote.setTextFill(Effects.fontColorDark);
 		lblQuote.setAlignment(Effects.fontPos);
 		lblQuote.translateXProperty().bind(picture.widthProperty().divide(1.9));
@@ -132,24 +131,24 @@ public class InvestigatorSheet extends Group {
 		
 		
 		lblLore = new Label();
-		lblLore.setFont(Effects.fontMedium);
+		lblLore.styleProperty().bind(Effects.fontMedium);
 		lblLore.setTextFill(Effects.fontColor);
 		lblLore.setAlignment(Effects.fontPos);
 		
 		lblInfluence = new Label();
-		lblInfluence.setFont(Effects.fontMedium);
+		lblInfluence.styleProperty().bind(Effects.fontMedium);
 		lblInfluence.setTextFill(Effects.fontColor);
 		lblInfluence.setAlignment(Effects.fontPos);
 		lblObservation = new Label();
-		lblObservation.setFont(Effects.fontMedium);
+		lblObservation.styleProperty().bind(Effects.fontMedium);
 		lblObservation.setTextFill(Effects.fontColor);
 		lblObservation.setAlignment(Effects.fontPos);
 		lblStrength = new Label();
-		lblStrength.setFont(Effects.fontMedium);
+		lblStrength.styleProperty().bind(Effects.fontMedium);
 		lblStrength.setTextFill(Effects.fontColor);
 		lblStrength.setAlignment(Effects.fontPos);
 		lblWill = new Label();
-		lblWill.setFont(Effects.fontMedium);
+		lblWill.styleProperty().bind(Effects.fontMedium);
 		lblWill.setTextFill(Effects.fontColor);
 		lblWill.setAlignment(Effects.fontPos);
 		HBox skills = new HBox(lblLore,lblInfluence,lblObservation,lblStrength,lblWill);
@@ -158,7 +157,7 @@ public class InvestigatorSheet extends Group {
 		skills.spacingProperty().bind(picture.widthProperty().divide(7.5));
 		skills.setRotate(1);
 		this.getChildren().addAll(investigatorPicture,picture,lblName, lblHealth,lblSanity,
-				lblOccupation,lblAction,lblAbility,lblQuote,skills);
+				lblOccupation,lblAction,lblAbility,lblQuote,skills,btnClose);
 	}
 	
 	private void showText() {
@@ -205,7 +204,7 @@ public class InvestigatorSheet extends Group {
 		
 		
 	}
-	public Button getCloseButton(){
+	public OkCancelBtn getCloseButton(){
 		if(btnClose.isVisible())return null;
 		return btnClose;
 	}

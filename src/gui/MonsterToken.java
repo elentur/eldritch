@@ -29,19 +29,19 @@ public class MonsterToken extends Group {
 		picture.heightProperty().bind(scene.widthProperty().divide(9.5));
 		
 		lblDamage=new Label();
-		lblDamage.setFont(Effects.fontMedium);
+		lblDamage.styleProperty().bind(Effects.fontMedium);
 		lblDamage.setTextFill(Effects.fontColorDark);
 		lblDamage.setAlignment(Effects.fontPosLeft);
 		lblDamage.translateXProperty().bind(picture.heightProperty().divide(2.5));
 		
 		lblStrengthTest=new Label();
-		lblStrengthTest.setFont(Effects.fontMedium);
+		lblStrengthTest.styleProperty().bind(Effects.fontMedium);
 		lblStrengthTest.setTextFill(Effects.fontColorDark);
 		lblStrengthTest.setAlignment(Effects.fontPosLeft);
 
 		
 		lblHorror=new Label();
-		lblHorror.setFont(Effects.fontMedium);
+		lblHorror.styleProperty().bind(Effects.fontMedium);
 		lblHorror.setTextFill(Effects.fontColorDark);
 		lblHorror.setAlignment(Effects.fontPosLeft);
 		lblHorror.translateXProperty().bind(picture.heightProperty().divide(2.5));
@@ -49,20 +49,20 @@ public class MonsterToken extends Group {
 		
 		
 		lblWillTest=new Label();
-		lblWillTest.setFont(Effects.fontMedium);
+		lblWillTest.styleProperty().bind(Effects.fontMedium);
 		lblWillTest.setTextFill(Effects.fontColorDark);
 		lblWillTest.setAlignment(Effects.fontPosLeft);
 		lblWillTest.translateYProperty().bind(picture.heightProperty().divide(5));
 		
 		lblToughness=new Label();
-		lblToughness.setFont(Effects.font);
+		lblToughness.styleProperty().bind(Effects.fontBig);
 		lblToughness.setTextFill(Effects.fontColor);
 		lblToughness.setAlignment(Effects.fontPosRight);
 		lblToughness.translateXProperty().bind(picture.heightProperty().divide(1.2));
 		lblToughness.translateYProperty().bind(picture.heightProperty().divide(-8));
 		
 		lblText=new Label();
-		lblText.setFont(Effects.fontVerySmall);
+		lblText.styleProperty().bind(Effects.fontVerySmall);
 		lblText.setTextFill(Effects.fontColorDark);
 		lblText.setLineSpacing(-3);
 		lblText.setAlignment(Effects.fontPosLeft);

@@ -1,0 +1,32 @@
+package enums;
+
+public enum MonsterNames {
+	cultist,
+	byakee,
+	colorOfSpace,
+	cthonian,
+	darkYoung,
+	deepOne,
+	elderThing,
+	ghost,
+	ghoul,
+	gnophKeh,
+	goatSpawn,
+	gug,
+	houndOfTindalos,
+	lloigor,
+	maniac,
+	miGo,
+	mummy,
+	nightgaunt,
+	riot,
+	serpentPeople,
+	shoggoth,
+	skeleton,
+	starSpawn,
+	vampire,
+	warlock,
+	witch,
+	wraith,
+	zombie
+}

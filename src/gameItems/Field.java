@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import elements.ClueToken;
 import elements.Gate;
 import elements.Investigator;
 import elements.Monster;
@@ -17,22 +18,33 @@ import enums.Path;
 import enums.Space;
 import gameBuild.Global;
 import gameMechanics.IO;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 
-public class Field implements Serializable {
+public class Field implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Map<Field,Path> neighbours;
 	private Space space;
 	private String name;
 	private Point position;
-	private List<Investigator> investigators;
+	private ObservableList<Investigator> investigators;
 	private List<Investigator> deadInvestigators;
-	private List<Monster> monsters;
-	private Boolean clue;
-	private Gate gate;
+	private ObservableList<Monster> monsters;
+	private final ObjectProperty<ClueToken> clue;
+	private final ObjectProperty<Gate> gate;
 	private Mystery mystery;
 	private Mythos roumor;
 	private FieldTyps fieldTyp;
 	private Map<String,String> names;
+
 	
 	public Field(String name,Space space, Point position,FieldTyps typ ){
 		 names=IO.readText(Global.language+"/fields.txt");
@@ -41,13 +53,16 @@ public class Field implements Serializable {
 		this.name=name;
 		this.position=position;
 		this.fieldTyp=typ;
-		this.investigators=new ArrayList<Investigator>();
-		this.monsters = new ArrayList<Monster>();
-		this.clue=false;
-		this.gate=null;
+		this.investigators= FXCollections.observableArrayList();
+		this.monsters = FXCollections.observableArrayList();
 		this.mystery=null;
 		this.roumor=null;
+		clue=new SimpleObjectProperty<ClueToken>(this, "clue", null);
+		gate=new SimpleObjectProperty<Gate>(this, "gate", null);
+
 	}
+	
+
 	public FieldTyps getFieldTyp() {
 		return fieldTyp;
 	}
@@ -57,6 +72,10 @@ public class Field implements Serializable {
 	public List<Investigator> getInvestigators() {
 		return investigators;
 	}
+	public ObservableList<Investigator> getObservalbleInvestigators() {
+		return investigators;
+	}
+	
 	public void addInvestigator(Investigator investigator){
 		investigators.add(investigator);
 	}
@@ -76,6 +95,10 @@ public class Field implements Serializable {
 	public boolean containsDeadInvestigator(Investigator investigator){
 		return deadInvestigators.contains(investigator);
 	}
+	public ObservableList<Monster> getObservalbleMonsters() {
+		return monsters;
+	}
+	
 	public List<Monster> getMonsters() {
 		return monsters;
 	}
@@ -90,26 +113,39 @@ public class Field implements Serializable {
 		return monsters.contains(monster);
 	}
 	
+	public ObjectProperty<ClueToken> clueProperty() { 
+		return clue; 
+	}
+	
 
-	public Boolean getClue() {
-		return clue;
+	public ClueToken getClue() {
+		return clue.get();
 	}
 
-	public void setClue(Boolean clue) {
-		this.clue = clue;
+	public void setClue(ClueToken clue) {
+		this.clue.set(clue);
+	}
+	public ClueToken removeClue() {
+		ClueToken c= clue.get();
+		clue.set(null);
+		return c;
 	}
 
+	public ObjectProperty<Gate> gateProperty() { 
+		return gate; 
+	}
+	
 	public Gate getGate() {
-		return gate;
+		return gate.get();
 	}
 	public Gate removeGate() {
-		Gate removedGate =gate;
-		gate=null;
+		Gate removedGate =gate.get();
+		gate.set(null);
 		return removedGate;
 	}
 
 	public void setGate(Gate gate) {
-		this.gate = gate;
+		this.gate.set(gate);
 	}
 
 	public Mystery getMystery() {
@@ -149,5 +185,9 @@ public class Field implements Serializable {
 	public String toString(){
 		return name;
 	}
+
+
+
+
 	
 }
