@@ -58,6 +58,8 @@ public class GameTextures {
 	public static Image passport;
 	public static Image suitCase;
 	public static Image leatherBackground;
+	public static Image shipTicket;
+	public static Image trainTicket;
 	
 	public static void load(){
 		boolean backgroundLoading = !Global.debug;
@@ -121,6 +123,8 @@ public class GameTextures {
 		passport= new Image("images/gameBoard/Passport.png",200,198, true, false, backgroundLoading);
 		suitCase= new Image("images/gameBoard/SuitCase.png",194,122, true, false, backgroundLoading);
 		leatherBackground = new Image("images/LeatherBackground.jpg",1024,678, true, false, backgroundLoading);
+		shipTicket =	new Image("images/gameBoard/ShipTicket.jpg",98,49, true, false, backgroundLoading);
+		trainTicket	 = new Image("images/gameBoard/TrainTicket.jpg",98,49, true, false, backgroundLoading);
 
 	}
 }

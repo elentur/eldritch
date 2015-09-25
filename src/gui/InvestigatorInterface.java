@@ -1,5 +1,6 @@
 package gui;
 
+import elements.ClueToken;
 import elements.Investigator;
 import gameBuild.Global;
 import gameItems.AncientOne;
@@ -7,14 +8,18 @@ import gameItems.DoomTracker;
 import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableNumberValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -37,6 +42,7 @@ public class InvestigatorInterface extends Group {
 	private Investigator inv;
 	private Label lblName;
 	private InventoryGui inventoryGui;
+	private VBox tickets;
 	
 
 	
@@ -54,10 +60,6 @@ public class InvestigatorInterface extends Group {
 			invSheet.setInvestigator(inv);
 			invSheet.translateXProperty().bind(scene.widthProperty().divide(2).subtract(invSheet.widthProperty().divide(2)));
 			invSheet.translateYProperty().bind(invSheet.widthProperty().divide(8));
-			
-			((Group)scene.getRoot()).getChildren().add(invSheet);
-			this.getParent().setDisable(true);
-			this.getParent().setEffect(Effects.blure);
 	
 		});	
 		
@@ -73,7 +75,7 @@ public class InvestigatorInterface extends Group {
 		inventoryGui= new InventoryGui();
 		inventoryGui.translateXProperty().bind(inventory.translateXProperty().add(inventory.widthProperty()));
 		inventoryGui.translateYProperty().bind(frame.translateYProperty().subtract(inventory.widthProperty()));
-
+		
 		inventory.setOnMouseClicked(a->{
 			if(this.getChildren().contains(inventoryGui)){
 				//this.getChildren().remove(inventoryGui);
@@ -158,9 +160,14 @@ public class InvestigatorInterface extends Group {
 		//frame.translateXProperty().bind(InvestigatorPicture.widthProperty().divide(-8));
 		//frame.translateYProperty().bind(InvestigatorPicture.widthProperty().divide(-6));
 	
+		
+		tickets = new VBox();
+		tickets.translateXProperty().bind(frame.heightProperty().divide(1.5));
+		//tickets.translateYProperty().bind(frame.heightProperty());
+		
 		updateInvestigator(Global.game.getRound().activInvestigatorProperty());
 		Group frameElements = new Group(frame,lblName,clueIndicator,healthIndicator,sanityIndicator,
-				lblClues,lblHealth,lblSanity);
+				lblClues,lblHealth,lblSanity,tickets);
 		frameElements.setEffect(Effects.shadowBtn);
 		this.getChildren().addAll(ability,inventory, investigatorPicture,frameElements);
 		this.setEffect(Effects.shadowBtn);
@@ -170,11 +177,35 @@ public class InvestigatorInterface extends Group {
 	private void updateInvestigator(Observable a) {
 		this.getChildren().remove(inventoryGui);
 		inv = Global.game.getInvestigators().get(((IntegerProperty)a).get());
+		
 		investigatorPicture.setFill(new ImagePattern( inv.getPicture()));
 		lblName.setText(inv.getName());
 		lblClues.setText(inv.getClues().getSize()+"");
 		lblHealth.setText(inv.getHealth()+"");
 		lblSanity.setText(inv.getSanity()+"");
+		inv.shipTicketProperty().addListener(b->updateTickets());
+		inv.trainTicketProperty().addListener(b->updateTickets());
+		updateTickets();
+		
+	}
+
+
+	private void updateTickets() {
+		tickets.getChildren().clear();
+		for(int i = 0 ; i< inv.getTrainTickets();i++){
+			Rectangle ticket=new Rectangle(0,0,new ImagePattern(GameTextures.trainTicket));
+			ticket.widthProperty().bind(scene.widthProperty().divide(19.51));
+			ticket.heightProperty().bind(scene.widthProperty().divide(39.18));
+			ticket.setRotate(-45);
+			tickets.getChildren().add(ticket);
+		}
+		for(int i = 0 ; i< inv.getShipTickets();i++){
+			Rectangle ticket=new Rectangle(0,0,new ImagePattern(GameTextures.shipTicket));
+			ticket.widthProperty().bind(scene.widthProperty().divide(19.51));
+			ticket.heightProperty().bind(scene.widthProperty().divide(39.18));
+			ticket.setRotate(-45);
+			tickets.getChildren().add(ticket);
+		}
 	}
 
 

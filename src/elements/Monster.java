@@ -43,6 +43,19 @@ public class Monster extends Card {
 	
 	
 	
+	public Monster (Monster monster){
+		//names=IO.readText(Global.language+"/Monster.txt");
+		this.HORROR=monster.HORROR;
+		this.TOUGHNESS=monster.TOUGHNESS;
+		this.name=monster.name;
+		this.DAMAGE=monster.DAMAGE;
+		this.STRENGTH_TEST=monster.STRENGTH_TEST;
+		this.WILL_TEST=monster.WILL_TEST;
+		this.actualDamage=monster.actualDamage;
+		this.event=monster.event;
+		this.ancient=monster.ancient;
+		setflatToken();
+	}
 	
 	public Monster(MonsterNames name, int horror, int toughness, int damage, int strengthTest,int willTest, Event event,String ancient){
 		names=IO.readText(Global.language+"/Monster.txt");

@@ -4,10 +4,12 @@ package gui;
 
 import java.util.List;
 import java.util.Set;
+import static gameBuild.Global.*;
 
 import elements.Investigator;
 import elements.Monster;
 import enums.FieldTyps;
+import enums.Phases;
 import enums.Space;
 import gameBuild.Global;
 import gameItems.Field;
@@ -41,6 +43,7 @@ public class FieldGui extends Group {
 	private HBox gate;
 	private HBox clue;
 
+
 	public FieldGui(Field field){
 		this.field=field;
 		gate = new HBox();
@@ -50,13 +53,17 @@ public class FieldGui extends Group {
 		lblName=new Label();
 		investigators=new FlowPane(5,5);
 		monsters = new FlowPane(5,5);
-		field.getObservalbleInvestigators().addListener((ListChangeListener<? super Investigator>) a -> investigatorUpdate());
+		field.getObservalbleInvestigators().addListener((ListChangeListener<? super Investigator>) a -> investigatorUpdate(false));
 		field.gateProperty().addListener(a->gateChanges());
-		field.getObservalbleMonsters().addListener((ListChangeListener<? super Monster>) a -> MonsterUpdate());
+		field.getObservalbleMonsters().addListener((ListChangeListener<? super Monster>) a -> MonsterUpdate(false));
 		field.clueProperty().addListener(a->clueChanges());
 		
 		investigators.setPrefWidth(230);
-		monsters.setPrefWidth(230);
+		investigators.setOnMouseEntered(a->investigatorUpdate(true));
+		investigators.setOnMouseExited(a->investigatorUpdate(false));
+	
+		monsters.setOnMouseEntered(a->MonsterUpdate(true));
+		monsters.setOnMouseExited(a->MonsterUpdate(false));
 		monsters.translateXProperty().bind(investigators.translateXProperty());
 		monsters.translateYProperty().bind(investigators.translateYProperty().add(investigators.heightProperty()));
 		//investigators.setPadding(new Insets(20));
@@ -71,23 +78,30 @@ public class FieldGui extends Group {
 		}
 		
 		space.setOnMouseClicked(a->{
-			Set<Field> fields=Global.game.getGameBoard().nextInvestigatorField(field);
-			
-			for(Field f:fields){
-				for(Investigator i:f.getInvestigators() ){
-					field.addInvestigator(i);
+			if(game.getRound().getPhase()==Phases.action && 
+					game.getActiveInvestigator().getPlayer()==myPlayerNumber){
+				if(field.containsInvestigator(game.getActiveInvestigator())){
+					new ActionScreen(true,field);
 				}
-				f.getInvestigators().clear();
 			}
-			Global.game.spawnGates(1);
+			
+//			Set<Field> fields=Global.game.getGameBoard().nextInvestigatorField(field);
+//			
+//			for(Field f:fields){
+//				for(Investigator i:f.getInvestigators() ){
+//					field.addInvestigator(i);
+//				}
+//				f.getInvestigators().clear();
+//			}
+//			Global.game.spawnGates(1);
 		});
 		
 		gate.setTranslateX(space.getTranslateX()+85);
 		gate.setTranslateY(space.getTranslateY()-100);
-		investigatorUpdate();
+		investigatorUpdate(false);
 		gateChanges();
 		clueChanges();
-		MonsterUpdate();
+		MonsterUpdate(false);
 		this.getChildren().addAll(gate,investigators,monsters,clue);
 		
 		
@@ -103,13 +117,36 @@ public class FieldGui extends Group {
 
 	}
 
-	private void MonsterUpdate() {
+	private void MonsterUpdate(boolean enter) {
+		
 		monsters.getChildren().clear();
-		for(Monster monster: field.getMonsters()){
-			monster.getFlatToken().setWidth(76.8);
-			monster.getFlatToken().setHeight(52.6);
-			if (!monsters.getChildren().contains(monster.getFlatToken())){
-				monsters.getChildren().add(monster.getFlatToken());
+		if(!field.getMonsters().isEmpty()){
+			if (enter){
+				
+				for(Monster monster: field.getMonsters()){
+					monster.getFlatToken().setWidth(76.8);
+					monster.getFlatToken().setHeight(52.6);
+					//if (!monsters.getChildren().contains(monster.getFlatToken()))
+						monsters.getChildren().add(monster.getFlatToken());
+					
+					
+				}
+				
+				if(field.getMonsters().size()>1) monsters.setPrefWidth(170);
+			}else{
+				Monster monster = field.getMonsters().get(0);
+				monster.getFlatToken().setWidth(76.8);
+				monster.getFlatToken().setHeight(52.6);
+				
+				Label number = new Label(field.getMonsters().size()+"");
+				number.setPadding(new Insets(0,0,0,10));
+				number.styleProperty().bind(Effects.fontMedium);
+				number.setAlignment(Effects.fontPos);
+				number.setTextAlignment(TextAlignment.CENTER);
+				number.setTextFill(Effects.fontColorRed);
+				//if (!monsters.getChildren().contains(monster.getFlatToken()))
+					monsters.getChildren().add(new Group(monster.getFlatToken(),number));
+				monsters.setPrefWidth(80);
 			}
 		}
 	}
@@ -123,9 +160,22 @@ public class FieldGui extends Group {
 		}
 	}
 
-	private void investigatorUpdate() {
+	private void investigatorUpdate(boolean enter) {
 		investigators.getChildren().clear();
-		for(Investigator inv: field.getInvestigators()){
+		if (enter){
+			for(Investigator inv: field.getInvestigators()){
+				inv.getFlatToken().widthProperty().unbind();
+				inv.getFlatToken().heightProperty().unbind();
+				inv.getFlatToken().setWidth(52);
+				inv.getFlatToken().setHeight(54.5);
+				if (!investigators.getChildren().contains(inv.getFlatToken())){
+					investigators.getChildren().add(inv.getFlatToken());
+				}
+				
+			}
+			if(field.getInvestigators().size()>1) investigators.setPrefWidth(170);
+		}else if (!field.getInvestigators().isEmpty()){
+			Investigator inv= field.getInvestigators().get(0);
 			inv.getFlatToken().widthProperty().unbind();
 			inv.getFlatToken().heightProperty().unbind();
 			inv.getFlatToken().setWidth(52);
@@ -133,7 +183,7 @@ public class FieldGui extends Group {
 			if (!investigators.getChildren().contains(inv.getFlatToken())){
 				investigators.getChildren().add(inv.getFlatToken());
 			}
-			
+			investigators.setPrefWidth(60);
 		}
 	
 	}

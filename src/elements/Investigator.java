@@ -36,8 +36,8 @@ public class Investigator extends Card {
 	private IntegerProperty sanity = new SimpleIntegerProperty();
 	private IntegerProperty health = new SimpleIntegerProperty();
 	private Stack<ClueToken> clues;
-	private int trainTickets;
-	private int shipTickets;
+	private IntegerProperty trainTickets = new SimpleIntegerProperty();
+	private IntegerProperty shipTickets = new SimpleIntegerProperty();
 	private Skill lore;
 	private Skill influence;
 	private Skill observation;
@@ -45,7 +45,7 @@ public class Investigator extends Card {
 	private Skill will;
 	private Stack<Item> inventory;
 	private Stack<Condition> condition;
-	private Image picture;
+	//private Image picture;
 	private  Rectangle flatToken;
 	private Map<String,String> names=null;
 private int player;
@@ -78,7 +78,7 @@ private int player;
 		this.sanity.set(this.MAX_SANITY);
 		this.sanity.addListener(a->InvestigatorListener.sanityChangeListener(a, this.MAX_SANITY));
 		this.health.set(this.MAX_HEALTH);
-				this.health.addListener(a->InvestigatorListener.healthChangeListener(a, this.MAX_HEALTH));
+		this.health.addListener(a->InvestigatorListener.healthChangeListener(a, this.MAX_HEALTH));
 		
 		this.lore=(Skill) clazz.getMethod("buildLore").invoke(null);
 		this.influence=(Skill) clazz.getMethod("buildInfluence").invoke(null);
@@ -87,8 +87,8 @@ private int player;
 		this.will=(Skill) clazz.getMethod("buildWill").invoke(null);
 		
 		
-		this.trainTickets=(int) clazz.getMethod("buildTrainTicket").invoke(null);
-		this.shipTickets=(int) clazz.getMethod("buildShipTicket").invoke(null);
+		this.trainTickets.set((int) clazz.getMethod("buildTrainTicket").invoke(null));
+		this.shipTickets.set((int) clazz.getMethod("buildShipTicket").invoke(null));
 		this.clues= (Stack<ClueToken>) clazz.getMethod("buildClues").invoke(null);
 		this.inventory=(Stack<Item>) clazz.getMethod("buildInventory").invoke(null);
 		this.condition=new Stack<Condition>(false);
@@ -261,15 +261,15 @@ private int player;
 	}
 
 	public int getTrainTickets() {
-		return trainTickets;
+		return trainTickets.get();
 	}
 	public void removeTrainTicket(){
-		if(trainTickets>0)trainTickets--;
+		if(trainTickets.get()>0)trainTickets.set(trainTickets.get()-1);
 	}
 	public boolean addTrainTickets() {
-		if(this.trainTickets+this.shipTickets<2){
+		if(this.trainTickets.get()+this.shipTickets.get()<2){
 			if(actions.size()<2 && !actions.contains(Actions.prepare_for_Travel)){
-				this.trainTickets++;
+				this.trainTickets.set(trainTickets.get()+1);
 				actions.add(Actions.prepare_for_Travel);
 				return true;
 			}
@@ -279,17 +279,20 @@ private int player;
 		return false;
 	}
 
+	public IntegerProperty trainTicketProperty(){
+		return trainTickets;
+	}
 	public int getShipTickets() {
-		return shipTickets;
+		return shipTickets.get();
 	}
 	public void removeShipTicket(){
-		if(shipTickets>0)shipTickets--;
+		if(shipTickets.get()>0)shipTickets.set(shipTickets.get()-1);
 	}
 
 	public boolean addShipTickets() {
-		if(this.trainTickets+this.shipTickets<2){
+		if(this.trainTickets.get()+this.shipTickets.get()<2){
 			if(actions.size()<2 && !actions.contains(Actions.prepare_for_Travel)){
-				this.shipTickets++;
+				this.shipTickets.set(shipTickets.get()+1);
 				actions.add(Actions.prepare_for_Travel);
 				return true;
 			}
@@ -297,6 +300,9 @@ private int player;
 			
 		}
 		return false;
+	}
+	public IntegerProperty shipTicketProperty(){
+		return shipTickets;
 	}
 
 	public Stack<Condition> getCondition() {
@@ -332,6 +338,11 @@ private int player;
 
 	public void setDelayed(boolean delayed) {
 		this.delayed = delayed;
+	}
+
+	public void refreshNewRound() {
+		actions.clear();
+		
 	}
 
 

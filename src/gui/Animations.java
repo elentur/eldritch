@@ -1,6 +1,7 @@
 package gui;
 
 import enums.Screens;
+import gameBuild.Global;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -27,7 +28,7 @@ public class Animations {
 	private static FadeTransition fadeIn;
 	private static TranslateTransition inventoryUp;
 	private static TranslateTransition inventoryDown;
-	
+	private static TranslateTransition moveMap;
 	
 	public static void init(){
 		scene=StageControll.getPrimaryStage().getScene();
@@ -37,7 +38,31 @@ public class Animations {
 		inventoryDown = new TranslateTransition(Duration.millis(200));
 		inventoryDown.setFromY(0);
 		inventoryDown.setToY(scene.getHeight()/1.8);
+		moveMap = new TranslateTransition(Duration.millis(600)); 
 	}
+	
+	public static void moveToMap(Group group, double x, double y ){
+		moveMap.setNode(group);
+		group.setTranslateX(group.getTranslateX()-Global.scrollPane.getHvalue());
+		group.setTranslateY(group.getTranslateY()-Global.scrollPane.getVvalue());
+		Global.scrollPane.setHvalue(0);
+		Global.scrollPane.setVvalue(0);
+		group.setCache(true);
+		group.setCacheHint(CacheHint.SPEED);
+		moveMap.setFromX(group.getTranslateX());
+		moveMap.setFromY(group.getTranslateY());
+		moveMap.setToX(-x);
+		moveMap.setToY(-y);
+		moveMap.setOnFinished(a->{
+			group.setTranslateX(0);
+			group.setTranslateY(0);
+			Global.scrollPane.setHvalue(x);
+			Global.scrollPane.setVvalue(y);
+			group.setCacheHint(CacheHint.QUALITY);
+		});
+		moveMap.playFromStart();
+	}
+	
 	public static void inventoryIn(Node node){
 		inventoryUp.setNode(node);
 		inventoryUp.playFromStart();
@@ -142,7 +167,7 @@ public class Animations {
 		root =(Group) scene.getRoot();
 		
 		blendscreenUp = new Rectangle();
-		root.getChildren().add(blendscreenUp);
+		
 		blendscreenUp.widthProperty().bind(scene.widthProperty());
 		blendscreenUp.heightProperty().bind(scene.heightProperty().divide(2));
 		blendscreenUp.setFill(new ImagePattern(MenueTextures.blendscreen_Up));
@@ -153,7 +178,7 @@ public class Animations {
 		
 		
 		blendscreenDown = new Rectangle();
-		root.getChildren().add(blendscreenDown);
+		root.getChildren().add(new Group(blendscreenUp,blendscreenDown));
 		blendscreenDown.widthProperty().bind(scene.widthProperty());
 		blendscreenDown.heightProperty().bind(scene.heightProperty().divide(2));
 		blendscreenDown.setFill(new ImagePattern(MenueTextures.blendscreen_Down));

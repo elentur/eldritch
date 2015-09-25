@@ -112,6 +112,13 @@ public class AncientOneCard extends Group {
 		VBox card = new VBox(new Group(ancientOnePicture,grpCultist,picture,lblName,lblDoom,texts,lblHeadline,cultistName),btnClose);
 		card.setAlignment(Effects.fontPos);
 		this.getChildren().addAll(card);
+		
+		
+		Global.overlay.getChildren().add(this);
+		if(CloseButton){
+			Global.screen.getChildren().get(0).setDisable(true);
+			Global.screen.getChildren().get(0).setEffect(Effects.blure);
+		}
 	}
 	
 	public void setAncientOne(AncientOne ancientOne2) {

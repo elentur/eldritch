@@ -313,7 +313,7 @@ public class Build {
 		monsterPool.add(new Monster(MonsterNames.ghoul));
 		monsterPool.add(new Monster(MonsterNames.goatSpawn));
 		for (int i = 0 ; i<5; i++){
-			monsterPool.add(ancient.getCultist1());
+			monsterPool.add(new Monster(ancient.getCultist1()));
 		}
 		monsterPool.shuffle();
 		return monsterPool;

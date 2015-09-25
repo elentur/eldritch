@@ -269,5 +269,8 @@ public class Game implements Serializable {
 		}
 		return fields;
 	}
+	public Investigator getActiveInvestigator(){
+		return investigators.get(getRound().getActiveInvestigator());
+	}
 
 }

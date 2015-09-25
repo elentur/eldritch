@@ -37,7 +37,7 @@ public class InvestigatorSheet extends Group {
 	public InvestigatorSheet( boolean CloseButton){
 		
 		scene = StageControll.getPrimaryStage().getScene();
-		Map<String,String> names = IO.readText(Global.language+"/Menu.txt");
+		
 	
 		btnClose= new OkCancelBtn(false);
 		btnClose.setNode(this);
@@ -158,14 +158,18 @@ public class InvestigatorSheet extends Group {
 		skills.setRotate(1);
 		this.getChildren().addAll(investigatorPicture,picture,lblName, lblHealth,lblSanity,
 				lblOccupation,lblAction,lblAbility,lblQuote,skills,btnClose);
+		
+		Global.overlay.getChildren().add(this);
+		if(CloseButton){
+			Global.screen.getChildren().get(0).setDisable(true);
+			Global.screen.getChildren().get(0).setEffect(Effects.blure);
+		}
 	}
 	
 	private void showText() {
 		TextScreen textScreen = new TextScreen(true);
 		textScreen.setText(investigator.getSTORY());
-		((Group)StageControll.getPrimaryStage().getScene().getRoot()).getChildren().add(textScreen);
-		this.getParent().setDisable(true);
-		this.getParent().setEffect(Effects.blure);
+		
 
 	}
 

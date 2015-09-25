@@ -5,33 +5,39 @@ import java.io.IOException;
 import java.util.Map;
 
 import elements.Investigator;
+import enums.Path;
+import enums.Space;
 import gameBuild.Global;
+import gameItems.Field;
 import gameMechanics.IO;
+import javafx.application.Platform;
 import javafx.beans.binding.DoubleExpression;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class TextScreen extends Group {
+public class ActionScreen extends Group {
 	private Label lblHeadline;
-	private Label lblText;
 	private Rectangle picture;
 	private Scene scene;
 	private OkCancelBtn btnClose;
+	private FlowPane flowPane;
 	
-	private Investigator investigator=null;
-	private ScrollPane scrollPane;
+	private Button btnTrain;
+	private Button btnShip;
+	private Button btnAsset;
+	private Button btnRest;
 	
-	public TextScreen( boolean CloseButton){
-		
+	public ActionScreen( boolean CloseButton,Field field){
+		Map<String,String> names = IO.readText(Global.language+"/GameScreen.txt");
 		scene = StageControll.getPrimaryStage().getScene();
-		Map<String,String> names = IO.readText(Global.language+"/Menu.txt");
 		
 		btnClose= new OkCancelBtn(false);
 		btnClose.setNode(this);
@@ -44,37 +50,56 @@ public class TextScreen extends Group {
 		picture.setMouseTransparent(true);
 		this.setEffect(Effects.shadowBtn);
 		
-		lblHeadline = new Label();
+		lblHeadline = new Label(names.get("actions"));
 		lblHeadline.styleProperty().bind(Effects.fontMedium);
 		lblHeadline.setTextFill(Effects.fontColorDark);
 		lblHeadline.setAlignment(Effects.fontPos);
 		lblHeadline.translateXProperty().bind(picture.widthProperty().divide(2.3));
 		lblHeadline.translateYProperty().bind(lblHeadline.heightProperty().divide(1.2));
-
 		
-
-		lblText = new Label();
-		lblText.styleProperty().bind(Effects.fontSmall);
-		lblText.setTextFill(Effects.fontColorDark);
-		lblText.setAlignment(Effects.fontPosLeft);
-		lblText.setWrapText(true);
-		lblText.maxWidthProperty().bind(picture.widthProperty().divide(1.5));
-
 		
-		scrollPane =  new ScrollPane();
-		scrollPane.maxWidthProperty().bind(picture.widthProperty().divide(1.45));
-		scrollPane.minWidthProperty().bind(picture.widthProperty().divide(1.45));
-		scrollPane.maxHeightProperty().bind(picture.heightProperty().divide(1.45));
-		scrollPane.minHeightProperty().bind(picture.heightProperty().divide(1.45));
-		scrollPane.translateXProperty().bind(picture.widthProperty().divide(6));
-		scrollPane.translateYProperty().bind(picture.heightProperty().divide(6));
-		scrollPane.getStylesheets().add("/gui/MyScrollBar.css");
-		scrollPane.setPannable(true);
-		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setContent(lblText);
+		btnShip = new Button(names.get("shipTicket"));
+		btnShip.setOnMouseClicked(a->{
+			if(Global.game.getActiveInvestigator().addShipTickets()){
+				Dialog.okDialog("shipTicketBuyDiag");
+			}else{
+				Dialog.okDialog("noTicketBuyDiag");
+			}
+			btnClose.close(this);
+		});
+
+		btnShip.setDisable(!field.getNeighbours().containsValue(Path.ship));
 		
-		VBox elements = new VBox(new Group(picture,lblHeadline,scrollPane),btnClose);
+		btnTrain = new Button(names.get("trainTicket"));
+		btnTrain.setOnMouseClicked(a->{
+			if(Global.game.getActiveInvestigator().addTrainTickets()){
+				Dialog.okDialog("trainTicketBuyDiag");
+			}else{
+				Dialog.okDialog("noTicketBuyDiag");
+			}
+			btnClose.close(this);
+		});
+		btnTrain.setDisable(!field.getNeighbours().containsValue(Path.train));
+		
+		btnAsset = new Button(names.get("assetAcquire"));
+		btnAsset.setOnMouseClicked(a->{
+			
+		});
+		btnAsset.setDisable(!(field.getSpace()==Space.city&& field.getMonsters().isEmpty()));
+		btnRest = new Button(names.get("rest"));
+		btnRest.setOnMouseClicked(a->{
+			
+		});
+		btnRest.setDisable(!field.getMonsters().isEmpty());
+		
+		
+		flowPane=new FlowPane(btnAsset,btnRest,btnShip,btnTrain);
+		flowPane.prefWidthProperty().bind(picture.widthProperty());
+		flowPane.prefHeightProperty().bind(btnRest.heightProperty().multiply(2.3));
+		flowPane.translateXProperty().bind(picture.widthProperty().divide(11));
+		flowPane.translateYProperty().bind(picture.heightProperty().divide(3));
+		
+		VBox elements = new VBox(new Group(picture,lblHeadline,flowPane),btnClose);
 		elements.setAlignment(Effects.fontPos);
 		this.getChildren().addAll(elements);
 		this.translateXProperty().bind(scene.widthProperty().subtract(this.widthProperty()).divide(2));
@@ -88,23 +113,9 @@ public class TextScreen extends Group {
 	}
 	
 	
-	public void setTextFont(Font font){
-		lblText.setFont(font);
-	}
-	public void setText(String path, String headline, String text) {
-			
-		
-	}
-	public void setText(String headline, String text) {
-		lblText.setText(text);
-		lblHeadline.setText(headline);
-		
-	}
 	
-	public void setText( String text) {
-		lblText.setText(text);
 	
-	}
+	
 
 	public OkCancelBtn getCloseButton(){
 		if(btnClose.isVisible())return null;

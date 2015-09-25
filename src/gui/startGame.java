@@ -36,7 +36,9 @@ public class startGame extends Application {
 		StageControll.setPrimaryStage(primaryStage);
 		MenueTextures.load();
 		GameTextures.load();
-		Scene scene = new Scene(new Group(),960,540);
+		Global.overlay= new Group();
+		Global.screen= new Group(Global.overlay);
+		Scene scene = new Scene(Global.screen,960,540);
 		scene.setFill(Color.BLACK);
 		primaryStage.setScene(scene);
 		primaryStage.setFullScreenExitHint("");

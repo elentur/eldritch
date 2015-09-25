@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import elements.ClueToken;
 import elements.Gate;
+import elements.Investigator;
 import enums.Phases;
+import gameBuild.Global;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -68,6 +70,9 @@ public class Round implements Serializable {
 		if(getActiveInvestigator()==0){
 			if(phase.get()==Phases.mythos){
 				phase.set(Phases.action);
+				for(Investigator inv :Global.game.getInvestigators()){
+					inv.refreshNewRound();
+				}
 				numberOfRounds++;
 			}else if(phase.get()==Phases.action){
 				phase.set(Phases.encounter);

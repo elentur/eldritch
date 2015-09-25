@@ -20,6 +20,7 @@ public class InventoryGui extends Group {
 		inventory= new FlowPane( Orientation.VERTICAL,20,20,investigator.getInventory().getNodes());
 		inventory.prefHeightProperty().bind(scene.widthProperty().divide(4));
 		inventory.setBackground(new Background(new BackgroundImage(GameTextures.leatherBackground, null, null, null, null)));
+		inventory.setEffect(Effects.innerShadow);
 		clip = new Rectangle();
 		clip.setFill(new ImagePattern(GameTextures.itemBackPicture));
 		clip.widthProperty().bind(inventory.widthProperty());
@@ -33,7 +34,7 @@ public class InventoryGui extends Group {
 		inventory.setPadding(new Insets(5));
 		inventory.prefHeightProperty().bind(scene.widthProperty().divide(4));
 		inventory.setBackground(new Background(new BackgroundImage(GameTextures.leatherBackground, null, null, null, null)));
-		
+		inventory.setEffect(Effects.innerShadow);
 		clip = new Rectangle();
 		clip.setFill(new ImagePattern(GameTextures.itemBackPicture));
 		clip.widthProperty().bind(inventory.widthProperty());
@@ -49,6 +50,7 @@ public class InventoryGui extends Group {
 		inventory.setVgap(20);
 		inventory.getChildren().clear();
 		inventory.getChildren().addAll(inv.getInventory().getNodes());
+		
 				
 	}
 }

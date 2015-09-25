@@ -1,3 +1,11 @@
 action:Action Phase
 mythos:Mythos Phase
 encounter:Encounter Phase
+rest:Rest
+assetAcquire:Acquire Asset
+trainTicket:Train Ticket
+shipTicket:Ship Ticket
+actions:Actions
+trainTicketBuyDiag:You buy a train ticket.
+shipTicketBuyDiag:You buy a ship ticket.
+noTicketBuyDiag:You can't buy anymore tickets.

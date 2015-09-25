@@ -16,6 +16,7 @@ import javafx.scene.effect.BlurType;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.effect.Shadow;
@@ -55,7 +56,7 @@ public class Effects {
 	public static Glow highlightBtn = new Glow(1);
 	public static Glow highlightSpaces = new Glow(0.5);
 	public static DropShadow textShadow = new DropShadow(BlurType.ONE_PASS_BOX, Color.color(0, 0, 0, 0.8),3,0.1, 1, 1);
-	
+	public static InnerShadow innerShadow = new InnerShadow( 5, 10, 10, Color.color(0, 0, 0, 0.8));
 	public static Light.Point pointLight = new Light.Point(100, 100, 100, Color.BISQUE);
 	public static Lighting highlightPicture = new Lighting();
 	public static Color fontColor = Color.ANTIQUEWHITE;

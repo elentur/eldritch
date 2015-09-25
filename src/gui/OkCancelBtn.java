@@ -1,5 +1,6 @@
 package gui;
 
+import gameBuild.Global;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
@@ -42,13 +43,16 @@ public class OkCancelBtn extends Group {
 	}
 
 	public void setNode(Node node) {
-		btnButton.setOnMouseClicked(a->{
-			((Group)node.getParent()).getChildren().get(0).setDisable(false);
-			((Group)node.getParent()).getChildren().get(0).setEffect(null);
-			((Group)node.getParent()).getChildren().remove(node);
-			
-		});
+		btnButton.setOnMouseClicked(a->close(node));
 		
+	}
+
+	public void close(Node node) {
+		((Group)node.getParent()).getChildren().remove(node);
+		if(Global.overlay.getChildren().isEmpty()){
+			Global.screen.getChildren().get(0).setDisable(false);
+			Global.screen.getChildren().get(0).setEffect(null);
+		}
 	}
 	
 }

@@ -18,20 +18,19 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class TextScreen extends Group {
+public class DialogGui extends Group {
 	private Label lblHeadline;
 	private Label lblText;
 	private Rectangle picture;
 	private Scene scene;
 	private OkCancelBtn btnClose;
-	
-	private Investigator investigator=null;
 	private ScrollPane scrollPane;
+	private Map<String,String> names;
 	
-	public TextScreen( boolean CloseButton){
+	public DialogGui( boolean CloseButton){
 		
 		scene = StageControll.getPrimaryStage().getScene();
-		Map<String,String> names = IO.readText(Global.language+"/Menu.txt");
+		names = IO.readText(Global.language+"/GameScreen.txt");
 		
 		btnClose= new OkCancelBtn(false);
 		btnClose.setNode(this);
@@ -39,8 +38,8 @@ public class TextScreen extends Group {
 		Animations.startFadeIn(this);
 		picture = new Rectangle();
 		picture.setFill(new ImagePattern(MenueTextures.infoBox));
-		picture.widthProperty().bind(scene.widthProperty().divide(2));
-		picture.heightProperty().bind(scene.widthProperty().divide(2*1.3));
+		picture.widthProperty().bind(scene.widthProperty().divide(5));
+		picture.heightProperty().bind(scene.widthProperty().divide(5*1.3));
 		picture.setMouseTransparent(true);
 		this.setEffect(Effects.shadowBtn);
 		
@@ -57,6 +56,7 @@ public class TextScreen extends Group {
 		lblText.styleProperty().bind(Effects.fontSmall);
 		lblText.setTextFill(Effects.fontColorDark);
 		lblText.setAlignment(Effects.fontPosLeft);
+		lblText.setCenterShape(true);
 		lblText.setWrapText(true);
 		lblText.maxWidthProperty().bind(picture.widthProperty().divide(1.5));
 
@@ -102,7 +102,7 @@ public class TextScreen extends Group {
 	}
 	
 	public void setText( String text) {
-		lblText.setText(text);
+		lblText.setText(names.get(text));
 	
 	}
 

@@ -31,10 +31,7 @@ public class AncientOneInterface extends Group {
 			aoC.setAncientOne(ancientOne);
 			aoC.translateXProperty().bind(scene.widthProperty().divide(2).subtract(aoC.widthProperty().divide(2)));
 			aoC.translateYProperty().bind(aoC.widthProperty().divide(8));
-			
-			((Group)StageControll.getPrimaryStage().getScene().getRoot()).getChildren().add(aoC);
-			this.getParent().setDisable(true);
-			this.getParent().setEffect(Effects.blure);
+
 			
 		});
 		graphicBack = new Rectangle();
