@@ -35,11 +35,8 @@ public class ClueToken extends Token {
 	}
 
 	@Override
-	public Shape getToken() {
-		Circle clueToken = new Circle(25);
-		clueToken.setFill(new ImagePattern(getPicture()));
-		Scene scene= StageControll.getPrimaryStage().getScene();
-		
-		return clueToken;
+	public Circle getToken() {
+
+		return new Circle(25,new ImagePattern(getPicture()));
 	}
 }

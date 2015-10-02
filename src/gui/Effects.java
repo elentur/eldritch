@@ -35,6 +35,7 @@ public class Effects {
 	public static StringProperty fontMedium = new SimpleStringProperty();//Font.loadFont("file:src/fonts/UGLYQUA.TTF",  Toolkit.getDefaultToolkit().getScreenSize().getWidth() /80);
 	public static StringProperty fontMedium2 =new SimpleStringProperty();// Font.loadFont("file:src/fonts/UGLYQUA.TTF",  Toolkit.getDefaultToolkit().getScreenSize().getWidth() /120);
     public static StringProperty fontBig = new SimpleStringProperty();
+    public static StringProperty fontVeryBig = new SimpleStringProperty();
     public static StringProperty fontGraphicButton = new SimpleStringProperty();// Font.loadFont("file:src/fonts/UGLYQUA.TTF",  Toolkit.getDefaultToolkit().getScreenSize().getWidth() /110);
 	
     public static DoubleProperty fontSizeVerySmall = new SimpleDoubleProperty(10);
@@ -42,6 +43,7 @@ public class Effects {
     public static DoubleProperty fontSizeMedium = new SimpleDoubleProperty(10);
     public static DoubleProperty fontSizeMedium2 = new SimpleDoubleProperty(10);
     public static DoubleProperty fontSizeBig = new SimpleDoubleProperty(10);
+    public static DoubleProperty fontSizeVeryBig = new SimpleDoubleProperty(10);
     public static DoubleProperty fontSizeGraphicButton = new SimpleDoubleProperty(10);
  
     public static Color fontColorDark = Color.DARKSLATEGREY;
@@ -66,7 +68,10 @@ public class Effects {
 	public static void init(){
 		Font.loadFont("file:src/resources/fonts/UGLYQUAITALIC.TTF",  Toolkit.getDefaultToolkit().getScreenSize().getWidth() /200);
 		Font.loadFont("file:src/resources/fonts/UGLYQUA.TTF",  Toolkit.getDefaultToolkit().getScreenSize().getWidth() /200);
-
+		
+		fontSizeVeryBig.bind( StageControll.getPrimaryStage().getScene().widthProperty().divide(10));
+		fontVeryBig.bind(Bindings.concat("-fx-font:" , Effects.fontSizeVeryBig.asString(), " 'UglyQua' ;"));
+		
 		fontSizeBig.bind( StageControll.getPrimaryStage().getScene().widthProperty().divide(30));
 		fontBig.bind(Bindings.concat("-fx-font:" , Effects.fontSizeBig.asString(), " 'UglyQua' ;"));
 		

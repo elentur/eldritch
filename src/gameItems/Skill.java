@@ -34,4 +34,12 @@ public class Skill implements Serializable {
 	public void improve(){
 		if(improvement<2) improvement++;
 	}
+	
+	public static String getSkillAsSymbol(Skills skill){
+		if (skill==Skills.influence)return "  &  ";
+		if (skill==Skills.lore)return "  %  ";
+		if (skill==Skills.observation)return "  $  ";
+		if (skill==Skills.strength)return "  §  ";
+		return "  \"  ";
+	}
 }

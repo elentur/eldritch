@@ -13,14 +13,21 @@ import elements.Monster;
 import enums.Actions;
 import enums.Path;
 import enums.Space;
+import gameBuild.Global;
+import gameMechanics.IO;
+import gameMechanics.TextAppearsTransition;
+import gui.Animations;
+import gui.Effects;
 
 public class GameBoard implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Map<Field,Space> fields;
+	private Map<String,String> names;
 	
 	public GameBoard(Map<Field,Space> fields){
 		this.fields =fields;
+		names = IO.readText(Global.language+"/GameScreen.txt");
 	}
 	
 	public Map<Field,Space> getFields(){
@@ -51,13 +58,17 @@ public class GameBoard implements Serializable {
 		
 		Field oldField = getInvestigatorField(investigator);
 		//Testen ob der Weg mit allen mitteln zu schafen ist
-		//if(investigator.getShipTickets()+ investigator.getTrainTickets()+1 < shortestWays(oldField, newField).get(0).size()-1)return;
+		if(1 < shortestWays(oldField, newField).get(0).size()-1)return;
 		List<Actions> actions= investigator.getActions();
 		//Erlaubt sind nur einfeldwege aber das wird �ber Das Interface realisiert
 		if(investigator.travel()){//!actions.contains(Actions.travel) && actions.size()<2){
 			oldField.removeInvestigator(investigator);
 			newField.addInvestigator(investigator);
-			actions.add(Actions.travel);
+			if(investigator == Global.game.getActiveInvestigator()){
+				Animations.moveToMap(newField.getPosition().getX(), newField.getPosition().getY());
+			}
+			//System.out.println(Global.game.getGameBoard().getInvestigatorField(investigator).getNeighbours());
+			
 		}else if( actions.get(actions.size()-1)==Actions.travel ){
 			
 			Path path =oldField.getNeighbours().get(newField);
@@ -66,10 +77,23 @@ public class GameBoard implements Serializable {
 			}else if(path ==Path.train && investigator.getTrainTickets()>0){
 				investigator.removeTrainTicket();
 			}else{
+				Global.textAppearsTransitionList.add(new TextAppearsTransition(names.get("noMove"), Effects.fontColor));
 				return;
 			}
+			
 			oldField.removeInvestigator(investigator);
 			newField.addInvestigator(investigator);
+			//System.out.println(Global.game.getGameBoard().getInvestigatorField(investigator).getNeighbours());
+			Animations.moveToMap(newField.getPosition().getX(), newField.getPosition().getY());
+			if(investigator.getActions().size()==2 &&
+					investigator.getShipTickets()==0 &&
+					investigator.getTrainTickets()==0)Global.game.getRound().next();
+			
+			
+
+		}else{
+			Global.textAppearsTransitionList.add(new TextAppearsTransition(names.get("noMove"), Effects.fontColor));
+			
 		}
 		
 	}

@@ -2,34 +2,30 @@ package gui;
 
 
 
-import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.script.Invocable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import elements.Investigator;
 import enums.Screens;
+import exceptions.CardNotFoundException;
 import gameBuild.Game;
 import gameBuild.Global;
 import gameItems.AncientOne;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
+
 import javafx.stage.Stage;
 
 public class startGame extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		Global.debug=true;
+		Global.init();
+		Global.debug=false;
 		
 		Global.language="src/language/english";
 	
@@ -57,7 +53,15 @@ public class startGame extends Application {
 			investigators.add(new Investigator("MarkHarrigan"));
 			investigators.add(new Investigator("TrishScarborough"));
 			investigators.add(new Investigator("NormanWithers"));
+			
 			Global.game.setInvestigators(investigators);
+			try {
+				investigators.get(0).addClues(Global.game.getCluePool().drawNextCard());
+				investigators.get(0).addClues(Global.game.getCluePool().drawNextCard());
+				investigators.get(0).addClues(Global.game.getCluePool().drawNextCard());
+				investigators.get(0).addClues(Global.game.getCluePool().drawNextCard());
+			} catch (CardNotFoundException e) {
+			}
 			//Global.lbldebug.setFont(Effects.font);
 			//Global.lbldebug.setTextFill(Effects.fontColorRed);
 			Animations.blendingDown(Screens.GameScreen);

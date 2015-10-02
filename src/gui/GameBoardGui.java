@@ -5,14 +5,20 @@ import java.util.List;
 
 import gameBuild.Global;
 import gameItems.Field;
+import gameMechanics.TextAppearsTransition;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -27,16 +33,17 @@ private List<FieldGui>  fields;
 		gameBoard.setFill(new ImagePattern(GameTextures.gameBoard));
 		gameBoard.setWidth(2902);
 		gameBoard.setHeight(1797);
+		
 		buildFields();
 		
 		
 		Group group = new Group(gameBoard);
 			group.getChildren().addAll(fields);
 			
-			Rectangle backBlack = new Rectangle();
-			backBlack.setFill(Color.BLACK);
-			backBlack.widthProperty().bind(scene.widthProperty().add(gameBoard.getWidth()));
-			backBlack.heightProperty().bind(scene.heightProperty().add(gameBoard.getHeight()));
+			HBox backBlack = new HBox();
+			backBlack.setBackground(new Background(new BackgroundImage(GameTextures.backgroundPattern, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, null, null)));
+			backBlack.prefWidthProperty().bind(scene.widthProperty().add(gameBoard.getWidth()));
+			backBlack.prefHeightProperty().bind(scene.heightProperty().add(gameBoard.getHeight()));
 		Group backGroup = new Group(backBlack,group);
 		group.translateXProperty().bind(scene.widthProperty().divide(2));
 		group.translateYProperty().bind(scene.heightProperty().divide(2));
@@ -56,7 +63,7 @@ private List<FieldGui>  fields;
 		Global.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		Global.game.getRound().activInvestigatorProperty().addListener(a->updateFocus(
 				Global.game.getGameBoard().getInvestigatorField(
-						Global.game.getInvestigators().get(((IntegerProperty)a).get()))));
+						Global.game.getActiveInvestigator())));
 		Global.scrollPane.setVmax(1797);
 		Global.scrollPane.setHmax(2902);
 //		Global.scrollPane.setOnMouseClicked(a->{Global.lbldebug.setText(
@@ -66,6 +73,7 @@ private List<FieldGui>  fields;
 //		
 //		});
 //	
+
 		this.getChildren().addAll(Global.scrollPane);
 		updateFocus(
 				Global.game.getGameBoard().getInvestigatorField(
@@ -73,7 +81,7 @@ private List<FieldGui>  fields;
 	}
 
 	public void updateFocus(Field field) {
-		Animations.moveToMap((Group)Global.scrollPane.getContent(),field.getPosition().getX(), field.getPosition().getY());
+		Animations.moveToMap(field.getPosition().getX(), field.getPosition().getY());
 	}
 
 	private void buildFields() {

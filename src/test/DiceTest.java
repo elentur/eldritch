@@ -2,20 +2,22 @@ package test;
 
 import org.junit.Test;
 
+import elements.Investigator;
+import enums.Skills;
 import gameItems.Dice;
 
 public class DiceTest {
-	Dice dice = new Dice();
+	Dice dice = new Dice(Skills.influence,new Investigator("CharlieKane"));
 
 	@Test
 	public void test() {
-		System.out.println(dice.roll(0));
-		System.out.println(dice.roll(1));
-		System.out.println(dice.roll(2));
-		System.out.println(dice.roll(5));
-		System.out.println(dice.roll(12));
-		System.out.println(dice.roll(100));
-		System.out.println(dice.roll(150));
+		System.out.println(dice.roll());
+		System.out.println(dice.roll());
+		System.out.println(dice.roll());
+		System.out.println(dice.roll());
+		System.out.println(dice.roll());
+		System.out.println(dice.roll());
+		System.out.println(dice.roll());
 	}
 
 }

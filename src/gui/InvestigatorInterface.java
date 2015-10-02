@@ -5,7 +5,10 @@ import elements.Investigator;
 import gameBuild.Global;
 import gameItems.AncientOne;
 import gameItems.DoomTracker;
+import gameItems.Field;
 import javafx.beans.Observable;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -16,6 +19,8 @@ import javafx.beans.value.ObservableNumberValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -55,13 +60,7 @@ public class InvestigatorInterface extends Group {
 		frame.heightProperty().bind(scene.widthProperty().divide(6.63));
 		frame.setMouseTransparent(true);
 		investigatorPicture.radiusProperty().bind(scene.widthProperty().divide(16));
-		investigatorPicture.setOnMouseClicked(a->{
-			InvestigatorSheet invSheet = new InvestigatorSheet(true);
-			invSheet.setInvestigator(inv);
-			invSheet.translateXProperty().bind(scene.widthProperty().divide(2).subtract(invSheet.widthProperty().divide(2)));
-			invSheet.translateYProperty().bind(invSheet.widthProperty().divide(8));
-	
-		});	
+		investigatorPicture.setOnMouseClicked(a->pictureButton(a));	
 		
 		
 		
@@ -117,6 +116,7 @@ public class InvestigatorInterface extends Group {
 		healthIndicator.translateXProperty().bind(healthIndicator.radiusProperty().multiply(2.1));
 		healthIndicator.translateYProperty().bind(healthIndicator.radiusProperty().multiply(0.4));
 		lblHealth = new Label();
+		
 		lblHealth.translateXProperty().bind(healthIndicator.translateXProperty().subtract(healthIndicator.radiusProperty()));
 		lblHealth.translateYProperty().bind(healthIndicator.translateYProperty().subtract(healthIndicator.radiusProperty()));
 		lblHealth.prefWidthProperty().bind(healthIndicator.radiusProperty().multiply(2));
@@ -131,6 +131,7 @@ public class InvestigatorInterface extends Group {
 		sanityIndicator.translateXProperty().bind(sanityIndicator.radiusProperty());
 		sanityIndicator.translateYProperty().bind(sanityIndicator.radiusProperty().multiply(2));
 		lblSanity = new Label();
+		
 		lblSanity.translateXProperty().bind(sanityIndicator.translateXProperty().subtract(healthIndicator.radiusProperty()));
 		lblSanity.translateYProperty().bind(sanityIndicator.translateYProperty().subtract(healthIndicator.radiusProperty()));
 		lblSanity.prefWidthProperty().bind(healthIndicator.radiusProperty().multiply(2));
@@ -166,11 +167,29 @@ public class InvestigatorInterface extends Group {
 		//tickets.translateYProperty().bind(frame.heightProperty());
 		
 		updateInvestigator(Global.game.getRound().activInvestigatorProperty());
+		lblSanity.textProperty().bind(inv.sanityProperty().asString());
+		lblHealth.textProperty().bind(inv.healthProperty().asString());
 		Group frameElements = new Group(frame,lblName,clueIndicator,healthIndicator,sanityIndicator,
 				lblClues,lblHealth,lblSanity,tickets);
 		frameElements.setEffect(Effects.shadowBtn);
 		this.getChildren().addAll(ability,inventory, investigatorPicture,frameElements);
 		this.setEffect(Effects.shadowBtn);
+	}
+
+
+	private void pictureButton(MouseEvent a) {
+		if(a.getButton()==MouseButton.PRIMARY){
+			Field field = Global.game.getGameBoard().getInvestigatorField(
+					Global.game.getActiveInvestigator());
+			Animations.moveToMap(field.getPosition().getX(), field.getPosition().getY());
+
+		}else if(a.getButton()==MouseButton.SECONDARY){
+			InvestigatorSheet invSheet = new InvestigatorSheet(true);
+			invSheet.setInvestigator(inv);
+			invSheet.translateXProperty().bind(scene.widthProperty().divide(2).subtract(invSheet.widthProperty().divide(2)));
+			invSheet.translateYProperty().bind(invSheet.widthProperty().divide(8));
+
+		}
 	}
 
 
@@ -181,8 +200,8 @@ public class InvestigatorInterface extends Group {
 		investigatorPicture.setFill(new ImagePattern( inv.getPicture()));
 		lblName.setText(inv.getName());
 		lblClues.setText(inv.getClues().getSize()+"");
-		lblHealth.setText(inv.getHealth()+"");
-		lblSanity.setText(inv.getSanity()+"");
+		//lblHealth.setText(inv.getHealth()+"");
+		//lblSanity.setText(inv.getSanity()+"");
 		inv.shipTicketProperty().addListener(b->updateTickets());
 		inv.trainTicketProperty().addListener(b->updateTickets());
 		updateTickets();

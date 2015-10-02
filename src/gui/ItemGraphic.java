@@ -34,12 +34,12 @@ public class ItemGraphic extends Group {
 	private boolean front;
 	private Group frontSide;
 	private Group backSide;
-	private boolean showPrice;
-
 	public ItemGraphic(Item  card){
+		this(card,false);
+	}
+	public ItemGraphic(Item  card,boolean showPrice){
 		Scene scene= StageControll.getPrimaryStage().getScene();
 		front = true;
-		showPrice=false;
 		namePicture = new Rectangle();
 		namePicture.setFill(new ImagePattern(MenueTextures.mainMenueBtn));
 		namePicture.widthProperty().bind(scene.widthProperty().divide(4.15).divide(1.8));
@@ -167,9 +167,7 @@ public class ItemGraphic extends Group {
 
 		return picture.heightProperty();
 	}
-	public void setShowPrice(boolean show){
-		showPrice=show;
-	}
+
 	
 	
 }

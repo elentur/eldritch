@@ -61,34 +61,41 @@ public class ActionScreen extends Group {
 		btnShip = new Button(names.get("shipTicket"));
 		btnShip.setOnMouseClicked(a->{
 			if(Global.game.getActiveInvestigator().addShipTickets()){
-				Dialog.okDialog("shipTicketBuyDiag");
+				Dialog.infoDialog("shipTicketBuyDiag");
 			}else{
-				Dialog.okDialog("noTicketBuyDiag");
+				Dialog.infoDialog("noTicketBuyDiag");
 			}
 			btnClose.close(this);
 		});
 
-		btnShip.setDisable(!field.getNeighbours().containsValue(Path.ship));
+		btnShip.setDisable(!field.getNeighbours().containsValue(Path.ship)||field.getSpace()!=Space.city);
 		
 		btnTrain = new Button(names.get("trainTicket"));
 		btnTrain.setOnMouseClicked(a->{
 			if(Global.game.getActiveInvestigator().addTrainTickets()){
-				Dialog.okDialog("trainTicketBuyDiag");
+				Dialog.infoDialog("trainTicketBuyDiag");
 			}else{
-				Dialog.okDialog("noTicketBuyDiag");
+				Dialog.infoDialog("noTicketBuyDiag");
 			}
 			btnClose.close(this);
 		});
-		btnTrain.setDisable(!field.getNeighbours().containsValue(Path.train));
+		btnTrain.setDisable(!field.getNeighbours().containsValue(Path.train)||field.getSpace()!=Space.city);
 		
 		btnAsset = new Button(names.get("assetAcquire"));
 		btnAsset.setOnMouseClicked(a->{
+			new ReserveGui(true);
+			btnClose.close(this);
 			
 		});
 		btnAsset.setDisable(!(field.getSpace()==Space.city&& field.getMonsters().isEmpty()));
 		btnRest = new Button(names.get("rest"));
 		btnRest.setOnMouseClicked(a->{
-			
+			if(Global.game.getActiveInvestigator().rest()){
+				Dialog.infoDialog("restDiag");
+			}else{
+				Dialog.infoDialog("noRestDiag");
+			}
+			btnClose.close(this);
 		});
 		btnRest.setDisable(!field.getMonsters().isEmpty());
 		

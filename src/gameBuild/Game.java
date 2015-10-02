@@ -33,12 +33,16 @@ import gameItems.OmenTracker;
 import gameItems.Reserve;
 import gameItems.Round;
 import gameItems.Stack;
+import gameMechanics.TokenAppearsTransition;
+import gui.Animations;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 
 public class Game implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private GameBoard gameBoard;
-	private Dice dice;
 	private Reserve reserve;
 	private Round round;
 	private List<Investigator> investigators;
@@ -65,6 +69,8 @@ public class Game implements Serializable {
 
 	private Stack<ClueToken> cluePool;
 	private Stack<Monster> monsterPool;
+
+
 
 	public Game(AncientOne ancientOne) {
 		this.ancientOne = ancientOne;
@@ -93,17 +99,16 @@ public class Game implements Serializable {
 
 		this.doomTracker = new DoomTracker(ancientOne.getDoom());
 		this.omenTracker = new OmenTracker();
-		this.dice = new Dice();
-		this.reserve=new Reserve(assetDeck);
 		
+		
+		
+
 		
 		
 
 	}
 
-	public Dice getDice() {
-		return dice;
-	}
+
 
 	public Reserve getReserve() {
 		return reserve;
@@ -194,8 +199,7 @@ public class Game implements Serializable {
 			}
 		}
 		this.round = new Round(investigators.size());
-		spawnGates(round.getGateNumber());
-		spawnClues(round.getClueNumber());
+		this.reserve=new Reserve(assetDeck);
 
 	}
 

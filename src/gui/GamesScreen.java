@@ -41,7 +41,10 @@ public class GamesScreen {
 		gameRoot = new Group(gameBoardGui,aOInterface,invInterface,phase,lblPhase);
 		root.getChildren().add(0, gameRoot);
 		
-		Animations.blendingUp();
+		Animations.blendingUp().setOnFinished(a->{
+			Animations.tokenAppearsTransition(Global.tokenAppearsTransitionList);
+		});
+		
 		if(Global.debug){
 			
 			//Global.game.spawnGates(1);

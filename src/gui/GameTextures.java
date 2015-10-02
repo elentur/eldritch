@@ -60,6 +60,7 @@ public class GameTextures {
 	public static Image leatherBackground;
 	public static Image shipTicket;
 	public static Image trainTicket;
+	public static Image backgroundPattern;
 	
 	public static void load(){
 		boolean backgroundLoading = !Global.debug;
@@ -125,6 +126,7 @@ public class GameTextures {
 		leatherBackground = new Image("images/LeatherBackground.jpg",1024,678, true, false, backgroundLoading);
 		shipTicket =	new Image("images/gameBoard/ShipTicket.jpg",98,49, true, false, backgroundLoading);
 		trainTicket	 = new Image("images/gameBoard/TrainTicket.jpg",98,49, true, false, backgroundLoading);
+		backgroundPattern = new Image("images/gameBoard/BackgroundPattern.jpg",500,500, true, false, backgroundLoading);
 
 	}
 }

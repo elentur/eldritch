@@ -4,6 +4,10 @@ package gui;
 
 import java.util.List;
 import java.util.Set;
+
+import static enums.Events.HEALTH;
+import static enums.Events.SANITY;
+import static enums.Events.recover;
 import static gameBuild.Global.*;
 
 import elements.Investigator;
@@ -13,9 +17,14 @@ import enums.Phases;
 import enums.Space;
 import gameBuild.Global;
 import gameItems.Field;
+import gameMechanics.Event;
+import gameMechanics.EventExecuter;
+import gameMechanics.TokenAppearsTransition;
+import javafx.animation.ScaleTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -31,6 +40,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public class FieldGui extends Group {
 	private Field field;
@@ -55,7 +65,7 @@ public class FieldGui extends Group {
 		monsters = new FlowPane(5,5);
 		field.getObservalbleInvestigators().addListener((ListChangeListener<? super Investigator>) a -> investigatorUpdate(false));
 		field.gateProperty().addListener(a->gateChanges());
-		field.getObservalbleMonsters().addListener((ListChangeListener<? super Monster>) a -> MonsterUpdate(false));
+		field.getObservalbleMonsters().addListener((ListChangeListener<? super Monster>) a -> MonsterAppears(a));
 		field.clueProperty().addListener(a->clueChanges());
 		
 		investigators.setPrefWidth(230);
@@ -82,18 +92,10 @@ public class FieldGui extends Group {
 					game.getActiveInvestigator().getPlayer()==myPlayerNumber){
 				if(field.containsInvestigator(game.getActiveInvestigator())){
 					new ActionScreen(true,field);
+				}else{
+					game.getGameBoard().moveInvestigator(game.getActiveInvestigator(), field);
 				}
 			}
-			
-//			Set<Field> fields=Global.game.getGameBoard().nextInvestigatorField(field);
-//			
-//			for(Field f:fields){
-//				for(Investigator i:f.getInvestigators() ){
-//					field.addInvestigator(i);
-//				}
-//				f.getInvestigators().clear();
-//			}
-//			Global.game.spawnGates(1);
 		});
 		
 		gate.setTranslateX(space.getTranslateX()+85);
@@ -101,22 +103,57 @@ public class FieldGui extends Group {
 		investigatorUpdate(false);
 		gateChanges();
 		clueChanges();
-		MonsterUpdate(false);
+		//////////////TEST///////////////
+		//if(!field.getInvestigators().isEmpty())EventExecuter.runEvent(Global.game, field.getInvestigators().get(0),new Event(enums.Events.loose,1,enums.Events.SANITY,new Event(enums.Events.loose,1,enums.Events.HEALTH)));
+		
+		
+		///////////////////////////////
+		MonsterAppears(null);
 		this.getChildren().addAll(gate,investigators,monsters,clue);
 		
 		
 	}
 
+	
+
 	private void clueChanges() {
 		if(field.getClue()==null){
 			clue.getChildren().clear();
 		}else{
-			
-			clue.getChildren().add(field.getClue().getToken());
+			Circle c= field.getClue().getToken();
+			clue.getChildren().add(c);
+			c.setVisible(false);
+			Global.tokenAppearsTransitionList.add(new TokenAppearsTransition(
+					Animations.newTokenAppearsTransition(c),field,this));
 		}
 
 	}
-
+	private void MonsterAppears( Change<? extends Monster> a) {
+		monsters.getChildren().clear();
+		if(!field.getMonsters().isEmpty()){
+				Monster monster = field.getMonsters().get(0);
+				monster.getFlatToken().setWidth(76.8);
+				monster.getFlatToken().setHeight(52.6);
+				
+				Label number = new Label(field.getMonsters().size()+"");
+				number.setPadding(new Insets(0,0,0,10));
+				number.styleProperty().bind(Effects.fontMedium);
+				number.setAlignment(Effects.fontPos);
+				number.setTextAlignment(TextAlignment.CENTER);
+				number.setTextFill(Effects.fontColorRed);
+				Group g= new Group(monster.getFlatToken(),number);
+				g.setVisible(false);
+				monsters.getChildren().add(g);
+				if(a==null || a.wasAdded()){
+					Global.tokenAppearsTransitionList.add(new TokenAppearsTransition(
+							Animations.newTokenAppearsTransition(
+									monsters.getChildren().get(monsters.getChildren().size()-1)),field,this));
+					
+				}
+				
+				monsters.setPrefWidth(80);
+		}
+	}
 	private void MonsterUpdate(boolean enter) {
 		
 		monsters.getChildren().clear();
@@ -127,8 +164,8 @@ public class FieldGui extends Group {
 					monster.getFlatToken().setWidth(76.8);
 					monster.getFlatToken().setHeight(52.6);
 					//if (!monsters.getChildren().contains(monster.getFlatToken()))
-						monsters.getChildren().add(monster.getFlatToken());
-					
+					Rectangle m= monster.getFlatToken();
+					monsters.getChildren().add(m);			
 					
 				}
 				
@@ -144,8 +181,8 @@ public class FieldGui extends Group {
 				number.setAlignment(Effects.fontPos);
 				number.setTextAlignment(TextAlignment.CENTER);
 				number.setTextFill(Effects.fontColorRed);
-				//if (!monsters.getChildren().contains(monster.getFlatToken()))
-					monsters.getChildren().add(new Group(monster.getFlatToken(),number));
+				Group g= new Group(monster.getFlatToken(),number);
+				monsters.getChildren().add(g);
 				monsters.setPrefWidth(80);
 			}
 		}
@@ -155,8 +192,11 @@ public class FieldGui extends Group {
 		if(field.getGate()==null){
 			gate.getChildren().clear();
 		}else{
-			
-			gate.getChildren().add(field.getGate().getToken());
+			Circle g=field.getGate().getToken();
+			gate.getChildren().add(g);
+			g.setVisible(false);
+			Global.tokenAppearsTransitionList.add(new TokenAppearsTransition(
+					Animations.newTokenAppearsTransition(g),field,this));
 		}
 	}
 

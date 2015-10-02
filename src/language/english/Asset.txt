@@ -83,7 +83,7 @@ name_27:Pocket Watch
 typ_27:TRINKET
 text_27:You cannot become Delayed unless you choose to.
 name_28:Private Care
-typ_29:SERVICE
+typ_28:SERVICE
 text_28:When you gain this card, immediately recover all Health and Sanity.
 name_29:Private Investigator
 typ_29:ALLEY

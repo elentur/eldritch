@@ -1,36 +1,46 @@
 package elements;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import enums.Actions;
+import enums.Skills;
 import exceptions.CardNotFoundException;
 import gameBuild.Global;
 import gameItems.Skill;
 import gameItems.Stack;
+import gameMechanics.Event;
+import gameMechanics.EventExecuter;
 import gameMechanics.IO;
+import gameMechanics.TextAppearsTransition;
+import gameMechanics.TokenAppearsTransition;
+import gui.Animations;
+import gui.Effects;
 import gui.MenueTextures;
 import gui.StageControll;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import listener.InvestigatorListener;
+import listener.ActionsListListener;
+import listener.SanityHealthListener;
+
+import static enums.Events.*;
 
 public class Investigator extends Card {
 	private static final long serialVersionUID = 1L;
 	private  int MAX_HEALTH;
 	private  int MAX_SANITY;
-	private  String OCCUPATION;
-	private  String STORY;
-	private String QUOTE;
-	private String actionText;
-	private String ablitiyText;
+
 	
 	
 	private IntegerProperty sanity = new SimpleIntegerProperty();
@@ -45,12 +55,13 @@ public class Investigator extends Card {
 	private Skill will;
 	private Stack<Item> inventory;
 	private Stack<Condition> condition;
+	
 	//private Image picture;
 	private  Rectangle flatToken;
 	private Map<String,String> names=null;
 private int player;
 	
-	private List<Actions> actions;
+	private ObservableList<Actions> actions;
 	
 	private boolean delayed = false;
 	private String loadName;
@@ -76,9 +87,10 @@ private int player;
 		this.MAX_SANITY=(int) clazz.getMethod("buildSanity").invoke(null);
 		this.name=(String) clazz.getMethod("buildName").invoke(null);
 		this.sanity.set(this.MAX_SANITY);
-		this.sanity.addListener(a->InvestigatorListener.sanityChangeListener(a, this.MAX_SANITY));
 		this.health.set(this.MAX_HEALTH);
-		this.health.addListener(a->InvestigatorListener.healthChangeListener(a, this.MAX_HEALTH));
+		this.sanity.addListener(new SanityHealthListener<Number>(this.MAX_SANITY, this, true));
+
+		this.health.addListener(new SanityHealthListener<Number>(this.MAX_HEALTH, this, false));
 		
 		this.lore=(Skill) clazz.getMethod("buildLore").invoke(null);
 		this.influence=(Skill) clazz.getMethod("buildInfluence").invoke(null);
@@ -92,7 +104,8 @@ private int player;
 		this.clues= (Stack<ClueToken>) clazz.getMethod("buildClues").invoke(null);
 		this.inventory=(Stack<Item>) clazz.getMethod("buildInventory").invoke(null);
 		this.condition=new Stack<Condition>(false);
-		this.actions=new ArrayList<Actions>();
+		this.actions=FXCollections.observableArrayList();//new ArrayList<Actions>();
+		this.actions.addListener(new ActionsListListener<Actions>(this));
 		//this.picture=(Image) clazz.getMethod("buildPicture").invoke(null);
 		this.flatToken= new Rectangle(0,0,new ImagePattern(getPicture()));
 		this.flatToken.widthProperty().bind(StageControll.getPrimaryStage().getScene().widthProperty().divide(12));
@@ -159,8 +172,8 @@ private int player;
 	public void recoverSanity(int value){
 		sanity.set( sanity.get() + value);
 	}
-	public void sanityListener(){
-		
+	public IntegerProperty sanityProperty(){
+		return sanity;
 	}
 	
 
@@ -177,11 +190,19 @@ private int player;
 	public void recoverHealth(int value){
 		health.set(health.get()+value);
 	}
-	
+	public IntegerProperty healthProperty(){
+		return health;
+	}
 	public boolean rest(){
+		if(getSanity()==MAX_SANITY&&getHealth()==MAX_HEALTH)return false;
 		if(actions.size()<2 && !actions.contains(Actions.rest)){
-			setHealth(1);
-			setSanity(1);
+			EventExecuter.runEvent(
+					Global.game, 
+					this,
+					new Event(recover,1,SANITY,
+							new Event(recover,1,HEALTH)
+							)
+					);
 			actions.add(Actions.rest);
 			return true;
 		}
@@ -227,6 +248,14 @@ private int player;
 	public void improveWill() {
 		will.improve();
 	}
+	
+	public int getSkillValue(Skills skill){
+		if(skill == Skills.influence)return getInfluence().getValue()+getInfluence().getImprovment();
+		if(skill == Skills.lore)return getLore().getValue()+getLore().getImprovment();
+		if(skill == Skills.observation)return getObservation().getValue()+getObservation().getImprovment();
+		if(skill == Skills.strength)return getStrength().getValue()+getStrength().getImprovment();
+		return getWill().getValue()+getWill().getImprovment();
+	}
 
 	public int getMAX_HEALTH() {
 		return MAX_HEALTH;
@@ -257,6 +286,12 @@ private int player;
 			this.clues.removeCard(clue);
 		} catch (CardNotFoundException e) {
 		}
+		
+	}
+	public void removeClues() {
+		try {
+			this.clues.drawNextCard();
+		} catch (CardNotFoundException e) {}
 		
 	}
 
@@ -331,6 +366,14 @@ private int player;
 		}
 		return false;
 	}
+	
+	public boolean accquireAssets(){
+		if(actions.size()<2 && !actions.contains(Actions.acquire_Assets)){
+			actions.add(Actions.acquire_Assets);
+			return true;
+		}
+		return false;
+	}
 
 	public boolean isDelayed() {
 		return delayed;
@@ -344,7 +387,10 @@ private int player;
 		actions.clear();
 		
 	}
-
+	public boolean isBlessed(){
+		///////Eigentliche überprüfung noch einfügen
+		return false;
+	}
 
 
 }

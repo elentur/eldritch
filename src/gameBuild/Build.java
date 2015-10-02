@@ -158,9 +158,9 @@ public class Build {
 		fieldBuenosAires.addNeighbour(field3, Path.ship);
 		fieldBuenosAires.addNeighbour(field7, Path.ship);
 		fieldBuenosAires.addNeighbour(fieldAmazon, Path.uncharted);
-		fieldBuenosAires.addNeighbour(field8, Path.train);
-		fieldBuenosAires.addNeighbour(field11, Path.train);
-		fieldBuenosAires.addNeighbour(field12, Path.train);
+		fieldBuenosAires.addNeighbour(field8, Path.ship);
+		fieldBuenosAires.addNeighbour(field11, Path.ship);
+		fieldBuenosAires.addNeighbour(field12, Path.ship);
 		fieldLondon.addNeighbour(field13, Path.ship);
 		fieldLondon.addNeighbour(fieldArkham, Path.ship);
 		fieldLondon.addNeighbour(fieldRom, Path.ship);

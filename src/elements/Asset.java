@@ -7,6 +7,7 @@ import enums.AssetNames;
 import enums.AssetTyps;
 import gameBuild.BuildAssets;
 import gameBuild.Global;
+import gameMechanics.DiceBonus;
 import gameMechanics.IO;
 import gui.GameTextures;
 import javafx.scene.image.Image;
@@ -16,6 +17,8 @@ private AssetNames name;
 private Map<String,String> names=null;
 private List<AssetTyps> assetTyps;
 private int price;
+private DiceBonus diceBonus;
+
 
 	private static final long serialVersionUID = 1L;
 	protected String attribute ="";
@@ -24,6 +27,8 @@ private int price;
 		names=IO.readText(Global.language+"/Asset.txt");
 		price=BuildAssets.getPrice(name);
 		assetTyps=BuildAssets.getTyp(name);
+		diceBonus = BuildAssets.getDiceBonus(name);
+
 	}
 	public String getAttribute() {
 		return attribute;
@@ -64,7 +69,7 @@ private int price;
 		return names.get("typ_" + name.ordinal());
 
 	}
-	public String toString(){
-		return name.toString();
+	public DiceBonus getDiceBonus(){
+		return diceBonus;
 	}
 }
