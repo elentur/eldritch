@@ -1,0 +1,4 @@
+atmosphereText1:During pagan rites, Shub-Niggurath absorbs worthy cultist into her amorphus body and transforms them into gof'nn hupadgh Shub-Niggurath, the goat spawn. From the wildest corner of the earth, her primal brood, the dark young, emerge to overwhelm humanity.
+reckoningText1:Spawn 1 Monster on a random space. Then if there are 10 or more Monsters on the game board, advance Doom by 2. 
+cultist1:~    Spawn 1 Goat Spawn Monster or 1 Dark Young Monster on this Space and discard this Cultist. 
+headline1:The black Goat of the Woods

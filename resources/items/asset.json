@@ -1,0 +1,35 @@
+{
+  "asset": [
+    {
+      "name": ".18 Derringer",
+      "category": "ASSET",
+      "typ": "TRINKET_WEAPON",
+      "bonus": [
+        {
+          "typ": "DICE_RESULT",
+          "dice_result": {
+            "num": 1,
+            "value": 1,
+            "test":"strength",
+            "condition":"COMBAT_ENCOUNTER"
+          }
+        }
+      ]
+    },
+    {
+      "name": ".38 Revolver",
+      "category": "ASSET",
+      "typ": "ITEM_WEAPON",
+      "bonus": [
+        {
+          "typ": "gain",
+          "gain": {
+            "value": 2,
+            "test":"strength",
+            "condition":"COMBAT_ENCOUNTER"
+          }
+        }
+      ]
+    }
+  ]
+}

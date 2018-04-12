@@ -1,7 +1,0 @@
-occupation:The Soldier
-story:During the war, Mark witnessed horrors he could not explain, and he wrote of what he saw in letters to his beloved wife, Sophie. When Mark returned home, he discovered that Sophie was no longer human. One of the beasts that Mark have seen overseas had taken over her body, killing her in the process. Afterward, Mark's thirst for vengeance lead him to Helsinki, wher some of this creatures had posed as German soldiers during the Great War.
-quote:'I'm walking out that door, and I'm taking this book. Anyone who wants to stop me is welcome to try.'
-action:You and 1 Monster on your space each lose 1 Health.
-ability:You can not become Delayed or gain a Detained Condition unless to choose to.
-insanity:You take custody of Mark's belongings and arrange to visit him in the asylum. Gain all of his possessions. To your dismay, Mark is convinced that you are a creature disguising itself as a human. You do your best to convince him, that you are telling the truth( & ). If you pass, he shows you sketches he made of the horrible monsters that he's been hunting; retreat Doom by 1. If you fail, Mark screams accusations of murder at you.  
-injury:Wile you are collecting Mark's things, you smell smoke in the hospital. Gain all of his possessions. The hospital has been set on fire, and you run to Mark's room and try to carry him to safety(  §  ). If you pass, Mar is able to tell you who set the fire; retreat Doom by 1. If you fail, the smoke overcome Mark and he dies outside the hospital.

@@ -1,7 +1,0 @@
-occupation:The Martial Artist
-story:Lily speaks rarely and when she does, her words are measured and wise. After a lifetime of disciplined training, every gesture is graceful, uncluttered by hesitation. When she was an infant, an obscure sect of monks believed that she was born for a special purpose, to face a great evil. Now, the monks believe that the great evil is at hand, and they have brought Lily to Shanghai to begin fulfilling her destiny.
-quote:'I have been preparing to confront this evil for my entire life. My focus must be absolute.'
-action:Spend any number of health or Sanity, then recover an equal number of Health or Sanity.
-ability: When you improve a skill, you may immediately improve that skill again.
-insanity:You barely recognize the small woman huddled in an alleyway, her few belongings scattered next to her. Gain all of her possessions. 'It wasn't true,'Lily sobs. 'I have no destiny. i cannot fight the darkness.' Youreassure her that she has already done her part and that others will finish the task(  &  ). If you pass, she chants over you, passing her destiny on to you; retreat Doom by 1. If you fail, Lily eventually falls into a catatonic state.
-injury:When you reach the hospital, you find Lily's things, but she is not in her bed. Gain all of her possessions. You quickly find that she's been kidnapped by cultist! You fight to free her(  §  ). If you pass, you interrogate the cultists, and Lily is safely returned to the hospital to begin the slow healing process; retreat Doom by 1. If you fail, Lily disappears into the darkness.

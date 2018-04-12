@@ -1,0 +1,111 @@
+name_0:.18 Derringer
+typ_0:TRINKET-WEAPON
+text_0:You may add 1 to the result of 1 die when resolving a  §  test during Combat Encounters.
+name_1:.38 Revolver
+typ_1:ITEM-WEAPON
+text_1:Gain +2  §  during Combat Encounters.
+name_2:.45 Automatic
+typ_2:ITEM-WEAPON
+text_2:Gain +3  §  during Combat Encounters.
+name_3:Agency Quarantine
+typ_3:SERVICE
+text_3:When you gain this card, immediately choose a space. Each Monster on the chosen space loses 4 Health.
+name_4:Arcane Manuscripts
+typ_4:ITEM-TOME
+text_4:Gain +1  %  when resolving Spell effects.
+name_5:Arcane Scholar
+typ_5:ALLEY
+text_5:Gain +1  % #You may reroll 1 die when resolving a  %  test.
+name_6:Arcane Tome
+typ_6:ITEM-TOME
+text_6: Gain +2  %  when resolving Spell effects.#When you perform a Rest action, you may test  % . If you pass, gain 1 Spell.
+name_7:Axe
+typ_7:ITEM-WEAPON
+text_7:Gain +2  §  during Combat Encounters.#You may spend 2 Sanity to reroll any number of dice when resolving a  §  test during a Combat Encounter.
+name_8:Bandages
+typ_8:ITEM
+text_8:You may discard this card to prevent an Investigator on your space from losing up to 2 Health.
+name_9:Bull Whip
+typ_9:ITEM-WEAPON
+text_9:Gain + 1  §  during Combat Encounters.#You may reroll 1 die when resolving a  §  test during a Combat Encounter.
+name_10:Carbine Rifle
+typ_10:ITEM-WEAPON
+text_10:Once per round, you may gain +5  §  during a Combat Encounter.
+name_11:Cat Burglar
+typ_11:ALLEY
+text_11:ACTION: Roll 1 die. On a 5 or 6, gain 1 Item or Trinket Asset from the reserve. On a 1, discard this card.
+name_12:Charter Flight
+typ_12:SERVICE
+text_12:When you gain this card, immediately move up to 2 spaces.
+name_13:Delivery Service
+typ_13:SERVICE-TEAMWORK
+text_13:When you gain this card, immediately giv any number of Item possessions to another Investigator on any space.
+name_14:Double-barreled Shotgun
+typ_14:ITEM-WEAPON
+text_14:Gain +4  §  during Combat Encounters.#Each 6 you roll when resolving a  §  test during Comabt Encounters counts as 2 successes.
+name_15:Dynamite
+typ_15:ITEM-WEAPON
+text_15:ACTION: Each Monster on your space loses 3 Health, then discard this card.
+name_16:Fine Clothes
+typ_16:ITEM
+text_16:Each 6 you roll when performing an Acquire Assets action counts as 2 successes.
+name_17:Fishing Net
+typ_17:ITEM
+text_17:You may reroll 1 die when resolving a  §  test during a Combat Encounter.#Reduce the damage of Monsters you encounter by 1 to a minimum of 1.
+name_18:Hired Muscle
+typ_18:ALLEY
+text_18:Gain +1  § .#You may reroll 1 die when resolving a  §  test.
+name_19:Holy Cross
+typ_19:ITEM
+text_19:Gain +2  " during Combat Encounters.
+name_20:Holy Water
+typ_20:ITEM-MAGICAL
+text_20:You may discard this card to gain +5  "  and  §  during a Combat Encounter.#ACTION: Discard this card to choose an investigator on your space to gain a Blessed Condition.
+name_21:Kerosene
+typ_21:ITEM
+text_21:You may discard this card to gain +5  §  during a Combat Encounter.
+name_22:King James Bible
+typ_22:ITEM-TOME
+text_22:You may reroll 1 die when resolving a  "  test during a Combat Encounter.#When you perform a Rest action, recover 1 additional Sanity.
+name_23:Lodge Researcher
+typ_23:ALLEY
+text_23:If you defeat a Monster during a Combat Encounter, recover 1 Sanity and gain 1 Clue.
+name_24:Lucky Cigarette Case
+typ_24:TRINKET
+text_24:Once per round, you may add 1 to the result of 1 die when resolving a test.
+name_25:Lucky Rabbit's Foot
+typ_25:TRINKET
+text_25:Once per round, you may reroll 1 die when resolving a test.
+name_26:Personal Assistant
+typ_26:ALLEY
+text_26:Gain +1  & .#You may reroll 1 die when resolving a  &  test.
+name_27:Pocket Watch
+typ_27:TRINKET
+text_27:You cannot become Delayed unless you choose to.
+name_28:Private Care
+typ_28:SERVICE
+text_28:When you gain this card, immediately recover all Health and Sanity.
+name_29:Private Investigator
+typ_29:ALLEY
+text_29:Gain +1  $ .#You may reroll 1 die when resolving a  $  test.
+name_30:Protective Amulet
+typ_30:ITEM
+text_30:Gain +1  "  during Combat Encounters.
+name_31:Puzzle Box
+typ_31:TRINKET
+text_31:When you perform a Rest action, you may attempt to open the puzzle box(  $ -2). If you pass, discard this card and gain 1 Artifact.
+name_32:Sanctuary
+typ_32:SERVICE
+text_32:When you gain this card, you may immediately discard 1 Condition.
+name_33:Silver Twilight Ritual
+typ_33:SERVICE
+text_33:When you gain this card, immediately retreat Doom by 1.
+name_34:Spirit Dagger
+typ_34:ITEM-WEAPON,MAGICAL
+text_34:Gain +1  "  and +2  §  during Combat Encounters.
+name_35:Urban Guide
+typ_35:ALLEY
+text_35:If you are on a City space, oldVersion.investigators on your space roll 1 additional die when resolving tests except when resolving Other World Encounters.
+name_36:Vatican Missionary
+typ_36:ALLEY
+text_36:Gain +1  " .#You may reroll 1 die when resolving a  "  test.

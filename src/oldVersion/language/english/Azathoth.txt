@@ -1,0 +1,4 @@
+atmosphereText1:The Idiot God sits at the center of all things, spreading madness and death. Its seeds descend from the stars, threatening to crack the world in half.
+specialText1:When the Omen advances to the green space of the Omen track, advance doom by 1 for each Eldritch token on that space.
+cultist1:After resolving the "    test, lose 1 Health and defeat this Monster.
+headline1:The Deamon Sultan

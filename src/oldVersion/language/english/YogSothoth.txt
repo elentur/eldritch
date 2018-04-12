@@ -1,0 +1,4 @@
+atmosphereText1:For eons, sorcerers have called upon the power of Yog-Sothoth to bend reality to their will. This incomprehensible Ancient One exists parallel to all places and times, but its bound to the space between dimensions. Gates between worlds continue to open with more frequency and soon, Yog-Sothoth will be free.
+reckoningText1:Each investigator on a space containing a Gate advances Doom by 1 unless he discard 1 Spell.
+cultist1:If you defeat this Monster during a combat Encounter, lose 1 Sanity and gain 1 Spell.
+headline1:The Lurker at the Threshold

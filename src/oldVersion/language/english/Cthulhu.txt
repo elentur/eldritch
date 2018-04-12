@@ -1,0 +1,5 @@
+atmosphereText1:Eons ago, Cthulhu came from the stars with his Star Spawn brethren. He now sleeps in the sunken city of R'lyeh, waiting for the stars to be right to rise again. 
+specialText1:When an investigator moves onto a space containing an Eldrith token, he becomes Delayed and loses 1 Sanity.
+reckoningText1:Each investigator on a Sea space that does not contain an Eldrith token places an Eldrith token on this space.
+cultist1:After resolving the §    test, lose 1 Health and defeat this Monster.
+headline1:The Madness from the Sea
