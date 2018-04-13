@@ -1,26 +1,26 @@
- [
-    {
-      "name": "Hound of Tindalos",
-      "image": "",
-      "willtest": 0,
-      "horro": 2,
-      "strengthtest": -1,
-      "damage": 3,
-      "toughness": 3,
-      "effects": [
-        {
-          "typ":"reckoning",
-          "action": {
-            "parts":[ [
-              "move to",
-              "nearest",
-              "Investigator"
-            ], [
-              "fight"
-            ]]
-          }
-        }
-      ],
-      "actions":[]
-    }
- ]
+[
+  {
+    "name": "Hound of Tindalos",
+    "image": "",
+    "willTest": 0,
+    "horror": 2,
+    "strengthTest": -1,
+    "damage": 3,
+    "toughness": 3,
+    "effects": [
+      {
+        "typ": "reckoning",
+        "parts": [
+          [
+            "move to",
+            "nearest",
+            "Investigator"
+          ],
+          [
+            "fight"
+          ]
+        ]
+      }
+    ]
+  }
+]

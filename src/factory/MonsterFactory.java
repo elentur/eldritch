@@ -16,15 +16,18 @@ import java.util.List;
 public class MonsterFactory {
 
     public List<Monster> getMonster() {
+
         ObjectMapper mapper = new ObjectMapper();
         List<Monster> monster = new ArrayList<>();
         try {
             File file = new File("./resources/monster/monster.json");
+            log.info("Beginn unmarschalling monster");
            monster =  mapper.readValue(file,  new TypeReference<List<Monster>>(){});
+            log.info("Unmarschalling monster successful");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        log.info("läuft");
+
         return monster;
     }
 }

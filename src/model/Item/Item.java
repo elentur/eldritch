@@ -1,4 +1,6 @@
-package model;
+package model.Item;
+
 
 public interface Item {
+
 }
