@@ -9,7 +9,7 @@
     "toughness": 3,
     "effects": [
       {
-        "typ": "reckoning",
+        "typ": "RECKONING",
         "parts": [
           [
             "move to",

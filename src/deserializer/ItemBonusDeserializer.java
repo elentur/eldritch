@@ -9,6 +9,7 @@ import enums.ConditionTyp;
 import enums.ItemBonusTyp;
 import enums.TestTyp;
 import model.Item.ItemBonus;
+import model.Item.ItemBonus_DiceResult;
 import model.Item.ItemBonus_Gain;
 import model.Item.ItemBonus_Null;
 
@@ -41,6 +42,10 @@ public class ItemBonusDeserializer extends StdDeserializer<ItemBonus> {
                         ConditionTyp.valueOf(value.get("condition").textValue()));
                 break;
             case DICE_RESULT:
+                bonus = new ItemBonus_DiceResult( value.get("num").intValue(),
+                        value.get("value").intValue(),
+                        TestTyp.valueOf(value.get("test").textValue()),
+                        ConditionTyp.valueOf(value.get("condition").textValue()));
                 break;
             default:
                 break;
