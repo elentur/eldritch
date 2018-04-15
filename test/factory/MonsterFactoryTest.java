@@ -16,7 +16,8 @@ public class MonsterFactoryTest {
     @BeforeMethod
     public void setUp() throws Exception {
         monster = new Monster();
-        monster.setName("Hound of Tindalos");
+        monster.setId("&houndOfTindalos");
+        monster.setName("${houndOfTindalos}");
         monster.setImage("");
         monster.setWillTest(0);
         monster.setHorror(2);
@@ -42,6 +43,8 @@ public class MonsterFactoryTest {
         MonsterFactory factory = new MonsterFactory();
        List<Monster> monsters =  factory.getMonster();
        Assert.assertEquals(monsters.get(0),monster);
+        Assert.assertEquals(monsters,factory.getMonster());
+        Assert.assertEquals(monster.getName(),"Hound of Tindalos");
     }
 
 }

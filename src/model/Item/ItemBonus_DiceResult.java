@@ -1,6 +1,6 @@
 package model.Item;
 
-import enums.ConditionTyp;
+import enums.SituationTyp;
 import enums.TestTyp;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ public class ItemBonus_DiceResult implements ItemBonus {
     private int num;
     private int value;
     private TestTyp test;
-    private ConditionTyp condition;
+    private SituationTyp situation;
     @Override
     public void execute() {
 

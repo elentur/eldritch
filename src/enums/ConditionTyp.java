@@ -1,5 +1,5 @@
 package enums;
 
 public enum ConditionTyp {
-    COMBAT_ENCOUNTER
+    BLESSED,CURSED,NONE
 }

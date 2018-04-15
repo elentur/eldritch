@@ -1,0 +1,30 @@
+[
+  {
+    "id": "&agnesBaker",
+    "firstName": "Agnes",
+    "lastName": "Baker",
+    "occupation": "${agnesBakerOccupation}",
+    "skillSet": {
+      "lore": 4,
+      "influence": 3,
+      "observation": 2,
+      "strength": 2,
+      "will": 2
+    },
+    "health": 7,
+    "sanity": 5,
+    "startingSpace": "London",
+    "startingPossessions": [
+      {
+        "number": 1,
+        "typ": "ASSET",
+        "id": "&profaneTome"
+      },
+      {
+        "number": 1,
+        "typ": "SPELL",
+        "id": "&stormOfSpirits"
+      }
+    ]
+  }
+]

@@ -1,6 +1,7 @@
 [
   {
-    "name": "Hound of Tindalos",
+    "id":"&houndOfTindalos",
+    "name": "${houndOfTindalos}",
     "image": "",
     "willTest": 0,
     "horror": 2,

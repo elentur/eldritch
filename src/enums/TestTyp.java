@@ -1,5 +1,6 @@
 package enums;
 
 public enum TestTyp {
-    STRENGTH
+
+    LORE,INFLUENCE,OBSERVATION,STRENGTH, NONE, WILL
 }

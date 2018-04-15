@@ -1,7 +1,9 @@
 [
   {
-    "name": ".18 Derringer",
+    "id":"&18Derringer",
+    "name": "${18_derringer}",
     "typ": "TRINKET_WEAPON",
+    "price":1,
     "bonus": [
       {
         "typ": "DICE_RESULT",
@@ -9,23 +11,40 @@
           "num": 1,
           "value": 1,
           "test": "STRENGTH",
-          "condition": "COMBAT_ENCOUNTER"
+          "situation": "COMBAT_ENCOUNTER"
         }
       }
     ]
   },
   {
-    "name": ".38 Revolver",
+    "id":"&38Revolver",
+    "name": "${38_revolver}",
     "typ": "ITEM_WEAPON",
+    "price":1,
     "bonus": [
       {
         "typ": "GAIN",
         "value": {
           "value": 2,
           "test": "STRENGTH",
-          "condition": "COMBAT_ENCOUNTER"
+          "situation": "COMBAT_ENCOUNTER"
         }
       }
     ]
-  }
+  },{
+  "id":"&profaneTome",
+  "name": "${profane_tome}",
+  "typ": "ITEM_TOME",
+  "price":1,
+  "bonus": [
+    {
+      "typ": "REPEAT_ROLL",
+      "value": {
+        "value": 1,
+        "test": "WILL",
+        "situation": "COMBAT_ENCOUNTER"
+      }
+    }
+  ]
+}
 ]

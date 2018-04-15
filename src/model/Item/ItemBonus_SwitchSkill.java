@@ -1,23 +1,22 @@
 package model.Item;
 
 import enums.SituationTyp;
-import enums.TestTyp;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
-public class ItemBonus_Gain implements ItemBonus {
+public class ItemBonus_SwitchSkill implements ItemBonus {
 
-    private int value;
-    private TestTyp test;
+
     private SituationTyp situation;
-
+    private List<SpellConsequence> consequence;
     @Override
     public void execute() {
 
