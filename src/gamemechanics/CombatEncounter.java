@@ -28,7 +28,7 @@ public class CombatEncounter {
 
 
     public CombatPreparation prepareForCombat(){
-        return new CombatPreparation();
+        return new CombatPreparation(investigator);
     }
 
     public Result attackMonster(CombatPreparation preparation){

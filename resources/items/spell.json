@@ -3,50 +3,52 @@
     "id": "&stormOfSpirits",
     "name": "${storm_of_spirits}",
     "typ": "INCANTATION",
-    "bonus": {
-      "typ": "STRENGTH_TO_LORE",
-      "value": {
-        "situation":"COMBAT_ENCOUNTER",
-        "consequence": [
-          {
-            "value": 0,
-            "text": "${storm_of_spirits_effect0}",
-            "effect": {
-              "typ": "SPELL",
-              "parts": [
-                [
-                  "gain",
-                  "health",
-                  "self",
-                  "-1"
+    "bonus": [
+      {
+        "typ": "STRENGTH_TO_LORE",
+        "value": {
+          "situation": "COMBAT_ENCOUNTER",
+          "consequence": [
+            {
+              "value": 0,
+              "text": "${storm_of_spirits_effect0}",
+              "effect": {
+                "typ": "SPELL",
+                "parts": [
+                  [
+                    "gain",
+                    "health",
+                    "self",
+                    "-1"
+                  ]
                 ]
-              ]
-            }
-          },
-          {
-            "value": 1,
-            "text": "${storm_of_spirits_effect1}",
-            "effect": {
-              "typ": "SPELL",
-              "parts": [
-                [
-                  "gain",
-                  "sanity",
-                  "equal",
-                  "health"
-                ],
-                [
-                  "gain",
-                  "health",
-                  "monster",
-                  "equal",
-                  "before"
+              }
+            },
+            {
+              "value": 1,
+              "text": "${storm_of_spirits_effect1}",
+              "effect": {
+                "typ": "SPELL",
+                "parts": [
+                  [
+                    "gain",
+                    "sanity",
+                    "equal",
+                    "health"
+                  ],
+                  [
+                    "gain",
+                    "health",
+                    "monster",
+                    "equal",
+                    "before"
+                  ]
                 ]
-              ]
+              }
             }
-          }
-        ]
+          ]
+        }
       }
-    }
+    ]
   }
 ]

@@ -21,4 +21,5 @@ public class ItemBonus_DiceResult implements ItemBonus {
     public void execute() {
 
     }
+
 }

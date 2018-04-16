@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import utils.ResourceUtil;
 
+import java.util.List;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -13,7 +15,7 @@ public class Spell implements Item {
     private String id;
     private String name;
     private ItemTyp typ;
-    private ItemBonus bonus;
+    private List<ItemBonus> bonus;
 
     public String getName(){
         return  ResourceUtil.get(name,this.getClass());

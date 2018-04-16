@@ -22,4 +22,6 @@ public class ItemBonus_Gain implements ItemBonus {
     public void execute() {
 
     }
+
+
 }
