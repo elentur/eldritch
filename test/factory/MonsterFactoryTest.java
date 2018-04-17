@@ -18,7 +18,6 @@ public class MonsterFactoryTest {
         monster = new Monster();
         monster.setId("&houndOfTindalos");
         monster.setName("${houndOfTindalos}");
-        monster.setImage("");
         monster.setWillTest(0);
         monster.setHorror(2);
         monster.setStrengthTest(-1);

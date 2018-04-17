@@ -13,7 +13,6 @@ import java.util.List;
 public class Monster implements IMonster {
     private String id;
     private String name;
-    private String image;
     private int willTest;
     private int horror;
     private int strengthTest;
@@ -31,7 +30,6 @@ public class Monster implements IMonster {
         Monster monster = new Monster();
         monster.setId(id);
         monster.setName(name);
-        monster.setImage(image);
         monster.setWillTest(willTest);
         monster.setHorror(horror);
         monster.setStrengthTest(strengthTest);

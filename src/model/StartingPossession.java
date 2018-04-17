@@ -12,4 +12,5 @@ public class StartingPossession extends Item {
     private String id;
     private int number;
     private ElementTyp typ;
+    public String getName(){return "";}
 }

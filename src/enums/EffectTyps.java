@@ -1,5 +1,5 @@
 package enums;
 
 public enum EffectTyps {
-    RECKONING,SPELL
+    RECKONING,SPELL,COMBAT_ENCOUNTER
 }

@@ -1,10 +1,6 @@
 package model.Item;
 
 
-import enums.EventTimeType;
-import enums.SituationTyp;
-import lombok.Getter;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +8,7 @@ import java.util.List;
 public abstract class Item {
 
     public abstract String getId();
+    public abstract String getName();
 
     public  List<ItemBonus> getBonus(){
 
