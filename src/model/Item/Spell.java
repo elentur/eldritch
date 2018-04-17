@@ -11,7 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Spell implements Item {
+public class Spell extends Item {
+    @Getter
     private String id;
     private String name;
     private ItemTyp typ;

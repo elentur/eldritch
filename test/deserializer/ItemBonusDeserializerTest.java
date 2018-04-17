@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import enums.SituationTyp;
 import enums.TestTyp;
 import model.Item.ItemBonus;
-import model.Item.ItemBonus_Gain;
+import model.Item.ItemBonus_GainDice;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -30,16 +30,16 @@ public class ItemBonusDeserializerTest {
     @Mock
     ObjectCodec codec;
 
-    ItemBonus_Gain itemBonusGain;
+    ItemBonus_GainDice itemBonusGain;
 
 
     @BeforeMethod
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        itemBonusGain = new ItemBonus_Gain(2,TestTyp.STRENGTH,SituationTyp.COMBAT_ENCOUNTER);
+        itemBonusGain = new ItemBonus_GainDice(2,TestTyp.STRENGTH,SituationTyp.COMBAT_ENCOUNTER);
         Mockito.when(parser.getCodec()).thenReturn(codec);
         String jsonString = "{\n" +
-                "        \"typ\": \"GAIN\",\n" +
+                "        \"typ\": \"GAIN_DICE\",\n" +
                 "        \"value\": {\n" +
                 "          \"value\": 2,\n" +
                 "          \"test\": \"STRENGTH\",\n" +

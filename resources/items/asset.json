@@ -23,7 +23,7 @@
     "price":1,
     "bonus": [
       {
-        "typ": "GAIN",
+        "typ": "GAIN_DICE",
         "value": {
           "value": 2,
           "test": "STRENGTH",

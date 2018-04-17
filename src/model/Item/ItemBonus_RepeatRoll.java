@@ -10,23 +10,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
+@AllArgsConstructor
 @EqualsAndHashCode
-public class ItemBonus_DiceResult implements ItemBonus {
-
-    private int num;
-    private int value;
-    private TestTyp test;
-    private SituationTyp situation;
-    private EventTimeType eventTime =EventTimeType.WHILE;
-
-    public ItemBonus_DiceResult(int num, int value, TestTyp test, SituationTyp situation) {
-        this.num = num;
+public class ItemBonus_RepeatRoll implements ItemBonus {
+    public ItemBonus_RepeatRoll(int value, TestTyp test, SituationTyp situation) {
         this.value = value;
         this.test = test;
         this.situation = situation;
     }
 
+    private EventTimeType eventTime= EventTimeType.WHILE;
+    private int value;
+    private TestTyp test;
+    private SituationTyp situation;
     @Override
     public void execute() {
 

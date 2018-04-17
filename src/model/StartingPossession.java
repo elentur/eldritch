@@ -8,7 +8,7 @@ import model.Item.Item;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class StartingPossession implements Item {
+public class StartingPossession extends Item {
     private String id;
     private int number;
     private ElementTyp typ;

@@ -36,12 +36,16 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
 
     public ItemContainer<Asset> getAssetsWidthSituationTyp(SituationTyp situation){
         return new ItemContainer<>(this.stream().filter( Asset.class::isInstance )
-                .map( Asset.class::cast ).filter(item-> item.getBonus().stream().filter(bonus->bonus.getSituation().equals(situation)).count()>0).collect(Collectors.toList()));
+                .map( Asset.class::cast ).filter(item-> item.getBonus().stream().
+                        filter(bonus->bonus.getSituation().equals(situation)).
+                        count()>0).collect(Collectors.toList()));
     }
 
     public ItemContainer<Spell> getSpellsWidthSituationTyp(SituationTyp situation){
         return new ItemContainer<>(this.stream().filter( Spell.class::isInstance )
-                .map( Spell.class::cast ).filter(item-> item.getBonus().stream().filter(bonus->bonus.getSituation().equals(situation)).count()>0).collect(Collectors.toList()));
+                .map( Spell.class::cast ).filter(item-> item.getBonus().stream().
+                        filter(bonus->bonus.getSituation().equals(situation)).
+                        count()>0).collect(Collectors.toList()));
     }
 
     public ItemContainer<Item> getItemsWidthSituationTyp(SituationTyp situation) {

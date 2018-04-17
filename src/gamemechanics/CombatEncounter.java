@@ -37,4 +37,7 @@ public class CombatEncounter {
        return skillTest.execute(investigator);
     }
 
+    public Monster getActiveMonster() {
+        return activeMonster;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Asset implements Item {
+public class Asset extends Item {
     private String id;
     private String name;
     private ItemTyp typ;

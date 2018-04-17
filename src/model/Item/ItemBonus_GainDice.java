@@ -1,5 +1,6 @@
 package model.Item;
 
+import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
 import lombok.AllArgsConstructor;
@@ -10,13 +11,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @EqualsAndHashCode
-public class ItemBonus_Gain implements ItemBonus {
+public class ItemBonus_GainDice implements ItemBonus {
 
     private int value;
     private TestTyp test;
     private SituationTyp situation;
+    private EventTimeType eventTime = EventTimeType.BEFORE;
+
+    public ItemBonus_GainDice(int value, TestTyp test, SituationTyp situation) {
+        this.value = value;
+        this.test = test;
+        this.situation = situation;
+    }
 
     @Override
     public void execute() {

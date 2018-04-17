@@ -1,7 +1,22 @@
 package model.Item;
 
 
-public interface Item {
-    String getId();
+import enums.EventTimeType;
+import enums.SituationTyp;
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.List;
+
+
+public abstract class Item {
+
+    public abstract String getId();
+
+    public  List<ItemBonus> getBonus(){
+
+        return Arrays.asList(ItemBonus_Null.value());
+    }
+
 
 }

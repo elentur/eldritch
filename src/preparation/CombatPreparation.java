@@ -2,6 +2,7 @@ package preparation;
 
 import Service.GameService;
 import container.ItemContainer;
+import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
 import model.Investigator;
@@ -24,6 +25,7 @@ public class CombatPreparation implements Preparation {
         this.modification = 0;
         this.investigator = investigator;
         game = GameService.getInstance();
+        bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
     }
 
     @Override
@@ -37,9 +39,12 @@ public class CombatPreparation implements Preparation {
     }
 
     public ItemContainer<Item> getBonusItems() {
-        if (bonusItems == null) {
-            bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
-        }
+
+        return bonusItems;
+    }
+
+    public ItemContainer<Item> getBonusItems(EventTimeType eventTime) {
+
         return bonusItems;
     }
 }

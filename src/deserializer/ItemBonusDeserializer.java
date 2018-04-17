@@ -36,8 +36,8 @@ public class ItemBonusDeserializer extends StdDeserializer<ItemBonus> {
         ObjectMapper mapper = new ObjectMapper();
 
         switch (typ) {
-            case GAIN:
-                bonus = new ItemBonus_Gain(
+            case GAIN_DICE:
+                bonus = new ItemBonus_GainDice(
                         value.get("value").intValue(),
                         TestTyp.valueOf(value.get("test").textValue()),
                         SituationTyp.valueOf(value.get("situation").textValue()));
@@ -53,6 +53,13 @@ public class ItemBonusDeserializer extends StdDeserializer<ItemBonus> {
                 bonus = new ItemBonus_SwitchSkill(
                         SituationTyp.valueOf(value.get("situation").textValue()),
                         mapper.readValue(value.get("consequence").toString(),new TypeReference<List<SpellConsequence>>(){}));
+                break;
+            case REPEAT_ROLL:
+
+                bonus = new ItemBonus_RepeatRoll(
+                        value.get("value").intValue(),
+                        TestTyp.valueOf(value.get("test").textValue()),
+                        SituationTyp.valueOf(value.get("situation").textValue()));
                 break;
             default:
                 break;
