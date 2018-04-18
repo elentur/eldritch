@@ -12,7 +12,7 @@ public class ItemBonus_Null extends ItemBonus{
     private ItemBonus_Null(){}
 
     @Override
-    public void execute() {
+    public void execute(Object object) {
 
     }
 

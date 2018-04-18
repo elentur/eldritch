@@ -3,7 +3,6 @@ package model.Item;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +25,7 @@ public class ItemBonus_GainDice extends ItemBonus {
     }
 
     @Override
-    public void execute() {
+    public void execute(Object object) {
 
     }
     @Override

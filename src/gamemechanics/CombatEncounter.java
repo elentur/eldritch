@@ -40,4 +40,8 @@ public class CombatEncounter {
     public Monster getActiveMonster() {
         return activeMonster;
     }
+
+    public Investigator getInvestigator() {
+        return investigator;
+    }
 }

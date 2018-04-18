@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Investigator;
 import model.Item.Bonus;
-import model.Item.Item;
 import model.Item.ItemBonus;
 import model.Monster;
 import preparation.CombatPreparation;
@@ -30,29 +29,37 @@ public class CombaEncounterUITest extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        CombatEncounter encounter = intiCombadEncounter();
+        CombatEncounter encounter = initCombatEncounter();
 
         HBox selectScreen = new HBox(100);
-        Scene scene = new Scene(selectScreen,960,540);
+        Scene scene = new Scene(selectScreen, 960, 540);
         VBox monsters = new VBox(20);
         VBox bonusItems = new VBox(20);
-        selectScreen.getChildren().addAll(monsters,bonusItems);
-        addMonsters(monsters,encounter);
+        VBox attack = new VBox(20);
+        Button attackButton = new Button("attack");
+        attackButton.setDisable(true);
+        attack.getChildren().add(attackButton);
+        Label preparationInfo = new Label();
+        attack.getChildren().add(preparationInfo);
+        selectScreen.getChildren().addAll(monsters, bonusItems, attack);
+        addMonsters(monsters, encounter, attackButton);
         CombatPreparation preparation = encounter.prepareForCombat();
-        addItems(bonusItems,preparation);
+        addItems(bonusItems, preparation,preparationInfo, encounter.getInvestigator());
         primaryStage.setScene(scene);
         primaryStage.show();
 
 
     }
 
-    private void addItems(VBox bonusItems, CombatPreparation preparation) {
+    private void addItems(VBox bonusItems, CombatPreparation preparation,Label info, Investigator inv ) {
 
-        for(Bonus bonus : preparation.getBoni(EventTimeType.BEFORE)) {
-            if(bonus instanceof ItemBonus) {
-                Button button = new Button(((ItemBonus)bonus).getParentItem().getName()+":\n" +bonus.getText());
+        for (Bonus bonus : preparation.getBoni(EventTimeType.BEFORE)) {
+            if (bonus instanceof ItemBonus) {
+                Button button = new Button(((ItemBonus) bonus).getParentItem().getName() + ":\n" + bonus.getText());
                 button.setOnAction(event -> {
-
+                    button.setDisable(true);
+                    bonus.execute(preparation);
+                    info.setText("Test: " + preparation.getTestTyp().getText()+"\nModification: " + preparation.getModification()+"\n" + inv.getSkillSet());
 
                 });
                 button.setMaxWidth(300);
@@ -63,23 +70,24 @@ public class CombaEncounterUITest extends Application {
 
     }
 
-    private void addMonsters(VBox monsters,CombatEncounter encounter) {
+    private void addMonsters(VBox monsters, CombatEncounter encounter, Button attackButton) {
         VBox values = new VBox(10);
-        Label  willTest=new Label();
-        Label horror=new Label();
-        Label strengthTest=new Label();
-        Label damage=new Label();
-        Label toughness=new Label();
-        values.getChildren().addAll(willTest,horror,strengthTest,damage,toughness);
-        for(Monster monster : encounter.getAvailableMonster()) {
+        Label willTest = new Label();
+        Label horror = new Label();
+        Label strengthTest = new Label();
+        Label damage = new Label();
+        Label toughness = new Label();
+        values.getChildren().addAll(willTest, horror, strengthTest, damage, toughness);
+        for (Monster monster : encounter.getAvailableMonster()) {
             Button button = new Button(monster.getName());
-            button.setOnAction(event->{
+            button.setOnAction(event -> {
                 encounter.setActiveMonster(monster);
                 willTest.setText("will test: " + monster.getWillTest());
                 horror.setText("horror: " + monster.getHorror());
                 strengthTest.setText("strength test: " + monster.getStrengthTest());
                 damage.setText("damage: " + monster.getDamage());
                 toughness.setText("toughness: " + monster.getToughness());
+                attackButton.setDisable(false);
 
             });
             monsters.getChildren().add(button);
@@ -87,13 +95,13 @@ public class CombaEncounterUITest extends Application {
         monsters.getChildren().add(values);
     }
 
-    private CombatEncounter intiCombadEncounter() {
+    private CombatEncounter initCombatEncounter() {
         Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
         GameService game = GameService.getInstance();
         List<Monster> monsters = new ArrayList<>();
-        monsters.add( new MonsterFactory().getMonster().get(0).getInstance());
-        monsters.add( new MonsterFactory().getMonster().get(1).getInstance());
-        monsters.add( new MonsterFactory().getMonster().get(2).getInstance());
-       return new CombatEncounter(monsters, inv);
+        monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
+        monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
+        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
+        return new CombatEncounter(monsters, inv);
     }
 }

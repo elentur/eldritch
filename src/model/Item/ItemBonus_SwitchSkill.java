@@ -7,10 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import preparation.Preparation;
 import utils.ResourceUtil;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 @Getter
 @Setter
@@ -32,8 +32,13 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
 
 
     @Override
-    public void execute() {
-
+    public void execute(Object object) {
+        if(object instanceof Preparation){
+            Preparation preparation = (Preparation) object;
+            if(preparation.getTestTyp().equals(from)){
+                preparation.setTestTyp(to);
+            }
+        }
     }
 
     @Override

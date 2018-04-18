@@ -1,15 +1,13 @@
 package model;
 
 import enums.TestTyp;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@ToString
 public class SkillSet {
     private int lore;
     private int influence;

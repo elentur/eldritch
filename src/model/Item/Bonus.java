@@ -4,7 +4,7 @@ import enums.EventTimeType;
 import enums.SituationTyp;
 
 public interface Bonus {
-    void execute();
+    void execute(Object object);
     SituationTyp getSituation();
     EventTimeType getEventTime();
     String getText();

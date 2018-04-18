@@ -24,7 +24,7 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
     private TestTyp test;
     private SituationTyp situation;
     @Override
-    public void execute() {
+    public void execute(Object object) {
 
     }
     @Override
