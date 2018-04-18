@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 
 @EqualsAndHashCode
-public class ItemBonus_DiceResult implements ItemBonus {
+public class ItemBonus_DiceResult extends ItemBonus {
 
     private int num;
     private int value;
@@ -31,5 +31,8 @@ public class ItemBonus_DiceResult implements ItemBonus {
     public void execute() {
 
     }
-
+    @Override
+    public String getText() {
+        return "";
+    }
 }

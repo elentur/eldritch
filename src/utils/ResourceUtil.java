@@ -16,7 +16,7 @@ public class ResourceUtil {
     private static HashMap<String,Properties> allProperties = new HashMap<>();
 
 
-    public static String get(String key, Class c) {
+    public static String get(String key, Class c, String... args   ) {
         String name = c.getSimpleName().toLowerCase();
 
         String path = "./resources/language/" + language + "/" + name + ".properties";
@@ -41,6 +41,11 @@ public class ResourceUtil {
         String value =  properties.getProperty(key);
         if(value == null){
             return key;
+        }
+        if(args!=null) {
+            for (int i = 0; i < args.length;i++) {
+                value = value.replace("{"+i+"}", args[i]);
+            }
         }
         return value;
     }

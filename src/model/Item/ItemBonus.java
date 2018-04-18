@@ -2,11 +2,16 @@ package model.Item;
 
 import enums.EventTimeType;
 import enums.SituationTyp;
+import lombok.Getter;
+import lombok.Setter;
 
-public interface ItemBonus {
+@Getter
+@Setter
+public abstract class ItemBonus implements Bonus{
+    private Item parentItem;
 
-    void execute();
-    SituationTyp getSituation();
-    EventTimeType getEventTime();
+
+
+
 
 }

@@ -1,14 +1,19 @@
 package preparation;
 
 import Service.GameService;
+import container.BonusContainer;
 import container.ItemContainer;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import lombok.Getter;
+import lombok.Setter;
 import model.Investigator;
-import model.Item.Asset;
+import model.Item.Bonus;
 import model.Item.Item;
 
+@Getter
+@Setter
 public class CombatPreparation implements Preparation {
 
     private TestTyp testTyp;
@@ -16,6 +21,8 @@ public class CombatPreparation implements Preparation {
     private Investigator investigator;
     private int modification;
     private ItemContainer<Item> bonusItems;
+
+    BonusContainer<Bonus> boni;
 
     private GameService game;
 
@@ -26,6 +33,8 @@ public class CombatPreparation implements Preparation {
         this.investigator = investigator;
         game = GameService.getInstance();
         bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
+        boni =  bonusItems.getBoniWithSituationTyp(situation);
+
     }
 
     @Override
@@ -38,13 +47,9 @@ public class CombatPreparation implements Preparation {
         return modification;
     }
 
-    public ItemContainer<Item> getBonusItems() {
 
-        return bonusItems;
-    }
+    public BonusContainer<Bonus> getBoni(EventTimeType eventTime) {
 
-    public ItemContainer<Item> getBonusItems(EventTimeType eventTime) {
-
-        return bonusItems;
+        return boni.getAllByEventTime(eventTime);
     }
 }

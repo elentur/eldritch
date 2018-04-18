@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
-public class ItemBonus_RepeatRoll implements ItemBonus {
+public class ItemBonus_RepeatRoll extends ItemBonus {
     public ItemBonus_RepeatRoll(int value, TestTyp test, SituationTyp situation) {
         this.value = value;
         this.test = test;
@@ -27,5 +27,8 @@ public class ItemBonus_RepeatRoll implements ItemBonus {
     public void execute() {
 
     }
-
+    @Override
+    public String getText() {
+        return "";
+    }
 }

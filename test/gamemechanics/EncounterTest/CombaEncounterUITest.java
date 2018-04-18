@@ -1,6 +1,7 @@
 package gamemechanics.EncounterTest;
 
 import Service.GameService;
+import enums.EventTimeType;
 import factory.InvestigatorFactory;
 import factory.MonsterFactory;
 import gamemechanics.CombatEncounter;
@@ -12,7 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Investigator;
+import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import model.Monster;
 import preparation.CombatPreparation;
 
@@ -45,13 +48,17 @@ public class CombaEncounterUITest extends Application {
 
     private void addItems(VBox bonusItems, CombatPreparation preparation) {
 
-        for(Item item : preparation.getBonusItems()) {
-            Button button = new Button(item.getName());
-            button.setOnAction(event->{
+        for(Bonus bonus : preparation.getBoni(EventTimeType.BEFORE)) {
+            if(bonus instanceof ItemBonus) {
+                Button button = new Button(((ItemBonus)bonus).getParentItem().getName()+":\n" +bonus.getText());
+                button.setOnAction(event -> {
 
 
-            });
-            bonusItems.getChildren().add(button);
+                });
+                button.setMaxWidth(300);
+                button.setWrapText(true);
+                bonusItems.getChildren().add(button);
+            }
         }
 
     }
