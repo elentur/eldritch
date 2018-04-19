@@ -33,7 +33,7 @@ public class HorrorPreparation implements Preparation {
         this.investigator = investigator;
         game = GameService.getInstance();
         bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
-        boni =  bonusItems.getBoniWithSituationTyp(situation);
+        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
 
     }
 
@@ -45,6 +45,11 @@ public class HorrorPreparation implements Preparation {
     @Override
     public int getModification() {
         return modification;
+    }
+
+    @Override
+    public int getModifiedSkill() {
+        return investigator.getSkill(testTyp)+modification;
     }
 
 

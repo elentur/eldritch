@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import utils.ResourceUtil;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
         this.situation = situation;
     }
 
-    private EventTimeType eventTime= EventTimeType.WHILE;
+    private EventTimeType eventTime= EventTimeType.AFTER;
     private int value;
     private TestTyp test;
     private SituationTyp situation;
@@ -29,6 +30,6 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
     }
     @Override
     public String getText() {
-        return "";
+        return ResourceUtil.get("${repeatRoll}",Bonus.class,value+"", test.getText(), situation.getText() );
     }
 }

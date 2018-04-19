@@ -2,6 +2,7 @@ package model.Item;
 
 import enums.EventTimeType;
 import enums.SituationTyp;
+import enums.TestTyp;
 import lombok.Getter;
 
 @Getter
@@ -14,6 +15,11 @@ public class ItemBonus_Null extends ItemBonus{
     @Override
     public void execute(Object object) {
 
+    }
+
+    @Override
+    public TestTyp getTest() {
+        return TestTyp.NONE;
     }
 
     @Override

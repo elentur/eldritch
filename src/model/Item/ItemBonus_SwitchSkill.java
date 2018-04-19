@@ -19,14 +19,14 @@ import java.util.List;
 public class ItemBonus_SwitchSkill extends ItemBonus {
     private EventTimeType eventTime = EventTimeType.BEFORE;
     private SituationTyp situation;
-    private TestTyp from;
+    private TestTyp test;
     private TestTyp to;
     private List<SpellConsequence> consequence;
 
-    public ItemBonus_SwitchSkill(SituationTyp situation, TestTyp from, TestTyp to, List<SpellConsequence> consequence) {
+    public ItemBonus_SwitchSkill(SituationTyp situation, TestTyp test, TestTyp to, List<SpellConsequence> consequence) {
         this.situation = situation;
         this.consequence = consequence;
-        this.from=from;
+        this.test=test;
         this.to = to;
     }
 
@@ -35,7 +35,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
     public void execute(Object object) {
         if(object instanceof Preparation){
             Preparation preparation = (Preparation) object;
-            if(preparation.getTestTyp().equals(from)){
+            if(preparation.getTestTyp().equals(test)){
                 preparation.setTestTyp(to);
             }
         }
@@ -43,7 +43,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
 
     @Override
     public String getText() {
-        return ResourceUtil.get("${switchSkill}",Bonus.class,situation.getText(),to.getText(), from.getText() );
+        return ResourceUtil.get("${switchSkill}",Bonus.class,situation.getText(),to.getText(), test.getText() );
     }
 
 }

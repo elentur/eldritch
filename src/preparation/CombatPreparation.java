@@ -47,6 +47,11 @@ public class CombatPreparation implements Preparation {
         return modification;
     }
 
+    @Override
+    public int getModifiedSkill() {
+        return 0;
+    }
+
 
     public BonusContainer<Bonus> getBoni(EventTimeType eventTime) {
 

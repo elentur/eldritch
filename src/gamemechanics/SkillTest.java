@@ -38,7 +38,9 @@ public class SkillTest {
         }
 
         int value = skill + mod;
-        return service.rollDice(value, conditionTyp);
+        Result result=service.rollDice(value, conditionTyp);
+
+        return result;
     }
 
 }

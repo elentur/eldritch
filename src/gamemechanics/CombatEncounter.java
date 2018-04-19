@@ -36,7 +36,9 @@ public class CombatEncounter  {
     public Result horrorCheck(HorrorPreparation preparation){
 
         SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
-        return skillTest.execute(investigator);
+       Result result = skillTest.execute(investigator);
+       result.setNum(getActiveMonster().getHorror());
+       return  result;
     }
 
     public Result attackMonster(CombatPreparation preparation){
@@ -51,5 +53,9 @@ public class CombatEncounter  {
 
     public Investigator getInvestigator() {
         return investigator;
+    }
+
+    public HorrorPreparation prepareForHorrorCheck() {
+        return new HorrorPreparation(investigator);
     }
 }

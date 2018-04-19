@@ -1,16 +1,14 @@
 package container;
 
 import enums.EventTimeType;
-import enums.ItemBonusTyp;
-import enums.ItemTyp;
 import enums.SituationTyp;
-import jdk.nashorn.internal.runtime.ListAdapter;
-import model.Item.Asset;
+import enums.TestTyp;
 import model.Item.Bonus;
 import model.Item.Item;
-import model.Item.Spell;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -49,7 +47,13 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
     }
 
     public BonusContainer<Bonus> getBoniWithSituationTyp(SituationTyp situation) {
-      return this.stream().collect(BonusContainer::new, ItemContainer::addAll, BonusContainer::addAll);
+      return new BonusContainer<>(this.stream().collect(BonusContainer::new, ItemContainer::addAll, BonusContainer::addAll)
+              .stream().filter(bonus->situation.equals(bonus.getSituation())).collect(Collectors.toList()));
+    }
+    public BonusContainer<Bonus> getBoniWithSituationTyp(SituationTyp situation, TestTyp test) {
+        return new BonusContainer<>(this.stream().collect(BonusContainer::new, ItemContainer::addAll, BonusContainer::addAll)
+                .stream().filter(bonus->situation.equals(bonus.getSituation())&&test.equals(bonus.getTest())).collect(Collectors.toList()));
+
     }
 
     private static <T extends Item> void addAll(BonusContainer<Bonus> boni, T t) {

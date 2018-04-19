@@ -10,4 +10,6 @@ public interface Preparation {
     void setTestTyp(TestTyp testTyp);
 
     void setModification(int mod);
+
+    int getModifiedSkill();
 }
