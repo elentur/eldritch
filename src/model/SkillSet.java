@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@ToString
+@ToString(of = {"lore","influence","observation","strength","will"})
 public class SkillSet {
     private int lore;
     private int influence;

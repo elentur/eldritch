@@ -1,14 +1,16 @@
 package gamemechanics;
 
 import container.Result;
+import lombok.ToString;
 import model.Investigator;
 import model.Monster;
 import preparation.CombatPreparation;
+import preparation.HorrorPreparation;
 
 import java.util.List;
 
-
-public class CombatEncounter {
+@ToString(of ={"activeMonster","investigator"})
+public class CombatEncounter  {
     private List<Monster> monsters;
     private Investigator investigator;
     private Monster activeMonster;
@@ -29,6 +31,12 @@ public class CombatEncounter {
 
     public CombatPreparation prepareForCombat(){
         return new CombatPreparation(investigator);
+    }
+
+    public Result horrorCheck(HorrorPreparation preparation){
+
+        SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
+        return skillTest.execute(investigator);
     }
 
     public Result attackMonster(CombatPreparation preparation){

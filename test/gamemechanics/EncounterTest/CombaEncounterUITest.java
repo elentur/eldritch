@@ -40,11 +40,29 @@ public class CombaEncounterUITest extends Application {
         attackButton.setDisable(true);
         attack.getChildren().add(attackButton);
         Label preparationInfo = new Label();
+        preparationInfo.setWrapText(true);
         attack.getChildren().add(preparationInfo);
-        selectScreen.getChildren().addAll(monsters, bonusItems, attack);
+        selectScreen.getChildren().add(monsters);
+
         addMonsters(monsters, encounter, attackButton);
         CombatPreparation preparation = encounter.prepareForCombat();
         addItems(bonusItems, preparation,preparationInfo, encounter.getInvestigator());
+        HBox horrorCheckScreen = new HBox(100);
+
+        HBox attackScreen = new HBox(100);
+
+        Label encounterInfo = new Label();
+        encounterInfo.setMaxWidth(300);
+        encounterInfo.setWrapText(true);
+
+
+
+        attackScreen.getChildren().addAll(encounterInfo);
+
+        attackButton.setOnAction(event->{
+            scene.setRoot(attackScreen);
+            encounterInfo.setText( encounter.toString());
+        });
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -70,7 +88,7 @@ public class CombaEncounterUITest extends Application {
 
     }
 
-    private void addMonsters(VBox monsters, CombatEncounter encounter, Button attackButton) {
+    private void addMonsters(VBox monsters, CombatEncounter encounter, VBox screen, HBox parent) {
         VBox values = new VBox(10);
         Label willTest = new Label();
         Label horror = new Label();
@@ -80,15 +98,29 @@ public class CombaEncounterUITest extends Application {
         values.getChildren().addAll(willTest, horror, strengthTest, damage, toughness);
         for (Monster monster : encounter.getAvailableMonster()) {
             Button button = new Button(monster.getName());
-            button.setOnAction(event -> {
-                encounter.setActiveMonster(monster);
+            button.setOnMouseEntered(event -> {
+
                 willTest.setText("will test: " + monster.getWillTest());
                 horror.setText("horror: " + monster.getHorror());
                 strengthTest.setText("strength test: " + monster.getStrengthTest());
                 damage.setText("damage: " + monster.getDamage());
                 toughness.setText("toughness: " + monster.getToughness());
-                attackButton.setDisable(false);
 
+
+            });
+            button.setOnMouseExited(event -> {
+
+                willTest.setText("will test: " );
+                horror.setText("horror: " );
+                strengthTest.setText("strength test: " );
+                damage.setText("damage: " );
+                toughness.setText("toughness: " );
+
+            });
+            button.setOnAction(event->{
+                encounter.setActiveMonster(monster);
+                parent.getChildren().clear();
+                parent.getChildren().add();
             });
             monsters.getChildren().add(button);
         }

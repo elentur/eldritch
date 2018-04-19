@@ -3,6 +3,7 @@ package model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import utils.ResourceUtil;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString(exclude = {"id", "effects",})
 public class Monster implements IMonster {
     private String id;
     private String name;

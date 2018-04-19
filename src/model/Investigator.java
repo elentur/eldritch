@@ -9,6 +9,7 @@ import factory.ItemFactory;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import model.Item.Item;
 import utils.ResourceUtil;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString(of={"firstName","skillSet","health","sanity"})
 public class Investigator {
     private String id;
     private String firstName;
