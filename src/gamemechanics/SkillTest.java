@@ -37,7 +37,8 @@ public class SkillTest {
             }
         }
 
-        int value = skill + mod;
+        int value = skill + mod<1?1:skill+mod;
+
         Result result=service.rollDice(value, conditionTyp);
 
         return result;

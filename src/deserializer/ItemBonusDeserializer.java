@@ -33,7 +33,10 @@ public class ItemBonusDeserializer extends StdDeserializer<ItemBonus> {
     public ItemBonus deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonStreamContext parsingContext = jsonParser.getParsingContext();
         JsonStreamContext parent = parsingContext.getParent().getParent();
-        Item currentValue = (Item)parent.getCurrentValue();
+        Item currentValue = null;
+        if(parent !=null) {
+             currentValue = (Item) parent.getCurrentValue();
+        }
 
         ItemBonus bonus = ItemBonus_Null.value();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);

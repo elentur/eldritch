@@ -11,6 +11,7 @@ import lombok.Setter;
 import model.Investigator;
 import model.Item.Bonus;
 import model.Item.Item;
+import model.Monster;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class HorrorPreparation implements Preparation {
     private TestTyp testTyp;
     private SituationTyp situation;
     private Investigator investigator;
+    private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
 
@@ -26,11 +28,12 @@ public class HorrorPreparation implements Preparation {
 
     private GameService game;
 
-    public HorrorPreparation(Investigator investigator) {
+    public HorrorPreparation(Investigator investigator, Monster monster) {
         this.testTyp = TestTyp.WILL;
         this.situation = SituationTyp.COMBAT_ENCOUNTER;
-        this.modification = 0;
+        this.modification = monster.getWillTest();
         this.investigator = investigator;
+        this.monster = monster;
         game = GameService.getInstance();
         bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
         boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
@@ -49,7 +52,8 @@ public class HorrorPreparation implements Preparation {
 
     @Override
     public int getModifiedSkill() {
-        return investigator.getSkill(testTyp)+modification;
+        int value=   investigator.getSkill(testTyp)+modification;
+        return value<1?1:value;
     }
 
 

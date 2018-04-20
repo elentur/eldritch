@@ -51,6 +51,7 @@ public class ItemBonusDeserializerTest {
         JsonNode node = mapper.readTree(jsonString);
 
         Mockito.when(codec.readTree(parser)).thenReturn(node);
+        Mockito.when(codec.readTree(parser)).thenReturn(node);
     }
 
     @Test

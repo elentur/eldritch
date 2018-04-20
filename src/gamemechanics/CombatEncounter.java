@@ -30,7 +30,7 @@ public class CombatEncounter  {
 
 
     public CombatPreparation prepareForCombat(){
-        return new CombatPreparation(investigator);
+        return new CombatPreparation(investigator,activeMonster);
     }
 
     public Result horrorCheck(HorrorPreparation preparation){
@@ -44,7 +44,9 @@ public class CombatEncounter  {
     public Result attackMonster(CombatPreparation preparation){
 
        SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
-       return skillTest.execute(investigator);
+        Result result = skillTest.execute(investigator);
+        result.setNum(getActiveMonster().getToughness());
+        return  result;
     }
 
     public Monster getActiveMonster() {
@@ -56,6 +58,11 @@ public class CombatEncounter  {
     }
 
     public HorrorPreparation prepareForHorrorCheck() {
-        return new HorrorPreparation(investigator);
+        return new HorrorPreparation(investigator,activeMonster);
+    }
+
+    public void removeActiveMonster() {
+      getAvailableMonster().remove(getActiveMonster());
+      setActiveMonster(null);
     }
 }
