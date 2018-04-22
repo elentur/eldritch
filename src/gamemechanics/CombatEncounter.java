@@ -1,6 +1,8 @@
 package gamemechanics;
 
 import container.Result;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import model.Investigator;
 import model.Monster;
@@ -9,11 +11,15 @@ import preparation.HorrorPreparation;
 
 import java.util.List;
 
+@Getter
+@Setter
 @ToString(of ={"activeMonster","investigator"})
-public class CombatEncounter  {
+public class CombatEncounter implements Encounter {
     private List<Monster> monsters;
     private Investigator investigator;
     private Monster activeMonster;
+    private CombatPreparation combatPreparation;
+    private HorrorPreparation horrorPreparation;
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
         this.monsters = monsters;
@@ -24,13 +30,12 @@ public class CombatEncounter  {
         return monsters;
     }
 
-    public void setActiveMonster(Monster monster){
-        activeMonster=monster;
-    }
+
 
 
     public CombatPreparation prepareForCombat(){
-        return new CombatPreparation(investigator,activeMonster);
+         combatPreparation= new CombatPreparation(investigator,activeMonster);
+         return combatPreparation;
     }
 
     public Result horrorCheck(HorrorPreparation preparation){
@@ -49,16 +54,15 @@ public class CombatEncounter  {
         return  result;
     }
 
-    public Monster getActiveMonster() {
-        return activeMonster;
-    }
+
 
     public Investigator getInvestigator() {
         return investigator;
     }
 
     public HorrorPreparation prepareForHorrorCheck() {
-        return new HorrorPreparation(investigator,activeMonster);
+        horrorPreparation = new HorrorPreparation(investigator,activeMonster);
+        return horrorPreparation;
     }
 
     public void removeActiveMonster() {

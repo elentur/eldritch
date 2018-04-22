@@ -3,6 +3,7 @@ package model.Item;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import gamemechanics.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +26,7 @@ public class ItemBonus_GainDice extends ItemBonus {
     }
 
     @Override
-    public void execute(Object object) {
+    public void execute(Encounter encounter) {
 
     }
     @Override

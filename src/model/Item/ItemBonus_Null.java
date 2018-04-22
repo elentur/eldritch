@@ -3,6 +3,7 @@ package model.Item;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import gamemechanics.Encounter;
 import lombok.Getter;
 
 @Getter
@@ -13,7 +14,7 @@ public class ItemBonus_Null extends ItemBonus{
     private ItemBonus_Null(){}
 
     @Override
-    public void execute(Object object) {
+    public void execute(Encounter encounter) {
 
     }
 

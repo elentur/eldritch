@@ -83,15 +83,16 @@ public class CombaEncounterUITest extends Application {
         VBox beforeBoni = new VBox(50,new Label("Before Test Boni"));
         VBox afterBoni = new VBox(50,new Label("After Test Boni"));
         HorrorPreparation preparation = encounter.prepareForHorrorCheck();
-        Label checkDataLabel = new Label("Horror: " + encounter.getActiveMonster().getHorror()+" Dice: " + preparation.getModifiedSkill());
+        Label checkDataLabel = new Label();
+        setHorrorText(encounter,checkDataLabel);
         for(Bonus bonus :preparation.getBoni(EventTimeType.BEFORE)){
             Button button = new Button(bonus.getText());
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
-                bonus.execute(preparation);
+                bonus.execute(encounter);
                 button.setDisable(true);
-                checkDataLabel.setText("Horror: " + encounter.getActiveMonster().getHorror()+" Dice: " + preparation.getModifiedSkill());
+                setHorrorText(encounter,checkDataLabel);
             });
             beforeBoni.getChildren().add(button);
         }
@@ -101,9 +102,9 @@ public class CombaEncounterUITest extends Application {
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
-                bonus.execute(preparation);
+                bonus.execute(encounter);
                 button.setDisable(true);
-                checkDataLabel.setText("Horror: " + encounter.getActiveMonster().getHorror()+" Dice: " + preparation.getModifiedSkill());
+                setHorrorText(encounter,checkDataLabel);
             });
             afterBoni.getChildren().add(button);
         }
@@ -132,6 +133,12 @@ Label succsessInfo = new Label();
 
     }
 
+    private void setHorrorText(CombatEncounter encounter, Label label) {
+        HorrorPreparation preparation = encounter.getHorrorPreparation();
+        label.setText( preparation.getTestTyp().getText() + ": "+ preparation.getInvestigator().getSkill(preparation.getTestTyp()) +"\n Montser: Horror: " + encounter.getActiveMonster().getHorror());
+
+    }
+
     private void buildAttackCheck(CombatEncounter encounter, BorderPane pane) {
         VBox attackCheckView = new VBox(20);
         attackCheckView.setAlignment(Pos.TOP_CENTER);
@@ -143,16 +150,16 @@ Label succsessInfo = new Label();
         VBox beforeBoni = new VBox(50,new Label("Before Test Boni"));
         VBox afterBoni = new VBox(50,new Label("After Test Boni"));
         CombatPreparation preparation = encounter.prepareForCombat();
-        Label checkDataLabel = new Label("Damage: " + encounter.getActiveMonster().getDamage()+" Dice: " + preparation.getModifiedSkill()+"\nToughness: " +encounter.getActiveMonster().getToughness());
-
+        Label checkDataLabel = new Label();
+setAttackText(encounter,checkDataLabel);
         for(Bonus bonus :preparation.getBoni(EventTimeType.BEFORE)){
             Button button = new Button(bonus.getText());
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
-                bonus.execute(preparation);
+                bonus.execute(encounter);
                 button.setDisable(true);
-                checkDataLabel.setText("Damage: " + encounter.getActiveMonster().getDamage()+" Dice: " + preparation.getModifiedSkill()+"\nToughness: " +encounter.getActiveMonster().getToughness());
+                setAttackText(encounter,checkDataLabel);
             });
             beforeBoni.getChildren().add(button);
         }
@@ -162,14 +169,14 @@ Label succsessInfo = new Label();
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
-                bonus.execute(preparation);
+                bonus.execute(encounter);
                 button.setDisable(true);
-                checkDataLabel.setText("Damage: " + encounter.getActiveMonster().getHorror()+" Dice: " + preparation.getModifiedSkill()+"\nToughness: " +encounter.getActiveMonster().getToughness());
+                setAttackText(encounter,checkDataLabel);
             });
             afterBoni.getChildren().add(button);
         }
 
-         Button rollDice = new Button("Roll dice");
+        Button rollDice = new Button("Roll dice");
         FlowPane resultDice = new FlowPane(10,10);
         resultDice.setMaxWidth(300);
         resultDice.setAlignment(Pos.CENTER);
@@ -200,7 +207,10 @@ Label succsessInfo = new Label();
 
     }
 
-
+private void setAttackText(CombatEncounter encounter,  Label label){
+        CombatPreparation preparation = encounter.getCombatPreparation();
+    label.setText( preparation.getTestTyp().getText() + ": "+ preparation.getInvestigator().getSkill(preparation.getTestTyp()) +"\n Montser: Damage: " + encounter.getActiveMonster().getDamage() +" Toughness: " +encounter.getActiveMonster().getToughness());
+}
 
 
     private CombatEncounter initCombatEncounter() {

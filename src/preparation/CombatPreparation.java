@@ -9,8 +9,8 @@ import enums.TestTyp;
 import lombok.Getter;
 import lombok.Setter;
 import model.Investigator;
-import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import model.Monster;
 
 @Getter
@@ -24,7 +24,7 @@ public class CombatPreparation implements Preparation {
     private int modification;
     private ItemContainer<Item> bonusItems;
 
-    BonusContainer<Bonus> boni;
+    BonusContainer<ItemBonus> boni;
 
     private GameService game;
 
@@ -57,7 +57,7 @@ public class CombatPreparation implements Preparation {
     }
 
 
-    public BonusContainer<Bonus> getBoni(EventTimeType eventTime) {
+    public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
 
         return boni.getAllByEventTime(eventTime);
     }

@@ -3,8 +3,8 @@ package container;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
-import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,17 +46,23 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
                 count()>0).collect(Collectors.toList()));
     }
 
-    public BonusContainer<Bonus> getBoniWithSituationTyp(SituationTyp situation) {
-      return new BonusContainer<>(this.stream().collect(BonusContainer::new, ItemContainer::addAll, BonusContainer::addAll)
-              .stream().filter(bonus->situation.equals(bonus.getSituation())).collect(Collectors.toList()));
-    }
-    public BonusContainer<Bonus> getBoniWithSituationTyp(SituationTyp situation, TestTyp test) {
-        return new BonusContainer<>(this.stream().collect(BonusContainer::new, ItemContainer::addAll, BonusContainer::addAll)
-                .stream().filter(bonus->situation.equals(bonus.getSituation())&&test.equals(bonus.getTest())).collect(Collectors.toList()));
+    public BonusContainer<ItemBonus> getBoniWithSituationTyp(SituationTyp situation) {
+        return new BonusContainer<>(this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer<ItemBonus>::addAll)
+              .stream().filter(bonus->situation.equals(bonus.getSituation())&&bonus.isActive()).collect(Collectors.toList()));
 
     }
 
-    private static <T extends Item> void addAll(BonusContainer<Bonus> boni, T t) {
+
+
+    public BonusContainer<ItemBonus> getBoniWithSituationTyp(SituationTyp situation, TestTyp test) {
+        return new BonusContainer<>(this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer<ItemBonus>::addAll)
+                .stream().filter(bonus->situation.equals(bonus.getSituation())
+                        &&test.equals(bonus.getTest())
+                &&bonus.isActive()).collect(Collectors.toList()));
+
+    }
+
+    private static <T extends Item> void addAll(BonusContainer<ItemBonus> boni, T t) {
         boni.addAll(t.getBonus());
     }
 

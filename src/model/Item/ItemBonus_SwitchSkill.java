@@ -3,6 +3,8 @@ package model.Item;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import gamemechanics.CombatEncounter;
+import gamemechanics.Encounter;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,17 +28,20 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
     public ItemBonus_SwitchSkill(SituationTyp situation, TestTyp test, TestTyp to, List<SpellConsequence> consequence) {
         this.situation = situation;
         this.consequence = consequence;
-        this.test=test;
+        this.test = test;
         this.to = to;
     }
 
 
     @Override
-    public void execute(Object object) {
-        if(object instanceof Preparation){
-            Preparation preparation = (Preparation) object;
+    public void execute(Encounter encounter) {
+        if(!isActive())return;
+        if(encounter instanceof CombatEncounter){
+            CombatEncounter combatEncounter = (CombatEncounter) encounter;
+            Preparation preparation = combatEncounter.getCombatPreparation();
             if(preparation.getTestTyp().equals(test)){
                 preparation.setTestTyp(to);
+                setActive(false);
             }
         }
     }

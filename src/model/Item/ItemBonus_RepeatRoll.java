@@ -3,6 +3,7 @@ package model.Item;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import gamemechanics.Encounter;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,18 +15,22 @@ import utils.ResourceUtil;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class ItemBonus_RepeatRoll extends ItemBonus {
+    private EventTimeType eventTime= EventTimeType.AFTER;
+    private int value;
+    private TestTyp test;
+    private SituationTyp situation;
+
+
     public ItemBonus_RepeatRoll(int value, TestTyp test, SituationTyp situation) {
         this.value = value;
         this.test = test;
         this.situation = situation;
     }
 
-    private EventTimeType eventTime= EventTimeType.AFTER;
-    private int value;
-    private TestTyp test;
-    private SituationTyp situation;
+
     @Override
-    public void execute(Object object) {
+    public void execute(Encounter encounter) {
+
 
     }
     @Override
