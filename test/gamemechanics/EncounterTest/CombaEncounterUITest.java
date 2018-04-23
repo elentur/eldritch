@@ -7,6 +7,7 @@ import enums.EventTimeType;
 import factory.InvestigatorFactory;
 import factory.MonsterFactory;
 import gamemechanics.CombatEncounter;
+import gamemechanics.Encounter;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,6 +22,7 @@ import model.Item.Bonus;
 import model.Monster;
 import preparation.CombatPreparation;
 import preparation.HorrorPreparation;
+import preparation.Preparation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +33,16 @@ public class CombaEncounterUITest extends Application {
         launch(args);
     }
 
+    Button rollDice;
+    FlowPane resultDice;
+    Label checkDataLabel;
+
     @Override
     public void start(Stage primaryStage) {
         CombatEncounter encounter = initCombatEncounter();
 
         BorderPane selectScreen = new BorderPane();
-        buildMonster(encounter,selectScreen);
+        buildMonster(encounter, selectScreen);
         Scene scene = new Scene(selectScreen, 960, 540);
 
         primaryStage.setScene(scene);
@@ -51,7 +57,7 @@ public class CombaEncounterUITest extends Application {
         Label info = new Label();
         info.setWrapText(true);
         info.setMaxWidth(300);
-        FlowPane monsterView = new FlowPane(10,10);
+        FlowPane monsterView = new FlowPane(10, 10);
         monsterView.setMaxWidth(400);
         for (Monster monster : encounter.getAvailableMonster()) {
             Button button = new Button(monster.getName());
@@ -64,7 +70,7 @@ public class CombaEncounterUITest extends Application {
             button.setOnMouseExited(event -> info.setText(""));
             button.setOnAction(event -> {
                 encounter.setActiveMonster(monster);
-                buildHorrorCheck(encounter, pane);
+                buildCheck(encounter, encounter.prepareForHorrorCheck(), pane);
             });
             monsterView.getChildren().add(button);
         }
@@ -72,150 +78,90 @@ public class CombaEncounterUITest extends Application {
         vbox.setAlignment(Pos.TOP_CENTER);
         vbox.setPadding(new Insets(50));
         pane.setCenter(vbox);
-        pane.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,null,BorderWidths.DEFAULT)));
+        pane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, BorderWidths.DEFAULT)));
+
+
     }
 
-    private void buildHorrorCheck(CombatEncounter encounter, BorderPane pane) {
+    private void buildCheck(CombatEncounter encounter, Preparation preparation, BorderPane pane) {
         VBox horrorCheckView = new VBox(20);
         horrorCheckView.setAlignment(Pos.TOP_CENTER);
         horrorCheckView.setPadding(new Insets(50));
         pane.setCenter(horrorCheckView);
-        VBox beforeBoni = new VBox(50,new Label("Before Test Boni"));
-        VBox afterBoni = new VBox(50,new Label("After Test Boni"));
-        HorrorPreparation preparation = encounter.prepareForHorrorCheck();
-        Label checkDataLabel = new Label();
-        setHorrorText(encounter,checkDataLabel);
-        for(Bonus bonus :preparation.getBoni(EventTimeType.BEFORE)){
-            Button button = new Button(bonus.getText());
-            button.setWrapText(true);
-            button.setMaxWidth(150);
-            button.setOnAction(event -> {
-                bonus.execute(encounter);
-                button.setDisable(true);
-                setHorrorText(encounter,checkDataLabel);
-            });
-            beforeBoni.getChildren().add(button);
-        }
+        VBox beforeBoni = new VBox(50, new Label("Before Test Boni"));
+        VBox afterBoni = new VBox(50, new Label("After Test Boni"));
+        checkDataLabel = new Label();
+        setCheckText(encounter, preparation, checkDataLabel);
+        setItemBoni(EventTimeType.BEFORE, beforeBoni, preparation, encounter);
+        setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
         pane.setLeft(beforeBoni);
-        for(Bonus bonus :preparation.getBoni(EventTimeType.AFTER)){
-            Button button = new Button(bonus.getText());
-            button.setWrapText(true);
-            button.setMaxWidth(150);
-            button.setOnAction(event -> {
-                bonus.execute(encounter);
-                button.setDisable(true);
-                setHorrorText(encounter,checkDataLabel);
-            });
-            afterBoni.getChildren().add(button);
-        }
 
-
-        Button rollDice = new Button("Roll dice");
-        FlowPane resultDice = new FlowPane(10,10);
+        rollDice = new Button();
+        resultDice = new FlowPane(10, 10);
         resultDice.setMaxWidth(300);
         resultDice.setAlignment(Pos.CENTER);
-        Button toAttack = new Button("to Attack");
-        toAttack.setOnAction(event-> buildAttackCheck(encounter, pane));
-Label succsessInfo = new Label();
-        rollDice.setOnAction(event->{
-           Result result = encounter.horrorCheck(preparation);
-           for (Die die : result){
-               Button dieButton = new Button(die.getValue()+"");
-               resultDice.getChildren().add(dieButton);
-               rollDice.setDisable(true);
-           }
-           succsessInfo.setText(result.isSuccess()?"Success":"Fail");
-           pane.setLeft(null);
-           pane.setRight(afterBoni);
-            horrorCheckView.getChildren().add(toAttack);
-        });
-        horrorCheckView.getChildren().addAll(checkDataLabel,rollDice,resultDice,succsessInfo);
-
-    }
-
-    private void setHorrorText(CombatEncounter encounter, Label label) {
-        HorrorPreparation preparation = encounter.getHorrorPreparation();
-        label.setText( preparation.getTestTyp().getText() + ": "+ preparation.getInvestigator().getSkill(preparation.getTestTyp()) +"\n Montser: Horror: " + encounter.getActiveMonster().getHorror());
-
-    }
-
-    private void buildAttackCheck(CombatEncounter encounter, BorderPane pane) {
-        VBox attackCheckView = new VBox(20);
-        attackCheckView.setAlignment(Pos.TOP_CENTER);
-        attackCheckView.setPadding(new Insets(50));
-        pane.setCenter(attackCheckView);
-        pane.setLeft(null);
-        pane.setRight(null);
-
-        VBox beforeBoni = new VBox(50,new Label("Before Test Boni"));
-        VBox afterBoni = new VBox(50,new Label("After Test Boni"));
-        CombatPreparation preparation = encounter.prepareForCombat();
-        Label checkDataLabel = new Label();
-setAttackText(encounter,checkDataLabel);
-        for(Bonus bonus :preparation.getBoni(EventTimeType.BEFORE)){
-            Button button = new Button(bonus.getText());
-            button.setWrapText(true);
-            button.setMaxWidth(150);
-            button.setOnAction(event -> {
-                bonus.execute(encounter);
-                button.setDisable(true);
-                setAttackText(encounter,checkDataLabel);
+        Button toAttack = new Button(preparation instanceof HorrorPreparation ? "To Attack" : "To Monster Selection");
+        if (preparation instanceof HorrorPreparation) {
+            toAttack.setOnAction(event -> buildCheck(encounter, encounter.prepareForCombat(), pane));
+        } else {
+            toAttack.setOnAction(event -> {
+                if (encounter.getAvailableMonster().isEmpty()) {
+                    System.exit(0);
+                } else {
+                    encounter.removeActiveMonster();
+                    buildMonster(encounter, pane);
+                }
             });
-            beforeBoni.getChildren().add(button);
         }
-        pane.setLeft(beforeBoni);
-        for(Bonus bonus :preparation.getBoni(EventTimeType.AFTER)){
-            Button button = new Button(bonus.getText());
-            button.setWrapText(true);
-            button.setMaxWidth(150);
-            button.setOnAction(event -> {
-                bonus.execute(encounter);
-                button.setDisable(true);
-                setAttackText(encounter,checkDataLabel);
-            });
-            afterBoni.getChildren().add(button);
-        }
-
-        Button rollDice = new Button("Roll dice");
-        FlowPane resultDice = new FlowPane(10,10);
-        resultDice.setMaxWidth(300);
-        resultDice.setAlignment(Pos.CENTER);
-        Button toSelect = new Button(encounter.getAvailableMonster().isEmpty()?"Exit":"to Select");
-        toSelect.setOnAction(event-> {
-
-            encounter.removeActiveMonster();
-            if(encounter.getAvailableMonster().isEmpty()) {
-               System.exit(0);
-            }else{
-                buildMonster(encounter, pane);
-            }
-        });
         Label succsessInfo = new Label();
-        rollDice.setOnAction(event->{
-            Result result = encounter.attackMonster(preparation);
-            for (Die die : result){
-                Button dieButton = new Button(die.getValue()+"");
+        rollDice.setOnAction(event -> {
+            Result result = encounter.check(preparation);
+            for (Die die : result) {
+                Button dieButton = new Button(die.getValue() + "");
                 resultDice.getChildren().add(dieButton);
-                rollDice.setDisable(true);
+                dieButton.setDisable(true);
             }
-            succsessInfo.setText(result.isSuccess()?"Success":"Fail");
+            rollDice.setDisable(true);
+            succsessInfo.setText(result.isSuccess() ? "Success" : "Fail");
             pane.setLeft(null);
             pane.setRight(afterBoni);
-            attackCheckView.getChildren().add(toSelect);
+            horrorCheckView.getChildren().add(toAttack);
         });
-        attackCheckView.getChildren().addAll(checkDataLabel,rollDice,resultDice,succsessInfo);
-
+        horrorCheckView.getChildren().addAll(checkDataLabel, rollDice, resultDice, succsessInfo);
+        refresh(encounter, preparation);
     }
 
-private void setAttackText(CombatEncounter encounter,  Label label){
-        CombatPreparation preparation = encounter.getCombatPreparation();
-    label.setText( preparation.getTestTyp().getText() + ": "+ preparation.getInvestigator().getSkill(preparation.getTestTyp()) +"\n Montser: Damage: " + encounter.getActiveMonster().getDamage() +" Toughness: " +encounter.getActiveMonster().getToughness());
-}
+    private void setItemBoni(EventTimeType timeType, VBox boni, Preparation preparation, CombatEncounter encounter) {
+        for (Bonus bonus : preparation.getBoni(EventTimeType.BEFORE)) {
+            Button button = new Button(bonus.getText());
+            button.setWrapText(true);
+            button.setMaxWidth(150);
+            button.setOnAction(event -> {
+                bonus.execute(encounter);
+                button.setDisable(true);
+                setCheckText(encounter, preparation, checkDataLabel);
+                refresh(encounter, preparation);
+            });
+            boni.getChildren().add(button);
+        }
+    }
+
+    private void refresh(CombatEncounter encounter, Preparation preparation) {
+        rollDice.setText("Roll " + preparation.getModifiedSkill() + " Dice");
+        for(int i =0; encounter.getResult().)
+    }
+
+    private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
+        if (preparation instanceof HorrorPreparation) {
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Horror: " + encounter.getActiveMonster().getHorror());
+        } else {
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Damage: " + encounter.getActiveMonster().getDamage() + " Toughness: " + encounter.getActiveMonster().getToughness());
+        }
+    }
 
 
     private CombatEncounter initCombatEncounter() {
         Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
-        GameService game = GameService.getInstance();
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
         monsters.add(new MonsterFactory().getMonster().get(1).getInstance());

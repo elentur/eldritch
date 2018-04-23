@@ -1,5 +1,6 @@
 package container;
 
+import Service.DiceRollerService;
 import enums.ConditionTyp;
 import lombok.AllArgsConstructor;
 
@@ -31,5 +32,10 @@ public class Die {
             default:
                 return value >= 5;
         }
+    }
+
+    public void reroll() {
+DiceRollerService service = new DiceRollerService();
+service.rerollDie(this);
     }
 }

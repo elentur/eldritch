@@ -36,7 +36,7 @@ public class CombatPreparation implements Preparation {
         this.monster=monster;
         game = GameService.getInstance();
         bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
-        boni =  bonusItems.getBoniWithSituationTyp(situation);
+        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
 
     }
 

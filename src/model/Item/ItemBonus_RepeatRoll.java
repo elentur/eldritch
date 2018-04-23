@@ -1,5 +1,6 @@
 package model.Item;
 
+import container.Result;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
@@ -30,8 +31,12 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
 
     @Override
     public void execute(Encounter encounter) {
-
-
+    Result result = encounter.getResult();
+        if(!result.getFails().isEmpty()){
+            result.setReroll(value);
+        }else{
+            //TODO Nachricht keine Misserfolge vorhanden
+        }
     }
     @Override
     public String getText() {

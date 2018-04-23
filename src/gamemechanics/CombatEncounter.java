@@ -8,6 +8,7 @@ import model.Investigator;
 import model.Monster;
 import preparation.CombatPreparation;
 import preparation.HorrorPreparation;
+import preparation.Preparation;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class CombatEncounter implements Encounter {
     private Monster activeMonster;
     private CombatPreparation combatPreparation;
     private HorrorPreparation horrorPreparation;
+    private Result result;
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
         this.monsters = monsters;
@@ -41,16 +43,16 @@ public class CombatEncounter implements Encounter {
     public Result horrorCheck(HorrorPreparation preparation){
 
         SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
-       Result result = skillTest.execute(investigator);
-       result.setNum(getActiveMonster().getHorror());
+        result = skillTest.execute(investigator);
+       result.setMinNumberOfSuccesses(getActiveMonster().getHorror());
        return  result;
     }
 
     public Result attackMonster(CombatPreparation preparation){
 
        SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
-        Result result = skillTest.execute(investigator);
-        result.setNum(getActiveMonster().getToughness());
+         result = skillTest.execute(investigator);
+        result.setMinNumberOfSuccesses(getActiveMonster().getToughness());
         return  result;
     }
 
@@ -68,5 +70,13 @@ public class CombatEncounter implements Encounter {
     public void removeActiveMonster() {
       getAvailableMonster().remove(getActiveMonster());
       setActiveMonster(null);
+    }
+
+    public Result check(Preparation preparation) {
+        if(preparation instanceof CombatPreparation){
+            return attackMonster((CombatPreparation) preparation);
+        }else{
+            return horrorCheck((HorrorPreparation) preparation);
+        }
     }
 }

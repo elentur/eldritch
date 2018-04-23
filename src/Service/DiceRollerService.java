@@ -17,4 +17,8 @@ public class DiceRollerService {
         }
         return result;
     }
+
+    public void rerollDie(Die die) {
+        die.setValue(rnd.nextInt(6)+1);
+    }
 }

@@ -1,7 +1,10 @@
 package preparation;
 
+import container.BonusContainer;
+import enums.EventTimeType;
 import enums.TestTyp;
 import model.Investigator;
+import model.Item.ItemBonus;
 import model.Monster;
 
 public interface Preparation {
@@ -19,4 +22,6 @@ public interface Preparation {
     void setModification(int mod);
 
     int getModifiedSkill();
+
+    BonusContainer<ItemBonus> getBoni(EventTimeType eventTim);
 }
