@@ -2,13 +2,20 @@ package container;
 
 import Service.DiceRollerService;
 import enums.ConditionTyp;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
+
+@Getter
+@Setter
 public class Die {
     private int value;
 
+    public Die(int value) {
+        this.value = value;
+    }
 
+    private boolean shiftable;
     public int getValue() {
         return value;
     }
@@ -35,7 +42,11 @@ public class Die {
     }
 
     public void reroll() {
-DiceRollerService service = new DiceRollerService();
-service.rerollDie(this);
+        DiceRollerService service = new DiceRollerService();
+        service.rerollDie(this);
+    }
+
+    public void shift(int v) {
+        setValue(getValue()+v);
     }
 }

@@ -1,25 +1,24 @@
 package container;
 
 import enums.ConditionTyp;
-import enums.TestTyp;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-
+@Setter
+@Getter
 public class Result extends ArrayList<Die> {
     private ConditionTyp typ;
-    @Setter
-    @Getter
+
     private int minNumberOfSuccesses;
 
     private int reroll;
+    private int shift;
+    private int shiftValue;
 
     public Result(ConditionTyp typ, int minNumberOfSuccesses){
         this.typ = typ;
@@ -38,12 +37,17 @@ public class Result extends ArrayList<Die> {
         return this.stream().filter(die -> !die.isSuccess(typ)).collect(Collectors.toList());
     }
 
-    public void setReroll(int reroll) {
-        this.reroll = reroll;
-    }
+
     public void rerollDie(Die die){
-        if(reroll<=1)return;
-        die.reroll();
+        if(reroll<1)return;
         reroll--;
+        die.reroll();
+
     }
+    public void shiftDie(Die die){
+        if(shift<1)return;
+        die.shift(shiftValue);
+        shift--;
+    }
+
 }

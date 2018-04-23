@@ -36,6 +36,7 @@ public class CombatEncounter implements Encounter {
 
 
     public CombatPreparation prepareForCombat(){
+        result=null;
          combatPreparation= new CombatPreparation(investigator,activeMonster);
          return combatPreparation;
     }
@@ -63,6 +64,7 @@ public class CombatEncounter implements Encounter {
     }
 
     public HorrorPreparation prepareForHorrorCheck() {
+
         horrorPreparation = new HorrorPreparation(investigator,activeMonster);
         return horrorPreparation;
     }

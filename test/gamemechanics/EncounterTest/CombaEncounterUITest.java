@@ -1,14 +1,13 @@
 package gamemechanics.EncounterTest;
 
-import Service.GameService;
 import container.Die;
 import container.Result;
 import enums.EventTimeType;
 import factory.InvestigatorFactory;
 import factory.MonsterFactory;
 import gamemechanics.CombatEncounter;
-import gamemechanics.Encounter;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,11 +15,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Investigator;
 import model.Item.Bonus;
 import model.Monster;
-import preparation.CombatPreparation;
 import preparation.HorrorPreparation;
 import preparation.Preparation;
 
@@ -36,6 +35,7 @@ public class CombaEncounterUITest extends Application {
     Button rollDice;
     FlowPane resultDice;
     Label checkDataLabel;
+    Label succsessInfo;
 
     @Override
     public void start(Stage primaryStage) {
@@ -84,6 +84,8 @@ public class CombaEncounterUITest extends Application {
     }
 
     private void buildCheck(CombatEncounter encounter, Preparation preparation, BorderPane pane) {
+        pane.setRight(null);
+        pane.setLeft(null);
         VBox horrorCheckView = new VBox(20);
         horrorCheckView.setAlignment(Pos.TOP_CENTER);
         horrorCheckView.setPadding(new Insets(50));
@@ -113,26 +115,32 @@ public class CombaEncounterUITest extends Application {
                 }
             });
         }
-        Label succsessInfo = new Label();
+         succsessInfo = new Label();
         rollDice.setOnAction(event -> {
             Result result = encounter.check(preparation);
             for (Die die : result) {
-                Button dieButton = new Button(die.getValue() + "");
+                DiceButton dieButton = new DiceButton(die, result);
+                dieButton.setOnMouseClicked(event1->{
+                    refresh(encounter,preparation);
+                });
+
                 resultDice.getChildren().add(dieButton);
-                dieButton.setDisable(true);
+
+
             }
             rollDice.setDisable(true);
-            succsessInfo.setText(result.isSuccess() ? "Success" : "Fail");
+
             pane.setLeft(null);
             pane.setRight(afterBoni);
             horrorCheckView.getChildren().add(toAttack);
+            refresh(encounter, preparation);
         });
         horrorCheckView.getChildren().addAll(checkDataLabel, rollDice, resultDice, succsessInfo);
         refresh(encounter, preparation);
     }
 
     private void setItemBoni(EventTimeType timeType, VBox boni, Preparation preparation, CombatEncounter encounter) {
-        for (Bonus bonus : preparation.getBoni(EventTimeType.BEFORE)) {
+        for (Bonus bonus : preparation.getBoni(timeType)) {
             Button button = new Button(bonus.getText());
             button.setWrapText(true);
             button.setMaxWidth(150);
@@ -148,7 +156,10 @@ public class CombaEncounterUITest extends Application {
 
     private void refresh(CombatEncounter encounter, Preparation preparation) {
         rollDice.setText("Roll " + preparation.getModifiedSkill() + " Dice");
-        for(int i =0; encounter.getResult().)
+        resultDice.getChildren().stream().forEach(item -> ((DiceButton) item).refresh());
+       if(encounter.getResult()!=null){
+           succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail");
+       }
     }
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
@@ -167,5 +178,43 @@ public class CombaEncounterUITest extends Application {
         monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
         monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
         return new CombatEncounter(monsters, inv);
+    }
+
+
+    class DiceButton extends HBox {
+        Label value = new Label();
+
+        Button reroll = new Button("@");
+        Button shift = new Button("^");
+        Die die;
+        Result result;
+
+        public DiceButton(Die die, Result result) {
+            this.die = die;
+            this.result = result;
+            value.setPrefWidth(50);
+            value.setPrefHeight(50);
+            value.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,null,BorderStroke.MEDIUM)));
+            value.setFont(Font.font(28.0));
+            value.setAlignment(Pos.CENTER);
+            this.getChildren().add(value);
+            this.getChildren().add(new VBox(reroll, shift));
+            reroll.setOnMouseClicked(event -> {
+                result.rerollDie(die);
+                Event.fireEvent(this,event);
+            });
+            shift.setOnMouseClicked(event -> {
+                result.shiftDie(die);
+                Event.fireEvent(this,event);
+            });
+
+            refresh();
+        }
+
+        public void refresh() {
+            value.setText(die.getValue() + "");
+            reroll.setVisible(result.getReroll() > 0);
+            shift.setVisible(die.isShiftable());
+        }
     }
 }
