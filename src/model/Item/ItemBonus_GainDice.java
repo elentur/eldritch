@@ -7,6 +7,7 @@ import gamemechanics.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import utils.ResourceUtil;
 
 
 @Getter
@@ -31,7 +32,7 @@ public class ItemBonus_GainDice extends ItemBonus {
     }
     @Override
     public String getText() {
-        return "";
+        return ResourceUtil.get("${gainDice}",Bonus.class,value+"", test.getText(), situation.getText() );
     }
 
 }

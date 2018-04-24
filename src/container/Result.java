@@ -48,6 +48,11 @@ public class Result extends ArrayList<Die> {
         if(shift<1)return;
         die.shift(shiftValue);
         shift--;
+        if(shift<=0){
+            for(Die d: this){
+                d.setShiftable(false);
+            }
+        }
     }
 
 }

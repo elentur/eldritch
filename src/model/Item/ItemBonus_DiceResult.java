@@ -1,5 +1,7 @@
 package model.Item;
 
+import container.Die;
+import container.Result;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
@@ -7,6 +9,7 @@ import gamemechanics.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import utils.ResourceUtil;
 
 @Getter
 @Setter
@@ -18,7 +21,7 @@ public class ItemBonus_DiceResult extends ItemBonus {
     private int value;
     private TestTyp test;
     private SituationTyp situation;
-    private EventTimeType eventTime =EventTimeType.WHILE;
+    private EventTimeType eventTime =EventTimeType.AFTER;
 
     public ItemBonus_DiceResult(int num, int value, TestTyp test, SituationTyp situation) {
         this.num = num;
@@ -30,10 +33,21 @@ public class ItemBonus_DiceResult extends ItemBonus {
 
     @Override
     public void execute(Encounter encounter) {
-
+        Result result = encounter.getResult();
+        if(!result.getFails().isEmpty()){
+            result.setShift(num);
+            result.setShiftValue(value);
+            for(Die die: result){
+                if(die.getValue()<6){
+                    die.setShiftable(true);
+                }
+            }
+        }else{
+            //TODO Nachricht keine Misserfolge vorhanden
+        }
     }
     @Override
     public String getText() {
-        return "";
+        return ResourceUtil.get("${diceResult}",Bonus.class,num+"",value+"", test.getText(), situation.getText() );
     }
 }

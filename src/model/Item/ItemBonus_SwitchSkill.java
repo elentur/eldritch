@@ -41,7 +41,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
             Preparation preparation = combatEncounter.getCombatPreparation();
             if(preparation.getTestTyp().equals(test)){
                 preparation.setTestTyp(to);
-                setActive(false);
+               // setActive(false);
             }
         }
     }

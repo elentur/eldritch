@@ -11,6 +11,7 @@ import lombok.Setter;
 import model.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
+import model.Item.ItemBonus_GainDice;
 import model.Monster;
 
 @Getter
@@ -23,6 +24,7 @@ public class CombatPreparation implements Preparation {
     private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
+    private ItemBonus_GainDice weaponBoni;
 
     BonusContainer<ItemBonus> boni;
 
@@ -36,7 +38,7 @@ public class CombatPreparation implements Preparation {
         this.monster=monster;
         game = GameService.getInstance();
         bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
-        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
+        calculateBoni();
 
     }
 
@@ -52,13 +54,23 @@ public class CombatPreparation implements Preparation {
 
     @Override
     public int getModifiedSkill(){
-        int value=   investigator.getSkill(testTyp)+modification;
+        weaponBoni = boni.getStrongestWeaponBoni(testTyp);
+        int wValue = weaponBoni!=null?weaponBoni.getValue():0;
+        int value=   investigator.getSkill(testTyp)+modification+wValue;
+        System.out.println(wValue + "   "+ investigator.getSkill(testTyp)+"   "+ modification);
         return value<1?1:value;
     }
 
 
     public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
-
+       calculateBoni();
         return boni.getAllByEventTime(eventTime);
     }
+
+    private void calculateBoni(){
+
+        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
+        weaponBoni = boni.getStrongestWeaponBoni(testTyp);
+    }
+
 }

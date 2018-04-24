@@ -1,9 +1,11 @@
 package gamemechanics.EncounterTest;
 
 import container.Die;
+import container.ItemContainer;
 import container.Result;
 import enums.EventTimeType;
 import factory.InvestigatorFactory;
+import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.CombatEncounter;
 import javafx.application.Application;
@@ -18,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Investigator;
+import model.Item.Asset;
 import model.Item.Bonus;
 import model.Monster;
 import preparation.HorrorPreparation;
@@ -95,7 +98,7 @@ public class CombaEncounterUITest extends Application {
         checkDataLabel = new Label();
         setCheckText(encounter, preparation, checkDataLabel);
         setItemBoni(EventTimeType.BEFORE, beforeBoni, preparation, encounter);
-        setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
+
         pane.setLeft(beforeBoni);
 
         rollDice = new Button();
@@ -129,7 +132,7 @@ public class CombaEncounterUITest extends Application {
 
             }
             rollDice.setDisable(true);
-
+            setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
             pane.setLeft(null);
             pane.setRight(afterBoni);
             horrorCheckView.getChildren().add(toAttack);
@@ -173,6 +176,9 @@ public class CombaEncounterUITest extends Application {
 
     private CombatEncounter initCombatEncounter() {
         Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
+        ItemContainer<Asset> assets = new ItemFactory().getAssets();
+        inv.getInventory().add(assets.get("&38Revolver"));
+        inv.getInventory().add(assets.get("&18Derringer"));
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
         monsters.add(new MonsterFactory().getMonster().get(1).getInstance());

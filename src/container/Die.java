@@ -48,5 +48,8 @@ public class Die {
 
     public void shift(int v) {
         setValue(getValue()+v);
+        if(getValue()>=6){
+            setShiftable(false);
+        }
     }
 }
