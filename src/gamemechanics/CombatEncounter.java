@@ -81,4 +81,12 @@ public class CombatEncounter implements Encounter {
             return horrorCheck((HorrorPreparation) preparation);
         }
     }
+
+    public int getMonsterLive() {
+        if(result!= null){
+          int v=  activeMonster.getToughness()-result.getNumberOfSuccess();
+          return v<0?0:v;
+        }
+        return activeMonster.getToughness();
+    }
 }

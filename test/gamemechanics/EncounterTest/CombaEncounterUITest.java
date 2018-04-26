@@ -150,7 +150,7 @@ public class CombaEncounterUITest extends Application {
             button.setOnAction(event -> {
                 bonus.execute(encounter);
                 button.setDisable(true);
-                setCheckText(encounter, preparation, checkDataLabel);
+
                 refresh(encounter, preparation);
             });
             boni.getChildren().add(button);
@@ -163,13 +163,14 @@ public class CombaEncounterUITest extends Application {
        if(encounter.getResult()!=null){
            succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail");
        }
+        setCheckText(encounter, preparation, checkDataLabel);
     }
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
         if (preparation instanceof HorrorPreparation) {
             label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Horror: " + encounter.getActiveMonster().getHorror());
         } else {
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Damage: " + encounter.getActiveMonster().getDamage() + " Toughness: " + encounter.getActiveMonster().getToughness());
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Damage: " + encounter.getActiveMonster().getDamage() + " Toughness: " + (encounter.getMonsterLive()));
         }
     }
 
