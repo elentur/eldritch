@@ -50,6 +50,6 @@ public class BonusContainer<T extends Bonus> extends ArrayList<T>{
         if(optional.isPresent()){
             return optional.get();
         }
-        return null;
+        return ItemBonus_GainDice.EMPTY;
     }
 }

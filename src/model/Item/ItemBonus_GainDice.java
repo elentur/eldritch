@@ -15,6 +15,7 @@ import utils.ResourceUtil;
 @EqualsAndHashCode
 public class ItemBonus_GainDice extends ItemBonus {
 
+    public static final ItemBonus_GainDice EMPTY = new ItemBonus_GainDice(0, TestTyp.NONE, SituationTyp.NONE);
     private int value;
     private TestTyp test;
     private SituationTyp situation;

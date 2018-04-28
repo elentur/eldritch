@@ -11,6 +11,7 @@ import lombok.Setter;
 import model.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
+import model.Item.ItemBonus_GainDice;
 import model.Monster;
 
 @Getter
@@ -23,6 +24,7 @@ public class HorrorPreparation implements Preparation {
     private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
+    ItemBonus_GainDice itemBonus = ItemBonus_GainDice.EMPTY;
 
     BonusContainer<ItemBonus> boni;
 
@@ -52,7 +54,10 @@ public class HorrorPreparation implements Preparation {
 
     @Override
     public int getModifiedSkill() {
-        int value=   investigator.getSkill(testTyp)+modification;
+        itemBonus = boni.getStrongestWeaponBoni(testTyp);
+        int wValue = itemBonus.getValue();
+        int value=   investigator.getSkill(testTyp)+modification+wValue;
+        System.out.println(wValue + "   "+ investigator.getSkill(testTyp)+"   "+ modification);
         return value<1?1:value;
     }
 
@@ -60,5 +65,10 @@ public class HorrorPreparation implements Preparation {
     public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
 
         return boni.getAllByEventTime(eventTime);
+    }
+
+    @Override
+    public int getBonusModification() {
+        return getItemBonus().getValue();
     }
 }

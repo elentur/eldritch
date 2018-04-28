@@ -4,6 +4,7 @@ import container.Die;
 import container.ItemContainer;
 import container.Result;
 import enums.EventTimeType;
+import expetions.EncounterException;
 import factory.InvestigatorFactory;
 import factory.ItemFactory;
 import factory.MonsterFactory;
@@ -95,11 +96,14 @@ public class CombaEncounterUITest extends Application {
         pane.setCenter(horrorCheckView);
         VBox beforeBoni = new VBox(50, new Label("Before Test Boni"));
         VBox afterBoni = new VBox(50, new Label("After Test Boni"));
+        afterBoni.setDisable(true);
         checkDataLabel = new Label();
         setCheckText(encounter, preparation, checkDataLabel);
         setItemBoni(EventTimeType.BEFORE, beforeBoni, preparation, encounter);
+        setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
 
         pane.setLeft(beforeBoni);
+        pane.setRight(afterBoni);
 
         rollDice = new Button();
         resultDice = new FlowPane(10, 10);
@@ -118,13 +122,13 @@ public class CombaEncounterUITest extends Application {
                 }
             });
         }
-         succsessInfo = new Label();
+        succsessInfo = new Label();
         rollDice.setOnAction(event -> {
             Result result = encounter.check(preparation);
             for (Die die : result) {
                 DiceButton dieButton = new DiceButton(die, result);
-                dieButton.setOnMouseClicked(event1->{
-                    refresh(encounter,preparation);
+                dieButton.setOnMouseClicked(event1 -> {
+                    refresh(encounter, preparation);
                 });
 
                 resultDice.getChildren().add(dieButton);
@@ -132,9 +136,9 @@ public class CombaEncounterUITest extends Application {
 
             }
             rollDice.setDisable(true);
-            setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
-            pane.setLeft(null);
-            pane.setRight(afterBoni);
+            afterBoni.setDisable(false);
+            beforeBoni.setDisable(true);
+
             horrorCheckView.getChildren().add(toAttack);
             refresh(encounter, preparation);
         });
@@ -148,9 +152,13 @@ public class CombaEncounterUITest extends Application {
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
-                bonus.execute(encounter);
-                button.setDisable(true);
+                try {
+                    bonus.execute(encounter);
+                } catch (EncounterException e) {
+                    button.setText(e.getMessage());
+                }
 
+                button.setDisable(true);
                 refresh(encounter, preparation);
             });
             boni.getChildren().add(button);
@@ -158,19 +166,21 @@ public class CombaEncounterUITest extends Application {
     }
 
     private void refresh(CombatEncounter encounter, Preparation preparation) {
-        rollDice.setText("Roll " + preparation.getModifiedSkill() + " Dice");
+        String text = "";
+
+        rollDice.setText("Roll " + preparation.getModifiedSkill() + " Dice."+text);
         resultDice.getChildren().stream().forEach(item -> ((DiceButton) item).refresh());
-       if(encounter.getResult()!=null){
-           succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail");
-       }
+        if (encounter.getResult() != null) {
+            succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail");
+        }
         setCheckText(encounter, preparation, checkDataLabel);
     }
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
         if (preparation instanceof HorrorPreparation) {
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Horror: " + encounter.getActiveMonster().getHorror());
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getHorrorPreparation().getBonusModification() + "\nMalus: " + encounter.getActiveMonster().getWillTest() + "\nHorror: " + encounter.getActiveMonster().getHorror());
         } else {
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\n Montser: Damage: " + encounter.getActiveMonster().getDamage() + " Toughness: " + (encounter.getMonsterLive()));
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getCombatPreparation().getBonusModification() + "\nMalus: " + encounter.getActiveMonster().getStrengthTest() + "\nDamage: " + encounter.getActiveMonster().getDamage() + "\nToughness: " + (encounter.getMonsterLive()));
         }
     }
 
@@ -201,18 +211,18 @@ public class CombaEncounterUITest extends Application {
             this.result = result;
             value.setPrefWidth(50);
             value.setPrefHeight(50);
-            value.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,null,BorderStroke.MEDIUM)));
+            value.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, BorderStroke.MEDIUM)));
             value.setFont(Font.font(28.0));
             value.setAlignment(Pos.CENTER);
             this.getChildren().add(value);
             this.getChildren().add(new VBox(reroll, shift));
             reroll.setOnMouseClicked(event -> {
                 result.rerollDie(die);
-                Event.fireEvent(this,event);
+                Event.fireEvent(this, event);
             });
             shift.setOnMouseClicked(event -> {
                 result.shiftDie(die);
-                Event.fireEvent(this,event);
+                Event.fireEvent(this, event);
             });
 
             refresh();

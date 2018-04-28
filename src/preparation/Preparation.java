@@ -24,4 +24,7 @@ public interface Preparation {
     int getModifiedSkill();
 
     BonusContainer<ItemBonus> getBoni(EventTimeType eventTim);
+
+    int getBonusModification();
+
 }

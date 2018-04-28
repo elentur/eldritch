@@ -5,6 +5,7 @@ import container.Result;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import expetions.NoFailsAvailableException;
 import gamemechanics.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,7 +44,7 @@ public class ItemBonus_DiceResult extends ItemBonus {
                 }
             }
         }else{
-            //TODO Nachricht keine Misserfolge vorhanden
+            throw new NoFailsAvailableException();
         }
     }
     @Override

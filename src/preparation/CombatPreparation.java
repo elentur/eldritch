@@ -24,7 +24,7 @@ public class CombatPreparation implements Preparation {
     private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
-    private ItemBonus_GainDice weaponBoni;
+    private ItemBonus_GainDice weaponBoni = ItemBonus_GainDice.EMPTY;
 
     BonusContainer<ItemBonus> boni;
 
@@ -55,7 +55,7 @@ public class CombatPreparation implements Preparation {
     @Override
     public int getModifiedSkill(){
         weaponBoni = boni.getStrongestWeaponBoni(testTyp);
-        int wValue = weaponBoni!=null?weaponBoni.getValue():0;
+        int wValue = weaponBoni.getValue();
         int value=   investigator.getSkill(testTyp)+modification+wValue;
         System.out.println(wValue + "   "+ investigator.getSkill(testTyp)+"   "+ modification);
         return value<1?1:value;
@@ -65,6 +65,11 @@ public class CombatPreparation implements Preparation {
     public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
        calculateBoni();
         return boni.getAllByEventTime(eventTime);
+    }
+
+    @Override
+    public int getBonusModification() {
+        return weaponBoni.getValue();
     }
 
     private void calculateBoni(){
