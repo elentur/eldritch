@@ -2,19 +2,21 @@ package enums;
 
 import utils.ResourceUtil;
 
-public enum SituationTyp {
+public enum RangeType {
+
     NONE(""),
-    COMBAT_ENCOUNTER("${combat_encounter}"),
-    SPELL_EFFECT("${spell_effect}"),
-    ALL("${all}");
+    SELF("${self}"),
+    LOCAL("${local}");
+
 
     private String key;
 
-    private SituationTyp(String key) {
+    private RangeType(String key) {
         this.key = key;
     }
 
     public String getText() {
         return ResourceUtil.get(key,this.getClass());
     }
-    }
+
+}

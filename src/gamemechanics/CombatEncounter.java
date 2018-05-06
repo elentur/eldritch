@@ -43,7 +43,7 @@ public class CombatEncounter implements Encounter {
 
     public Result horrorCheck(HorrorPreparation preparation){
 
-        SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
+        SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
        result.setMinNumberOfSuccesses(getActiveMonster().getHorror());
        return  result;
@@ -51,7 +51,7 @@ public class CombatEncounter implements Encounter {
 
     public Result attackMonster(CombatPreparation preparation){
 
-       SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModification());
+       SkillTest skillTest = new SkillTest( preparation.getTestTyp(),preparation.getModificationForSkillTest());
          result = skillTest.execute(investigator);
         result.setMinNumberOfSuccesses(getActiveMonster().getToughness());
         return  result;

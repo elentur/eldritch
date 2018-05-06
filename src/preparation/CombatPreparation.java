@@ -24,7 +24,7 @@ public class CombatPreparation implements Preparation {
     private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
-    private ItemBonus_GainDice weaponBoni = ItemBonus_GainDice.EMPTY;
+    private ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
 
     BonusContainer<ItemBonus> boni;
 
@@ -33,11 +33,10 @@ public class CombatPreparation implements Preparation {
     public CombatPreparation(Investigator investigator, Monster monster) {
         this.testTyp = TestTyp.STRENGTH;
         this.situation = SituationTyp.COMBAT_ENCOUNTER;
-        this.modification =  monster.getStrengthTest();
+        this.modification = monster.getStrengthTest();
         this.investigator = investigator;
-        this.monster=monster;
+        this.monster = monster;
         game = GameService.getInstance();
-        bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
         calculateBoni();
 
     }
@@ -53,29 +52,35 @@ public class CombatPreparation implements Preparation {
     }
 
     @Override
-    public int getModifiedSkill(){
-        weaponBoni = boni.getStrongestWeaponBoni(testTyp);
-        int wValue = weaponBoni.getValue();
-        int value=   investigator.getSkill(testTyp)+modification+wValue;
-        System.out.println(wValue + "   "+ investigator.getSkill(testTyp)+"   "+ modification);
+    public int getModificationForSkillTest() {
+
+        int wValue = gainDiceBonus.getValue();
+        return modification+wValue;
+
+    }
+
+    @Override
+    public int getNumberOfDice() {
+        int value = getModificationForSkillTest()+ investigator.getSkill(testTyp);
         return value<1?1:value;
     }
 
 
     public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
-       calculateBoni();
+        calculateBoni();
         return boni.getAllByEventTime(eventTime);
     }
 
     @Override
     public int getBonusModification() {
-        return weaponBoni.getValue();
+        return gainDiceBonus.getValue();
     }
 
-    private void calculateBoni(){
 
+    @Override
+    public void calculateBoni() {
+        bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
         boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
-        weaponBoni = boni.getStrongestWeaponBoni(testTyp);
+        gainDiceBonus = boni.getStrongestGainDiceBonus(testTyp);
     }
-
 }

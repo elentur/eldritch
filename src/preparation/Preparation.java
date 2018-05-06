@@ -21,10 +21,13 @@ public interface Preparation {
 
     void setModification(int mod);
 
-    int getModifiedSkill();
+    int getModificationForSkillTest();
+
+    int getNumberOfDice();
 
     BonusContainer<ItemBonus> getBoni(EventTimeType eventTim);
 
     int getBonusModification();
 
+    void calculateBoni();
 }

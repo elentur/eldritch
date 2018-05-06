@@ -44,7 +44,7 @@ public class BonusContainer<T extends Bonus> extends ArrayList<T>{
         return this.stream().filter(item -> situation.equals(item.getSituation())&&test.equals(item.getTest())).filter(item ->!(item instanceof ItemBonus_GainDice)).collect(Collectors.toList());
     }
 
-    public ItemBonus_GainDice getStrongestWeaponBoni(TestTyp testTyp) {
+    public ItemBonus_GainDice getStrongestGainDiceBonus(TestTyp testTyp) {
         Optional<ItemBonus_GainDice> optional= this.stream().filter(item -> item instanceof ItemBonus_GainDice).map(item-> (ItemBonus_GainDice)item).filter(item->
              item.getTest().equals(testTyp)||item.getTest().equals(TestTyp.NONE)).max(Comparator.comparingInt(ItemBonus_GainDice::getValue));
         if(optional.isPresent()){

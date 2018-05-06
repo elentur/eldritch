@@ -1,6 +1,5 @@
 package deserializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonStreamContext;
@@ -9,9 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import enums.SituationTyp;
-import enums.ItemBonusTyp;
-import enums.TestTyp;
+import enums.*;
 import model.Item.*;
 
 import java.io.IOException;
@@ -50,6 +47,14 @@ public class ItemBonusDeserializer extends StdDeserializer<ItemBonus> {
                         value.get("value").intValue(),
                         TestTyp.valueOf(value.get("test").textValue()),
                         SituationTyp.valueOf(value.get("situation").textValue()));
+                break;
+            case ADDITIONAL_DICE:
+                bonus = new ItemBonus_AdditionalDice(
+                        value.get("value").intValue(),
+                        TestTyp.valueOf(value.get("test").textValue()),
+                        SituationTyp.valueOf(value.get("situation").textValue()),
+                        RangeType.valueOf(value.get("range").textValue()),
+                        FieldType.valueOf(value.get("field").textValue()));
                 break;
             case DICE_RESULT:
                 bonus = new ItemBonus_DiceResult( value.get("num").intValue(),

@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +23,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Investigator;
 import model.Item.Asset;
-import model.Item.Bonus;
+import model.Item.Item;
+import model.Item.ItemBonus;
 import model.Monster;
 import preparation.HorrorPreparation;
 import preparation.Preparation;
@@ -40,6 +42,8 @@ public class CombaEncounterUITest extends Application {
     FlowPane resultDice;
     Label checkDataLabel;
     Label succsessInfo;
+    VBox beforeBoni;
+    VBox afterBoni;
 
     @Override
     public void start(Stage primaryStage) {
@@ -94,8 +98,8 @@ public class CombaEncounterUITest extends Application {
         horrorCheckView.setAlignment(Pos.TOP_CENTER);
         horrorCheckView.setPadding(new Insets(50));
         pane.setCenter(horrorCheckView);
-        VBox beforeBoni = new VBox(50, new Label("Before Test Boni"));
-        VBox afterBoni = new VBox(50, new Label("After Test Boni"));
+         beforeBoni = new VBox(50, new Label("Before Test Boni"));
+         afterBoni = new VBox(50, new Label("After Test Boni"));
         afterBoni.setDisable(true);
         checkDataLabel = new Label();
         setCheckText(encounter, preparation, checkDataLabel);
@@ -147,13 +151,18 @@ public class CombaEncounterUITest extends Application {
     }
 
     private void setItemBoni(EventTimeType timeType, VBox boni, Preparation preparation, CombatEncounter encounter) {
-        for (Bonus bonus : preparation.getBoni(timeType)) {
-            Button button = new Button(bonus.getText());
+        Node node = boni.getChildren().get(0);
+        boni.getChildren().clear();
+        boni.getChildren().add(node);
+        for (ItemBonus bonus : preparation.getBoni(timeType)) {
+            Button button = new Button(bonus.getParentItem().getName()+": "+ bonus.getText());
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
                 try {
                     bonus.execute(encounter);
+                  //  setItemBoni(EventTimeType.BEFORE, beforeBoni, preparation, encounter);
+                   // setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
                 } catch (EncounterException e) {
                     button.setText(e.getMessage());
                 }
@@ -168,7 +177,7 @@ public class CombaEncounterUITest extends Application {
     private void refresh(CombatEncounter encounter, Preparation preparation) {
         String text = "";
 
-        rollDice.setText("Roll " + preparation.getModifiedSkill() + " Dice."+text);
+        rollDice.setText("Roll " + preparation.getNumberOfDice() + " Dice."+text);
         resultDice.getChildren().stream().forEach(item -> ((DiceButton) item).refresh());
         if (encounter.getResult() != null) {
             succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail");
@@ -177,10 +186,19 @@ public class CombaEncounterUITest extends Application {
     }
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
+        String  bonusName = "";
         if (preparation instanceof HorrorPreparation) {
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getHorrorPreparation().getBonusModification() + "\nMalus: " + encounter.getActiveMonster().getWillTest() + "\nHorror: " + encounter.getActiveMonster().getHorror());
+            Item parent = encounter.getHorrorPreparation().getGainDiceBonus().getParentItem();
+            if(parent !=null){
+                 bonusName =" ("+ parent.getName()+")";
+            }
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getHorrorPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getWillTest() + "\nHorror: " + encounter.getActiveMonster().getHorror());
         } else {
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getCombatPreparation().getBonusModification() + "\nMalus: " + encounter.getActiveMonster().getStrengthTest() + "\nDamage: " + encounter.getActiveMonster().getDamage() + "\nToughness: " + (encounter.getMonsterLive()));
+            Item parent = encounter.getCombatPreparation().getGainDiceBonus().getParentItem();
+            if(parent !=null){
+                  bonusName =" ("+ parent.getName()+")";
+            }
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getCombatPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getStrengthTest() + "\nDamage: " + encounter.getActiveMonster().getDamage() + "\nToughness: " + (encounter.getMonsterLive()));
         }
     }
 
@@ -188,8 +206,8 @@ public class CombaEncounterUITest extends Application {
     private CombatEncounter initCombatEncounter() {
         Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
         ItemContainer<Asset> assets = new ItemFactory().getAssets();
-        inv.getInventory().add(assets.get("&38Revolver"));
-        inv.getInventory().add(assets.get("&18Derringer"));
+        inv.getInventory().remove(assets.get("&profaneTome"));
+        inv.getInventory().addAll(assets);
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
         monsters.add(new MonsterFactory().getMonster().get(1).getInstance());

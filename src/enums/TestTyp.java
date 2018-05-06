@@ -4,7 +4,7 @@ import utils.ResourceUtil;
 
 public enum TestTyp {
 
-    LORE("${lore}"),INFLUENCE("${influence}"),OBSERVATION("${observation}"),STRENGTH("${strength}"), NONE(""), WILL("${will}");
+    LORE("${lore}"),INFLUENCE("${influence}"),OBSERVATION("${observation}"),STRENGTH("${strength}"), NONE(""), ALL("${all}"), WILL("${will}");
 
 
     private String key;

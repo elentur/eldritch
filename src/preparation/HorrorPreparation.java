@@ -24,7 +24,7 @@ public class HorrorPreparation implements Preparation {
     private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
-    ItemBonus_GainDice itemBonus = ItemBonus_GainDice.EMPTY;
+    ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
 
     BonusContainer<ItemBonus> boni;
 
@@ -37,9 +37,7 @@ public class HorrorPreparation implements Preparation {
         this.investigator = investigator;
         this.monster = monster;
         game = GameService.getInstance();
-        bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
-        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
-
+      calculateBoni();
     }
 
     @Override
@@ -53,11 +51,16 @@ public class HorrorPreparation implements Preparation {
     }
 
     @Override
-    public int getModifiedSkill() {
-        itemBonus = boni.getStrongestWeaponBoni(testTyp);
-        int wValue = itemBonus.getValue();
-        int value=   investigator.getSkill(testTyp)+modification+wValue;
-        System.out.println(wValue + "   "+ investigator.getSkill(testTyp)+"   "+ modification);
+    public int getModificationForSkillTest() {
+
+        int wValue = gainDiceBonus.getValue();
+        return modification+wValue;
+
+    }
+
+    @Override
+    public int getNumberOfDice() {
+         int value = getModificationForSkillTest()+ investigator.getSkill(testTyp);
         return value<1?1:value;
     }
 
@@ -69,6 +72,14 @@ public class HorrorPreparation implements Preparation {
 
     @Override
     public int getBonusModification() {
-        return getItemBonus().getValue();
+        return getGainDiceBonus().getValue()  ;
     }
+
+    @Override
+    public void calculateBoni() {
+        bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
+        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
+        gainDiceBonus = boni.getStrongestGainDiceBonus(testTyp);
+    }
+
 }

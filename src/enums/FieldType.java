@@ -2,19 +2,23 @@ package enums;
 
 import utils.ResourceUtil;
 
-public enum SituationTyp {
+public enum FieldType {
+
     NONE(""),
-    COMBAT_ENCOUNTER("${combat_encounter}"),
-    SPELL_EFFECT("${spell_effect}"),
-    ALL("${all}");
+    CITY("${city}"),
+    WILDNESS("${wildness}"),
+    SEA("${sea}"),
+    OTHER_WORLD("${other_world}");
+
 
     private String key;
 
-    private SituationTyp(String key) {
+    private FieldType(String key) {
         this.key = key;
     }
 
     public String getText() {
         return ResourceUtil.get(key,this.getClass());
     }
-    }
+
+}

@@ -1,9 +1,9 @@
 [
   {
-    "id":"&18Derringer",
+    "id": "&18Derringer",
     "name": "${18_derringer}",
     "typ": "TRINKET_WEAPON",
-    "price":1,
+    "price": 1,
     "bonus": [
       {
         "typ": "DICE_RESULT",
@@ -17,10 +17,10 @@
     ]
   },
   {
-    "id":"&38Revolver",
+    "id": "&38Revolver",
     "name": "${38_revolver}",
     "typ": "ITEM_WEAPON",
-    "price":1,
+    "price": 1,
     "bonus": [
       {
         "typ": "GAIN_DICE",
@@ -31,20 +31,143 @@
         }
       }
     ]
-  },{
-  "id":"&profaneTome",
-  "name": "${profane_tome}",
-  "typ": "ITEM_TOME",
-  "price":1,
-  "bonus": [
-    {
-      "typ": "REPEAT_ROLL",
-      "value": {
-        "value": 1,
-        "test": "WILL",
-        "situation": "COMBAT_ENCOUNTER"
+  },
+  {
+    "id": "&profaneTome",
+    "name": "${profane_tome}",
+    "typ": "ITEM_TOME",
+    "price": 1,
+    "bonus": [
+      {
+        "typ": "REPEAT_ROLL",
+        "value": {
+          "value": 1,
+          "test": "WILL",
+          "situation": "COMBAT_ENCOUNTER"
+        }
       }
-    }
-  ]
-}
+    ]
+  },
+  {
+    "id": "&spiritDagger",
+    "name": "${spirit_dagger}",
+    "typ": "ITEM_WEAPON_MAGICAL",
+    "price": 2,
+    "bonus": [
+      {
+        "typ": "GAIN_DICE",
+        "value": {
+          "value": 2,
+          "test": "STRENGTH",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      },
+      {
+        "typ": "GAIN_DICE",
+        "value": {
+          "value": 1,
+          "test": "WILL",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      }
+    ]
+  },
+  {
+    "id": "&protectiveAmulet",
+    "name": "${protective_amulet}",
+    "typ": "ITEM",
+    "price": 1,
+    "bonus": [
+      {
+        "typ": "REPEAT_ROLL",
+        "value": {
+          "value": 1,
+          "test": "WILL",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      }
+    ]
+  },
+  {
+    "id": "&cultistJournal",
+    "name": "${cultists_journal}",
+    "typ": "ITEM_WEAPON_MAGICAL",
+    "price": 3,
+    "bonus": [
+      {
+        "typ": "GAIN_DICE",
+        "value": {
+          "value": 2,
+          "test": "STRENGTH",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      },
+      {
+        "typ": "GAIN_DICE",
+        "value": {
+          "value": 2,
+          "test": "WILL",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      }
+    ]
+  },
+  {
+    "id": "&bullWhip",
+    "name": "${bull_whip}",
+    "typ": "ITEM_WEAPON",
+    "price": 1,
+    "bonus": [
+      {
+        "typ": "GAIN_DICE",
+        "value": {
+          "value": 1,
+          "test": "STRENGTH",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      },
+      {
+        "typ": "REPEAT_ROLL",
+        "value": {
+          "value": 1,
+          "test": "STRENGTH",
+          "situation": "COMBAT_ENCOUNTER"
+        }
+      }
+    ]
+  },
+  {
+    "id": "&urbanGuide",
+    "name": "${urban_guide}",
+    "typ": "ALLEY",
+    "price": 4,
+    "bonus": [
+      {
+        "typ": "ADDITIONAL_DICE",
+        "value": {
+          "value": 1,
+          "test": "ALL",
+          "field":"CITY",
+          "situation": "ALL",
+          "range":"LOCAL"
+        }
+      }
+    ]
+  },
+  {
+    "id": "&arcaneManuscripts",
+    "name": "${arcane_manuscripts}",
+    "typ": "ITEM_TOME",
+    "price": 1,
+    "bonus": [
+      {
+        "typ": "REPEAT_ROLL",
+        "value": {
+          "value": 1,
+          "test": "LORE",
+          "situation": "SPELL_EFFECT"
+        }
+      }
+    ]
+  }
 ]
