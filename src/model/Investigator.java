@@ -1,7 +1,5 @@
 package model;
 
-import static enums.ItemTyp.*;
-
 import container.ItemContainer;
 import enums.ConditionTyp;
 import enums.TestTyp;
@@ -28,6 +26,8 @@ public class Investigator {
     private SkillSet skillSet;
     private int health;
     private int sanity;
+    private int actualHealth;
+    private int actualSanity;
     private String startingSpace;
     private ItemContainer<StartingPossession> startingPossessions;
 
@@ -62,6 +62,8 @@ public class Investigator {
         inv.setSkillSet(skills);
         inv.setHealth(health);
         inv.setSanity(sanity);
+        inv.setActualHealth(health);
+        inv.setActualSanity(sanity);
         inv.setStartingSpace(startingSpace);
         inv.setStartingPossessions(startingPossessions);
         ItemFactory itemFactory = new ItemFactory();
@@ -80,5 +82,25 @@ public class Investigator {
             }
         }
         return inv;
+    }
+
+    public void addHealth(int value) {
+        actualHealth+=value;
+        if(actualHealth> health){
+            actualHealth=health;
+        }else if(actualHealth<0){
+            actualHealth=0;
+        }
+
+    }
+
+    public void addSanity(int value) {
+        actualSanity+=value;
+        if(actualSanity> sanity){
+            actualSanity=sanity;
+        }else if(actualSanity<0){
+            actualSanity=0;
+        }
+
     }
 }

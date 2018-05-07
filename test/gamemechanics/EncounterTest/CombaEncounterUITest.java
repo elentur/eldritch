@@ -115,9 +115,16 @@ public class CombaEncounterUITest extends Application {
         resultDice.setAlignment(Pos.CENTER);
         Button toAttack = new Button(preparation instanceof HorrorPreparation ? "To Attack" : "To Monster Selection");
         if (preparation instanceof HorrorPreparation) {
-            toAttack.setOnAction(event -> buildCheck(encounter, encounter.prepareForCombat(), pane));
-        } else {
+
             toAttack.setOnAction(event -> {
+                encounter.sanityLoss();
+                buildCheck(encounter, encounter.prepareForCombat(), pane);
+            });
+        } else {
+
+            toAttack.setOnAction(event -> {
+                encounter.healthLoss();
+                encounter.monsterDamage();
                 if (encounter.getAvailableMonster().isEmpty()) {
                     System.exit(0);
                 } else {
@@ -180,7 +187,9 @@ public class CombaEncounterUITest extends Application {
         rollDice.setText("Roll " + preparation.getNumberOfDice() + " Dice."+text);
         resultDice.getChildren().stream().forEach(item -> ((DiceButton) item).refresh());
         if (encounter.getResult() != null) {
-            succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail");
+            String damage = preparation instanceof HorrorPreparation? " loose " + (encounter.getActiveMonster().getHorror()-encounter.getResult().getNumberOfSuccess()) +" sanity":
+                    " loose " + (encounter.getActiveMonster().getDamage()-encounter.getResult().getNumberOfSuccess()) +" health";
+            succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail"+damage);
         }
         setCheckText(encounter, preparation, checkDataLabel);
     }

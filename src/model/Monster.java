@@ -20,6 +20,7 @@ public class Monster implements IMonster {
     private int strengthTest;
     private int damage;
     private int toughness;
+    private int actualToughness;
     private List<Effect> effects;
 
 
@@ -37,7 +38,17 @@ public class Monster implements IMonster {
         monster.setStrengthTest(strengthTest);
         monster.setDamage(damage);
         monster.setToughness(toughness);
+        monster.setActualToughness(toughness);
         monster.setEffects(effects);
         return monster;
+    }
+
+    public void addDamage(int value) {
+        actualToughness+=value;
+        if(actualToughness> toughness){
+            actualToughness=toughness;
+        }else if(actualToughness<0){
+            actualToughness=0;
+        }
     }
 }
