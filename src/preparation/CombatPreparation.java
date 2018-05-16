@@ -30,8 +30,8 @@ public class CombatPreparation implements Preparation {
 
     private GameService game;
 
-    public CombatPreparation(Investigator investigator, Monster monster) {
-        this.testTyp = TestTyp.STRENGTH;
+    public CombatPreparation(TestTyp testTyp, Investigator investigator, Monster monster) {
+        this.testTyp = testTyp;
         this.situation = SituationTyp.COMBAT_ENCOUNTER;
         this.modification = monster.getStrengthTest();
         this.investigator = investigator;

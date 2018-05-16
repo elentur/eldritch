@@ -2,13 +2,13 @@ package gamemechanics;
 
 import Service.EventService;
 import container.Result;
+import enums.TestTyp;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Investigator;
 import model.Monster;
 import preparation.CombatPreparation;
-import preparation.HorrorPreparation;
 import preparation.Preparation;
 
 import java.util.List;
@@ -21,20 +21,21 @@ public class CombatEncounter implements Encounter {
     private Investigator investigator;
     private Monster activeMonster;
     private CombatPreparation combatPreparation;
-    private HorrorPreparation horrorPreparation;
+    private CombatPreparation horrorPreparation;
     private Result result;
+    private boolean isCombatCheck;
 
     private EventService eventService = new EventService();
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
         this.monsters = monsters;
         this.investigator = investigator;
+        this.isCombatCheck=false;
     }
 
     public List<Monster> getAvailableMonster() {
         return monsters;
     }
-
 
     public void sanityLoss() {
         eventService.looseSanity(investigator, activeMonster.getHorror() - result.getNumberOfSuccess());
@@ -47,36 +48,19 @@ public class CombatEncounter implements Encounter {
     }
 
     public CombatPreparation prepareForCombat() {
-
+        this.isCombatCheck=true;
         result = null;
-        combatPreparation = new CombatPreparation(investigator, activeMonster);
+        combatPreparation = new CombatPreparation(TestTyp.STRENGTH , investigator, activeMonster);
         return combatPreparation;
     }
-
-    public Result horrorCheck(HorrorPreparation preparation) {
-
-        SkillTest skillTest = new SkillTest(preparation.getTestTyp(), preparation.getModificationForSkillTest());
-        result = skillTest.execute(investigator);
-        result.setMinNumberOfSuccesses(getActiveMonster().getHorror());
-        return result;
-    }
-
-    public Result attackMonster(CombatPreparation preparation) {
-
-        SkillTest skillTest = new SkillTest(preparation.getTestTyp(), preparation.getModificationForSkillTest());
-        result = skillTest.execute(investigator);
-        result.setMinNumberOfSuccesses(getActiveMonster().getToughness());
-        return result;
-    }
-
 
     public Investigator getInvestigator() {
         return investigator;
     }
 
-    public HorrorPreparation prepareForHorrorCheck() {
-
-        horrorPreparation = new HorrorPreparation(investigator, activeMonster);
+    public CombatPreparation prepareForHorrorCheck() {
+        this.isCombatCheck=false;
+        horrorPreparation = new CombatPreparation(TestTyp.WILL ,investigator, activeMonster);
         return horrorPreparation;
     }
 
@@ -85,12 +69,28 @@ public class CombatEncounter implements Encounter {
         setActiveMonster(null);
     }
 
-    public Result check(Preparation preparation) {
-        if (preparation instanceof CombatPreparation) {
-            return attackMonster((CombatPreparation) preparation);
+    public Result check() {
+        if (  this.isCombatCheck) {
+            return attackMonster();
         } else {
-            return horrorCheck((HorrorPreparation) preparation);
+            return horrorCheck();
         }
+    }
+
+    private Result horrorCheck( ) {
+
+        SkillTest skillTest = new SkillTest(horrorPreparation.getTestTyp(), horrorPreparation.getModificationForSkillTest());
+        result = skillTest.execute(investigator);
+        result.setMinNumberOfSuccesses(getActiveMonster().getHorror());
+        return result;
+    }
+
+    private Result attackMonster( ) {
+
+        SkillTest skillTest = new SkillTest(combatPreparation.getTestTyp(), combatPreparation.getModificationForSkillTest());
+        result = skillTest.execute(investigator);
+        result.setMinNumberOfSuccesses(getActiveMonster().getToughness());
+        return result;
     }
 
     public int getMonsterLive() {

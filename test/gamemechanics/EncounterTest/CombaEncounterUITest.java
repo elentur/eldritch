@@ -26,7 +26,6 @@ import model.Item.Asset;
 import model.Item.Item;
 import model.Item.ItemBonus;
 import model.Monster;
-import preparation.HorrorPreparation;
 import preparation.Preparation;
 
 import java.util.ArrayList;
@@ -98,8 +97,8 @@ public class CombaEncounterUITest extends Application {
         horrorCheckView.setAlignment(Pos.TOP_CENTER);
         horrorCheckView.setPadding(new Insets(50));
         pane.setCenter(horrorCheckView);
-         beforeBoni = new VBox(50, new Label("Before Test Boni"));
-         afterBoni = new VBox(50, new Label("After Test Boni"));
+        beforeBoni = new VBox(50, new Label("Before Test Boni"));
+        afterBoni = new VBox(50, new Label("After Test Boni"));
         afterBoni.setDisable(true);
         checkDataLabel = new Label();
         setCheckText(encounter, preparation, checkDataLabel);
@@ -113,15 +112,8 @@ public class CombaEncounterUITest extends Application {
         resultDice = new FlowPane(10, 10);
         resultDice.setMaxWidth(300);
         resultDice.setAlignment(Pos.CENTER);
-        Button toAttack = new Button(preparation instanceof HorrorPreparation ? "To Attack" : "To Monster Selection");
-        if (preparation instanceof HorrorPreparation) {
-
-            toAttack.setOnAction(event -> {
-                encounter.sanityLoss();
-                buildCheck(encounter, encounter.prepareForCombat(), pane);
-            });
-        } else {
-
+        Button toAttack = new Button(encounter.isCombatCheck() ? "To Attack" : "To Monster Selection");
+        if (encounter.isCombatCheck()) {
             toAttack.setOnAction(event -> {
                 encounter.healthLoss();
                 encounter.monsterDamage();
@@ -132,10 +124,15 @@ public class CombaEncounterUITest extends Application {
                     buildMonster(encounter, pane);
                 }
             });
+        } else {
+            toAttack.setOnAction(event -> {
+                encounter.sanityLoss();
+                buildCheck(encounter, encounter.prepareForCombat(), pane);
+            });
         }
         succsessInfo = new Label();
         rollDice.setOnAction(event -> {
-            Result result = encounter.check(preparation);
+            Result result = encounter.check();
             for (Die die : result) {
                 DiceButton dieButton = new DiceButton(die, result);
                 dieButton.setOnMouseClicked(event1 -> {
@@ -162,14 +159,14 @@ public class CombaEncounterUITest extends Application {
         boni.getChildren().clear();
         boni.getChildren().add(node);
         for (ItemBonus bonus : preparation.getBoni(timeType)) {
-            Button button = new Button(bonus.getParentItem().getName()+": "+ bonus.getText());
+            Button button = new Button(bonus.getParentItem().getName() + ": " + bonus.getText());
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
                 try {
                     bonus.execute(encounter);
-                  //  setItemBoni(EventTimeType.BEFORE, beforeBoni, preparation, encounter);
-                   // setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
+                    //  setItemBoni(EventTimeType.BEFORE, beforeBoni, preparation, encounter);
+                    // setItemBoni(EventTimeType.AFTER, afterBoni, preparation, encounter);
                 } catch (EncounterException e) {
                     button.setText(e.getMessage());
                 }
@@ -184,30 +181,30 @@ public class CombaEncounterUITest extends Application {
     private void refresh(CombatEncounter encounter, Preparation preparation) {
         String text = "";
 
-        rollDice.setText("Roll " + preparation.getNumberOfDice() + " Dice."+text);
+        rollDice.setText("Roll " + preparation.getNumberOfDice() + " Dice." + text);
         resultDice.getChildren().stream().forEach(item -> ((DiceButton) item).refresh());
         if (encounter.getResult() != null) {
-            String damage = preparation instanceof HorrorPreparation? " loose " + (encounter.getActiveMonster().getHorror()-encounter.getResult().getNumberOfSuccess()) +" sanity":
-                    " loose " + (encounter.getActiveMonster().getDamage()-encounter.getResult().getNumberOfSuccess()) +" health";
-            succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail"+damage);
+            String damage = encounter.isCombatCheck() ? ": Loose " + (encounter.getActiveMonster().getDamage() - encounter.getResult().getNumberOfSuccess()) + " health" :
+                    ": Loose " + (encounter.getActiveMonster().getHorror() - encounter.getResult().getNumberOfSuccess()) + " sanity";
+            succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail" + damage);
         }
         setCheckText(encounter, preparation, checkDataLabel);
     }
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
-        String  bonusName = "";
-        if (preparation instanceof HorrorPreparation) {
-            Item parent = encounter.getHorrorPreparation().getGainDiceBonus().getParentItem();
-            if(parent !=null){
-                 bonusName =" ("+ parent.getName()+")";
-            }
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getHorrorPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getWillTest() + "\nHorror: " + encounter.getActiveMonster().getHorror());
-        } else {
+        String bonusName = "";
+        if (encounter.isCombatCheck()) {
             Item parent = encounter.getCombatPreparation().getGainDiceBonus().getParentItem();
-            if(parent !=null){
-                  bonusName =" ("+ parent.getName()+")";
+            if (parent != null) {
+                bonusName = " (" + parent.getName() + ")";
             }
             label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getCombatPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getStrengthTest() + "\nDamage: " + encounter.getActiveMonster().getDamage() + "\nToughness: " + (encounter.getMonsterLive()));
+        } else {
+            Item parent = encounter.getHorrorPreparation().getGainDiceBonus().getParentItem();
+            if (parent != null) {
+                bonusName = " (" + parent.getName() + ")";
+            }
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getHorrorPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getWillTest() + "\nHorror: " + encounter.getActiveMonster().getHorror());
         }
     }
 
