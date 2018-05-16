@@ -10,11 +10,15 @@ public enum SituationTyp {
 
     private String key;
 
-    private SituationTyp(String key) {
+     SituationTyp(String key) {
         this.key = key;
     }
 
     public String getText() {
         return ResourceUtil.get(key,this.getClass());
     }
+
+    public boolean equalsWithAll(SituationTyp o){
+        return o.equals(this) || this.equals(SituationTyp.ALL);
     }
+}

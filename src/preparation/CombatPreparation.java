@@ -24,6 +24,7 @@ public class CombatPreparation implements Preparation {
     private Monster monster;
     private int modification;
     private ItemContainer<Item> bonusItems;
+    private ItemContainer<Item> additionalDiceBoni;
     private ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
 
     BonusContainer<ItemBonus> boni;
@@ -79,6 +80,7 @@ public class CombatPreparation implements Preparation {
 
     @Override
     public void calculateBoni() {
+
         bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
         boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
         gainDiceBonus = boni.getStrongestGainDiceBonus(testTyp);

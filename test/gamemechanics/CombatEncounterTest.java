@@ -30,7 +30,7 @@ public class CombatEncounterTest {
         Assert.assertEquals(availableMonsters, monsters);
         combatEncounter.setActiveMonster(availableMonsters.get(0));
         Assert.assertNotNull(combatEncounter.getActiveMonster());
-        CombatPreparation preparation = combatEncounter.prepareForCombat();
+        CombatPreparation preparation = combatEncounter.prepareForAttack();
         ItemContainer<Item> bonusItems =preparation.getBonusItems();
         ItemContainer<Item> expectedItems = new ItemContainer<>();
         expectedItems.add(new ItemFactory().getAssets().get("&profaneTome"));

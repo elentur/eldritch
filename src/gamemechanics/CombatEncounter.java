@@ -9,7 +9,6 @@ import lombok.ToString;
 import model.Investigator;
 import model.Monster;
 import preparation.CombatPreparation;
-import preparation.Preparation;
 
 import java.util.List;
 
@@ -20,17 +19,17 @@ public class CombatEncounter implements Encounter {
     private List<Monster> monsters;
     private Investigator investigator;
     private Monster activeMonster;
-    private CombatPreparation combatPreparation;
+    private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
     private Result result;
-    private boolean isCombatCheck;
+    private boolean isAttackCheck;
 
     private EventService eventService = new EventService();
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
         this.monsters = monsters;
         this.investigator = investigator;
-        this.isCombatCheck=false;
+        this.isAttackCheck =false;
     }
 
     public List<Monster> getAvailableMonster() {
@@ -47,11 +46,11 @@ public class CombatEncounter implements Encounter {
         eventService.looseHealth(activeMonster, result.getNumberOfSuccess());
     }
 
-    public CombatPreparation prepareForCombat() {
-        this.isCombatCheck=true;
+    public CombatPreparation prepareForAttack() {
+        this.isAttackCheck =true;
         result = null;
-        combatPreparation = new CombatPreparation(TestTyp.STRENGTH , investigator, activeMonster);
-        return combatPreparation;
+        attackPreparation = new CombatPreparation(TestTyp.STRENGTH , investigator, activeMonster);
+        return attackPreparation;
     }
 
     public Investigator getInvestigator() {
@@ -59,7 +58,7 @@ public class CombatEncounter implements Encounter {
     }
 
     public CombatPreparation prepareForHorrorCheck() {
-        this.isCombatCheck=false;
+        this.isAttackCheck =false;
         horrorPreparation = new CombatPreparation(TestTyp.WILL ,investigator, activeMonster);
         return horrorPreparation;
     }
@@ -70,8 +69,8 @@ public class CombatEncounter implements Encounter {
     }
 
     public Result check() {
-        if (  this.isCombatCheck) {
-            return attackMonster();
+        if (  this.isAttackCheck) {
+            return attackCheck();
         } else {
             return horrorCheck();
         }
@@ -85,9 +84,9 @@ public class CombatEncounter implements Encounter {
         return result;
     }
 
-    private Result attackMonster( ) {
+    private Result attackCheck( ) {
 
-        SkillTest skillTest = new SkillTest(combatPreparation.getTestTyp(), combatPreparation.getModificationForSkillTest());
+        SkillTest skillTest = new SkillTest(attackPreparation.getTestTyp(), attackPreparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
         result.setMinNumberOfSuccesses(getActiveMonster().getToughness());
         return result;

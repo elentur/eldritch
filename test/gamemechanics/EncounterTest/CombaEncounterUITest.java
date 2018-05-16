@@ -37,12 +37,12 @@ public class CombaEncounterUITest extends Application {
         launch(args);
     }
 
-    Button rollDice;
-    FlowPane resultDice;
-    Label checkDataLabel;
-    Label succsessInfo;
-    VBox beforeBoni;
-    VBox afterBoni;
+    private Button rollDice;
+    private FlowPane resultDice;
+    private Label checkDataLabel;
+    private Label succsessInfo;
+    private VBox beforeBoni;
+    private VBox afterBoni;
 
     @Override
     public void start(Stage primaryStage) {
@@ -112,8 +112,8 @@ public class CombaEncounterUITest extends Application {
         resultDice = new FlowPane(10, 10);
         resultDice.setMaxWidth(300);
         resultDice.setAlignment(Pos.CENTER);
-        Button toAttack = new Button(encounter.isCombatCheck() ? "To Attack" : "To Monster Selection");
-        if (encounter.isCombatCheck()) {
+        Button toAttack = new Button(encounter.isAttackCheck() ? "To Attack" : "To Monster Selection");
+        if (encounter.isAttackCheck()) {
             toAttack.setOnAction(event -> {
                 encounter.healthLoss();
                 encounter.monsterDamage();
@@ -127,7 +127,7 @@ public class CombaEncounterUITest extends Application {
         } else {
             toAttack.setOnAction(event -> {
                 encounter.sanityLoss();
-                buildCheck(encounter, encounter.prepareForCombat(), pane);
+                buildCheck(encounter, encounter.prepareForAttack(), pane);
             });
         }
         succsessInfo = new Label();
@@ -135,9 +135,7 @@ public class CombaEncounterUITest extends Application {
             Result result = encounter.check();
             for (Die die : result) {
                 DiceButton dieButton = new DiceButton(die, result);
-                dieButton.setOnMouseClicked(event1 -> {
-                    refresh(encounter, preparation);
-                });
+                dieButton.setOnMouseClicked(event1 -> refresh(encounter, preparation));
 
                 resultDice.getChildren().add(dieButton);
 
@@ -182,9 +180,9 @@ public class CombaEncounterUITest extends Application {
         String text = "";
 
         rollDice.setText("Roll " + preparation.getNumberOfDice() + " Dice." + text);
-        resultDice.getChildren().stream().forEach(item -> ((DiceButton) item).refresh());
+        resultDice.getChildren().forEach(item -> ((DiceButton) item).refresh());
         if (encounter.getResult() != null) {
-            String damage = encounter.isCombatCheck() ? ": Loose " + (encounter.getActiveMonster().getDamage() - encounter.getResult().getNumberOfSuccess()) + " health" :
+            String damage = encounter.isAttackCheck() ? ": Loose " + (encounter.getActiveMonster().getDamage() - encounter.getResult().getNumberOfSuccess()) + " health" :
                     ": Loose " + (encounter.getActiveMonster().getHorror() - encounter.getResult().getNumberOfSuccess()) + " sanity";
             succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail" + damage);
         }
@@ -193,12 +191,12 @@ public class CombaEncounterUITest extends Application {
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
         String bonusName = "";
-        if (encounter.isCombatCheck()) {
-            Item parent = encounter.getCombatPreparation().getGainDiceBonus().getParentItem();
+        if (encounter.isAttackCheck()) {
+            Item parent = encounter.getAttackPreparation().getGainDiceBonus().getParentItem();
             if (parent != null) {
                 bonusName = " (" + parent.getName() + ")";
             }
-            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getCombatPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getStrengthTest() + "\nDamage: " + encounter.getActiveMonster().getDamage() + "\nToughness: " + (encounter.getMonsterLive()));
+            label.setText(preparation.getTestTyp().getText() + ": " + preparation.getInvestigator().getSkill(preparation.getTestTyp()) + "\nBonus: " + encounter.getAttackPreparation().getBonusModification() + bonusName + "\nMalus: " + encounter.getActiveMonster().getStrengthTest() + "\nDamage: " + encounter.getActiveMonster().getDamage() + "\nToughness: " + (encounter.getMonsterLive()));
         } else {
             Item parent = encounter.getHorrorPreparation().getGainDiceBonus().getParentItem();
             if (parent != null) {
@@ -230,7 +228,7 @@ public class CombaEncounterUITest extends Application {
         Die die;
         Result result;
 
-        public DiceButton(Die die, Result result) {
+        DiceButton(Die die, Result result) {
             this.die = die;
             this.result = result;
             value.setPrefWidth(50);
@@ -252,7 +250,7 @@ public class CombaEncounterUITest extends Application {
             refresh();
         }
 
-        public void refresh() {
+        void refresh() {
             value.setText(die.getValue() + "");
             reroll.setVisible(result.getReroll() > 0);
             shift.setVisible(die.isShiftable());

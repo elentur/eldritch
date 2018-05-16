@@ -28,37 +28,31 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
             return null;
         }
         Optional<T> opt= this.stream().filter(item -> s.equals(item.getId())).findFirst();
-        if(opt.isPresent()){
-            return opt.get();
-        }
-        return null;
+        return opt.orElse(null);
     }
 
     public ItemContainer<Item> getItemsWidthSituationTyp(SituationTyp situation) {
-        return new ItemContainer<>(this.stream().filter(item-> item.getBonus().stream().
-                        filter(bonus->bonus.getSituation().equals(situation)).
-                        count()>0).collect(Collectors.toList()));
+        return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus -> bonus.getSituation().equalsWithAll(situation)))
+                .collect(Collectors.toCollection(ItemContainer::new));
     }
 
     public ItemContainer<Item> getItemsWidthEventTimeType(EventTimeType eventTime) {
-        return new ItemContainer<>(this.stream().filter(item-> item.getBonus().stream().
-                filter(bonus->bonus.getEventTime().equals(eventTime)).
-                count()>0).collect(Collectors.toList()));
+        return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus -> bonus.getEventTime().equals(eventTime))).collect(Collectors.toCollection(ItemContainer::new));
     }
 
     public BonusContainer<ItemBonus> getBoniWithSituationTyp(SituationTyp situation) {
-        return new BonusContainer<>(this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer<ItemBonus>::addAll)
-              .stream().filter(bonus->situation.equals(bonus.getSituation())&&bonus.isActive()).collect(Collectors.toList()));
+        return this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer::addAll)
+                .stream().filter(bonus -> situation.equals(bonus.getSituation()) && bonus.isActive()).collect(Collectors.toCollection(BonusContainer::new));
 
     }
 
 
 
     public BonusContainer<ItemBonus> getBoniWithSituationTyp(SituationTyp situation, TestTyp test) {
-        return new BonusContainer<>(this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer<ItemBonus>::addAll)
-                .stream().filter(bonus->situation.equals(bonus.getSituation())
-                        &&test.equals(bonus.getTest())
-                &&bonus.isActive()).collect(Collectors.toList()));
+        return this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer::addAll)
+                .stream().filter(bonus -> situation.equals(bonus.getSituation())
+                        && test.equalsWithAll(bonus.getTest())
+                        && bonus.isActive()).collect(Collectors.toCollection(BonusContainer::new));
 
     }
 

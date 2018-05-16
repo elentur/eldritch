@@ -3,7 +3,7 @@ package model.Item;
 
 import enums.ItemTyp;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -15,10 +15,14 @@ public abstract class Item {
 
     public  List<ItemBonus> getBonus(){
 
-        return Arrays.asList(ItemBonus_Null.value());
+        return Collections.singletonList(ItemBonus_Null.value());
     }
     public ItemTyp getItemTyp(){
         return ItemTyp.NONE;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

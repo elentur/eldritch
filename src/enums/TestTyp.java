@@ -9,12 +9,16 @@ public enum TestTyp {
 
     private String key;
 
-    private TestTyp(String key) {
+     TestTyp(String key) {
         this.key = key;
     }
 
     public String getText() {
         return ResourceUtil.get(key,this.getClass());
+    }
+
+    public boolean equalsWithAll(TestTyp o){
+        return o.equals(this) || this.equals(TestTyp.ALL);
     }
 
 }

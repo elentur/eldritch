@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@EqualsAndHashCode
+
 public class ItemBonus_SwitchSkill extends ItemBonus {
     private EventTimeType eventTime = EventTimeType.BEFORE;
     private SituationTyp situation;
@@ -38,7 +38,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
         if(!isActive())return;
         if(encounter instanceof CombatEncounter){
             CombatEncounter combatEncounter = (CombatEncounter) encounter;
-            Preparation preparation = combatEncounter.getCombatPreparation();
+            Preparation preparation = combatEncounter.getAttackPreparation();
             if(preparation.getTestTyp().equals(test)){
                 preparation.setTestTyp(to);
                 preparation.calculateBoni();
