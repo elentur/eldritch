@@ -18,7 +18,8 @@ public enum TestTyp {
     }
 
     public boolean equalsWithAll(TestTyp o){
-        return o.equals(this) || this.equals(TestTyp.ALL);
+       return o.equals(this) || this.equals(TestTyp.ALL) || o.equals(TestTyp.ALL);
+
     }
 
 }

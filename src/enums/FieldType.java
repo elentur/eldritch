@@ -8,12 +8,13 @@ public enum FieldType {
     CITY("${city}"),
     WILDNESS("${wildness}"),
     SEA("${sea}"),
-    OTHER_WORLD("${other_world}");
+    OTHER_WORLD("${other_world}"),
+    ALL("${other_world}");
 
 
     private String key;
 
-    private FieldType(String key) {
+    FieldType(String key) {
         this.key = key;
     }
 
@@ -21,4 +22,7 @@ public enum FieldType {
         return ResourceUtil.get(key,this.getClass());
     }
 
+    public boolean equalsWithAll(FieldType o){
+        return o.equals(this) || this.equals(FieldType.ALL)|| this.equals(FieldType.ALL);
+    }
 }

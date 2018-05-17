@@ -10,10 +10,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+
 public class Asset extends Item {
-    private String id;
-    private String name;
+
+
     private ItemTyp typ;
     private int price;
     private List<ItemBonus> bonus;

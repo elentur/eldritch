@@ -19,6 +19,6 @@ public enum SituationTyp {
     }
 
     public boolean equalsWithAll(SituationTyp o){
-        return o.equals(this) || this.equals(SituationTyp.ALL);
+        return o.equals(this) || this.equals(SituationTyp.ALL)|| o.equals(SituationTyp.ALL);
     }
 }

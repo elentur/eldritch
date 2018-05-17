@@ -14,18 +14,15 @@ import utils.ResourceUtil;
 @Getter
 @Setter
 @AllArgsConstructor
-@EqualsAndHashCode
 public class ItemBonus_RepeatRoll extends ItemBonus {
-    private EventTimeType eventTime= EventTimeType.AFTER;
     private int value;
-    private TestTyp test;
-    private SituationTyp situation;
 
 
     public ItemBonus_RepeatRoll(int value, TestTyp test, SituationTyp situation) {
         this.value = value;
         this.test = test;
         this.situation = situation;
+        this.eventTime= EventTimeType.AFTER;
     }
 
 
@@ -34,8 +31,6 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
     Result result = encounter.getResult();
         if(!result.getFails().isEmpty()){
             result.setReroll(value);
-        }else{
-            //TODO Nachricht keine Misserfolge vorhanden
         }
     }
     @Override

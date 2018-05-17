@@ -19,17 +19,15 @@ import java.util.List;
 @AllArgsConstructor
 
 public class ItemBonus_SwitchSkill extends ItemBonus {
-    private EventTimeType eventTime = EventTimeType.BEFORE;
-    private SituationTyp situation;
-    private TestTyp test;
     private TestTyp to;
-    private List<SpellConsequence> consequence;
+
 
     public ItemBonus_SwitchSkill(SituationTyp situation, TestTyp test, TestTyp to, List<SpellConsequence> consequence) {
         this.situation = situation;
         this.consequence = consequence;
         this.test = test;
         this.to = to;
+        this.eventTime = EventTimeType.BEFORE;
     }
 
 

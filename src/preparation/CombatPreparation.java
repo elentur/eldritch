@@ -11,78 +11,42 @@ import lombok.Setter;
 import model.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
+import model.Item.ItemBonus_AdditionalDice;
 import model.Item.ItemBonus_GainDice;
 import model.Monster;
 
 @Getter
 @Setter
-public class CombatPreparation implements Preparation {
+public class CombatPreparation extends Preparation {
 
-    private TestTyp testTyp;
-    private SituationTyp situation;
-    private Investigator investigator;
+
     private Monster monster;
     private int modification;
-    private ItemContainer<Item> bonusItems;
-    private ItemContainer<Item> additionalDiceBoni;
-    private ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
 
-    BonusContainer<ItemBonus> boni;
-
-    private GameService game;
 
     public CombatPreparation(TestTyp testTyp, Investigator investigator, Monster monster) {
-        this.testTyp = testTyp;
-        this.situation = SituationTyp.COMBAT_ENCOUNTER;
-        this.modification = monster.getStrengthTest();
-        this.investigator = investigator;
+        super(testTyp,investigator,SituationTyp.COMBAT_ENCOUNTER);
         this.monster = monster;
-        game = GameService.getInstance();
-        calculateBoni();
+        this.modification = testTyp.equals(TestTyp.STRENGTH)?monster.getStrengthTest():monster.getWillTest();
 
     }
 
-    @Override
-    public TestTyp getTestTyp() {
-        return testTyp;
-    }
 
-    @Override
-    public int getModification() {
-        return modification;
-    }
 
     @Override
     public int getModificationForSkillTest() {
-
-        int wValue = gainDiceBonus.getValue();
-        return modification+wValue;
+        return modification+super.getModificationForSkillTest();
 
     }
 
-    @Override
-    public int getNumberOfDice() {
-        int value = getModificationForSkillTest()+ investigator.getSkill(testTyp);
-        return value<1?1:value;
-    }
 
 
-    public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
-        calculateBoni();
-        return boni.getAllByEventTime(eventTime);
-    }
-
-    @Override
-    public int getBonusModification() {
-        return gainDiceBonus.getValue();
-    }
 
 
-    @Override
-    public void calculateBoni() {
 
-        bonusItems = investigator.getInventory().getItemsWidthSituationTyp(situation);
-        boni =  bonusItems.getBoniWithSituationTyp(situation,testTyp);
-        gainDiceBonus = boni.getStrongestGainDiceBonus(testTyp);
-    }
+
+
+
+
+
 }

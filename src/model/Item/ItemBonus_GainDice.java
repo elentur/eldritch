@@ -12,14 +12,10 @@ import utils.ResourceUtil;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 public class ItemBonus_GainDice extends ItemBonus {
 
     public static final ItemBonus_GainDice EMPTY = new ItemBonus_GainDice(0, TestTyp.NONE, SituationTyp.NONE);
     private int value;
-    private TestTyp test;
-    private SituationTyp situation;
-    private EventTimeType eventTime = EventTimeType.BEFORE;
 
     public ItemBonus_GainDice(int value, TestTyp test, SituationTyp situation) {
         this.value = value;

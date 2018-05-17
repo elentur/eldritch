@@ -1,33 +1,90 @@
 package preparation;
 
+import Service.GameService;
 import container.BonusContainer;
+import container.ItemContainer;
 import enums.EventTimeType;
+import enums.SituationTyp;
 import enums.TestTyp;
+import lombok.Getter;
+import lombok.Setter;
 import model.Investigator;
+import model.Item.Item;
 import model.Item.ItemBonus;
-import model.Monster;
+import model.Item.ItemBonus_AdditionalDice;
+import model.Item.ItemBonus_GainDice;
 
-public interface Preparation {
+import java.util.function.Function;
 
-    Investigator getInvestigator();
+@Getter
+@Setter
+public class Preparation {
 
-    Monster getMonster();
+    protected TestTyp testTyp;
+    protected SituationTyp situation;
+    protected Investigator investigator;
+    protected BonusContainer<ItemBonus_AdditionalDice> additionalDiceBoni;
+    protected ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
 
-    TestTyp getTestTyp();
+    BonusContainer<ItemBonus> boni;
 
-    int getModification();
+    private GameService game;
 
-    void setTestTyp(TestTyp testTyp);
 
-    void setModification(int mod);
 
-    int getModificationForSkillTest();
+    Preparation(TestTyp testTyp, Investigator investigator,SituationTyp situation) {
+        this.testTyp = testTyp;
+        this.situation = situation;
+        this.investigator = investigator;
+        game = GameService.getInstance();
+        calculateBoni();
 
-    int getNumberOfDice();
+    }
 
-    BonusContainer<ItemBonus> getBoni(EventTimeType eventTim);
 
-    int getBonusModification();
+    public TestTyp getTestTyp() {
+        return testTyp;
+    }
 
-    void calculateBoni();
+
+
+
+    public int getModificationForSkillTest() {
+        return getGainDiceBonus().getValue()+getAdditionDiceBoniSum();
+
+    }
+
+
+    public int getNumberOfDice() {
+        int value = getModificationForSkillTest()+ investigator.getSkill(testTyp);
+        return value<1?1:value;
+    }
+
+
+    public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
+        calculateBoni();
+        return boni.getAllByEventTime(eventTime);
+    }
+
+
+    public ItemBonus_GainDice getGainDiceBonus() {
+        return gainDiceBonus;
+    }
+
+
+    public int getAdditionDiceBoniSum() {
+        return additionalDiceBoni.stream().mapToInt(ItemBonus_AdditionalDice::getValue).sum();
+    }
+
+
+    public void calculateBoni() {
+        Function<ItemBonus,Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(situation)
+                &&bonus.getTest().equalsWithAll(testTyp)
+                && bonus.getField().equalsWithAll(game.getFieldOfInvestigator(investigator).getType())
+                && bonus.isActive();
+        ItemContainer<Item> bonusItems = GameService.getBonusItemsforInvestigatorAndSituation(investigator);
+        additionalDiceBoni = bonusItems.getAdditionalDiceBoni(filter);
+        boni =  bonusItems.getBoniWithFilter(filter);
+        gainDiceBonus = boni.getStrongestGainDiceBonus(filter);
+    }
 }

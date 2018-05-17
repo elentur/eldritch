@@ -2,15 +2,19 @@ package model.Item;
 
 
 import enums.ItemTyp;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collections;
 import java.util.List;
 
-
+@Getter
+@Setter
+@EqualsAndHashCode(of={"id"})
 public abstract class Item {
-
-    public abstract String getId();
-    public abstract String getName();
+    protected String id;
+    protected String name;
 
 
     public  List<ItemBonus> getBonus(){

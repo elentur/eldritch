@@ -15,14 +15,10 @@ import utils.ResourceUtil;
 @Getter
 @Setter
 
-@EqualsAndHashCode
 public class ItemBonus_DiceResult extends ItemBonus {
 
     private int num;
     private int value;
-    private TestTyp test;
-    private SituationTyp situation;
-    private EventTimeType eventTime =EventTimeType.AFTER;
 
     public ItemBonus_DiceResult(int num, int value, TestTyp test, SituationTyp situation) {
         this.num = num;
