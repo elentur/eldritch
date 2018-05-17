@@ -25,6 +25,18 @@
         "typ": "SPELL",
         "id": "&stormOfSpirits"
       }
+    ],
+    "bonus": [
+      {
+        "typ": "ADDITIONAL_DICE",
+        "value": {
+          "value": 2,
+          "test": "ALL",
+          "field": "ALL",
+          "situation": "COMBAT_ENCOUNTER",
+          "range": "LOCAL"
+        }
+      }
     ]
   }
 ]

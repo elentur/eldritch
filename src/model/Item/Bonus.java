@@ -1,6 +1,7 @@
 package model.Item;
 
 import enums.EventTimeType;
+import enums.FieldType;
 import enums.SituationTyp;
 import enums.TestTyp;
 import gamemechanics.Encounter;
@@ -11,4 +12,8 @@ public interface Bonus {
     EventTimeType getEventTime();
     TestTyp getTest();
     String getText();
+    FieldType getField();
+    boolean isActive();
+
+    String getParentName();
 }

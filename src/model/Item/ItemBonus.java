@@ -21,6 +21,14 @@ public abstract class ItemBonus implements Bonus{
     protected EventTimeType eventTime = EventTimeType.NONE;
     protected List<SpellConsequence> consequence = new ArrayList<>();
 
+    @Override
+    public String getParentName(){
+        if(getParentItem()==null){
+            return "";
+        }
+        return getParentItem().getName();
+    }
+
 
 
 }

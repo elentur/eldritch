@@ -3,6 +3,7 @@ package container;
 import enums.EventTimeType;
 import enums.SituationTyp;
 import enums.TestTyp;
+import model.Item.Bonus;
 import model.Item.Item;
 import model.Item.ItemBonus;
 import model.Item.ItemBonus_AdditionalDice;
@@ -40,7 +41,7 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
                 .collect(Collectors.toCollection(ItemContainer::new));
     }
 
-    public BonusContainer<ItemBonus> getBoniWithFilter(Function<ItemBonus,Boolean> filter) {
+    public BonusContainer<Bonus> getBoniWithFilter(Function<Bonus,Boolean> filter) {
         return this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer::addAll)
                 .stream().filter(filter::apply).collect(Collectors.toCollection(BonusContainer::new));
 
@@ -51,10 +52,7 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
         boni.addAll(t.getBonus());
     }
 
-    public BonusContainer<ItemBonus_AdditionalDice> getAdditionalDiceBoni(Function<ItemBonus,Boolean> filter) {
-        return  this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer::addAll)
-                .stream().filter(bonus -> bonus instanceof ItemBonus_AdditionalDice).filter(filter::apply).map(bonus -> (ItemBonus_AdditionalDice)bonus).collect(Collectors.toCollection(BonusContainer::new));
-    }
+
 
     public ItemContainer<Item> getItemsWidthSituationTyp(SituationTyp situationTyp) {
         return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus->bonus.getSituation().equalsWithAll(situationTyp)))

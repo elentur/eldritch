@@ -9,10 +9,7 @@ import enums.TestTyp;
 import lombok.Getter;
 import lombok.Setter;
 import model.Investigator;
-import model.Item.Item;
-import model.Item.ItemBonus;
-import model.Item.ItemBonus_AdditionalDice;
-import model.Item.ItemBonus_GainDice;
+import model.Item.*;
 
 import java.util.function.Function;
 
@@ -26,7 +23,7 @@ public class Preparation {
     protected BonusContainer<ItemBonus_AdditionalDice> additionalDiceBoni;
     protected ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
 
-    BonusContainer<ItemBonus> boni;
+    BonusContainer<Bonus> boni;
 
     private GameService game;
 
@@ -61,7 +58,7 @@ public class Preparation {
     }
 
 
-    public BonusContainer<ItemBonus> getBoni(EventTimeType eventTime) {
+    public BonusContainer<Bonus> getBoni(EventTimeType eventTime) {
         calculateBoni();
         return boni.getAllByEventTime(eventTime);
     }
@@ -78,13 +75,14 @@ public class Preparation {
 
 
     public void calculateBoni() {
-        Function<ItemBonus,Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(situation)
+        Function<Bonus,Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(situation)
                 &&bonus.getTest().equalsWithAll(testTyp)
                 && bonus.getField().equalsWithAll(game.getFieldOfInvestigator(investigator).getType())
                 && bonus.isActive();
-        ItemContainer<Item> bonusItems = GameService.getBonusItemsforInvestigatorAndSituation(investigator);
-        additionalDiceBoni = bonusItems.getAdditionalDiceBoni(filter);
+        ItemContainer<Item> bonusItems = game.getBonusItemsforInvestigator(investigator);
         boni =  bonusItems.getBoniWithFilter(filter);
+        boni.addAll( game.getInvestigatorBoni(investigator));
+        additionalDiceBoni = boni.getAdditionalDiceBoni(filter);
         gainDiceBonus = boni.getStrongestGainDiceBonus(filter);
     }
 }

@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import container.InvestigatorContainer;
 import container.ItemContainer;
+import deserializer.ItemBonusDeserializer;
 import deserializer.StartingPossessionDeserializer;
 import lombok.extern.java.Log;
 import model.Investigator;
+import model.Item.ItemBonus;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +25,12 @@ public class InvestigatorFactory {
             ObjectMapper mapper = new ObjectMapper();
             SimpleModule module = new SimpleModule();
             module.addDeserializer(ItemContainer.class, new StartingPossessionDeserializer());
-            mapper.registerModule(module); investigators = new InvestigatorContainer();
+            mapper.registerModule(module);
+             module = new SimpleModule();
+            module.addDeserializer(ItemBonus.class, new ItemBonusDeserializer());
+            mapper.registerModule(module);
+
+            investigators = new InvestigatorContainer();
             try {
                 File file = new File("./resources/investigator/investigator.json");
                 log.info("Beginn unmarschalling investigators");

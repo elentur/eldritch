@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -16,9 +17,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString(of={"firstName","skillSet","health","sanity"})
-public class Investigator {
+public class Investigator extends Item{
     private String id;
     private String firstName;
     private String lastName;
@@ -31,6 +31,8 @@ public class Investigator {
     private String startingSpace;
     private ItemContainer<StartingPossession> startingPossessions;
 
+    private List<ItemBonus> bonus;
+
     private ItemContainer<Item> inventory;
 
     public String getOccupation() {
@@ -42,9 +44,11 @@ public class Investigator {
     }
 
     public List<ConditionTyp> getConditions() {
-        List<ConditionTyp> conditions = new ArrayList<>();
-        return conditions;
+        return new ArrayList<>();
+    }
 
+    public String getName(){
+        return firstName +" " +lastName;
     }
 
     public Investigator getInstance() {
@@ -66,6 +70,7 @@ public class Investigator {
         inv.setActualSanity(sanity);
         inv.setStartingSpace(startingSpace);
         inv.setStartingPossessions(startingPossessions);
+        inv.setBonus(bonus);
         ItemFactory itemFactory = new ItemFactory();
         inv.setInventory(new ItemContainer<>());
         for (StartingPossession p : startingPossessions) {

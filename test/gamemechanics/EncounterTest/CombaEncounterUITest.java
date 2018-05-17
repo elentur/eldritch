@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Investigator;
 import model.Item.Asset;
+import model.Item.Bonus;
 import model.Item.Item;
 import model.Item.ItemBonus;
 import model.Monster;
@@ -156,8 +157,8 @@ public class CombaEncounterUITest extends Application {
         Node node = boni.getChildren().get(0);
         boni.getChildren().clear();
         boni.getChildren().add(node);
-        for (ItemBonus bonus : preparation.getBoni(timeType)) {
-            Button button = new Button(bonus.getParentItem().getName() + ": " + bonus.getText());
+        for (Bonus bonus : preparation.getBoni(timeType)) {
+            Button button = new Button(bonus.getParentName() + ": " + bonus.getText());
             button.setWrapText(true);
             button.setMaxWidth(150);
             button.setOnAction(event -> {
