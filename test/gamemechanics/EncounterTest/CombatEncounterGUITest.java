@@ -1,11 +1,23 @@
 package gamemechanics.EncounterTest;
 
-import gui.Dialog;
+import container.ItemContainer;
+import factory.InvestigatorFactory;
+import factory.ItemFactory;
+import factory.MonsterFactory;
+import gamemechanics.CombatEncounter;
+import gui.DialogGui;
+import gui.EncounterGui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Investigator;
+import model.Item.Asset;
+import model.Monster;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CombatEncounterGUITest extends Application {
 
@@ -16,13 +28,25 @@ public class CombatEncounterGUITest extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-
+        CombatEncounter encounter = initCombatEncounter();
         VBox root = new VBox();
         Scene scene = new Scene(root);
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
         primaryStage.show();
-        Dialog dlg = new Dialog("No Scene created.");
+        DialogGui dlg = new EncounterGui(encounter);
         dlg.showAndWait();
+    }
+
+    private CombatEncounter initCombatEncounter() {
+        Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
+        ItemContainer<Asset> assets = new ItemFactory().getAssets();
+        inv.getInventory().remove(assets.get("&profaneTome"));
+        inv.getInventory().addAll(assets);
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
+        monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
+        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
+        return new CombatEncounter(monsters, inv);
     }
 }
