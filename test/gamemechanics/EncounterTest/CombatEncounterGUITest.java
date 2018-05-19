@@ -5,8 +5,9 @@ import factory.InvestigatorFactory;
 import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.CombatEncounter;
+import gui.CombatEncounterGui;
 import gui.DialogGui;
-import gui.EncounterGui;
+import gui.Fonts;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -27,14 +28,15 @@ public class CombatEncounterGUITest extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
+        Fonts.init(primaryStage);
         CombatEncounter encounter = initCombatEncounter();
         VBox root = new VBox();
         Scene scene = new Scene(root);
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
+        scene.setOnKeyPressed(e->primaryStage.close());
         primaryStage.show();
-        DialogGui dlg = new EncounterGui(encounter);
+        DialogGui dlg = new CombatEncounterGui(encounter);
         dlg.showAndWait();
     }
 
@@ -49,4 +51,6 @@ public class CombatEncounterGUITest extends Application {
         monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
         return new CombatEncounter(monsters, inv);
     }
+
+
 }

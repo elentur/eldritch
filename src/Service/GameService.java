@@ -8,11 +8,6 @@ import model.Field;
 import model.Investigator;
 import model.Item.Bonus;
 import model.Item.Item;
-import model.Item.ItemBonus;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class GameService {
     private static GameService ourInstance = new GameService();
@@ -22,6 +17,7 @@ public class GameService {
     }
 
     private GameService() {
+
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
