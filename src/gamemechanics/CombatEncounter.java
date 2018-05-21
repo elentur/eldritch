@@ -9,31 +9,38 @@ import lombok.ToString;
 import model.Investigator;
 import model.Monster;
 import preparation.CombatPreparation;
+import preparation.Preparation;
 
 import java.util.List;
 
 @Getter
 @Setter
 @ToString(of = {"activeMonster", "investigator"})
-public class CombatEncounter implements Encounter {
+public class CombatEncounter extends Encounter {
     private List<Monster> monsters;
     private Investigator investigator;
     private Monster activeMonster;
     private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
     private Result result;
-    private boolean isAttackCheck;
+
 
     private EventService eventService = new EventService();
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
         this.monsters = monsters;
         this.investigator = investigator;
-        this.isAttackCheck =false;
     }
 
     public List<Monster> getAvailableMonster() {
         return monsters;
+    }
+
+    public  void setActiveMonster(Monster monster){
+        activeMonster=monster;
+        encounterPart =1;
+        attackPreparation=null;
+        horrorPreparation=null;
     }
 
     public void sanityLoss() {
@@ -46,10 +53,24 @@ public class CombatEncounter implements Encounter {
         eventService.looseHealth(activeMonster, result.getNumberOfSuccess());
     }
 
-    public CombatPreparation prepareForAttack() {
-        this.isAttackCheck =true;
+    @Override
+    public Preparation getPreparation(){
+
+       if (  encounterPart ==1)  {
+            return prepareForHorrorCheck();
+        }else{
+           return prepareForAttack();
+       }
+
+    }
+
+
+    private CombatPreparation prepareForAttack() {
+
         result = null;
-        attackPreparation = new CombatPreparation(TestTyp.STRENGTH , investigator, activeMonster);
+        if(attackPreparation==null) {
+            attackPreparation = new CombatPreparation(TestTyp.STRENGTH, investigator, activeMonster);
+        }
         return attackPreparation;
     }
 
@@ -57,9 +78,10 @@ public class CombatEncounter implements Encounter {
         return investigator;
     }
 
-    public CombatPreparation prepareForHorrorCheck() {
-        this.isAttackCheck =false;
-        horrorPreparation = new CombatPreparation(TestTyp.WILL ,investigator, activeMonster);
+    private CombatPreparation prepareForHorrorCheck() {
+        if(horrorPreparation==null) {
+            horrorPreparation = new CombatPreparation(TestTyp.WILL, investigator, activeMonster);
+        }
         return horrorPreparation;
     }
 
@@ -68,11 +90,12 @@ public class CombatEncounter implements Encounter {
         setActiveMonster(null);
     }
 
+    @Override
     public Result check() {
-        if (  this.isAttackCheck) {
-            return attackCheck();
-        } else {
+        if (  encounterPart==1) {
             return horrorCheck();
+        } else {
+            return attackCheck();
         }
     }
 

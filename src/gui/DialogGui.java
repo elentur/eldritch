@@ -5,7 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -24,8 +27,8 @@ public abstract class DialogGui extends Stage {
     private final static int centerY = screenHeight / 2;
     private final static Image backgroundImage= new Image("images/InfoScreen.png");
 
-    protected Rectangle background;
-    protected StackPane main;
+    Rectangle background;
+    StackPane main;
 
     DialogGui(String s, double width, double height) {
         super();
@@ -52,6 +55,7 @@ public abstract class DialogGui extends Stage {
         this.getScene().getRoot().setEffect(new DropShadow());
         this.setFullScreen(true);
         scene.setOnKeyPressed(e->this.close());
+
 
 
 

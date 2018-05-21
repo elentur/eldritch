@@ -14,7 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import model.Monster;
 
-public class MonsterButton extends Group {
+class MonsterButton extends Group {
 
     private final static Image backgroundImage = new Image("images/ItemBack.png");
     private final static Image sanityImage = new Image("images/sanity.png");
@@ -29,7 +29,7 @@ public class MonsterButton extends Group {
     private Node actualNode;
     private Node oldNode;
 
-    public MonsterButton(Monster monster) {
+    MonsterButton(Monster monster) {
         this.monster = monster;
         Rectangle backside = new Rectangle(200, 150, new ImagePattern(backgroundImage));
         Image monsterImage = new Image("images/monster/" + monster.getId() + ".jpg");
@@ -45,12 +45,19 @@ public class MonsterButton extends Group {
         this.getChildren().add(actualNode);
 
 
-        this.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
-        this.setOnMouseExited(e -> {
+
+        setEventsForButton(actualNode);
+        setEventsForButton(oldNode);
+
+    }
+
+    private void setEventsForButton(Node node) {
+        node.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
+        node.setOnMouseExited(e -> {
             actualNode.setEffect(null);
             this.setEffect(Effects.dropShadow);
         });
-        this.setOnMouseClicked(e -> {
+        node.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.SECONDARY)) {
                 Animations.startRotateFromTo(actualNode, oldNode, this);
                 Node temp = actualNode;
@@ -58,17 +65,17 @@ public class MonsterButton extends Group {
                 oldNode = temp;
             }
         });
-        this.setOnMousePressed(e -> {
+
+        node.setOnMousePressed(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 this.setEffect(null);
             }
         });
-        this.setOnMouseReleased(e -> {
+        node.setOnMouseReleased(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 this.setEffect(Effects.dropShadow);
             }
         });
-
     }
 
     private Group createBacksideInfo(Rectangle backside) {

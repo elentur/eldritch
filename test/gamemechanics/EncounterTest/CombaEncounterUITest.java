@@ -25,7 +25,6 @@ import model.Investigator;
 import model.Item.Asset;
 import model.Item.Bonus;
 import model.Item.Item;
-import model.Item.ItemBonus;
 import model.Monster;
 import preparation.Preparation;
 
@@ -78,7 +77,7 @@ public class CombaEncounterUITest extends Application {
             button.setOnMouseExited(event -> info.setText(""));
             button.setOnAction(event -> {
                 encounter.setActiveMonster(monster);
-                buildCheck(encounter, encounter.prepareForHorrorCheck(), pane);
+                buildCheck(encounter, encounter.getPreparation(), pane);
             });
             monsterView.getChildren().add(button);
         }
@@ -113,8 +112,8 @@ public class CombaEncounterUITest extends Application {
         resultDice = new FlowPane(10, 10);
         resultDice.setMaxWidth(300);
         resultDice.setAlignment(Pos.CENTER);
-        Button toAttack = new Button(encounter.isAttackCheck() ?  "To Monster Selection": "To Attack");
-        if (encounter.isAttackCheck()) {
+        Button toAttack = new Button(encounter.getEncounterPart()==2 ?  "To Monster Selection": "To Attack");
+        if (encounter.getEncounterPart()==2) {
             toAttack.setOnAction(event -> {
                 encounter.healthLoss();
                 encounter.monsterDamage();
@@ -128,7 +127,9 @@ public class CombaEncounterUITest extends Application {
         } else {
             toAttack.setOnAction(event -> {
                 encounter.sanityLoss();
-                buildCheck(encounter, encounter.prepareForAttack(), pane);
+                encounter.completeEncounterPart();
+                buildCheck(encounter, encounter.getPreparation(), pane);
+
             });
         }
         succsessInfo = new Label();
@@ -181,7 +182,7 @@ public class CombaEncounterUITest extends Application {
         rollDice.setText("Roll " + preparation.getNumberOfDice() + " Dice." + text);
         resultDice.getChildren().forEach(item -> ((DiceButton) item).refresh());
         if (encounter.getResult() != null) {
-            String damage = encounter.isAttackCheck() ? ": Loose " + (encounter.getActiveMonster().getDamage() - encounter.getResult().getNumberOfSuccess()) + " health" :
+            String damage = encounter.getEncounterPart()==2 ? ": Loose " + (encounter.getActiveMonster().getDamage() - encounter.getResult().getNumberOfSuccess()) + " health" :
                     ": Loose " + (encounter.getActiveMonster().getHorror() - encounter.getResult().getNumberOfSuccess()) + " sanity";
             succsessInfo.setText(encounter.getResult().isSuccess() ? "Success" : "Fail" + damage);
         }
@@ -190,7 +191,7 @@ public class CombaEncounterUITest extends Application {
 
     private void setCheckText(CombatEncounter encounter, Preparation preparation, Label label) {
         String bonusName = "";
-        if (encounter.isAttackCheck()) {
+        if (encounter.getEncounterPart()==2) {
             Item parent = encounter.getAttackPreparation().getGainDiceBonus().getParentItem();
             if (parent != null) {
                 bonusName = " (" + parent.getName() + ")";

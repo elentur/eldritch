@@ -10,7 +10,7 @@ import model.Item.Item;
 import model.Monster;
 import org.junit.Test;
 import org.testng.Assert;
-import preparation.CombatPreparation;
+import preparation.Preparation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class CombatEncounterTest {
         Assert.assertEquals(availableMonsters, monsters);
         combatEncounter.setActiveMonster(availableMonsters.get(0));
         Assert.assertNotNull(combatEncounter.getActiveMonster());
-        CombatPreparation preparation = combatEncounter.prepareForAttack();
+        Preparation preparation = combatEncounter.getPreparation();
         ItemContainer<Item> expectedItems = new ItemContainer<>();
         expectedItems.add(new ItemFactory().getAssets().get("&profaneTome"));
         expectedItems.add(new ItemFactory().getSpells().get("&stormOfSpirits"));
