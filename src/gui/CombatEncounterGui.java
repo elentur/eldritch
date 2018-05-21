@@ -1,9 +1,6 @@
 package gui;
 
 import gamemechanics.CombatEncounter;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.layout.FlowPane;
 import model.Monster;
 
 public class CombatEncounterGui extends EncounterGui {
@@ -17,18 +14,18 @@ public class CombatEncounterGui extends EncounterGui {
 
     private void showMonsterSelection() {
         if(encounter.getMonsters().size()>1){
-            FlowPane pane = new FlowPane();
-         //   pane.setBorder(new Border(new BorderStroke(Color.YELLOW,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderStroke.MEDIUM)));
-            pane.setPadding(new Insets(20,20,20,20));
-            pane.setHgap(20);
-            pane.setVgap(20);
-            pane.setAlignment(Pos.CENTER);
+            ItemScrollPane pane = new ItemScrollPane();
+            pane.setWidth(background.getWidth()*0.6);
+            pane.setHeight(background.getHeight()*0.7);
+
             main.getChildren().add(pane);
             for(Monster monster : encounter.getMonsters()) {
-                pane.getChildren().add(new MonsterButton(monster));
+                pane.getScrollableChildren().add(new MonsterButton(monster));
             }
         }else{
 
         }
     }
+
+
 }

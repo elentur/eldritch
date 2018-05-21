@@ -1,6 +1,7 @@
-.monster_button_name .text{
--fx-stroke:#FF0000FF;
-}
-.bold .text{
--fx-stroke-width:2;
+
+.scroll-pane .viewport {
+    -fx-background-image: url('../images/ShowCase.jpg');
+    -fx-background-position:  center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
 }

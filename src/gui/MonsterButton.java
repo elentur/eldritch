@@ -5,8 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -22,8 +20,8 @@ public class MonsterButton extends Group {
     private final static Image sanityImage = new Image("images/sanity.png");
     private final static Image healthImage = new Image("images/health.png");
 
-    private static ColorAdjust colorAdjust = new ColorAdjust(0.0, 0.1, 0.3, 0.0);
-    private static DropShadow dropShadow = new DropShadow();
+
+
 
     private final Monster monster;
 
@@ -43,14 +41,14 @@ public class MonsterButton extends Group {
 
         oldNode = createBacksideInfo(backside);
 
-        this.setEffect(dropShadow);
+        this.setEffect(Effects.dropShadow);
         this.getChildren().add(actualNode);
 
 
-        this.setOnMouseEntered(e -> actualNode.setEffect(colorAdjust));
+        this.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
         this.setOnMouseExited(e -> {
             actualNode.setEffect(null);
-            this.setEffect(dropShadow);
+            this.setEffect(Effects.dropShadow);
         });
         this.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.SECONDARY)) {
@@ -67,7 +65,7 @@ public class MonsterButton extends Group {
         });
         this.setOnMouseReleased(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                this.setEffect(dropShadow);
+                this.setEffect(Effects.dropShadow);
             }
         });
 
