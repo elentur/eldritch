@@ -13,7 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 
-public class ItemScrollPane extends Group {
+class ItemScrollPane extends Group {
 
     private final FlowPane flowPane;
     private final ScrollPane scrollPane;
@@ -22,7 +22,7 @@ public class ItemScrollPane extends Group {
     private final ArrowButton up;
     private final ArrowButton down;
 
-    public ItemScrollPane() {
+    ItemScrollPane() {
         flowPane = new FlowPane();
         scrollPane = new ScrollPane(flowPane);
         scrollPane.setFitToWidth(true);
@@ -50,8 +50,8 @@ public class ItemScrollPane extends Group {
         down.translateYProperty().bind(scrollPane.translateYProperty().add(scrollPane.heightProperty().subtract(down.heightProperty())));
 
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        down.setOnMousePressed(e->Animations.scroll2(scrollPane,1,down));
-        up.setOnMousePressed(e->Animations.scroll2(scrollPane,-1,up));
+        down.setOnMousePressed(e->Animations.scroll(scrollPane,1,down));
+        up.setOnMousePressed(e->Animations.scroll(scrollPane,-1,up));
 
         up.enabledProperty().bind(scrollPane.vvalueProperty().isNotEqualTo(0));
         down.enabledProperty().bind(scrollPane.vvalueProperty().isNotEqualTo(1));
@@ -62,20 +62,20 @@ public class ItemScrollPane extends Group {
     }
 
 
-    public ObservableList<Node> getScrollableChildren() {
+    ObservableList<Node> getScrollableChildren() {
         return flowPane.getChildren();
     }
 
-    public void setAlignment(Pos center) {
+     void setAlignment(Pos center) {
         flowPane.setAlignment(center);
     }
 
-    public void setWidth(double width) {
+    void setWidth(double width) {
         scrollPane.setMinWidth(width);
         scrollPane.setMaxWidth(width);
     }
 
-    public void setHeight(double height) {
+    void setHeight(double height) {
         scrollPane.setMinHeight(height);
         scrollPane.setMaxHeight(height);
     }

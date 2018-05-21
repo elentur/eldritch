@@ -7,9 +7,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.util.Duration;
 
 
-public class Animations {
+class Animations {
 
-	public static void startRotateFromTo(Node oldNode, Node node, Group group) {
+	static void startRotateFromTo(Node oldNode, Node node, Group group) {
 		ScaleTransition st1 = new ScaleTransition(Duration.millis(70), group);
 		st1.setByX(-1);
 		st1.playFromStart();
@@ -23,28 +23,8 @@ public class Animations {
 		});
 	}
 
-	public static void scroll(ScrollPane pane, double v) {
-		double h = pane.getContent().getBoundsInLocal().getHeight();
-		double value = pane.getVvalue()+(400*v)/h;
-		int duration = 1000;
-		if(value > 1){
-			duration=(int)(duration*(value-1));
-			value=1;
-		}
-		else if(value<0 ){
-			duration=(int)(duration*(1+value));
-			value=0;
-		}
-		final Timeline timeline = new Timeline();
-		timeline.setCycleCount(1);
-		timeline.setAutoReverse(true);
-		final KeyValue kv = new KeyValue(pane.vvalueProperty(), value, Interpolator.EASE_BOTH);
-		final KeyFrame kf = new KeyFrame(Duration.millis(duration), kv);
-		timeline.getKeyFrames().add(kf);
-		timeline.playFromStart();
-	}
 
-	public static void scroll2(ScrollPane pane,double v, ArrowButton button){
+	static void scroll(ScrollPane pane, double v, Button button){
 		final double scrollSpeed = 1.5 ;
 
 		AnimationTimer timer = new AnimationTimer() {
