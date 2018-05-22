@@ -28,7 +28,7 @@ class ItemScrollPane extends Group {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.getStylesheets().add("css/rootStyle.css");
-        scrollPane.getStyleClass().add("item-scroll-pane");
+        scrollPane.getStyleClass().add("show-case");
         flowPane.setPadding(new Insets(20, 20, 20, 20));
         flowPane.setHgap(20);
         flowPane.setVgap(20);

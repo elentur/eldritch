@@ -11,8 +11,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
 public class Button extends StackPane {
-
-    private final static Image backgroundImage = new Image("images/arrow.png");
     private BooleanProperty enabled = new SimpleBooleanProperty(true);
     private BooleanProperty armed = new SimpleBooleanProperty(false);
     final Rectangle image;
@@ -55,7 +53,7 @@ public class Button extends StackPane {
         });
         //this.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
         this.setPadding(new Insets(12));
-        this.setDisable(true);
+
         enabled.addListener(e -> {
             this.setDisable(!isEnabled());
             if (isDisabled()) {

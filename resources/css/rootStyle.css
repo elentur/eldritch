@@ -1,7 +1,19 @@
 
-.scroll-pane .viewport {
+.show-case .viewport   {
     -fx-background-image: url('../images/ShowCase.jpg');
     -fx-background-position:  center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
+}
+
+.small-show-case     {
+    -fx-background-image: url('../images/SmallShowCase.jpg');
+    -fx-background-position:  center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+}
+
+.text-stroke-black .text{
+    -fx-stroke: black;
+    -fx-stroke-width: 2;
 }

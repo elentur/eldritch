@@ -1,5 +1,6 @@
 package gui;
 
+import enums.TestTyp;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -7,7 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -19,6 +22,7 @@ class MonsterButton extends Group {
     private final static Image backgroundImage = new Image("images/ItemBack.png");
     private final static Image sanityImage = new Image("images/sanity.png");
     private final static Image healthImage = new Image("images/health.png");
+    private final static Image toughnessImage = new Image("images/ReckoningBlack.png");
 
 
 
@@ -93,7 +97,7 @@ class MonsterButton extends Group {
 
 
 
-        Label horrorSymbol = new Label("\"     " + monster.getWillTest());
+        Label horrorSymbol = new Label(TestTyp.WILL.getSymbol() + monster.getWillTest());
         horrorSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
         horrorSymbol.setPadding(new Insets(0,10,0,10));
         Label horrorValue = new Label(monster.getHorror()+"");
@@ -105,7 +109,7 @@ class MonsterButton extends Group {
         horror.setAlignment(Pos.CENTER);
 
 
-        Label attackSymbol = new Label("§     " + monster.getStrengthTest());
+        Label attackSymbol = new Label(TestTyp.STRENGTH.getSymbol() + monster.getStrengthTest());
         attackSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
         attackSymbol.setPadding(new Insets(0,10,0,10));
         Label attackValue = new Label(monster.getDamage()+"");
@@ -116,10 +120,17 @@ class MonsterButton extends Group {
         attack.setSpacing(5);
         attack.setAlignment(Pos.CENTER);
 
+        Rectangle toughness = new Rectangle(40,40,new ImagePattern(toughnessImage));
+        Label toughnessValue = new Label(monster.getToughness()+"");
+        toughnessValue.getStyleClass().add("text-stroke-black");
+        toughnessValue.setPadding(new Insets(0,10,0,10));
+        toughnessValue.styleProperty().bind(Fonts.getFont(0.4, Fonts.WHITE, Fonts.FontTyp.BOLD));
+        HBox values = new HBox(new VBox(horror,attack),new StackPane(toughness,toughnessValue));
+
         Label special = new Label("Test text fsf fsd sd sdfggd g dfg df dfggdf gdfgfd sfdfsd sdfdsfds sdfdsfd");
         special.setWrapText(true);
         special.styleProperty().bind(Fonts.getFont(0.18, Fonts.DARK, Fonts.FontTyp.ITALIC));
-        main.getChildren().addAll(name,horror,attack,special);
+        main.getChildren().addAll(name,values,special);
         backsideInfo.getChildren().add(main);
         backside.heightProperty().bind(main.heightProperty());
         return backsideInfo;

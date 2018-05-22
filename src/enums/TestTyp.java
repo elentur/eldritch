@@ -4,13 +4,21 @@ import utils.ResourceUtil;
 
 public enum TestTyp {
 
-    LORE("${lore}"),INFLUENCE("${influence}"),OBSERVATION("${observation}"),STRENGTH("${strength}"), NONE(""), ALL("${all}"), WILL("${will}");
+    LORE("${lore}","%     "),
+    INFLUENCE("${influence}","&     "),
+    OBSERVATION("${observation}","$     "),
+    STRENGTH("${strength}","§    "),
+    WILL("${will}","\"     "),
+    NONE("", " "),
+    ALL("${all}"," ");
 
 
+    private final String symbol;
     private String key;
 
-     TestTyp(String key) {
+     TestTyp(String key,String symbol) {
         this.key = key;
+        this.symbol = symbol;
     }
 
     public String getText() {
@@ -22,4 +30,7 @@ public enum TestTyp {
 
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
 }

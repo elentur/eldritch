@@ -36,8 +36,8 @@ public abstract class DialogGui extends Stage {
         root.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.2),CornerRadii.EMPTY,Insets.EMPTY)));
         background = new Rectangle(centerX-((screenWidth*width)/2),centerY-((screenHeight*height)/2),screenWidth*width,screenHeight*height);
         main = new StackPane();
-        main.minWidthProperty().bind(background.widthProperty().multiply(0.6));
-        main.maxWidthProperty().bind(background.widthProperty().multiply(0.6));
+        main.minWidthProperty().bind(background.widthProperty().multiply(0.7));
+        main.maxWidthProperty().bind(background.widthProperty().multiply(0.7));
         main.minHeightProperty().bind(background.heightProperty().multiply(0.7));
         main.maxHeightProperty().bind(background.heightProperty().multiply(0.7));
         main.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,CornerRadii.EMPTY,Insets.EMPTY)));

@@ -13,16 +13,13 @@ public class ResourceUtil {
 
     private static String language = "english";
 
-    private static HashMap<String,Properties> allProperties = new HashMap<>();
+    private static HashMap<String, Properties> allProperties = new HashMap<>();
 
-
-    public static String get(String key, Class c, String... args   ) {
-        String name = c.getSimpleName().toLowerCase();
-
+    public static String get(String key, String name, String... args) {
         String path = "./resources/language/" + language + "/" + name + ".properties";
         Properties properties = allProperties.get(path);
 
-        if(properties==null) {
+        if (properties == null) {
 
             File file = new File(path);
             if (!file.exists()) {
@@ -32,22 +29,28 @@ public class ResourceUtil {
             try {
                 properties = new Properties();
                 properties.load(new FileReader(file));
-                allProperties.put(path,properties);
+                allProperties.put(path, properties);
             } catch (IOException e) {
                 e.printStackTrace();
                 return key;
             }
         }
-        String value =  properties.getProperty(key);
-        if(value == null){
+        String value = properties.getProperty(key);
+        if (value == null) {
             return key;
         }
-        if(args!=null) {
-            for (int i = 0; i < args.length;i++) {
-                value = value.replace("{"+i+"}", args[i]);
+        if (args != null) {
+            for (int i = 0; i < args.length; i++) {
+                value = value.replace("{" + i + "}", args[i]);
             }
         }
         return value;
+    }
+
+    public static String get(String key, Class c, String... args) {
+        String name = c.getSimpleName().toLowerCase();
+        return get(key, name, args);
+
     }
 
 }

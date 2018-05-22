@@ -54,7 +54,9 @@ public class Preparation {
 
     public int getNumberOfDice() {
         int value = getModificationForSkillTest()+ investigator.getSkill(testTyp);
-        return value<1?1:value;
+        value=value<1?1:value;
+        value=value>12?12:value;
+        return value;
     }
 
 

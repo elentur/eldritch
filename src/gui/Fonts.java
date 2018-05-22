@@ -16,6 +16,7 @@ public class Fonts {
         NORMAL, BOLD, ITALIC
     }
     public static Color DARK = Color.DARKSLATEGREY;
+    public static Color WHITE = Color.WHITE;
     public static Color RED = Color.rgb(205, 40, 43);
     public static Color BLUE = Color.rgb(88, 120, 200);
     public static Color GREEN = Color.rgb(0, 170, 80);
