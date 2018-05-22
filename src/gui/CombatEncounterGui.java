@@ -1,12 +1,10 @@
 package gui;
 
-import com.sun.javafx.font.freetype.HBGlyphLayout;
 import enums.TestTyp;
 import gamemechanics.CombatEncounter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -23,7 +21,7 @@ public class CombatEncounterGui extends EncounterGui {
     private final static Image monsterShapeImage = new Image("images/ItemBack.png");
     private final static Image sanityImage = new Image("images/sanity.png");
     private final static Image healthImage = new Image("images/health.png");
-    private final static Image toughnessImage = new Image("images/ReckoningBlack.png");
+    private final static Image toughnessImage = new Image("images/toughness.png");
 
     public CombatEncounterGui(CombatEncounter encounter) {
         super(encounter);
@@ -100,6 +98,7 @@ public class CombatEncounterGui extends EncounterGui {
             Rectangle health = new Rectangle(50, 50, new ImagePattern(healthImage));
             VBox symbols = new VBox(20, strengthTestSymbol, health);
             VBox values = new VBox(20, strengthTest, attackValue);
+            values.setAlignment(Pos.CENTER_RIGHT);
             leftSide.getChildren().addAll(symbols, values);
         } else {
             leftSide.setBackground(new Background(new BackgroundFill(Color.rgb(88, 120, 200, 0.2), new CornerRadii(10.0), Insets.EMPTY)));
@@ -116,6 +115,7 @@ public class CombatEncounterGui extends EncounterGui {
             Rectangle sanity = new Rectangle(50, 50, new ImagePattern(sanityImage));
             VBox symbols = new VBox(20, willTestSymbol, sanity);
             VBox values = new VBox(20, willTest, horrorValue);
+            values.setAlignment(Pos.CENTER_RIGHT);
             leftSide.getChildren().addAll(symbols, values);
         }
         HBox rightSide = new HBox();

@@ -7,7 +7,7 @@ import enums.ConditionTyp;
 import java.util.Random;
 
 public class DiceRollerService {
-   private static Random rnd = new Random(532835472);
+   private static Random rnd = new Random();
 
     public Result rollDice(int number, ConditionTyp typ){
         Result result = new Result(typ,1);

@@ -4,11 +4,11 @@ import utils.ResourceUtil;
 
 public enum TestTyp {
 
-    LORE("${lore}","%     "),
-    INFLUENCE("${influence}","&     "),
-    OBSERVATION("${observation}","$     "),
-    STRENGTH("${strength}","§    "),
-    WILL("${will}","\"     "),
+    LORE("${lore}","%"),
+    INFLUENCE("${influence}","&"),
+    OBSERVATION("${observation}","$"),
+    STRENGTH("${strength}","§"),
+    WILL("${will}","\""),
     NONE("", " "),
     ALL("${all}"," ");
 

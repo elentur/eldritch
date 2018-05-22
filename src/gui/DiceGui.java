@@ -1,14 +1,12 @@
 package gui;
 
 import container.Die;
-import container.Result;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -17,9 +15,6 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
-import model.Effect;
-import oldVersion.gameItems.Dice;
-import org.w3c.dom.css.Rect;
 
 import java.util.Random;
 
@@ -106,7 +101,7 @@ class DiceGui extends Group {
         label = new Label();
         label.setMouseTransparent(true);
         label.setTranslateZ(-100);
-        label.setTranslateY(-35);
+        label.setTranslateY(-25);
         label.setTranslateX(-8);
         label.getStyleClass().add("text-stroke-black");
         this.getChildren().addAll(meshView, label,rerollButton,shiftButton);
@@ -131,7 +126,7 @@ class DiceGui extends Group {
 
         switch (die.getValue()) {
             case 1:
-                return new Point2D(0, 0);
+                return new Point2D(0, -90);
             case 2:
                 return new Point2D(0, 90);
             case 3:

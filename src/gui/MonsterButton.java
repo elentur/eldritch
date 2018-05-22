@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,7 +21,7 @@ class MonsterButton extends Group {
     private final static Image backgroundImage = new Image("images/ItemBack.png");
     private final static Image sanityImage = new Image("images/sanity.png");
     private final static Image healthImage = new Image("images/health.png");
-    private final static Image toughnessImage = new Image("images/ReckoningBlack.png");
+    private final static Image toughnessImage = new Image("images/toughness.png");
 
 
 
@@ -97,35 +96,37 @@ class MonsterButton extends Group {
 
 
 
-        Label horrorSymbol = new Label(TestTyp.WILL.getSymbol() + monster.getWillTest());
-        horrorSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
-        horrorSymbol.setPadding(new Insets(0,10,0,10));
-        Label horrorValue = new Label(monster.getHorror()+"");
-        horrorValue.setPadding(new Insets(0,10,0,10));
+        Label willTestSymbol = new Label(TestTyp.WILL.getSymbol());
+        willTestSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
+        Label willTest = new Label(monster.getWillTest() + "");
+        willTest.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
+        Label horrorValue = new Label(monster.getHorror() + "");
         horrorValue.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
-        Rectangle sanity = new Rectangle(30,30,new ImagePattern(sanityImage));
-        HBox horror = new HBox(horrorSymbol,horrorValue,sanity);
-        horror.setSpacing(5);
-        horror.setAlignment(Pos.CENTER);
+        Rectangle sanity = new Rectangle(30, 30, new ImagePattern(sanityImage));
+        VBox symbolsLeft = new VBox(10, willTestSymbol, sanity);
+        VBox valuesLeft = new VBox(10, willTest, horrorValue);
+        valuesLeft.setAlignment(Pos.CENTER_RIGHT);
+        HBox left= new HBox(symbolsLeft,valuesLeft);
 
 
-        Label attackSymbol = new Label(TestTyp.STRENGTH.getSymbol() + monster.getStrengthTest());
-        attackSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
-        attackSymbol.setPadding(new Insets(0,10,0,10));
-        Label attackValue = new Label(monster.getDamage()+"");
-        attackValue.setPadding(new Insets(0,10,0,10));
+        Label strengthTestSymbol = new Label(TestTyp.STRENGTH.getSymbol());
+        strengthTestSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
+        Label strengthTest = new Label(monster.getStrengthTest() + "");
+        strengthTest.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
+        Label attackValue = new Label(monster.getDamage() + "");
         attackValue.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
-        Rectangle health = new Rectangle(30,30,new ImagePattern(healthImage));
-        HBox attack = new HBox(attackSymbol,attackValue,health);
-        attack.setSpacing(5);
-        attack.setAlignment(Pos.CENTER);
+        Rectangle health = new Rectangle(30, 30, new ImagePattern(healthImage));
+        VBox symbolsRight = new VBox(10, strengthTestSymbol, health);
+        VBox valuesRight = new VBox(10, strengthTest, attackValue);
+        valuesRight.setAlignment(Pos.CENTER_RIGHT);
+        HBox right= new HBox(symbolsRight,valuesRight);
 
         Rectangle toughness = new Rectangle(40,40,new ImagePattern(toughnessImage));
         Label toughnessValue = new Label(monster.getToughness()+"");
         toughnessValue.getStyleClass().add("text-stroke-black");
         toughnessValue.setPadding(new Insets(0,10,0,10));
         toughnessValue.styleProperty().bind(Fonts.getFont(0.4, Fonts.WHITE, Fonts.FontTyp.BOLD));
-        HBox values = new HBox(new VBox(horror,attack),new StackPane(toughness,toughnessValue));
+        HBox values = new HBox(10,left,right,new StackPane(toughness,toughnessValue));
 
         Label special = new Label("Test text fsf fsd sd sdfggd g dfg df dfggdf gdfgfd sfdfsd sdfdsfds sdfdsfd");
         special.setWrapText(true);
