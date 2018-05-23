@@ -2,7 +2,6 @@ package model.Item;
 
 import enums.*;
 import gamemechanics.Encounter;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import utils.ResourceUtil;

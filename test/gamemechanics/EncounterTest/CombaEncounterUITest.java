@@ -113,7 +113,22 @@ public class CombaEncounterUITest extends Application {
         resultDice.setMaxWidth(300);
         resultDice.setAlignment(Pos.CENTER);
         Button toAttack = new Button(encounter.getEncounterPart()==2 ?  "To Monster Selection": "To Attack");
+        if (encounter.getEncounterPart()==2) {
+            toAttack.setOnAction(event -> {
+                if (encounter.getAvailableMonster().isEmpty()) {
+                    System.exit(0);
+                } else {
+                    encounter.removeActiveMonster();
+                    buildMonster(encounter, pane);
+                }
+            });
+        } else {
+            toAttack.setOnAction(event -> {
+                encounter.completeEncounterPart();
+                buildCheck(encounter, encounter.getPreparation(), pane);
 
+            });
+        }
         succsessInfo = new Label();
         rollDice.setOnAction(event -> {
             Result result = encounter.check();

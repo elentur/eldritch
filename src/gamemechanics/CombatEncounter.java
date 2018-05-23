@@ -18,11 +18,11 @@ import java.util.List;
 @ToString(of = {"activeMonster", "investigator"})
 public class CombatEncounter extends Encounter {
     private List<Monster> monsters;
-    private Investigator investigator;
+
     private Monster activeMonster;
     private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
-    private Result result;
+
 
 
     private EventService eventService = new EventService();
@@ -66,9 +66,8 @@ public class CombatEncounter extends Encounter {
 
 
     private CombatPreparation prepareForAttack() {
-
-        result = null;
         if(attackPreparation==null) {
+            result = null;
             attackPreparation = new CombatPreparation(TestTyp.STRENGTH, investigator, activeMonster);
         }
         return attackPreparation;
@@ -111,7 +110,7 @@ public class CombatEncounter extends Encounter {
 
         SkillTest skillTest = new SkillTest(attackPreparation.getTestTyp(), attackPreparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
-        result.setMinNumberOfSuccesses(getActiveMonster().getToughness());
+        result.setMinNumberOfSuccesses(getActiveMonster().getDamage());
         return result;
     }
 

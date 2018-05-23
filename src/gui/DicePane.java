@@ -4,12 +4,14 @@ import container.Die;
 import container.Result;
 import gamemechanics.CombatEncounter;
 import gamemechanics.Encounter;
-import javafx.event.Event;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import preparation.Preparation;
 import utils.ResourceUtil;
@@ -22,8 +24,10 @@ class DicePane extends HBox {
     private double width;
     private double height;
     private Map<DiceGui, Die> diceGuis;
+    private SubScene dicesScene;
     RoundButton diceButton;
     InfoTextButton acceptButton;
+    private BooleanProperty rolleIsDone = new SimpleBooleanProperty(false);
 
     DicePane(Encounter encounter, double width, double height) {
         this.encounter = encounter;
@@ -32,7 +36,7 @@ class DicePane extends HBox {
         Preparation preparation = encounter.getPreparation();
         int dice = preparation.getNumberOfDice();
         Group root = new Group();
-        SubScene dicesScene = createSubScene(
+        dicesScene = createSubScene(
                 new PerspectiveCamera(), root);
         double gap = DiceGui.cubeWidth;
         double x = DiceGui.cubeWidth * 1.8;
@@ -58,17 +62,7 @@ class DicePane extends HBox {
                     Die die = result.get(i);
                     diceGuis.put(diceGui, die);
                     diceGui.rollDie(die);
-                    diceGui.rolledProperty().addListener(a->{
-                        boolean allRolled = true;
-                                for (DiceGui dg : diceGuis.keySet()) {
-                                    if(dg.rolledProperty().getValue()==false){
-                                        allRolled=false;
-                                    }
-                                }
-                                if(allRolled){
-                                    refresh();
-                                }
-                    });
+                    diceGui.rolledProperty().addListener(a -> diceRollHandler());
                     diceGui.rerollButton.setOnMouseClicked(a -> {
                         result.rerollDie(die);
                         diceGui.rollDie(die);
@@ -84,24 +78,28 @@ class DicePane extends HBox {
             }
         });
         diceButtonContainer.getChildren().add(diceButton);
-        HBox.setHgrow(diceButtonContainer,Priority.ALWAYS);
+        HBox.setHgrow(diceButtonContainer, Priority.ALWAYS);
         acceptButton = new InfoTextButton("${accept_Button}");
         this.setAlignment(Pos.CENTER_LEFT);
         this.setSpacing(20);
+
         this.getChildren().addAll(dicesScene, diceButtonContainer);
         this.getStyleClass().add("small-show-case");
 
-       // diceButtonContainer.setBorder(new Border(new BorderStroke(Fonts.RED, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.MEDIUM)));
+        // diceButtonContainer.setBorder(new Border(new BorderStroke(Fonts.RED, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.MEDIUM)));
 
     }
 
-    public void refresh() {
-        if (encounter.getResult() != null) {
-            for (DiceGui diceGui : diceGuis.keySet()) {
-                diceGui.rerollButton.setVisible(encounter.getResult().getReroll() > 0);
-                diceGui.shiftButton.setVisible(diceGuis.get(diceGui).isShiftable());
-            }
+    private void diceRollHandler() {
 
+        boolean allRolled = true;
+        for (DiceGui dg : diceGuis.keySet()) {
+            if (dg.rolledProperty().getValue() == false) {
+                allRolled = false;
+            }
+        }
+        if (allRolled) {
+            rolleIsDone.setValue(true);
             if (!this.getChildren().contains(acceptButton)) {
                 this.getChildren().add(acceptButton);
             }
@@ -117,6 +115,22 @@ class DicePane extends HBox {
                 acceptButton.setStyleProperty(Fonts.getFont(0.5, color, Fonts.FontTyp.NORMAL));
             }
             acceptButton.setInfoText(encounter.getResult().isSuccess() ? ResourceUtil.get("${success}", "ui") : ResourceUtil.get("${fail}", "ui") + damage);
+            refresh();
+        }
+
+    }
+
+    public void setDiceSceneVisible(boolean visible) {
+        dicesScene.setVisible(visible);
+    }
+
+    public void refresh() {
+        if (encounter.getResult() != null) {
+            for (DiceGui diceGui : diceGuis.keySet()) {
+                diceGui.rerollButton.setVisible(encounter.getResult().getReroll() > 0);
+                diceGui.shiftButton.setVisible(diceGuis.get(diceGui).isShiftable());
+            }
+
 
         }
 
@@ -145,5 +159,9 @@ class DicePane extends HBox {
 
     public InfoTextButton getAcceptButton() {
         return acceptButton;
+    }
+
+    public BooleanProperty getRolleIsDoneProperty() {
+        return rolleIsDone;
     }
 }

@@ -7,7 +7,6 @@ import enums.SituationTyp;
 import enums.TestTyp;
 import expetions.NoFailsAvailableException;
 import gamemechanics.Encounter;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import utils.ResourceUtil;
@@ -25,6 +24,7 @@ public class ItemBonus_DiceResult extends ItemBonus {
         this.value = value;
         this.test = test;
         this.situation = situation;
+        this.eventTime = EventTimeType.AFTER;
 
     }
 

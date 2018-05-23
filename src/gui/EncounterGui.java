@@ -1,6 +1,7 @@
 package gui;
 
-import gamemechanics.CombatEncounter;
+import enums.EventTimeType;
+import expetions.EncounterException;
 import gamemechanics.Encounter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,13 +9,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import preparation.Preparation;
+import model.Item.Bonus;
 
 class EncounterGui extends DialogGui {
     final Encounter encounter;
     private VBox bonusPane;
     VBox encounterPane;
-    private DicePane dicePane;
+     DicePane dicePane;
     private final static Image frameImage = new Image("images/ShowCaseFrame.png");
     final BorderPane encounterMain;
 
@@ -43,6 +44,7 @@ class EncounterGui extends DialogGui {
 
     void populateDicePane() {
         dicePane = new DicePane(encounter, background.getWidth() * 0.42, background.getHeight() * 0.25);
+        dicePane.getRolleIsDoneProperty().addListener(e-> populateBoni(EventTimeType.AFTER));
         dicePane.getAcceptButton().setOnMouseClicked(this::acceptHandler);
         encounterMain.setBottom(dicePane);
 
@@ -55,9 +57,34 @@ class EncounterGui extends DialogGui {
     }
 
     void populateBonusPane() {
-        bonusPane.getChildren().clear();
-        bonusPane.getChildren().add(new RoundButton("${dice_Button}"));
+
+        populateBoni(EventTimeType.BEFORE);
         encounterMain.setRight(bonusPane);
+    }
+
+    private void populateBoni(EventTimeType timeType) {
+
+        bonusPane.getChildren().clear();
+        for (Bonus bonus : encounter.getPreparation().getBoni(timeType)) {
+            InfoTextButton button = new InfoTextButton(bonus.getParentName());
+            button.setInfoText(bonus.getText());
+            button.setOnMouseClicked(event -> {
+                try {
+                    bonus.execute(encounter);
+                    if(timeType.equals(EventTimeType.BEFORE)){
+                        populate();
+                    }else{
+                        dicePane.refresh();
+                    }
+                } catch (EncounterException e) {
+                    button.setInfoText(e.getMessage());
+                }
+
+                button.setDisable(true);
+
+            });
+            bonusPane.getChildren().add(button);
+        }
     }
 
     private void acceptHandler(MouseEvent e) {
@@ -66,8 +93,6 @@ class EncounterGui extends DialogGui {
             populate();
         }
     }
-    private void refresh() {
 
-    }
 
 }

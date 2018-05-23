@@ -52,8 +52,10 @@ public class CombatEncounterGui extends EncounterGui {
                 monsterButton.setOnMouseClicked(e -> {
                     if (e.getButton().equals(MouseButton.PRIMARY)) {
                         encounter.setActiveMonster(monster);
+                        populate();
+                        dicePane.setDiceSceneVisible(false);
                         Callable<Void> c = () -> {
-                            populate();
+                            dicePane.setDiceSceneVisible(true);
                             return null;
                         };
                         Animations.startRotateFromTo(monsterSelection, encounterMain, main, c);

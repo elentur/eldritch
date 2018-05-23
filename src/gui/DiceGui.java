@@ -10,10 +10,8 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Rotate;
 
@@ -25,7 +23,7 @@ class DiceGui extends Group {
     private final MeshView meshView;
     private final static Image backgroundImage = new Image("images/dice.png");
     private final static Image rerollImage = new Image("images/flip.png",20,20,true,true,true);
-    private final static Image shiftImage = new Image("images/flip.png",20,20,true,true,true);
+    private final static Image shiftImage = new Image("images/shift.png",20,20,true,true,true);
     private final Label label;
 
     private IntegerProperty animationDone=new SimpleIntegerProperty(0);

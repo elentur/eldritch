@@ -72,6 +72,7 @@ public class Preparation {
 
 
     public int getAdditionDiceBoniSum() {
+        calculateBoni();
         return additionalDiceBoni.stream().mapToInt(ItemBonus_AdditionalDice::getValue).sum();
     }
 
