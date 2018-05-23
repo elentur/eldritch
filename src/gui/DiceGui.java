@@ -24,8 +24,8 @@ class DiceGui extends Group {
     private static TriangleMesh mesh;
     private final MeshView meshView;
     private final static Image backgroundImage = new Image("images/dice.png");
-    private final static Image rerollImage = new Image("images/flip.png");
-    private final static Image shiftImage = new Image("images/flip.png");
+    private final static Image rerollImage = new Image("images/flip.png",20,20,true,true,true);
+    private final static Image shiftImage = new Image("images/flip.png",20,20,true,true,true);
     private final Label label;
 
     private IntegerProperty animationDone=new SimpleIntegerProperty(0);
@@ -87,10 +87,10 @@ class DiceGui extends Group {
 
 
     DiceGui() {
-         rerollButton = new Button(new Rectangle(20,20,new ImagePattern(rerollImage)));
+         rerollButton = new Button(rerollImage);
         rerollButton.setTranslateZ(-100);
         rerollButton.setVisible(false);
-         shiftButton = new Button(new Rectangle(20,20,new ImagePattern(shiftImage)));
+         shiftButton = new Button(shiftImage);
         shiftButton.setTranslateZ(-100);
         shiftButton.setTranslateY(-40);
         shiftButton.setVisible(false);

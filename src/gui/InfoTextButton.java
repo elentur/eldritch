@@ -11,22 +11,19 @@ import javafx.scene.text.TextAlignment;
 
 class InfoTextButton extends TextButton {
 
-    private final static Image backgroundImage = new Image("images/MainMenuBtn.png");
+    private final static Image backgroundImage = new Image("images/MainMenuBtn.png",300,120,false,true,false);
     private Label infoText;
-    InfoTextButton(String key) {
-       this(key,300,120);
 
-    }
-    InfoTextButton(String key, double width, double height) {
-        super(key,new Rectangle(width, height, new ImagePattern(backgroundImage)));
+    InfoTextButton(String key) {
+        super(key,backgroundImage);
 
         infoText= new Label();
         infoText.setWrapText(true);
         StackPane.setAlignment(infoText, Pos.TOP_CENTER);
         StackPane.setAlignment(label, Pos.BOTTOM_CENTER);
-        label.setTranslateY(-height/9);
+        label.setTranslateY(-12);
         infoText.getStyleClass().addAll("text-stroke-black","stroke-thin","short-line-spacing");
-        infoText.setPrefWidth(width*0.85);
+        infoText.setPrefWidth(backgroundImage.getWidth()*0.85);
         infoText.setTextAlignment(TextAlignment.CENTER);
         infoText.setAlignment(Pos.CENTER);
         this.getChildren().add(infoText);

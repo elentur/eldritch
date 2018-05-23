@@ -6,24 +6,24 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 
 public class Button extends StackPane {
     private BooleanProperty enabled = new SimpleBooleanProperty(true);
     private BooleanProperty armed = new SimpleBooleanProperty(false);
-    final Rectangle image;
+    final ImageView imageView;
 
     private Node actualNode;
 
 
-    Button(Rectangle image) {
-        this.image = image;
+    Button(Image image) {
+        imageView = new ImageView(image);
         this.maxWidthProperty().bind(image.widthProperty());
         this.maxHeightProperty().bind(image.heightProperty());
 
-        actualNode = new Group(image);
+        actualNode = new Group( this.imageView);
         actualNode.setEffect(Effects.dropShadow);
         this.getChildren().add(actualNode);
 
@@ -59,23 +59,23 @@ public class Button extends StackPane {
         enabled.addListener(e -> {
             this.setDisable(!isEnabled());
             if (isDisabled()) {
-                image.setEffect(Effects.disabled);
+                this.imageView.setEffect(Effects.disabled);
             } else {
-                image.setEffect(null);
+                this.imageView.setEffect(null);
             }
         });
     }
 
     void hoverOut() {
 
-        image.setEffect(null);
+        imageView.setEffect(null);
         actualNode.setEffect(Effects.dropShadow);
 
     }
 
     void hoverIn() {
 
-        image.setEffect(Effects.hover);
+        imageView.setEffect(Effects.hover);
 
     }
 

@@ -1,26 +1,24 @@
 package gui;
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 class ArrowButton extends Button {
 
-    private final static Image backgroundImage = new Image("images/arrow.png");
+    private final static Image backgroundImage = new Image("images/arrow.png",50,70,false,true,true);
     enum ArrowDir {
         UP, DOWN, LEFT, RIGHT
     }
 
     ArrowButton(ArrowDir dir) {
-        super(new Rectangle(50, 70, new ImagePattern(backgroundImage)));
+        super(backgroundImage);
 
         if (dir.equals(ArrowDir.LEFT)) {
-            image.setRotate(-90);
+            imageView.setRotate(-90);
         } else if (dir.equals(ArrowDir.DOWN)) {
-            image.setScaleY(-1);
+            imageView.setScaleY(-1);
         } else if (dir.equals(ArrowDir.RIGHT)) {
-            image.setScaleY(-1);
-            image.setRotate(-90);
+            imageView.setScaleY(-1);
+            imageView.setRotate(-90);
         }
     }
 

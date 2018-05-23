@@ -12,8 +12,8 @@ class TextButton extends Button {
 
     Label label;
 
-    TextButton(String key,Rectangle background) {
-        super(background);
+    TextButton(String key, Image background) {
+        super( background);
         label=new Label(ResourceUtil.get(key,"ui"));
         label.styleProperty().bind(Fonts.getFont(0.4, Fonts.DARK, Fonts.FontTyp.BOLD));
         label.setEffect(Effects.innerShadow);
