@@ -122,4 +122,19 @@ public class CombatEncounter extends Encounter {
         }
         return activeMonster.getToughness();
     }
+
+    @Override
+    public int completeEncounterPart(){
+        if(encounterPart==2) {
+            healthLoss();
+            monsterDamage();
+            removeActiveMonster();
+            encounterPart=0;
+            return encounterPart;
+        }else{
+            sanityLoss();
+            return super.completeEncounterPart();
+        }
+
+    }
 }

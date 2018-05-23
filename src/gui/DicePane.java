@@ -2,25 +2,28 @@ package gui;
 
 import container.Die;
 import container.Result;
+import gamemechanics.CombatEncounter;
 import gamemechanics.Encounter;
-import javafx.geometry.Insets;
+import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import preparation.Preparation;
+import utils.ResourceUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class DicePane extends HBox {
     private final Encounter encounter;
     private double width;
     private double height;
-    private Map<DiceGui,Die> diceGuis;
+    private Map<DiceGui, Die> diceGuis;
+    RoundButton diceButton;
+    InfoTextButton acceptButton;
 
     DicePane(Encounter encounter, double width, double height) {
         this.encounter = encounter;
@@ -39,20 +42,33 @@ class DicePane extends HBox {
             DiceGui diceGui = new DiceGui();
             diceGui.setTranslateX(gap + (i % 6) * x);
             diceGui.setTranslateY(gap + (i / 6) * y);
-            diceGuis.put(diceGui,null);
+            diceGuis.put(diceGui, null);
         }
         root.getChildren().addAll(diceGuis.keySet());
         dicesScene.setEffect(Effects.dropShadow);
-        RollDiceButton diceButton = new RollDiceButton();
+        VBox diceButtonContainer = new VBox();
+        diceButtonContainer.setAlignment(Pos.TOP_CENTER);
+        diceButton = new RoundButton("${dice_Button}");
         diceButton.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 Result result = encounter.check();
-                int i= 0;
+                int i = 0;
                 for (DiceGui diceGui : diceGuis.keySet()) {
 
                     Die die = result.get(i);
-                    diceGuis.put(diceGui,die);
+                    diceGuis.put(diceGui, die);
                     diceGui.rollDie(die);
+                    diceGui.rolledProperty().addListener(a->{
+                        boolean allRolled = true;
+                                for (DiceGui dg : diceGuis.keySet()) {
+                                    if(dg.rolledProperty().getValue()==false){
+                                        allRolled=false;
+                                    }
+                                }
+                                if(allRolled){
+                                    refresh();
+                                }
+                    });
                     diceGui.rerollButton.setOnMouseClicked(a -> {
                         result.rerollDie(die);
                         diceGui.rollDie(die);
@@ -63,24 +79,48 @@ class DicePane extends HBox {
                     });
                     i++;
                 }
-                diceButton.setEnabled(false);
+                this.getChildren().remove(diceButtonContainer);
+
             }
         });
-        this.setAlignment(Pos.CENTER);
+        diceButtonContainer.getChildren().add(diceButton);
+        HBox.setHgrow(diceButtonContainer,Priority.ALWAYS);
+        acceptButton = new InfoTextButton("${accept_Button}");
+        this.setAlignment(Pos.CENTER_LEFT);
         this.setSpacing(20);
-        this.getChildren().addAll(dicesScene, diceButton);
+        this.getChildren().addAll(dicesScene, diceButtonContainer);
         this.getStyleClass().add("small-show-case");
-    //    this.setBorder(new Border(new BorderStroke(Fonts.DARK, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.THIN)));
+
+       // diceButtonContainer.setBorder(new Border(new BorderStroke(Fonts.RED, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.MEDIUM)));
 
     }
 
-    public void refresh(){
-        if(encounter.getResult()!=null) {
+    public void refresh() {
+        if (encounter.getResult() != null) {
             for (DiceGui diceGui : diceGuis.keySet()) {
                 diceGui.rerollButton.setVisible(encounter.getResult().getReroll() > 0);
                 diceGui.shiftButton.setVisible(diceGuis.get(diceGui).isShiftable());
             }
+
+            if (!this.getChildren().contains(acceptButton)) {
+                this.getChildren().add(acceptButton);
+            }
+            String damage = "";
+            Color color = encounter.getResult().isSuccess() ? Fonts.GREEN : Fonts.RED;
+            if (encounter instanceof CombatEncounter) {
+                CombatEncounter ce = (CombatEncounter) encounter;
+                damage += ": ";
+                damage += encounter.getEncounterPart() == 2 ? ResourceUtil.get("${loose_x_health}", "ui", (ce.getActiveMonster().getDamage() - encounter.getResult().getNumberOfSuccess()) + "") :
+                        ResourceUtil.get("${loose_x_sanity}", "ui", (ce.getActiveMonster().getHorror() - encounter.getResult().getNumberOfSuccess()) + "");
+                acceptButton.setStyleProperty(Fonts.getFont(0.25, color, Fonts.FontTyp.NORMAL));
+            } else {
+                acceptButton.setStyleProperty(Fonts.getFont(0.5, color, Fonts.FontTyp.NORMAL));
+            }
+            acceptButton.setInfoText(encounter.getResult().isSuccess() ? ResourceUtil.get("${success}", "ui") : ResourceUtil.get("${fail}", "ui") + damage);
+
         }
+
+
     }
 
     private SubScene createSubScene(PerspectiveCamera camera, Group root) {
@@ -100,5 +140,10 @@ class DicePane extends HBox {
         subScene.setCamera(camera);
         //subScene.setFill(Color.BLUE);
         return subScene;
+    }
+
+
+    public InfoTextButton getAcceptButton() {
+        return acceptButton;
     }
 }

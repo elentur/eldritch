@@ -56,7 +56,7 @@ public class MenueTextures {
 		background= new Image("oldVersion/images/Background_Menue.jpg",1920,1080, false, false, false);
 		blendscreen_Up= new Image("oldVersion/images/Blendscreen_Up.jpg",1920,561, false, false, false);
 		blendscreen_Down= new Image("oldVersion/images/Blendscreen_Down.jpg",1920,561, false, false, false);
-		mainMenueBtn= new Image("oldVersion/images/MainMenueBtn.png",462,130, false, false, false);
+		mainMenueBtn= new Image("oldVersion/images/MainMenuBtn.png",462,130, false, false, false);
 		frame= new Image("oldVersion/images/FrameAncientOne.png",300,300, false, false, false);
 		azathoth= new Image("oldVersion/images/Azathoth.png",300,300, false, false, false);
 		cthulhu= new Image("oldVersion/images/Cthulhu.png",300,300, false, false, false);

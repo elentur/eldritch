@@ -20,19 +20,21 @@ public class Button extends StackPane {
 
     Button(Rectangle image) {
         this.image = image;
+        this.maxWidthProperty().bind(image.widthProperty());
+        this.maxHeightProperty().bind(image.heightProperty());
 
         actualNode = new Group(image);
         actualNode.setEffect(Effects.dropShadow);
         this.getChildren().add(actualNode);
 
         actualNode.setOnMouseEntered(e -> {
-            if(isEnabled()) image.setEffect(Effects.hover);
-
+            if (isEnabled()) {
+                hoverIn();
+            }
         });
         actualNode.setOnMouseExited(e -> {
             if (isEnabled()) {
-                image.setEffect(null);
-                actualNode.setEffect(Effects.dropShadow);
+                hoverOut();
             }
         });
 
@@ -64,11 +66,24 @@ public class Button extends StackPane {
         });
     }
 
+    void hoverOut() {
+
+        image.setEffect(null);
+        actualNode.setEffect(Effects.dropShadow);
+
+    }
+
+    void hoverIn() {
+
+        image.setEffect(Effects.hover);
+
+    }
+
     BooleanProperty enabledProperty() {
         return enabled;
     }
 
-    private boolean isEnabled() {
+    boolean isEnabled() {
         return enabled.getValue();
     }
 

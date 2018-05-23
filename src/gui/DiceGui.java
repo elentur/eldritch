@@ -2,6 +2,7 @@ package gui;
 
 import container.Die;
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
@@ -221,5 +222,9 @@ class DiceGui extends Group {
 
     private double clamp(double value, double min, double max) {
         return Math.min(max, Math.max(min, value));
+    }
+
+    public BooleanProperty rolledProperty(){
+        return label.visibleProperty();
     }
 }

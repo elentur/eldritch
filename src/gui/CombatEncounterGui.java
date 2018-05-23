@@ -17,7 +17,7 @@ import utils.ResourceUtil;
 import java.util.concurrent.Callable;
 
 public class CombatEncounterGui extends EncounterGui {
-    private final CombatEncounter encounter;
+
     private final static Image monsterShapeImage = new Image("images/ItemBack.png");
     private final static Image sanityImage = new Image("images/sanity.png");
     private final static Image healthImage = new Image("images/health.png");
@@ -25,11 +25,21 @@ public class CombatEncounterGui extends EncounterGui {
 
     public CombatEncounterGui(CombatEncounter encounter) {
         super(encounter);
-        this.encounter = encounter;
-        showMonsterSelection();
+
+    }
+
+    @Override
+    void populate() {
+        CombatEncounter encounter = (CombatEncounter)this.encounter;
+        if(encounter.getEncounterPart()==0) {
+            showMonsterSelection();
+        }else {
+            super.populate();
+        }
     }
 
     private void showMonsterSelection() {
+        CombatEncounter encounter = (CombatEncounter)this.encounter;
         if (encounter.getMonsters().size() > 1) {
             ItemScrollPane monsterSelection = new ItemScrollPane();
             monsterSelection.setWidth(background.getWidth() * 0.6);
@@ -50,14 +60,18 @@ public class CombatEncounterGui extends EncounterGui {
                     }
                 });
             }
-        } else {
+        } else if(encounter.getMonsters().size()==1) {
             encounter.setActiveMonster(encounter.getMonsters().get(0));
             populate();
+        }else{
+            this.close();
         }
 
     }
 
     void populateCenterPane() {
+        CombatEncounter encounter = (CombatEncounter)this.encounter;
+        super.populateCenterPane();
         Monster m = encounter.getActiveMonster();
         Rectangle shape = new Rectangle(200, 80, new ImagePattern(monsterShapeImage));
         Rectangle monsterImage = new Rectangle(200, 150,
@@ -121,22 +135,18 @@ public class CombatEncounterGui extends EncounterGui {
         HBox rightSide = new HBox();
         rightSide.setBackground(new Background(new BackgroundFill(Color.rgb(0, 170, 80, 0.2), new CornerRadii(10.0), Insets.EMPTY)));
         rightSide.setPadding(new Insets(10));
-        if (encounter.getEncounterPart() == 2) {
 
-
-        } else {
-
-            Label willTest = new Label(TestTyp.WILL.getText() + ":");
-            willTest.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
-            willTest.setPadding(new Insets(0, 10, 0, 10));
-            Label willTestValue = new Label(encounter.getPreparation().getInvestigator().getSkill(encounter.getPreparation().getTestTyp()) + "");
-            willTestValue.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
-            willTestValue.setPadding(new Insets(0, 10, 0, 10));
+            Label testType = new Label(encounter.getPreparation().getTestTyp().getText() + ":");
+            testType.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
+            testType.setPadding(new Insets(0, 10, 0, 10));
+            Label testValue = new Label(encounter.getPreparation().getInvestigator().getSkill(encounter.getPreparation().getTestTyp()) + "");
+            testValue.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
+            testValue.setPadding(new Insets(0, 10, 0, 10));
 
             Label bonusItem = new Label(ResourceUtil.get("${item_bonus}", "ui") + ":");
             bonusItem.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
             bonusItem.setPadding(new Insets(0, 10, 0, 10));
-            Label bonusItemValue = new Label(encounter.getHorrorPreparation().getGainDiceBonus().getValue() + "   (" + encounter.getHorrorPreparation().getGainDiceBonus().getParentName() + ")");
+            Label bonusItemValue = new Label(encounter.getPreparation().getGainDiceBonus().getValue() + "   (" + encounter.getPreparation().getGainDiceBonus().getParentName() + ")");
             bonusItemValue.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
             bonusItemValue.setPadding(new Insets(0, 10, 0, 10));
 
@@ -147,10 +157,11 @@ public class CombatEncounterGui extends EncounterGui {
             additionalDiceValue.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
             additionalDiceValue.setPadding(new Insets(0, 10, 0, 10));
 
-            VBox names = new VBox(20, willTest, bonusItem, additionalDice);
-            VBox values = new VBox(20, willTestValue, bonusItemValue, additionalDiceValue);
-            rightSide.getChildren().addAll(names, values);
-        }
+            VBox names = new VBox(20, testType, bonusItem, additionalDice);
+            VBox valuesRight = new VBox(20, testValue, bonusItemValue, additionalDiceValue);
+            rightSide.getChildren().addAll(names, valuesRight);
+
+
 
         HBox values = new HBox(20, leftSide, rightSide);
         values.setAlignment(Pos.TOP_CENTER);
@@ -159,6 +170,8 @@ public class CombatEncounterGui extends EncounterGui {
       //  header.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
         encounterPane.getChildren().addAll(header, values);
       //  encounterPane.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
-        encounterMain.setCenter(encounterPane);
+
     }
+
+
 }

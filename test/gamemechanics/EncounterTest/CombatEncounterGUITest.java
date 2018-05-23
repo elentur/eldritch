@@ -48,16 +48,7 @@ public class CombatEncounterGUITest extends Application {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
         monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
+    //    monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
         return new CombatEncounter(monsters, inv);
     }
 
