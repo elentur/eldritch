@@ -14,6 +14,6 @@ public interface Bonus {
     String getText();
     FieldType getField();
     boolean isActive();
-
+    Item getParentItem();
     String getParentName();
 }

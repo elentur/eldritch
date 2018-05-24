@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class Fonts {
     //public static Font font = Font.loadFont("file:src/fonts/UGLYQUA.TTF",  Toolkit.getDefaultToolkit().getScreenSize().getWidth() /50);
-    enum FontTyp {
+    public enum FontTyp {
         NORMAL, BOLD, ITALIC
     }
     public static Color DARK = Color.DARKSLATEGREY;

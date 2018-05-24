@@ -1,15 +1,15 @@
-package gui;
+package gui.buttons;
 
 import javafx.scene.image.Image;
 
-class ArrowButton extends Button {
+public class ArrowButton extends Button {
 
     private final static Image backgroundImage = new Image("images/arrow.png",50,70,false,true,true);
-    enum ArrowDir {
+    public enum ArrowDir {
         UP, DOWN, LEFT, RIGHT
     }
 
-    ArrowButton(ArrowDir dir) {
+    public ArrowButton(ArrowDir dir) {
         super(backgroundImage);
 
         if (dir.equals(ArrowDir.LEFT)) {

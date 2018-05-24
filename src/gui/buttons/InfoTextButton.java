@@ -1,4 +1,4 @@
-package gui;
+package gui.buttons;
 
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
@@ -7,12 +7,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 
-class InfoTextButton extends TextButton {
+public class InfoTextButton extends TextButton {
 
     private final static Image backgroundImage = new Image("images/MainMenuBtn.png",300,120,false,true,false);
     private Label infoText;
 
-    InfoTextButton(String key) {
+    public InfoTextButton(String key) {
         super(key,backgroundImage);
 
         infoText= new Label();

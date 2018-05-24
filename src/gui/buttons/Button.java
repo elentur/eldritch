@@ -1,5 +1,6 @@
-package gui;
+package gui.buttons;
 
+import gui.Effects;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -18,7 +19,7 @@ public class Button extends StackPane {
     private Node actualNode;
 
 
-    Button(Image image) {
+    public Button(Image image) {
         imageView = new ImageView(image);
         this.maxWidthProperty().bind(image.widthProperty());
         this.maxHeightProperty().bind(image.heightProperty());
@@ -79,7 +80,7 @@ public class Button extends StackPane {
 
     }
 
-    BooleanProperty enabledProperty() {
+    public BooleanProperty enabledProperty() {
         return enabled;
     }
 
@@ -91,7 +92,7 @@ public class Button extends StackPane {
         enabled.setValue(v);
     }
 
-    boolean isArmed() {
+    public boolean isArmed() {
         return armed.getValue();
     }
 

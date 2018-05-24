@@ -1,14 +1,15 @@
 package gui;
 
 import enums.EventTimeType;
-import expetions.EncounterException;
 import gamemechanics.Encounter;
+import gui.buttons.BonusButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import model.Item.Bonus;
 
 class EncounterGui extends DialogGui {
@@ -68,21 +69,20 @@ class EncounterGui extends DialogGui {
     private void populateBoni(EventTimeType timeType) {
         bonusPane.getScrollableChildren().clear();
         for (Bonus bonus : encounter.getPreparation().getBoni(timeType)) {
-            InfoTextButton button = new InfoTextButton(bonus.getParentName());
-            button.setInfoText(bonus.getText());
-            button.setOnMouseClicked(event -> {
-                try {
-                    bonus.execute(encounter);
-                    if (timeType.equals(EventTimeType.BEFORE)) {
-                        populate();
-                    } else {
-                        dicePane.refresh();
-                    }
-                } catch (EncounterException e) {
-                    button.setInfoText(e.getMessage());
-                }
+            BonusButton button = new BonusButton(bonus);
 
-                button.setDisable(true);
+            button.setOnMouseClicked(event -> {
+if(event.getButton().equals(MouseButton.PRIMARY)) {
+    bonus.execute(encounter);
+    if (timeType.equals(EventTimeType.BEFORE)) {
+        populate();
+    } else {
+        dicePane.refresh();
+    }
+
+
+    button.setDisable(true);
+}
 
             });
             bonusPane.getScrollableChildren().add(button);

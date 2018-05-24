@@ -1,10 +1,9 @@
-package gui;
+package gui.buttons;
 
+import gui.Effects;
+import gui.Fonts;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import utils.ResourceUtil;
 
 class TextButton extends Button {

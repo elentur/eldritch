@@ -1,5 +1,6 @@
 package gui;
 
+import gui.buttons.Button;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -12,9 +13,9 @@ import javafx.util.Duration;
 import java.util.concurrent.Callable;
 
 
-class Animations {
+public class Animations {
 
-    static void startRotateFromTo(Node oldNode, Node node, Group group) {
+    public static void startRotateFromTo(Node oldNode, Node node, Group group) {
         ScaleTransition st1 = new ScaleTransition(Duration.millis(70), group);
         st1.setByX(-1);
         st1.playFromStart();

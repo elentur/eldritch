@@ -1,90 +1,36 @@
-package gui;
+package gui.buttons;
 
 import enums.TestTyp;
+import gui.Fonts;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import model.Monster;
 
-class MonsterButton extends Group {
+public class MonsterButton extends ItemButton {
 
-    private final static Image backgroundImage = new Image("images/ItemBack.png",200,150,true,true,true);
+
     private final static Image sanityImage = new Image("images/sanity.png",30,30,true,true,true);
     private final static Image healthImage = new Image("images/health.png",30,30,true,true,true);
     private final static Image toughnessImage = new Image("images/toughness.png",40,40,true,true,true);
 
 
-
-
-    private final Monster monster;
-
-
-    private Node actualNode;
-    private Node oldNode;
-
-    MonsterButton(Monster monster) {
-        this.monster = monster;
-
-        ImageView backside = new ImageView(backgroundImage);
-        Image monsterImage = new Image("images/monster/" + monster.getId() + ".jpg", 200,150,true,true,true);
-        ImageView frontside = new ImageView(monsterImage);
-        ImageView shape = new ImageView(backgroundImage);
-        frontside.setClip(shape);
-
-        actualNode = new Group(frontside);
-
-
-        oldNode = createBacksideInfo(backside);
-
-        this.setEffect(Effects.dropShadow);
-        this.getChildren().add(actualNode);
-
-
-
-        setEventsForButton(actualNode);
-        setEventsForButton(oldNode);
+    public MonsterButton(Monster monster) {
+        super(monster);
 
     }
 
-    private void setEventsForButton(Node node) {
-        node.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
-        node.setOnMouseExited(e -> {
-            actualNode.setEffect(null);
-            this.setEffect(Effects.dropShadow);
-        });
-        node.setOnMouseClicked(e -> {
-            if (e.getButton().equals(MouseButton.SECONDARY)) {
-                Animations.startRotateFromTo(actualNode, oldNode, this);
-                Node temp = actualNode;
-                actualNode = oldNode;
-                oldNode = temp;
-            }
-        });
 
-        node.setOnMousePressed(e -> {
-            if (e.getButton().equals(MouseButton.PRIMARY)) {
-                this.setEffect(null);
-            }
-        });
-        node.setOnMouseReleased(e -> {
-            if (e.getButton().equals(MouseButton.PRIMARY)) {
-                this.setEffect(Effects.dropShadow);
-            }
-        });
-    }
-
-    private Group createBacksideInfo(ImageView backside) {
+    @Override
+    protected Group createBacksideInfo(ImageView backside) {
+        Monster monster = (Monster)item;
         Group backsideInfo = new Group(backside);
         VBox main = new VBox();
         main.setPadding(new Insets(5,10,5,10));

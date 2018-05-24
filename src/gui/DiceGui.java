@@ -1,6 +1,7 @@
 package gui;
 
 import container.Die;
+import gui.buttons.Button;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;

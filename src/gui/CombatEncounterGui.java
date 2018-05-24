@@ -2,6 +2,7 @@ package gui;
 
 import enums.TestTyp;
 import gamemechanics.CombatEncounter;
+import gui.buttons.MonsterButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
