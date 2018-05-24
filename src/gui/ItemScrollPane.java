@@ -1,5 +1,6 @@
 package gui;
 
+import container.Die;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +30,9 @@ class ItemScrollPane extends Group {
         scrollPane.setFitToHeight(true);
         scrollPane.getStylesheets().add("css/rootStyle.css");
         scrollPane.getStyleClass().add("show-case");
-        flowPane.setPadding(new Insets(20, 20, 20, 20));
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        flowPane.setPadding(new Insets(20, 30, 20, 0));
         flowPane.setHgap(20);
         flowPane.setVgap(20);
 
@@ -44,12 +47,12 @@ class ItemScrollPane extends Group {
 
 
         up= new ArrowButton(ArrowButton.ArrowDir.UP);
-        up.translateXProperty().bind(scrollPane.translateXProperty().add(scrollPane.widthProperty()).multiply(1.05));
+        up.translateXProperty().bind(scrollPane.translateXProperty().add(scrollPane.widthProperty()).subtract(up.widthProperty()));
         down=new ArrowButton(ArrowButton.ArrowDir.DOWN);
-        down.translateXProperty().bind(scrollPane.translateXProperty().add(scrollPane.widthProperty()).multiply(1.05));
+        down.translateXProperty().bind(scrollPane.translateXProperty().add(scrollPane.widthProperty()).subtract(down.widthProperty()));
         down.translateYProperty().bind(scrollPane.translateYProperty().add(scrollPane.heightProperty().subtract(down.heightProperty())));
 
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         down.setOnMousePressed(e->Animations.scroll(scrollPane,1,down));
         up.setOnMousePressed(e->Animations.scroll(scrollPane,-1,up));
 
@@ -58,6 +61,7 @@ class ItemScrollPane extends Group {
 
         up.visibleProperty().bind(scrollPane.heightProperty().lessThan(flowPane.heightProperty()));
         down.visibleProperty().bind(scrollPane.heightProperty().lessThan(flowPane.heightProperty()));
+
         this.getChildren().addAll(scrollPane,frame,up,down);
     }
 
@@ -78,5 +82,8 @@ class ItemScrollPane extends Group {
     void setHeight(double height) {
         scrollPane.setMinHeight(height);
         scrollPane.setMaxHeight(height);
+
     }
+
+
 }

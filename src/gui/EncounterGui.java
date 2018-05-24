@@ -13,9 +13,9 @@ import model.Item.Bonus;
 
 class EncounterGui extends DialogGui {
     final Encounter encounter;
-    private VBox bonusPane;
+    private ItemScrollPane bonusPane;
     VBox encounterPane;
-     DicePane dicePane;
+    DicePane dicePane;
     private final static Image frameImage = new Image("images/ShowCaseFrame.png");
     final BorderPane encounterMain;
 
@@ -24,11 +24,14 @@ class EncounterGui extends DialogGui {
         this.encounter = encounter;
 
         encounterMain = new BorderPane();
-
         encounterPane = new VBox(20);
         encounterPane.setAlignment(Pos.CENTER);
-        bonusPane = new VBox();
-        bonusPane.setBorder(new Border(new BorderStroke(Fonts.DARK, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.THIN)));
+
+        bonusPane = new ItemScrollPane();
+        bonusPane.setWidth(background.getWidth()*0.25);
+        encounterPane.heightProperty().addListener(e ->
+                bonusPane.setHeight(encounterPane.getHeight())
+        );
         main.getChildren().clear();
         main.getChildren().add(encounterMain);
         BorderPane.setMargin(encounterPane, new Insets(0, 10, 10, 0));
@@ -44,7 +47,7 @@ class EncounterGui extends DialogGui {
 
     void populateDicePane() {
         dicePane = new DicePane(encounter, background.getWidth() * 0.42, background.getHeight() * 0.25);
-        dicePane.getRolleIsDoneProperty().addListener(e-> populateBoni(EventTimeType.AFTER));
+        dicePane.getRolleIsDoneProperty().addListener(e -> populateBoni(EventTimeType.AFTER));
         dicePane.getAcceptButton().setOnMouseClicked(this::acceptHandler);
         encounterMain.setBottom(dicePane);
 
@@ -63,17 +66,16 @@ class EncounterGui extends DialogGui {
     }
 
     private void populateBoni(EventTimeType timeType) {
-
-        bonusPane.getChildren().clear();
+        bonusPane.getScrollableChildren().clear();
         for (Bonus bonus : encounter.getPreparation().getBoni(timeType)) {
             InfoTextButton button = new InfoTextButton(bonus.getParentName());
             button.setInfoText(bonus.getText());
             button.setOnMouseClicked(event -> {
                 try {
                     bonus.execute(encounter);
-                    if(timeType.equals(EventTimeType.BEFORE)){
+                    if (timeType.equals(EventTimeType.BEFORE)) {
                         populate();
-                    }else{
+                    } else {
                         dicePane.refresh();
                     }
                 } catch (EncounterException e) {
@@ -83,7 +85,7 @@ class EncounterGui extends DialogGui {
                 button.setDisable(true);
 
             });
-            bonusPane.getChildren().add(button);
+            bonusPane.getScrollableChildren().add(button);
         }
     }
 
