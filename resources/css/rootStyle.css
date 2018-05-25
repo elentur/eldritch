@@ -30,3 +30,9 @@
 -fx-line-spacing: 0.01em;
 }
 
+.tooltip {
+        -fx-background-image: url('../images/SmallShowCase.jpg');
+       -fx-background-position:  center;
+       -fx-background-repeat: no-repeat;
+       -fx-background-size: stretch;
+}
