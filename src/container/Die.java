@@ -1,7 +1,7 @@
 package container;
 
 import Service.DiceRollerService;
-import enums.ConditionTyp;
+import enums.ConditionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +30,7 @@ public class Die {
         }
     }
 
-    public boolean isSuccess(ConditionTyp conditionTyp) {
+    public boolean isSuccess(ConditionType conditionTyp) {
         switch (conditionTyp) {
             case CURSED:
                 return value == 6;

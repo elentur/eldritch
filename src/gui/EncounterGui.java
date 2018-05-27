@@ -27,12 +27,13 @@ class EncounterGui extends DialogGui {
         encounterMain = new BorderPane();
         encounterPane = new VBox(20);
         encounterPane.setAlignment(Pos.CENTER);
+        encounterPane.setPrefWidth(background.getHeight() * 0.50);
 
         bonusPane = new ItemScrollPane();
-        bonusPane.setWidth(background.getWidth()*0.25);
-        encounterPane.heightProperty().addListener(e ->
-                bonusPane.setHeight(encounterPane.getHeight())
-        );
+        bonusPane.setWidth(background.getWidth() * 0.20);
+        bonusPane.setHeight(background.getHeight() * 0.50);
+
+
         main.getChildren().clear();
         main.getChildren().add(encounterMain);
         BorderPane.setMargin(encounterPane, new Insets(0, 10, 10, 0));
@@ -72,17 +73,15 @@ class EncounterGui extends DialogGui {
             BonusButton button = new BonusButton(bonus);
 
             button.setOnMouseClicked(event -> {
-if(event.getButton().equals(MouseButton.PRIMARY)) {
-    bonus.execute(encounter);
-    if (timeType.equals(EventTimeType.BEFORE)) {
-        populate();
-    } else {
-        dicePane.refresh();
-    }
-
-
-    button.setDisable(true);
-}
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    bonus.execute(encounter);
+                    if (timeType.equals(EventTimeType.BEFORE)) {
+                        populate();
+                    } else {
+                        dicePane.refresh();
+                    }
+                    button.setEnabled(false);
+                }
 
             });
             bonusPane.getScrollableChildren().add(button);

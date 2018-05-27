@@ -1,10 +1,9 @@
 package container;
 
 import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
+import enums.TestType;
 import model.Item.Bonus;
-import model.Item.ItemBonus;
 import model.Item.ItemBonus_AdditionalDice;
 import model.Item.ItemBonus_GainDice;
 
@@ -31,16 +30,16 @@ public class BonusContainer<T extends Bonus> extends ArrayList<T>{
         if(eventTime == null){
             return new BonusContainer<>();
         }
-       return new BonusContainer<>(this.stream().filter(item -> eventTime.equals(item.getEventTime())).filter(item ->!(item instanceof ItemBonus_GainDice)).collect(Collectors.toList()));
-    }
-    public List<T> getAllBySituation(SituationTyp situation) {
+       return new BonusContainer<>(this.stream().filter(bonus -> eventTime.equals(bonus.getEventTime())&& bonus.isUsable()).filter(bonus ->!(bonus instanceof ItemBonus_GainDice)).collect(Collectors.toList()));
+}
+    public List<T> getAllBySituation(SituationType situation) {
         if(situation == null){
             return  new ArrayList<>();
         }
         return this.stream().filter(item -> situation.equals(item.getSituation())).filter(item ->!(item instanceof ItemBonus_GainDice)).collect(Collectors.toList());
     }
 
-    public List<T> getAllBySituation(SituationTyp situation, TestTyp test) {
+    public List<T> getAllBySituation(SituationType situation, TestType test) {
         if(situation == null){
             return  new ArrayList<>();
         }
@@ -56,6 +55,6 @@ public class BonusContainer<T extends Bonus> extends ArrayList<T>{
 
     public BonusContainer<ItemBonus_AdditionalDice> getAdditionalDiceBoni(Function<Bonus,Boolean> filter) {
         return  this.stream().filter(bonus -> bonus instanceof ItemBonus_AdditionalDice)
-                .filter(filter::apply).map(bonus -> (ItemBonus_AdditionalDice)bonus).collect(Collectors.toCollection(BonusContainer::new));
+                .filter(filter::apply).filter(bonus->!bonus.isActive()).map(bonus -> (ItemBonus_AdditionalDice)bonus).collect(Collectors.toCollection(BonusContainer::new));
     }
 }

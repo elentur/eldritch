@@ -2,7 +2,7 @@ package gamemechanics;
 
 import Service.EventService;
 import container.Result;
-import enums.TestTyp;
+import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -68,7 +68,7 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation prepareForAttack() {
         if(attackPreparation==null) {
             result = null;
-            attackPreparation = new CombatPreparation(TestTyp.STRENGTH, investigator, activeMonster);
+            attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster);
         }
         return attackPreparation;
     }
@@ -79,7 +79,7 @@ public class CombatEncounter extends Encounter {
 
     private CombatPreparation prepareForHorrorCheck() {
         if(horrorPreparation==null) {
-            horrorPreparation = new CombatPreparation(TestTyp.WILL, investigator, activeMonster);
+            horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster);
         }
         return horrorPreparation;
     }

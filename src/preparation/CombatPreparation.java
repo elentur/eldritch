@@ -1,18 +1,10 @@
 package preparation;
 
-import Service.GameService;
-import container.BonusContainer;
-import container.ItemContainer;
-import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
+import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
 import model.Investigator;
-import model.Item.Item;
-import model.Item.ItemBonus;
-import model.Item.ItemBonus_AdditionalDice;
-import model.Item.ItemBonus_GainDice;
 import model.Monster;
 
 @Getter
@@ -24,10 +16,10 @@ public class CombatPreparation extends Preparation {
     private int modification;
 
 
-    public CombatPreparation(TestTyp testTyp, Investigator investigator, Monster monster) {
-        super(testTyp,investigator,SituationTyp.COMBAT_ENCOUNTER);
+    public CombatPreparation(TestType testTyp, Investigator investigator, Monster monster) {
+        super(testTyp,investigator,SituationType.COMBAT_ENCOUNTER);
         this.monster = monster;
-        this.modification = testTyp.equals(TestTyp.STRENGTH)?monster.getStrengthTest():monster.getWillTest();
+        this.modification = testTyp.equals(TestType.STRENGTH)?monster.getStrengthTest():monster.getWillTest();
 
     }
 

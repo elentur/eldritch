@@ -1,6 +1,6 @@
 package container;
 
-import enums.ConditionTyp;
+import enums.ConditionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 public class Result extends ArrayList<Die> {
-    private ConditionTyp typ;
+    private ConditionType typ;
 
     private int minNumberOfSuccesses;
 
@@ -20,7 +20,7 @@ public class Result extends ArrayList<Die> {
     private int shift;
     private int shiftValue;
 
-    public Result(ConditionTyp typ, int minNumberOfSuccesses){
+    public Result(ConditionType typ, int minNumberOfSuccesses){
         this.typ = typ;
         this.minNumberOfSuccesses=minNumberOfSuccesses;
     }

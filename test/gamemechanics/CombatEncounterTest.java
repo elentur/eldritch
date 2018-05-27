@@ -2,11 +2,11 @@ package gamemechanics;
 
 import Service.GameService;
 import container.ItemContainer;
-import factory.InvestigatorFactory;
 import factory.ItemFactory;
-import factory.MonsterFactory;
 import model.Investigator;
 import model.Item.Item;
+import model.Item.investigators.AgnesBaker;
+import model.Item.monsters.Vampire;
 import model.Monster;
 import org.junit.Test;
 import org.testng.Assert;
@@ -20,8 +20,8 @@ public class CombatEncounterTest {
 
     @Test
     public void testCombatEncounter() {
-        Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
-        Monster monster = new MonsterFactory().getMonster().get(0).getInstance();
+        Investigator inv = new AgnesBaker();
+        Monster monster = new Vampire();
         GameService game = GameService.getInstance();
         List<Monster> monsters = new ArrayList<>();
         monsters.add(monster);

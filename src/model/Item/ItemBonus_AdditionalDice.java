@@ -11,19 +11,25 @@ import utils.ResourceUtil;
 @Setter
 public class ItemBonus_AdditionalDice extends ItemBonus {
 
-    public static final ItemBonus_AdditionalDice EMPTY = new ItemBonus_AdditionalDice(0, TestTyp.NONE, SituationTyp.NONE,RangeType.NONE,FieldType.NONE);
+    public static final ItemBonus_AdditionalDice EMPTY = new ItemBonus_AdditionalDice(0, TestType.NONE, SituationType.NONE,RangeType.NONE,FieldType.NONE,null);
     private int value;
-
-    public ItemBonus_AdditionalDice(int value, TestTyp test, SituationTyp situation,RangeType range,FieldType field) {
+    private BonusType bonusType = BonusType.ADDITIONAL_DICE;
+    public ItemBonus_AdditionalDice(int value, TestType test, SituationType situation, RangeType range, FieldType field,Item parentItem) {
+        super(parentItem);
         this.value = value;
         this.test = test;
         this.situation = situation;
         this.range=range;
         this.field=field;
+        this.eventTime = EventTimeType.BEFORE;
     }
 
     @Override
     public void execute(Encounter encounter) {
+        encounter.getPreparation().getAdditionalDiceBoni().add(this);
+        if(isPerRound()){
+            setUsable(false);
+        }
 
     }
     @Override

@@ -2,7 +2,7 @@ package enums;
 
 import utils.ResourceUtil;
 
-public enum TestTyp {
+public enum TestType {
 
     LORE("${lore}","%"),
     INFLUENCE("${influence}","&"),
@@ -16,7 +16,7 @@ public enum TestTyp {
     private final String symbol;
     private String key;
 
-     TestTyp(String key,String symbol) {
+     TestType(String key, String symbol) {
         this.key = key;
         this.symbol = symbol;
     }
@@ -25,8 +25,8 @@ public enum TestTyp {
         return ResourceUtil.get(key,this.getClass());
     }
 
-    public boolean equalsWithAll(TestTyp o){
-       return o.equals(this) || this.equals(TestTyp.ALL) || o.equals(TestTyp.ALL);
+    public boolean equalsWithAll(TestType o){
+       return o.equals(this) || this.equals(TestType.ALL) || o.equals(TestType.ALL);
 
     }
 

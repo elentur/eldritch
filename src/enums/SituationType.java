@@ -2,7 +2,7 @@ package enums;
 
 import utils.ResourceUtil;
 
-public enum SituationTyp {
+public enum SituationType {
     NONE(""),
     COMBAT_ENCOUNTER("${combat_encounter}"),
     SPELL_EFFECT("${spell_effect}"),
@@ -10,7 +10,7 @@ public enum SituationTyp {
 
     private String key;
 
-     SituationTyp(String key) {
+     SituationType(String key) {
         this.key = key;
     }
 
@@ -18,7 +18,7 @@ public enum SituationTyp {
         return ResourceUtil.get(key,this.getClass());
     }
 
-    public boolean equalsWithAll(SituationTyp o){
-        return o.equals(this) || this.equals(SituationTyp.ALL)|| o.equals(SituationTyp.ALL);
+    public boolean equalsWithAll(SituationType o){
+        return o.equals(this) || this.equals(SituationType.ALL)|| o.equals(SituationType.ALL);
     }
 }

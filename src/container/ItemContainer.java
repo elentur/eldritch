@@ -1,12 +1,9 @@
 package container;
 
-import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
 import model.Item.Bonus;
 import model.Item.Item;
 import model.Item.ItemBonus;
-import model.Item.ItemBonus_AdditionalDice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +51,7 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
 
 
 
-    public ItemContainer<Item> getItemsWidthSituationTyp(SituationTyp situationTyp) {
+    public ItemContainer<Item> getItemsWidthSituationTyp(SituationType situationTyp) {
         return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus->bonus.getSituation().equalsWithAll(situationTyp)))
                 .collect(Collectors.toCollection(ItemContainer::new));
     }

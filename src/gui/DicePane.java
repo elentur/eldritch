@@ -37,6 +37,7 @@ class DicePane extends HBox {
         this.height = height;
         Preparation preparation = encounter.getPreparation();
         int dice = preparation.getNumberOfDice();
+
         Group root = new Group();
         dicesScene = createSubScene(
                 new PerspectiveCamera(), root);
@@ -66,11 +67,16 @@ class DicePane extends HBox {
                     diceGui.rollDie(die);
                     diceGui.rolledProperty().addListener(a -> diceRollHandler());
                     diceGui.rerollButton.setOnMouseClicked(a -> {
+
                         result.rerollDie(die);
+                        refresh();
                         diceGui.rollDie(die);
+
                     });
                     diceGui.shiftButton.setOnMouseClicked(a -> {
+
                         result.shiftDie(die);
+                        refresh();
                         diceGui.shiftDie(die);
                     });
                     i++;
@@ -117,7 +123,7 @@ class DicePane extends HBox {
                 acceptButton.setStyleProperty(Fonts.getFont(0.5, color, Fonts.FontTyp.NORMAL));
             }
             acceptButton.setInfoText(encounter.getResult().isSuccess() ? ResourceUtil.get("${success}", "ui") : ResourceUtil.get("${fail}", "ui") + damage);
-            refresh();
+
         }
 
     }

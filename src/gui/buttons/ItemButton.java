@@ -20,11 +20,11 @@ public class ItemButton extends Group {
     protected Node actualNode;
     protected Node oldNode;
 
-    public ItemButton(Item item) {
+    public ItemButton(String type, Item item) {
         this.item = item;
          backside = new ImageView(backgroundImage);
 
-        Image itemImage = new Image("images/"+item.getClass().getSimpleName()+"/" + item.getId() + ".jpg", 200, 150, true, true, true);
+        Image itemImage = new Image("images/"+type+"/" + item.getId() + ".jpg", 200, 150, true, true, true);
          frontside = new ImageView(itemImage);
         ImageView shape = new ImageView(backgroundImage);
         frontside.setClip(shape);

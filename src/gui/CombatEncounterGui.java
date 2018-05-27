@@ -1,6 +1,6 @@
 package gui;
 
-import enums.TestTyp;
+import enums.TestType;
 import gamemechanics.CombatEncounter;
 import gui.buttons.MonsterButton;
 import javafx.geometry.Insets;
@@ -103,7 +103,7 @@ public class CombatEncounterGui extends EncounterGui {
         if (encounter.getEncounterPart() == 2) {
             leftSide.setBackground(new Background(new BackgroundFill(Color.rgb(205, 40, 43, 0.2), new CornerRadii(10.0), Insets.EMPTY)));
 
-            Label strengthTestSymbol = new Label(TestTyp.STRENGTH.getSymbol());
+            Label strengthTestSymbol = new Label(TestType.STRENGTH.getSymbol());
             strengthTestSymbol.styleProperty().bind(Fonts.getFont(0.4, Fonts.RED, Fonts.FontTyp.NORMAL));
             strengthTestSymbol.setPadding(new Insets(0, 10, 0, 10));
             Label strengthTest = new Label(m.getStrengthTest() + "");
@@ -120,7 +120,7 @@ public class CombatEncounterGui extends EncounterGui {
         } else {
             leftSide.setBackground(new Background(new BackgroundFill(Color.rgb(88, 120, 200, 0.2), new CornerRadii(10.0), Insets.EMPTY)));
 
-            Label willTestSymbol = new Label(TestTyp.WILL.getSymbol());
+            Label willTestSymbol = new Label(TestType.WILL.getSymbol());
             willTestSymbol.styleProperty().bind(Fonts.getFont(0.4, Fonts.BLUE, Fonts.FontTyp.NORMAL));
             willTestSymbol.setPadding(new Insets(0, 10, 0, 10));
             Label willTest = new Label(m.getWillTest() + "");
@@ -149,7 +149,8 @@ public class CombatEncounterGui extends EncounterGui {
             Label bonusItem = new Label(ResourceUtil.get("${item_bonus}", "ui") + ":");
             bonusItem.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
             bonusItem.setPadding(new Insets(0, 10, 0, 10));
-            Label bonusItemValue = new Label(encounter.getPreparation().getGainDiceBonus().getValue() + "   (" + encounter.getPreparation().getGainDiceBonus().getParentName() + ")");
+            Label bonusItemValue = new Label(encounter.getPreparation().getGainDiceBonus().getValue() +
+                    (encounter.getPreparation().getGainDiceBonus().getValue()>0?"   (" + encounter.getPreparation().getGainDiceBonus().getParentName() + ")":""));
             bonusItemValue.styleProperty().bind(Fonts.getFont(0.25, Fonts.GREEN, Fonts.FontTyp.NORMAL));
             bonusItemValue.setPadding(new Insets(0, 10, 0, 10));
 

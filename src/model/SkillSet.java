@@ -1,6 +1,6 @@
 package model;
 
-import enums.TestTyp;
+import enums.TestType;
 import lombok.*;
 
 @Getter
@@ -28,7 +28,7 @@ public class SkillSet {
         this.will = will;
     }
 
-    public int getSkill(TestTyp typ) {
+    public int getSkill(TestType typ) {
         switch (typ) {
             case LORE:
                 return lore + loreMod < 1 ? 1 : lore + loreMod;

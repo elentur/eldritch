@@ -1,17 +1,21 @@
 package model.Item;
 
+import enums.BonusType;
 import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.Encounter;
 import lombok.Getter;
 
 @Getter
 public class ItemBonus_Null extends ItemBonus{
     private final static ItemBonus_Null instance = new ItemBonus_Null();
-    private final SituationTyp situation = SituationTyp.NONE;
+    private final SituationType situation = SituationType.NONE;
     private final EventTimeType eventTime= EventTimeType.NONE;
-    private ItemBonus_Null(){}
+    private BonusType bonusType = BonusType.NONE;
+    private ItemBonus_Null(){
+        super(null);
+    }
 
     @Override
     public void execute(Encounter encounter) {
@@ -19,8 +23,8 @@ public class ItemBonus_Null extends ItemBonus{
     }
 
     @Override
-    public TestTyp getTest() {
-        return TestTyp.NONE;
+    public TestType getTest() {
+        return TestType.NONE;
     }
 
     @Override

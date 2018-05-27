@@ -1,12 +1,11 @@
 package model.Item;
 
+import enums.BonusType;
 import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.CombatEncounter;
 import gamemechanics.Encounter;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import preparation.Preparation;
@@ -16,13 +15,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 
 public class ItemBonus_SwitchSkill extends ItemBonus {
-    private TestTyp to;
+    private TestType to;
+    private BonusType bonusType = BonusType.SWITCH_SKILL;
 
-
-    public ItemBonus_SwitchSkill(SituationTyp situation, TestTyp test, TestTyp to, List<SpellConsequence> consequence) {
+    public ItemBonus_SwitchSkill(SituationType situation, TestType test, TestType to, List<SpellConsequence> consequence,Item parentItem) {
+        super(parentItem);
         this.situation = situation;
         this.consequence = consequence;
         this.test = test;

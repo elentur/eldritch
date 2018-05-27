@@ -1,7 +1,8 @@
 package model.Item;
 
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.BonusType;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,10 +13,12 @@ import utils.ResourceUtil;
 @Setter
 public class ItemBonus_GainDice extends ItemBonus {
 
-    public static final ItemBonus_GainDice EMPTY = new ItemBonus_GainDice(0, TestTyp.NONE, SituationTyp.NONE);
+    public static final ItemBonus_GainDice EMPTY = new ItemBonus_GainDice(0, TestType.NONE, SituationType.NONE,null);
     private int value;
+    private BonusType bonusType = BonusType.GAIN_DICE;
 
-    public ItemBonus_GainDice(int value, TestTyp test, SituationTyp situation) {
+    public ItemBonus_GainDice(int value, TestType test, SituationType situation,Item parentItem) {
+        super(parentItem);
         this.value = value;
         this.test = test;
         this.situation = situation;

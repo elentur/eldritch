@@ -1,6 +1,6 @@
 package gui.buttons;
 
-import enums.TestTyp;
+import enums.TestType;
 import gui.Fonts;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +23,7 @@ public class MonsterButton extends ItemButton {
 
 
     public MonsterButton(Monster monster) {
-        super(monster);
+        super("monster",monster);
 
     }
 
@@ -45,7 +45,7 @@ public class MonsterButton extends ItemButton {
 
 
 
-        Label willTestSymbol = new Label(TestTyp.WILL.getSymbol());
+        Label willTestSymbol = new Label(TestType.WILL.getSymbol());
         willTestSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
         Label willTest = new Label(monster.getWillTest() + "");
         willTest.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
@@ -59,7 +59,7 @@ public class MonsterButton extends ItemButton {
         HBox left= new HBox(symbolsLeft,valuesLeft);
 
 
-        Label strengthTestSymbol = new Label(TestTyp.STRENGTH.getSymbol());
+        Label strengthTestSymbol = new Label(TestType.STRENGTH.getSymbol());
         strengthTestSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
         Label strengthTest = new Label(monster.getStrengthTest() + "");
         strengthTest.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));

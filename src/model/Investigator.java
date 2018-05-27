@@ -1,10 +1,9 @@
 package model;
 
 import container.ItemContainer;
-import enums.ConditionTyp;
-import enums.TestTyp;
-import factory.ItemFactory;
-import lombok.EqualsAndHashCode;
+import enums.ConditionType;
+import enums.ItemType;
+import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(of={"firstName","skillSet","health","sanity"})
-public class Investigator extends Item{
+public abstract class Investigator implements Item {
     private String id;
     private String firstName;
     private String lastName;
@@ -29,7 +28,7 @@ public class Investigator extends Item{
     private int actualHealth;
     private int actualSanity;
     private String startingSpace;
-    private ItemContainer<StartingPossession> startingPossessions;
+    private List<StartingPossession> startingPossessions;
 
     private List<ItemBonus> bonus;
 
@@ -39,55 +38,31 @@ public class Investigator extends Item{
         return ResourceUtil.get(occupation, this.getClass());
     }
 
-    public int getSkill(TestTyp typ) {
+    public int getSkill(TestType typ) {
         return skillSet.getSkill(typ);
     }
 
-    public List<ConditionTyp> getConditions() {
+    public List<ConditionType> getConditions() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public String getNameId() {
+        return "";
     }
 
     public String getName(){
         return firstName +" " +lastName;
     }
 
-    public Investigator getInstance() {
-        Investigator inv = new Investigator();
-        inv.setId(id);
-        inv.setFirstName(firstName);
-        inv.setLastName(lastName);
-        inv.setOccupation(occupation);
-        SkillSet skills = new SkillSet(
-                skillSet.getLore(),
-                skillSet.getInfluence(),
-                skillSet.getObservation(),
-                skillSet.getStrength(),
-                skillSet.getWill());
-        inv.setSkillSet(skills);
-        inv.setHealth(health);
-        inv.setSanity(sanity);
-        inv.setActualHealth(health);
-        inv.setActualSanity(sanity);
-        inv.setStartingSpace(startingSpace);
-        inv.setStartingPossessions(startingPossessions);
-        inv.setBonus(bonus);
-        ItemFactory itemFactory = new ItemFactory();
-        inv.setInventory(new ItemContainer<>());
-        for (StartingPossession p : startingPossessions) {
-            switch (p.getTyp()) {
-                case ASSET:
-                    inv.getInventory().add(itemFactory.getAssets().get(p.getId()));
-                    break;
-                case SPELL:
-                    inv.getInventory().add(itemFactory.getSpells().get(p.getId()));
-                    break;
-                default:
-                    break;
 
-            }
-        }
-        return inv;
+    @Override
+    public ItemType getItemTyp() {
+        return ItemType.NONE;
     }
+
+   protected abstract List<StartingPossession> createStartingPossessions();
+
 
     public void addHealth(int value) {
         actualHealth+=value;

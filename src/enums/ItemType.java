@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public enum ItemTyp {
+public enum ItemType {
     NONE("", Collections.singletonList("")),
     TRINKET_WEAPON("&trinketWeapon", Arrays.asList("Trinket","Weapon")),
     ITEM("&item", Collections.singletonList("Item")),
@@ -19,7 +19,7 @@ public enum ItemTyp {
     private String key;
     private List<String> parts;
 
-    private ItemTyp(String key,List<String> parts) {
+    private ItemType(String key, List<String> parts) {
         this.key = key;
         parts = parts;
     }

@@ -1,24 +1,24 @@
 package model.Item;
 
 import container.Result;
+import enums.BonusType;
 import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.Encounter;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import utils.ResourceUtil;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class ItemBonus_RepeatRoll extends ItemBonus {
     private int value;
+    private BonusType bonusType = BonusType.REPEAT_ROLL;
 
 
-    public ItemBonus_RepeatRoll(int value, TestTyp test, SituationTyp situation) {
+    public ItemBonus_RepeatRoll(int value, TestType test, SituationType situation,Item parentItem) {
+        super(parentItem);
         this.value = value;
         this.test = test;
         this.situation = situation;

@@ -1,13 +1,10 @@
 package factory;
 
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
 import model.Monster;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,24 +12,26 @@ import java.util.List;
 @Log
 public class MonsterFactory {
 
-    List<Monster> monster = new ArrayList<>();
+    List<Monster> monster=null;
 
     public List<Monster> getMonster() {
-
-        ObjectMapper mapper = new ObjectMapper();
-        if (monster.isEmpty()) {
-            try {
-                File file = new File("./resources/monster/monster.json");
-                log.info("Beginn unmarschalling monster");
-                monster = mapper.readValue(file, new TypeReference<List<Monster>>() {
-                });
-                log.info("Unmarschalling monster successful");
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (monster == null) {
+            File f = new File("./src/model/item/monsters");
+            monster = new ArrayList<>();
+            for (String name: f.list()){
+                try {
+                    Monster m = (Monster) Class.forName("model.Item.monsters."+name.replace(".java","")).newInstance();
+                    monster.add(m);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-
-
         }
+
         return monster;
     }
 }

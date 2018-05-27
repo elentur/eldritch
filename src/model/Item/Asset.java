@@ -1,6 +1,6 @@
 package model.Item;
 
-import enums.ItemTyp;
+import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,15 +10,30 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+public abstract class Asset implements Item {
 
-public class Asset extends Item {
 
+    private final ItemType type;
+    private final int price;
+    private final List<ItemBonus> bonus;
 
-    private ItemTyp typ;
-    private int price;
-    private List<ItemBonus> bonus;
+    public Asset(ItemType type, int price ){
+        this.type = type;
+        this.price=price;
+        this.bonus= createBonus();
 
+    }
     public String getName(){
-        return  ResourceUtil.get(name,this.getClass());
+        return  ResourceUtil.get(getNameId(),"asset");
+    }
+
+    public String toString() {
+        return getName();
+    }
+
+    @Override
+    public ItemType getItemTyp() {
+        return type;
     }
 }

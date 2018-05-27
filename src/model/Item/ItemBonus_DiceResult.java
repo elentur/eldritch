@@ -2,9 +2,10 @@ package model.Item;
 
 import container.Die;
 import container.Result;
+import enums.BonusType;
 import enums.EventTimeType;
-import enums.SituationTyp;
-import enums.TestTyp;
+import enums.SituationType;
+import enums.TestType;
 import expetions.NoFailsAvailableException;
 import gamemechanics.Encounter;
 import lombok.Getter;
@@ -18,8 +19,10 @@ public class ItemBonus_DiceResult extends ItemBonus {
 
     private int num;
     private int value;
+    private BonusType bonusType = BonusType.DICE_RESULT;
 
-    public ItemBonus_DiceResult(int num, int value, TestTyp test, SituationTyp situation) {
+    public ItemBonus_DiceResult(int num, int value, TestType test, SituationType situation,Item parentItem) {
+        super(parentItem);
         this.num = num;
         this.value = value;
         this.test = test;

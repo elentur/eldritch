@@ -40,6 +40,7 @@ public class Button extends StackPane {
         });
 
 
+
         actualNode.setOnMousePressed(e -> {
             if (e.getButton().equals(MouseButton.PRIMARY)) {
                 actualNode.setEffect(null);

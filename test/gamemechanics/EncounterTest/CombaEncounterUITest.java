@@ -5,9 +5,7 @@ import container.ItemContainer;
 import container.Result;
 import enums.EventTimeType;
 import expetions.EncounterException;
-import factory.InvestigatorFactory;
 import factory.ItemFactory;
-import factory.MonsterFactory;
 import gamemechanics.CombatEncounter;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -25,6 +23,10 @@ import model.Investigator;
 import model.Item.Asset;
 import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.investigators.AgnesBaker;
+import model.Item.monsters.HoundOfTindalos;
+import model.Item.monsters.Shan;
+import model.Item.monsters.Vampire;
 import model.Monster;
 import preparation.Preparation;
 
@@ -205,14 +207,14 @@ public class CombaEncounterUITest extends Application {
 
 
     private CombatEncounter initCombatEncounter() {
-        Investigator inv = new InvestigatorFactory().getInvestigators().get(0).getInstance();
+        Investigator inv = new AgnesBaker();
         ItemContainer<Asset> assets = new ItemFactory().getAssets();
         inv.getInventory().remove(assets.get("&profaneTome"));
         inv.getInventory().addAll(assets);
         List<Monster> monsters = new ArrayList<>();
-        monsters.add(new MonsterFactory().getMonster().get(0).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(1).getInstance());
-        monsters.add(new MonsterFactory().getMonster().get(2).getInstance());
+        monsters.add(new Vampire());
+        monsters.add(new HoundOfTindalos());
+        monsters.add(new Shan());
         return new CombatEncounter(monsters, inv);
     }
 

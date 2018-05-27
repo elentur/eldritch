@@ -1,5 +1,0 @@
-package enums;
-
-public enum ItemBonusTyp {
-    GAIN_DICE,ADDITIONAL_DICE, DICE_RESULT,REPEAT_ROLL,STRENGTH_TO_LORE
-}

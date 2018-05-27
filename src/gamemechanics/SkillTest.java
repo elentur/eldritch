@@ -2,38 +2,38 @@ package gamemechanics;
 
 import Service.DiceRollerService;
 import container.Result;
-import enums.ConditionTyp;
-import enums.TestTyp;
+import enums.ConditionType;
+import enums.TestType;
 import model.Investigator;
 
 import java.util.List;
 
 
 public class SkillTest {
-    private TestTyp typ;
+    private TestType typ;
     private int mod;
 
-    public SkillTest(TestTyp typ, int mod) {
+    public SkillTest(TestType typ, int mod) {
         this.typ = typ;
         this.mod = mod;
         if (this.typ == null) {
-            this.typ = TestTyp.NONE;
+            this.typ = TestType.NONE;
         }
     }
 
     public Result execute(Investigator inv) {
         int skill;
-        ConditionTyp conditionTyp = ConditionTyp.NONE;
+        ConditionType conditionTyp = ConditionType.NONE;
         DiceRollerService service = new DiceRollerService();
         if (inv == null) {
            skill = 1;
         }else {
             skill = inv.getSkill(typ);
-            List<ConditionTyp> conditons = inv.getConditions();
-            if (conditons.contains(ConditionTyp.BLESSED)) {
-                conditionTyp = ConditionTyp.BLESSED;
-            } else if (conditons.contains(ConditionTyp.CURSED)) {
-                conditionTyp = ConditionTyp.CURSED;
+            List<ConditionType> conditons = inv.getConditions();
+            if (conditons.contains(ConditionType.BLESSED)) {
+                conditionTyp = ConditionType.BLESSED;
+            } else if (conditons.contains(ConditionType.CURSED)) {
+                conditionTyp = ConditionType.CURSED;
             }
         }
 
