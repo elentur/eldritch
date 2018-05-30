@@ -17,7 +17,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 
-class ItemScrollPane extends Group {
+public class ItemScrollPane extends Group {
 
     private final FlowPane flowPane;
     private final ScrollPane scrollPane;
@@ -26,7 +26,7 @@ class ItemScrollPane extends Group {
     private final ArrowButton up;
     private final ArrowButton down;
 
-    ItemScrollPane() {
+    public ItemScrollPane() {
         flowPane = new FlowPane();
         scrollPane = new ScrollPane(flowPane);
         scrollPane.setFitToWidth(true);
@@ -69,7 +69,7 @@ class ItemScrollPane extends Group {
     }
 
 
-    ObservableList<Node> getScrollableChildren() {
+    public ObservableList<Node> getScrollableChildren() {
         return flowPane.getChildren();
     }
 
@@ -77,12 +77,12 @@ class ItemScrollPane extends Group {
         flowPane.setAlignment(center);
     }
 
-    void setWidth(double width) {
+    public void setWidth(double width) {
         scrollPane.setMinWidth(width);
         scrollPane.setMaxWidth(width);
     }
 
-    void setHeight(double height) {
+    public void setHeight(double height) {
         scrollPane.setMinHeight(height);
         scrollPane.setMaxHeight(height);
 

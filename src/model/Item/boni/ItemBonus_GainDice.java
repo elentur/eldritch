@@ -1,4 +1,4 @@
-package model.Item;
+package model.Item.boni;
 
 import enums.BonusType;
 import enums.SituationType;
@@ -6,6 +6,7 @@ import enums.TestType;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Item;
 import utils.ResourceUtil;
 
 

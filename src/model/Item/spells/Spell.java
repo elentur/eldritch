@@ -1,9 +1,11 @@
-package model.Item;
+package model.Item.spells;
 
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Item;
+import model.Item.boni.ItemBonus;
 import utils.ResourceUtil;
 
 import java.util.List;
@@ -11,21 +13,18 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-public abstract class Asset implements Item {
+public abstract class Spell implements Item {
+
+    private ItemType type;
+    private List<ItemBonus> bonus;
 
 
-    private final ItemType type;
-    private final int price;
-    private final List<ItemBonus> bonus;
-
-    public Asset(ItemType type, int price ){
+    public Spell(ItemType type ){
         this.type = type;
-        this.price=price;
         this.bonus= createBonus();
-
     }
     public String getName(){
-        return  ResourceUtil.get(getNameId(),"asset");
+        return  ResourceUtil.get(getNameId(),this.getClass());
     }
 
     public String toString() {

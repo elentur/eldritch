@@ -1,9 +1,11 @@
-package model.Item;
+package model.Item.boni;
 
 import enums.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Item;
+import model.Item.SpellConsequence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-public abstract class ItemBonus implements Bonus{
+public abstract class ItemBonus implements Bonus {
     protected Item parentItem;
     protected boolean active = true;
     protected boolean usable = true;

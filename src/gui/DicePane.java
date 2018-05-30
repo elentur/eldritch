@@ -21,7 +21,7 @@ import utils.ResourceUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-class DicePane extends HBox {
+public class DicePane extends HBox {
     private final Encounter encounter;
     private double width;
     private double height;
@@ -31,7 +31,7 @@ class DicePane extends HBox {
     InfoTextButton acceptButton;
     private BooleanProperty rolleIsDone = new SimpleBooleanProperty(false);
 
-    DicePane(Encounter encounter, double width, double height) {
+    public DicePane(Encounter encounter, double width, double height) {
         this.encounter = encounter;
         this.width = width;
         this.height = height;

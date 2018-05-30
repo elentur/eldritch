@@ -2,6 +2,7 @@ package model.Item;
 
 
 import enums.ItemType;
+import model.Item.boni.ItemBonus;
 
 import java.util.List;
 

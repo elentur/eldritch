@@ -1,7 +1,5 @@
 package model.Item.monsters;
 
-import model.Monster;
-
 
 public class Shan extends Monster {
 

@@ -3,10 +3,9 @@ package model.Item.assets;
 import enums.ItemType;
 import enums.SituationType;
 import enums.TestType;
-import model.Item.Asset;
-import model.Item.ItemBonus;
-import model.Item.ItemBonus_GainDice;
-import model.Item.ItemBonus_RepeatRoll;
+import model.Item.boni.ItemBonus;
+import model.Item.boni.ItemBonus_GainDice;
+import model.Item.boni.ItemBonus_RepeatRoll;
 
 import java.util.ArrayList;
 import java.util.List;

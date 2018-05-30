@@ -1,9 +1,10 @@
-package model.Item;
+package model.Item.boni;
 
 import enums.*;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Item;
 import utils.ResourceUtil;
 
 

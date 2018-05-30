@@ -16,7 +16,7 @@ public class Button extends StackPane {
     private BooleanProperty armed = new SimpleBooleanProperty(false);
     final ImageView imageView;
 
-    private Node actualNode;
+    protected Node actualNode;
 
 
     public Button(Image image) {

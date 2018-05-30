@@ -1,4 +1,4 @@
-package model.Item;
+package model.Item.boni;
 
 import enums.BonusType;
 import enums.EventTimeType;
@@ -8,6 +8,8 @@ import gamemechanics.CombatEncounter;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Item;
+import model.Item.SpellConsequence;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -16,16 +18,13 @@ import java.util.List;
 @Getter
 @Setter
 
-public class ItemBonus_SwitchSkill extends ItemBonus {
-    private TestType to;
-    private BonusType bonusType = BonusType.SWITCH_SKILL;
+public class ItemBonus_ChangeMonsterHorror extends ItemBonus {
+    private int value;
+    private BonusType bonusType = BonusType.CHANGE_MONSTER_HORROR;
 
-    public ItemBonus_SwitchSkill(SituationType situation, TestType test, TestType to, List<SpellConsequence> consequence,Item parentItem) {
+    public ItemBonus_ChangeMonsterHorror(SituationType situation, int value,Item parentItem) {
         super(parentItem);
         this.situation = situation;
-        this.consequence = consequence;
-        this.test = test;
-        this.to = to;
         this.eventTime = EventTimeType.BEFORE;
     }
 
@@ -36,11 +35,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
         if(encounter instanceof CombatEncounter){
             CombatEncounter combatEncounter = (CombatEncounter) encounter;
             Preparation preparation = combatEncounter.getAttackPreparation();
-            if(preparation.getTestTyp().equals(test)){
-                preparation.setTestTyp(to);
-                preparation.calculateBoni();
-               // setActive(false);
-            }
+
         }
     }
 

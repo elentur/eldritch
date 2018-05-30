@@ -3,9 +3,9 @@ package container;
 import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
-import model.Item.Bonus;
-import model.Item.ItemBonus_AdditionalDice;
-import model.Item.ItemBonus_GainDice;
+import model.Item.boni.Bonus;
+import model.Item.boni.ItemBonus_AdditionalDice;
+import model.Item.boni.ItemBonus_GainDice;
 
 import java.util.ArrayList;
 import java.util.Comparator;

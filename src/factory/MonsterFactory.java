@@ -2,7 +2,7 @@ package factory;
 
 
 import lombok.extern.java.Log;
-import model.Monster;
+import model.Item.monsters.Monster;
 
 import java.io.File;
 import java.util.ArrayList;

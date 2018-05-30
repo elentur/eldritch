@@ -33,7 +33,7 @@ public class Animations {
         startRotateFromTo(oldNode,node,pane,null);
     }
 
-    static void startRotateFromTo(Node oldNode, Node node, Pane pane, Callable<Void> func) {
+    public static void startRotateFromTo(Node oldNode, Node node, Pane pane, Callable<Void> func) {
         ScaleTransition st1 = new ScaleTransition(Duration.millis(70), pane);
         st1.setByX(-1);
         st1.playFromStart();

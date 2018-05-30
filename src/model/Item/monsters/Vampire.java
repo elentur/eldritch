@@ -1,7 +1,5 @@
 package model.Item.monsters;
 
-import model.Monster;
-
 
 public class Vampire extends Monster {
 
@@ -17,6 +15,8 @@ public class Vampire extends Monster {
         this.setEffects(null);
 
     }
+
+
 
 
 

@@ -3,10 +3,9 @@ package model;
 import enums.FieldType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import model.Item.investigators.Investigator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor

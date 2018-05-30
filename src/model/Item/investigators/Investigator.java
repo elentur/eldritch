@@ -1,4 +1,4 @@
-package model;
+package model.Item.investigators;
 
 import container.ItemContainer;
 import enums.ConditionType;
@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Item.Item;
-import model.Item.ItemBonus;
+import model.Item.boni.ItemBonus;
+import model.SkillSet;
+import model.StartingPossession;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;

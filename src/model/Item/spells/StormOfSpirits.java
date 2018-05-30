@@ -3,9 +3,8 @@ package model.Item.spells;
 import enums.ItemType;
 import enums.SituationType;
 import enums.TestType;
-import model.Item.ItemBonus;
-import model.Item.ItemBonus_SwitchSkill;
-import model.Item.Spell;
+import model.Item.boni.ItemBonus;
+import model.Item.boni.ItemBonus_SwitchSkill;
 
 import java.util.ArrayList;
 import java.util.List;

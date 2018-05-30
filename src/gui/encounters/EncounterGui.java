@@ -1,7 +1,10 @@
-package gui;
+package gui.encounters;
 
 import enums.EventTimeType;
 import gamemechanics.Encounter;
+import gui.DialogGui;
+import gui.DicePane;
+import gui.ItemScrollPane;
 import gui.buttons.BonusButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,9 +13,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import model.Item.Bonus;
+import model.Item.boni.Bonus;
 
-class EncounterGui extends DialogGui {
+public class EncounterGui extends DialogGui {
     final Encounter encounter;
     private ItemScrollPane bonusPane;
     VBox encounterPane;
@@ -20,7 +23,7 @@ class EncounterGui extends DialogGui {
     private final static Image frameImage = new Image("images/ShowCaseFrame.png");
     final BorderPane encounterMain;
 
-    EncounterGui(Encounter encounter) {
+  public  EncounterGui(Encounter encounter) {
         super("", 0.7, 0.7);
         this.encounter = encounter;
 

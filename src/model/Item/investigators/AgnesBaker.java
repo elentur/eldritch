@@ -3,9 +3,8 @@ package model.Item.investigators;
 import container.ItemContainer;
 import enums.*;
 import factory.ItemFactory;
-import model.Investigator;
-import model.Item.ItemBonus;
-import model.Item.ItemBonus_AdditionalDice;
+import model.Item.boni.ItemBonus;
+import model.Item.boni.ItemBonus_AdditionalDice;
 import model.SkillSet;
 import model.StartingPossession;
 

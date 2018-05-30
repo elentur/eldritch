@@ -8,8 +8,11 @@ import enums.SituationType;
 import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
-import model.Investigator;
+import model.Item.investigators.Investigator;
 import model.Item.*;
+import model.Item.boni.Bonus;
+import model.Item.boni.ItemBonus_AdditionalDice;
+import model.Item.boni.ItemBonus_GainDice;
 
 import java.util.function.Function;
 

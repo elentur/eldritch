@@ -1,7 +1,7 @@
 package Service;
 
-import model.Investigator;
-import model.Monster;
+import model.Item.investigators.Investigator;
+import model.Item.monsters.Monster;
 
 public class EventService {
 

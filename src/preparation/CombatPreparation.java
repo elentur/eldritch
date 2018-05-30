@@ -4,8 +4,8 @@ import enums.SituationType;
 import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
-import model.Investigator;
-import model.Monster;
+import model.Item.investigators.Investigator;
+import model.Item.monsters.Monster;
 
 @Getter
 @Setter

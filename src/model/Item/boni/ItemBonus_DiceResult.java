@@ -1,4 +1,4 @@
-package model.Item;
+package model.Item.boni;
 
 import container.Die;
 import container.Result;
@@ -10,6 +10,7 @@ import expetions.NoFailsAvailableException;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Item;
 import utils.ResourceUtil;
 
 @Getter

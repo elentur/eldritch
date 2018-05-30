@@ -4,9 +4,11 @@ import container.BonusContainer;
 import container.ItemContainer;
 import enums.FieldType;
 import enums.SituationType;
+import gamemechanics.choice.Choice;
+import javafx.beans.property.SimpleObjectProperty;
 import model.Field;
-import model.Investigator;
-import model.Item.Bonus;
+import model.Item.investigators.Investigator;
+import model.Item.boni.Bonus;
 import model.Item.Item;
 
 import java.util.function.Function;
@@ -18,6 +20,8 @@ public class GameService {
     public static GameService getInstance() {
         return ourInstance;
     }
+
+    private  SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<Choice>();
 
     private GameService() {
 
@@ -44,5 +48,13 @@ public class GameService {
             boni.addAll(inv.getBonus().stream().filter(filter::apply).collect(Collectors.toCollection(BonusContainer::new)));
         }
         return boni;
+    }
+
+    public  void addChoice(Choice choice) {
+        this.choice.set(choice);
+    }
+
+    public SimpleObjectProperty<Choice> getChoiceProperty() {
+        return choice;
     }
 }

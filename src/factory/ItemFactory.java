@@ -2,8 +2,8 @@ package factory;
 
 import container.ItemContainer;
 import lombok.extern.java.Log;
-import model.Item.Asset;
-import model.Item.Spell;
+import model.Item.assets.Asset;
+import model.Item.spells.Spell;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package model.Item;
+package model.Item.boni;
 
 import enums.BonusType;
 import enums.EventTimeType;
@@ -8,7 +8,7 @@ import gamemechanics.Encounter;
 import lombok.Getter;
 
 @Getter
-public class ItemBonus_Null extends ItemBonus{
+public class ItemBonus_Null extends ItemBonus {
     private final static ItemBonus_Null instance = new ItemBonus_Null();
     private final SituationType situation = SituationType.NONE;
     private final EventTimeType eventTime= EventTimeType.NONE;

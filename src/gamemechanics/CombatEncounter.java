@@ -6,8 +6,8 @@ import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import model.Investigator;
-import model.Monster;
+import model.Item.investigators.Investigator;
+import model.Item.monsters.Monster;
 import preparation.CombatPreparation;
 import preparation.Preparation;
 
@@ -17,8 +17,8 @@ import java.util.List;
 @Setter
 @ToString(of = {"activeMonster", "investigator"})
 public class CombatEncounter extends Encounter {
+    private List<Monster> originalMonsters;
     private List<Monster> monsters;
-
     private Monster activeMonster;
     private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
@@ -28,7 +28,10 @@ public class CombatEncounter extends Encounter {
     private EventService eventService = new EventService();
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
-        this.monsters = monsters;
+        this.originalMonsters = monsters;
+        for(Monster m : monsters){
+            this.monsters.add(m.clone());
+        }
         this.investigator = investigator;
     }
 

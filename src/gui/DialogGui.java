@@ -21,16 +21,16 @@ import java.awt.*;
 
 public abstract class DialogGui extends Stage {
 
-    private final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width ;
-    private final static int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height ;
+    protected final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width ;
+    protected final static int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height ;
     private final static int centerX =screenWidth / 2;
     private final static int centerY = screenHeight / 2;
     private final static Image backgroundImage= new Image("images/InfoScreen.png");
 
-    Rectangle background;
-    StackPane main;
+    protected Rectangle background;
+    protected StackPane main;
 
-    DialogGui(String s, double width, double height) {
+    protected DialogGui(String s, double width, double height) {
         super();
         StackPane root = new StackPane();
         root.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.2),CornerRadii.EMPTY,Insets.EMPTY)));
@@ -53,7 +53,7 @@ public abstract class DialogGui extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
         this.initStyle(StageStyle.TRANSPARENT);
         this.getScene().getRoot().setEffect(new DropShadow());
-        this.setFullScreen(true);
+        this.setMaximized(true);
         scene.setOnKeyPressed(e->this.close());
 
 

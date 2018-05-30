@@ -1,7 +1,8 @@
-package gui;
+package gui.encounters;
 
 import enums.TestType;
 import gamemechanics.CombatEncounter;
+import gui.*;
 import gui.buttons.MonsterButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import model.Monster;
+import model.Item.monsters.Monster;
 import utils.ResourceUtil;
 
 import java.util.concurrent.Callable;
@@ -26,6 +27,7 @@ public class CombatEncounterGui extends EncounterGui {
 
     public CombatEncounterGui(CombatEncounter encounter) {
         super(encounter);
+
 
     }
 
@@ -176,6 +178,7 @@ public class CombatEncounterGui extends EncounterGui {
       //  encounterPane.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
     }
+
 
 
 }
