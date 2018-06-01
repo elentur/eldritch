@@ -1,21 +1,21 @@
 package Service;
 
-import container.BonusContainer;
 import container.ItemContainer;
 import enums.FieldType;
 import enums.SituationType;
 import gamemechanics.choice.Choice;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Effect;
 import model.Field;
-import model.Item.investigators.Investigator;
-import model.Item.boni.Bonus;
+import model.Item.Investigator;
 import model.Item.Item;
-
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class GameService {
     private static GameService ourInstance = new GameService();
+
+    private final ObservableList<Effect> insertions;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -24,7 +24,7 @@ public class GameService {
     private  SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<Choice>();
 
     private GameService() {
-
+        insertions= FXCollections.observableArrayList();
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
@@ -39,16 +39,11 @@ public class GameService {
         for(Investigator inv : getFieldOfInvestigator(investigator).getInvestigators()){
             items.addAll(inv.getInventory().getItemsWidthSituationTyp(SituationType.ALL));
         }
+        items.add(investigator);
         return items ;
     }
 
-    public BonusContainer<Bonus> getInvestigatorBoni(Investigator investigator,Function<Bonus,Boolean> filter) {
-        BonusContainer<Bonus> boni = new BonusContainer<>();
-        for(Investigator inv : getFieldOfInvestigator(investigator).getInvestigators()){
-            boni.addAll(inv.getBonus().stream().filter(filter::apply).collect(Collectors.toCollection(BonusContainer::new)));
-        }
-        return boni;
-    }
+
 
     public  void addChoice(Choice choice) {
         this.choice.set(choice);
@@ -56,5 +51,13 @@ public class GameService {
 
     public SimpleObjectProperty<Choice> getChoiceProperty() {
         return choice;
+    }
+
+    public ObservableList<Effect> getInsertions() {
+        return insertions;
+    }
+
+    public void addEffect(Effect effect){
+        insertions.add(effect);
     }
 }

@@ -1,17 +1,22 @@
 package model;
 
+import Service.GameService;
 import enums.EffectTyps;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import oldVersion.gameBuild.Game;
 
 import java.util.List;
 
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Effect {
+public abstract class Effect {
 
-   private EffectTyps typ;
-   private List<List<String>> parts;
+
+
+   public  void execute(){
+      GameService.getInstance().addEffect(this);
+   }
 }

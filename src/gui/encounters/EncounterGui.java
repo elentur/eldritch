@@ -13,7 +13,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import model.Item.boni.Bonus;
+import model.Item.Bonus;
 
 public class EncounterGui extends DialogGui {
     final Encounter encounter;

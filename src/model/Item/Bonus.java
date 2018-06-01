@@ -1,4 +1,4 @@
-package model.Item.boni;
+package model.Item;
 
 import enums.*;
 import gamemechanics.Encounter;
@@ -13,11 +13,12 @@ public interface Bonus {
     TestType getTest();
     String getText();
     FieldType getField();
-    boolean isActive();
+    boolean isActivated();
+    boolean isPassive();
     boolean isUsable();
 
     /**
-     * Means if true execute deactivates dis bonus for this round
+     * Means if true execute deactivates this bonus for this round
      * @return
      */
     boolean isPerRound();

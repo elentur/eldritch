@@ -1,6 +1,6 @@
 package container;
 
-import model.Item.investigators.Investigator;
+import model.Item.Investigator;
 
 import java.util.ArrayList;
 import java.util.List;

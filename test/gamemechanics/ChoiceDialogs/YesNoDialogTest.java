@@ -33,7 +33,7 @@ public class YesNoDialogTest extends Application {
         primaryStage.setScene(scene);
         scene.setOnKeyPressed(e->primaryStage.close());
         primaryStage.show();
-        YesNoChoice choice= new YesNoChoice("Test", "test text");
+        YesNoChoice choice= new YesNoChoice("Test", "test text",null,null);
         game.addChoice(choice);
 
 

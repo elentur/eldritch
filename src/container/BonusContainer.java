@@ -3,7 +3,8 @@ package container;
 import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
-import model.Item.boni.Bonus;
+import model.Item.Bonus;
+import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_AdditionalDice;
 import model.Item.boni.ItemBonus_GainDice;
 
@@ -55,6 +56,11 @@ public class BonusContainer<T extends Bonus> extends ArrayList<T>{
 
     public BonusContainer<ItemBonus_AdditionalDice> getAdditionalDiceBoni(Function<Bonus,Boolean> filter) {
         return  this.stream().filter(bonus -> bonus instanceof ItemBonus_AdditionalDice)
-                .filter(filter::apply).filter(bonus->!bonus.isActive()).map(bonus -> (ItemBonus_AdditionalDice)bonus).collect(Collectors.toCollection(BonusContainer::new));
+                .filter(filter::apply).filter(bonus->!bonus.isActivated()).map(bonus -> (ItemBonus_AdditionalDice)bonus).collect(Collectors.toCollection(BonusContainer::new));
     }
+    public BonusContainer<Bonus> getBoniWithFilter(Function<Bonus,Boolean> filter) {
+        return this.stream().filter(filter::apply).collect(Collectors.toCollection(BonusContainer::new));
+
+    }
+
 }

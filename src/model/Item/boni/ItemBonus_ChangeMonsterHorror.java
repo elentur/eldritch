@@ -8,12 +8,11 @@ import gamemechanics.CombatEncounter;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Bonus;
 import model.Item.Item;
-import model.Item.SpellConsequence;
-import preparation.Preparation;
+import model.Item.ItemBonus;
+import model.Item.Monster;
 import utils.ResourceUtil;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,26 +21,35 @@ public class ItemBonus_ChangeMonsterHorror extends ItemBonus {
     private int value;
     private BonusType bonusType = BonusType.CHANGE_MONSTER_HORROR;
 
-    public ItemBonus_ChangeMonsterHorror(SituationType situation, int value,Item parentItem) {
+    public ItemBonus_ChangeMonsterHorror(int value,SituationType situation, Item parentItem) {
         super(parentItem);
         this.situation = situation;
         this.eventTime = EventTimeType.BEFORE;
+        this.value=value;
+        this.test= TestType.WILL;
+        this.passive=true;
+
     }
 
 
     @Override
     public void execute(Encounter encounter) {
-        if(!isActive())return;
+
+        if(!isExecutable()){
+            return;
+        }
         if(encounter instanceof CombatEncounter){
             CombatEncounter combatEncounter = (CombatEncounter) encounter;
-            Preparation preparation = combatEncounter.getAttackPreparation();
+           for(Monster m : combatEncounter.getAvailableMonster()){
+               m.setHorror(m.getHorror()-1<1?1:m.getHorror()-1);
+           }
 
         }
     }
 
     @Override
     public String getText() {
-        return ResourceUtil.get("${switchSkill}",Bonus.class,situation.getText(),to.getText(), test.getText() );
+        return ResourceUtil.get("${changeMonsterHorror}",Bonus.class,value+"",situation.getText());
     }
 
 }

@@ -1,6 +1,8 @@
 package model.Item.monsters;
 
 
+import model.Item.Monster;
+
 public class Vampire extends Monster {
 
     public Vampire(){

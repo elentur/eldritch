@@ -1,4 +1,4 @@
-package model.Item.monsters;
+package model.Item;
 
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
@@ -6,18 +6,18 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Effect;
-import model.Item.Item;
-import model.Item.boni.ItemBonus;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"uniqueId"})
 @ToString(exclude = {"id", "effects",})
 public abstract class Monster implements Item, IMonster {
+    public String uniqueId = UUID.randomUUID().toString();
     public String id;
     private String name;
     private int willTest;
@@ -67,6 +67,7 @@ public abstract class Monster implements Item, IMonster {
     public Monster clone(){
         Monster m = new Monster() {
         };
+        m.setUniqueId(this.uniqueId);
         m.setId(this.id);
         m.setName(this.name);
         m.setWillTest(this.willTest);

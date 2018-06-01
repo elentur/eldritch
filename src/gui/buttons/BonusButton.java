@@ -4,7 +4,7 @@ import gui.Fonts;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.text.TextAlignment;
-import model.Item.boni.Bonus;
+import model.Item.Bonus;
 
 public class BonusButton extends Button {
 

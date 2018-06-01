@@ -1,4 +1,4 @@
-package model.Item.investigators;
+package model.Item;
 
 import container.ItemContainer;
 import enums.ConditionType;
@@ -7,23 +7,27 @@ import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import model.Item.Item;
-import model.Item.boni.ItemBonus;
+import lombok.extern.java.Log;
 import model.SkillSet;
 import model.StartingPossession;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @ToString(of={"firstName","skillSet","health","sanity"})
+@Log
 public abstract class Investigator implements Item {
+    public String uniqueId = UUID.randomUUID().toString();
     private String id;
     private String firstName;
     private String lastName;
     private String occupation;
+    private String actionText;
+    private String bonusText;
     private SkillSet skillSet;
     private int health;
     private int sanity;
@@ -57,7 +61,9 @@ public abstract class Investigator implements Item {
         return firstName +" " +lastName;
     }
 
-
+    public String getBonusText(){
+        return ResourceUtil.get(bonusText,"investigator");
+    }
     @Override
     public ItemType getItemTyp() {
         return ItemType.NONE;
@@ -73,16 +79,17 @@ public abstract class Investigator implements Item {
         }else if(actualHealth<0){
             actualHealth=0;
         }
-
+        log.info(getName() +" has changed health value to " +actualHealth);
     }
 
     public void addSanity(int value) {
         actualSanity+=value;
         if(actualSanity> sanity){
             actualSanity=sanity;
+
         }else if(actualSanity<0){
             actualSanity=0;
         }
-
+        log.info(getName() +" has changed sanity value to " +actualSanity);
     }
 }

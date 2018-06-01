@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import model.Item.monsters.Monster;
+import model.Item.Monster;
 import utils.ResourceUtil;
 
 import java.util.concurrent.Callable;
@@ -49,7 +49,7 @@ public class CombatEncounterGui extends EncounterGui {
             monsterSelection.setHeight(background.getHeight() * 0.7);
             main.getChildren().clear();
             main.getChildren().add(monsterSelection);
-            for (Monster monster : encounter.getMonsters()) {
+            for (Monster monster : encounter.getAvailableMonster()) {
                 MonsterButton monsterButton = new MonsterButton(monster);
                 monsterSelection.getScrollableChildren().add(monsterButton);
                 monsterButton.setOnMouseClicked(e -> {
@@ -66,7 +66,7 @@ public class CombatEncounterGui extends EncounterGui {
                 });
             }
         } else if(encounter.getMonsters().size()==1) {
-            encounter.setActiveMonster(encounter.getMonsters().get(0));
+            encounter.setActiveMonster(encounter.getAvailableMonster().get(0));
             populate();
         }else{
             this.close();

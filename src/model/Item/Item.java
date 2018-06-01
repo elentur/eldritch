@@ -2,7 +2,6 @@ package model.Item;
 
 
 import enums.ItemType;
-import model.Item.boni.ItemBonus;
 
 import java.util.List;
 
@@ -12,6 +11,8 @@ public interface Item {
     String getName();
 
     String getId();
+
+    String getUniqueId();
 
     List<ItemBonus> createBonus();
 

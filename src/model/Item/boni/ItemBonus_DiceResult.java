@@ -10,7 +10,9 @@ import expetions.NoFailsAvailableException;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import utils.ResourceUtil;
 
 @Getter
@@ -34,6 +36,9 @@ public class ItemBonus_DiceResult extends ItemBonus {
 
     @Override
     public void execute(Encounter encounter) {
+        if(!isExecutable()){
+            return;
+        }
         Result result = encounter.getResult();
         if(!result.getFails().isEmpty()){
             result.setShift(num);

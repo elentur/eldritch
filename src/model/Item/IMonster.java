@@ -1,4 +1,4 @@
-package model.Item.monsters;
+package model.Item;
 
 public interface IMonster {
 }

@@ -4,7 +4,7 @@ import Service.DiceRollerService;
 import container.Result;
 import enums.ConditionType;
 import enums.TestType;
-import model.Item.investigators.Investigator;
+import model.Item.Investigator;
 
 import java.util.List;
 

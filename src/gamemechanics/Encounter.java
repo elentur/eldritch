@@ -3,7 +3,7 @@ package gamemechanics;
 import container.Result;
 import lombok.Getter;
 import lombok.Setter;
-import model.Item.investigators.Investigator;
+import model.Item.Investigator;
 import preparation.Preparation;
 
 @Getter

@@ -8,7 +8,9 @@ import gamemechanics.CombatEncounter;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import model.Item.SpellConsequence;
 import preparation.Preparation;
 import utils.ResourceUtil;
@@ -22,10 +24,9 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
     private TestType to;
     private BonusType bonusType = BonusType.SWITCH_SKILL;
 
-    public ItemBonus_SwitchSkill(SituationType situation, TestType test, TestType to, List<SpellConsequence> consequence, Item parentItem) {
+    public ItemBonus_SwitchSkill(SituationType situation, TestType test, TestType to, Item parentItem) {
         super(parentItem);
         this.situation = situation;
-        this.consequence = consequence;
         this.test = test;
         this.to = to;
         this.eventTime = EventTimeType.BEFORE;
@@ -34,7 +35,9 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
 
     @Override
     public void execute(Encounter encounter) {
-        if(!isActive())return;
+        if(!isExecutable()){
+            return;
+        }
         if(encounter instanceof CombatEncounter){
             CombatEncounter combatEncounter = (CombatEncounter) encounter;
             Preparation preparation = combatEncounter.getAttackPreparation();

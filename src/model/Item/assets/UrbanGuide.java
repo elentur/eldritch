@@ -1,7 +1,8 @@
 package model.Item.assets;
 
 import enums.*;
-import model.Item.boni.ItemBonus;
+import model.Item.Asset;
+import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_AdditionalDice;
 
 import java.util.ArrayList;

@@ -1,11 +1,12 @@
-package model.Item.boni;
+package model.Item;
 
+import Service.GameService;
 import enums.*;
+import gamemechanics.Encounter;
+import gamemechanics.choice.Choice;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import model.Item.Item;
-import model.Item.SpellConsequence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +16,18 @@ import java.util.List;
 @EqualsAndHashCode
 public abstract class ItemBonus implements Bonus {
     protected Item parentItem;
-    protected boolean active = true;
+    protected boolean activated = true;
     protected boolean usable = true;
     protected RangeType range = RangeType.SELF;
     protected FieldType field = FieldType.ALL;
     protected TestType test = TestType.NONE;
     protected SituationType situation = SituationType.ALL;
     protected EventTimeType eventTime = EventTimeType.NONE;
-    protected List<SpellConsequence> consequence = new ArrayList<>();
     protected boolean perRound=false;
+    protected boolean passive=false;
+    protected Choice condition=null;
+    protected GameService game = GameService.getInstance();
+
 
 
     @Override
@@ -42,6 +46,18 @@ public abstract class ItemBonus implements Bonus {
         return getParentItem().getName();
     }
 
+    protected boolean isExecutable(){
+        if(condition!= null){
+            game.addChoice(condition);
+            if(!condition.isAccepted()){
+                return false;
+            }
+        }
+        if(!isActivated()){
+            return false;
+        }
+        return true;
+    }
 
 
 }

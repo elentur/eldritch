@@ -1,8 +1,13 @@
 package gamemechanics.EncounterTest;
 
+import Service.GameService;
 import container.ItemContainer;
 import factory.ItemFactory;
 import gamemechanics.CombatEncounter;
+import gamemechanics.choice.Choice;
+import gamemechanics.choice.YesNoChoice;
+import gui.InterfaceLinking;
+import gui.choice.YesNoDialog;
 import gui.encounters.CombatEncounterGui;
 import gui.DialogGui;
 import gui.Fonts;
@@ -11,12 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Item.investigators.Investigator;
-import model.Item.assets.Asset;
+import model.Item.Investigator;
+import model.Item.Asset;
 import model.Item.investigators.AgnesBaker;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
-import model.Item.monsters.Monster;
+import model.Item.Monster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +35,7 @@ public class CombatEncounterGUITest extends Application {
     @Override
     public void start(Stage primaryStage) {
         Fonts.init(primaryStage);
+        InterfaceLinking.init();
         CombatEncounter encounter = initCombatEncounter();
         VBox root = new VBox();
         Scene scene = new Scene(root);

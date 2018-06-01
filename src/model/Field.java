@@ -3,7 +3,7 @@ package model;
 import enums.FieldType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import model.Item.investigators.Investigator;
+import model.Item.Investigator;
 
 import java.util.HashSet;
 import java.util.Set;

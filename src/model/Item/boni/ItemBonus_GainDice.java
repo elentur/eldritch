@@ -6,7 +6,9 @@ import enums.TestType;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import utils.ResourceUtil;
 
 
@@ -27,7 +29,9 @@ public class ItemBonus_GainDice extends ItemBonus {
 
     @Override
     public void execute(Encounter encounter) {
-
+        if(!isExecutable()){
+            return;
+        }
     }
     @Override
     public String getText() {

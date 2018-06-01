@@ -2,7 +2,7 @@ package gamemechanics;
 
 import container.Result;
 import enums.TestType;
-import model.Item.investigators.Investigator;
+import model.Item.Investigator;
 import model.Item.investigators.AgnesBaker;
 import model.SkillSet;
 import org.junit.Assert;

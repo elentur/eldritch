@@ -36,6 +36,7 @@ public abstract class ChoiceDialog extends DialogGui {
         background.setFill(new ImagePattern(newBackground));
         this.choice=choice;
         choice.getChoiceTakenProperty().addListener(e->this.close());
+
     }
 
 

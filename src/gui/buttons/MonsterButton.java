@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import model.Item.monsters.Monster;
+import model.Item.Monster;
 
 public class MonsterButton extends ItemButton {
 

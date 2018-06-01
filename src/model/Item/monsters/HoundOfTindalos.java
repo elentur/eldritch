@@ -1,6 +1,8 @@
 package model.Item.monsters;
 
 
+import model.Item.Monster;
+
 public class HoundOfTindalos extends Monster {
 
     public HoundOfTindalos(){

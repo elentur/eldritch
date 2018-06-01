@@ -6,6 +6,7 @@ import enums.SituationType;
 import enums.TestType;
 import gamemechanics.Encounter;
 import lombok.Getter;
+import model.Item.ItemBonus;
 
 @Getter
 public class ItemBonus_Null extends ItemBonus {

@@ -1,21 +1,20 @@
-package model.Item.assets;
+package model.Item;
 
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import model.Item.Item;
-import model.Item.boni.ItemBonus;
 import utils.ResourceUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 public abstract class Asset implements Item {
 
-
+    public String uniqueId = UUID.randomUUID().toString();
     private final ItemType type;
     private final int price;
     private final List<ItemBonus> bonus;

@@ -1,42 +1,65 @@
 package gamemechanics;
 
 import Service.EventService;
+import Service.GameService;
+import container.ItemContainer;
 import container.Result;
+import enums.SituationType;
 import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import model.Item.investigators.Investigator;
-import model.Item.monsters.Monster;
+import model.Item.Bonus;
+import model.Item.Investigator;
+import model.Item.Item;
+import model.Item.Monster;
 import preparation.CombatPreparation;
 import preparation.Preparation;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 
 @Getter
 @Setter
 @ToString(of = {"activeMonster", "investigator"})
 public class CombatEncounter extends Encounter {
     private List<Monster> originalMonsters;
-    private List<Monster> monsters;
+    private Map<Monster,Monster> monsters;
     private Monster activeMonster;
     private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
+    private GameService game;
 
 
 
     private EventService eventService = new EventService();
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
+        this.game = GameService.getInstance();
         this.originalMonsters = monsters;
+        this.monsters = new HashMap<>();
         for(Monster m : monsters){
-            this.monsters.add(m.clone());
+            this.monsters.put(m.clone(),m);
         }
         this.investigator = investigator;
+        activatePassiveBoni();
+    }
+
+    private void activatePassiveBoni() {
+        Function<Bonus,Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
+                && bonus.getField().equalsWithAll(game.getFieldOfInvestigator(investigator).getType())
+                && bonus.isActivated()
+                && bonus.isUsable()
+                && bonus.isPassive();
+        ItemContainer<Item> bonusItems = game.getBonusItemsforInvestigator(investigator);
+
+        for(Bonus b :bonusItems.getBoniWithFilter(filter)){
+            b.execute(this);
+        }
     }
 
     public List<Monster> getAvailableMonster() {
-        return monsters;
+        return new ArrayList<>(monsters.keySet());
     }
 
     public  void setActiveMonster(Monster monster){
@@ -71,7 +94,7 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation prepareForAttack() {
         if(attackPreparation==null) {
             result = null;
-            attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster);
+            attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster,this);
         }
         return attackPreparation;
     }
@@ -82,13 +105,15 @@ public class CombatEncounter extends Encounter {
 
     private CombatPreparation prepareForHorrorCheck() {
         if(horrorPreparation==null) {
-            horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster);
+            horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster,this);
         }
         return horrorPreparation;
     }
 
     public void removeActiveMonster() {
-        getAvailableMonster().remove(getActiveMonster());
+        Monster org = this.monsters.get(getActiveMonster());
+        org.setActualToughness(getActiveMonster().getActualToughness());
+        this.monsters.remove(getActiveMonster());
         setActiveMonster(null);
     }
 

@@ -8,7 +8,9 @@ import enums.TestType;
 import gamemechanics.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Bonus;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import utils.ResourceUtil;
 
 @Getter
@@ -18,24 +20,28 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
     private BonusType bonusType = BonusType.REPEAT_ROLL;
 
 
-    public ItemBonus_RepeatRoll(int value, TestType test, SituationType situation,Item parentItem) {
+    public ItemBonus_RepeatRoll(int value, TestType test, SituationType situation, Item parentItem) {
         super(parentItem);
         this.value = value;
         this.test = test;
         this.situation = situation;
-        this.eventTime= EventTimeType.AFTER;
+        this.eventTime = EventTimeType.AFTER;
     }
 
 
     @Override
     public void execute(Encounter encounter) {
-    Result result = encounter.getResult();
-        if(!result.getFails().isEmpty()){
+        if (!isExecutable()) {
+            return;
+        }
+        Result result = encounter.getResult();
+        if (!result.getFails().isEmpty()) {
             result.setReroll(value);
         }
     }
+
     @Override
     public String getText() {
-        return ResourceUtil.get("${repeatRoll}",Bonus.class,value+"", test.getText(), situation.getText() );
+        return ResourceUtil.get("${repeatRoll}", Bonus.class, value + "", test.getText(), situation.getText());
     }
 }

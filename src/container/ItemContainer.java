@@ -1,9 +1,9 @@
 package container;
 
 import enums.SituationType;
-import model.Item.boni.Bonus;
+import model.Item.Bonus;
 import model.Item.Item;
-import model.Item.boni.ItemBonus;
+import model.Item.ItemBonus;
 
 import java.util.ArrayList;
 import java.util.List;
