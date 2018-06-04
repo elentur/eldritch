@@ -2,9 +2,11 @@ package model.effects;
 
 
 import enums.SpendType;
+import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
 
+@Getter
 public class Spend extends Effect {
     private final SpendType spendType;
     private final int value;

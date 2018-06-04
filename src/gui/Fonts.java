@@ -41,6 +41,7 @@ public class Fonts {
         if (type.equals(FontTyp.ITALIC)) {
 
             font.bind(Bindings.concat("-fx-font:", sizeprop.intValue(), " 'UglyQua-Italic' ; -fx-text-fill: " + color.toString().replace("0x", "#") + ";"));
+
         } else if (type.equals(FontTyp.BOLD)) {
             font.bind(Bindings.concat("-fx-font:", sizeprop.intValue(), " 'UglyQua-Bold' ; -fx-text-fill: " + color.toString().replace("0x", "#") + "; "));
         } else {

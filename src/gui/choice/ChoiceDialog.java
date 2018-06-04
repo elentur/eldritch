@@ -6,8 +6,6 @@ import gui.Fonts;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.TextAlignment;
@@ -24,6 +22,8 @@ public abstract class ChoiceDialog extends DialogGui {
         headline.setAlignment(Pos.CENTER);
         headline.setTextAlignment(TextAlignment.CENTER);
         Label info = new Label(choice.getInfo());
+        info.setWrapText(true);
+        info.setMaxWidth(newBackground.getWidth());
         info.styleProperty().bind(Fonts.getFont(0.25,Fonts.DARK, Fonts.FontTyp.ITALIC));
         info.setAlignment(Pos.CENTER);
         info.setTextAlignment(TextAlignment.CENTER);
@@ -35,7 +35,10 @@ public abstract class ChoiceDialog extends DialogGui {
 
         background.setFill(new ImagePattern(newBackground));
         this.choice=choice;
-        choice.getChoiceTakenProperty().addListener(e->this.close());
+        choice.getChoiceTakenProperty().addListener(e->{
+            System.out.println("Yes clicked");
+            this.close();
+        });
 
     }
 

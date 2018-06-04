@@ -3,6 +3,7 @@ package Service;
 import container.ItemContainer;
 import enums.FieldType;
 import enums.SituationType;
+import gamemechanics.Encounter;
 import gamemechanics.choice.Choice;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -21,7 +22,8 @@ public class GameService {
         return ourInstance;
     }
 
-    private  SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<Choice>();
+    private  SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
+    private  SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
 
     private GameService() {
         insertions= FXCollections.observableArrayList();
@@ -59,5 +61,12 @@ public class GameService {
 
     public void addEffect(Effect effect){
         insertions.add(effect);
+    }
+
+    public SimpleObjectProperty<Encounter> getEncounterProperty() {
+        return encounter;
+    }
+    public void addEncounter(Encounter encounter) {
+        this.encounter.set(encounter);
     }
 }

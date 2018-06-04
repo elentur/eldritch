@@ -2,18 +2,14 @@ package gamemechanics.ChoiceDialogs;
 
 
 import Service.GameService;
-import gamemechanics.choice.Choice;
 import gamemechanics.choice.YesNoChoice;
-import gui.DialogGui;
 import gui.Fonts;
-import gui.choice.YesNoDialog;
+import gui.InterfaceLinking;
 import javafx.application.Application;
-import javafx.beans.Observable;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import oldVersion.gameBuild.Game;
 
 public class YesNoDialogTest extends Application {
 
@@ -24,29 +20,19 @@ public class YesNoDialogTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         Fonts.init(primaryStage);
-
-        GameService game =  GameService.getInstance();
-        game.getChoiceProperty().addListener(e->startChoiceDialog(game.getChoiceProperty().getValue()));
-        VBox root = new VBox();
+        GameService game = GameService.getInstance();
+        StackPane root = new StackPane();
         Scene scene = new Scene(root);
+        InterfaceLinking.init(primaryStage);
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
-        scene.setOnKeyPressed(e->primaryStage.close());
+        scene.setOnKeyPressed(e -> primaryStage.close());
         primaryStage.show();
-        YesNoChoice choice= new YesNoChoice("Test", "test text",null,null);
+        YesNoChoice choice = new YesNoChoice("Test", "test text", null, null);
         game.addChoice(choice);
 
+        System.out.println("Test");
 
-    }
-
-    private void startChoiceDialog(Choice choice) {
-        if(choice==null){
-            return;
-        }
-        if(choice instanceof YesNoChoice){
-            DialogGui dlg = new YesNoDialog((YesNoChoice) choice);
-            dlg.showAndWait();
-        }
 
     }
 

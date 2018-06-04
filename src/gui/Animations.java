@@ -1,5 +1,6 @@
 package gui;
 
+import Service.GameService;
 import gui.buttons.Button;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
@@ -8,12 +9,17 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Effect;
 
 import java.util.concurrent.Callable;
 
 
 public class Animations {
+
+    private static boolean effectOverlayIsRunning;
 
     public static void startRotateFromTo(Node oldNode, Node node, Group group) {
         ScaleTransition st1 = new ScaleTransition(Duration.millis(70), group);
@@ -99,4 +105,24 @@ public class Animations {
     }
 
 
+    public static void effectOverlayAnimations(Group group, Stage activeStage, Effect effect) {
+        if(!(activeStage.getScene().getRoot() instanceof StackPane) ||effectOverlayIsRunning){
+            return;
+        }
+        effectOverlayIsRunning=true;
+        StackPane pane = (StackPane) activeStage.getScene().getRoot();
+        pane.getChildren().add(group);
+        FadeTransition st1 = new FadeTransition(Duration.millis(3000), group);
+        st1.setDelay(Duration.millis(500));
+        st1.setFromValue(1);
+        st1.setToValue(0);
+        st1.playFromStart();
+        st1.setOnFinished(a -> {
+            effectOverlayIsRunning=false;
+           pane.getChildren().remove(group);
+            GameService.getInstance().getInsertions().remove(effect);
+
+        });
+
+    }
 }
