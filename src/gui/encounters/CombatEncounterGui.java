@@ -45,8 +45,8 @@ public class CombatEncounterGui extends EncounterGui {
         CombatEncounter encounter = (CombatEncounter)this.encounter;
         if (encounter.getMonsters().size() > 1) {
             ItemScrollPane monsterSelection = new ItemScrollPane();
-            monsterSelection.setWidth(background.getWidth() * 0.6);
-            monsterSelection.setHeight(background.getHeight() * 0.7);
+            monsterSelection.setWidth1(background.getWidth() * 0.6);
+            monsterSelection.setHeight1(background.getHeight() * 0.7);
             main.getChildren().clear();
             main.getChildren().add(monsterSelection);
             for (Monster monster : encounter.getAvailableMonster()) {

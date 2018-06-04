@@ -15,6 +15,7 @@ import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.Item.investigators.AgnesBaker;
+import model.Item.monsters.HoundOfTindalos;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
 
@@ -34,10 +35,13 @@ public class CombatEncounterGUITest extends Application {
         CombatEncounter encounter = initCombatEncounter();
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
-        InterfaceLinking.init(primaryStage);
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
-        scene.setOnKeyPressed(e->primaryStage.close());
+        scene.setOnKeyPressed(e->{
+            primaryStage.close();
+            System.exit(0);
+        });
+        InterfaceLinking.init(primaryStage);
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().addEncounter(initCombatEncounter());
@@ -51,6 +55,23 @@ public class CombatEncounterGUITest extends Application {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Vampire());
         monsters.add(new Shan());
+        monsters.add(new HoundOfTindalos());
+        monsters.add(new Vampire());
+        monsters.add(new Shan());
+        monsters.add(new HoundOfTindalos());
+
+        monsters.add(new Vampire());
+        monsters.add(new Shan());
+        monsters.add(new HoundOfTindalos());
+
+        monsters.add(new Vampire());
+        monsters.add(new Shan());
+        monsters.add(new HoundOfTindalos());
+
+        monsters.add(new Vampire());
+        monsters.add(new Shan());
+        monsters.add(new HoundOfTindalos());
+
 
         return new CombatEncounter(monsters, inv);
     }

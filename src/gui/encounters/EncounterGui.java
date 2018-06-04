@@ -33,8 +33,8 @@ public class EncounterGui extends DialogGui {
         encounterPane.setPrefWidth(background.getHeight() * 0.50);
 
         bonusPane = new ItemScrollPane();
-        bonusPane.setWidth(background.getWidth() * 0.20);
-        bonusPane.setHeight(background.getHeight() * 0.50);
+        bonusPane.setWidth1(background.getWidth() * 0.20);
+        bonusPane.setHeight1(background.getHeight() * 0.50);
 
 
         main.getChildren().clear();

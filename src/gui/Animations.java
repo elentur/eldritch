@@ -110,7 +110,9 @@ public class Animations {
             return;
         }
         effectOverlayIsRunning=true;
+
         StackPane pane = (StackPane) activeStage.getScene().getRoot();
+        group.setEffect(Effects.dropShadow);
         pane.getChildren().add(group);
         FadeTransition st1 = new FadeTransition(Duration.millis(3000), group);
         st1.setDelay(Duration.millis(500));

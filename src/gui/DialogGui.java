@@ -1,5 +1,6 @@
 package gui;
 
+import Service.GameService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
@@ -19,7 +20,7 @@ import javafx.stage.StageStyle;
 import java.awt.*;
 
 
-public abstract class DialogGui extends Stage {
+public abstract class DialogGui extends StackPane {
 
     protected final static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width ;
     protected final static int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height ;
@@ -29,11 +30,13 @@ public abstract class DialogGui extends Stage {
 
     protected Rectangle background;
     protected StackPane main;
+    private boolean inNestedEventLoop;
+
 
     protected DialogGui(String s, double width, double height) {
         super();
-        StackPane root = new StackPane();
-        root.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.2),CornerRadii.EMPTY,Insets.EMPTY)));
+
+        this.setBackground(new Background(new BackgroundFill(Color.rgb(0,0,0,0.2),CornerRadii.EMPTY,Insets.EMPTY)));
         background = new Rectangle(centerX-((screenWidth*width)/2),centerY-((screenHeight*height)/2),screenWidth*width,screenHeight*height);
         main = new StackPane();
         main.minWidthProperty().bind(background.widthProperty().multiply(0.7));
@@ -41,23 +44,36 @@ public abstract class DialogGui extends Stage {
         main.minHeightProperty().bind(background.heightProperty().multiply(0.7));
         main.maxHeightProperty().bind(background.heightProperty().multiply(0.7));
         main.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,CornerRadii.EMPTY,Insets.EMPTY)));
-        root.getChildren().addAll(background,main);
+        this.getChildren().addAll(background,main);
 
         background.setFill(new ImagePattern(backgroundImage));
         DropShadow shadow = new DropShadow(BlurType.GAUSSIAN, Color.rgb(0,0,0,0.6),10,0,3,3);
         background.setEffect(shadow);
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("css/rootStyle.css");
-        scene.setFill(Color.TRANSPARENT);
-        this.setScene(scene);
-        this.initModality(Modality.APPLICATION_MODAL);
-        this.initStyle(StageStyle.TRANSPARENT);
-        this.getScene().getRoot().setEffect(new DropShadow());
-        this.setMaximized(true);
-        scene.setOnKeyPressed(e->this.close());
+        this.getStylesheets().add("css/rootStyle.css");
+        this.setEffect(new DropShadow());
+
 
 
 
 
     }
+    public void close(){
+
+        InterfaceLinking.root.getChildren().remove(this);
+        com.sun.javafx.tk.Toolkit.getToolkit().exitNestedEventLoop(this, null);
+    }
+
+    public void showAndWait() {
+
+        com.sun.javafx.tk.Toolkit.getToolkit().checkFxUserThread();
+
+        // TODO: file a new bug; the following assertion can fail if this
+        // method is called from an event handler that is listening to a
+        // WindowEvent.WINDOW_HIDING event.
+        assert !inNestedEventLoop;
+
+        inNestedEventLoop = true;
+        com.sun.javafx.tk.Toolkit.getToolkit().enterNestedEventLoop(this);
+    }
+
 }

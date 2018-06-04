@@ -25,7 +25,7 @@ public class InterfaceLinking {
 
     private static StackPane pane;
 
-    private static Stage activeStage;
+    public static StackPane root;
     private static Stage primaryStage;
 
 
@@ -52,13 +52,13 @@ public class InterfaceLinking {
         }else if (effect instanceof Loose) {
             group = new LooseEffectOverlay( (Loose) effect);
         }
-        Animations.effectOverlayAnimations(group,activeStage,effect);
+        Animations.effectOverlayAnimations(group,primaryStage,effect);
     }
 
 
     public static void init(Stage stage) {
-        activeStage = stage;
         primaryStage = stage;
+        root = (StackPane) primaryStage.getScene().getRoot();
     }
 
 
@@ -74,6 +74,7 @@ public class InterfaceLinking {
         if(dlg==null){
             return;
         }
+        root.getChildren().add(dlg);
         dlg.showAndWait();
     }
 
@@ -89,8 +90,9 @@ public class InterfaceLinking {
         if(dlg==null){
             return;
         }
-        activeStage=dlg;
+        root.getChildren().add(dlg);
         dlg.showAndWait();
-        activeStage=primaryStage;
+        System.out.println("fertig");
+
     }
 }

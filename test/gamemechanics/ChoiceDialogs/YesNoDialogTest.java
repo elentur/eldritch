@@ -5,8 +5,11 @@ import Service.GameService;
 import gamemechanics.choice.YesNoChoice;
 import gui.Fonts;
 import gui.InterfaceLinking;
+import gui.choice.ButtonChoice;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -23,15 +26,16 @@ public class YesNoDialogTest extends Application {
         GameService game = GameService.getInstance();
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
-        InterfaceLinking.init(primaryStage);
+
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
         scene.setOnKeyPressed(e -> primaryStage.close());
+        InterfaceLinking.init(primaryStage);
         primaryStage.show();
         YesNoChoice choice = new YesNoChoice("Test", "test text", null, null);
         game.addChoice(choice);
 
-        System.out.println("Test");
+        System.out.println("test");
 
 
     }
