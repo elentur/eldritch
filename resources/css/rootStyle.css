@@ -30,8 +30,8 @@
 -fx-line-spacing: 0.01em;
 }
 
-.tooltip .bonus {
-        -fx-background-image: url('../images/ItemBack.png');
+.bonus {
+ -fx-background-image: url('../images/ItemBack.png');
        -fx-background-position:  center;
        -fx-background-repeat: no-repeat;
        -fx-background-size: stretch;

@@ -11,8 +11,8 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import model.Item.Bonus;
 
 public class EncounterGui extends DialogGui {
@@ -20,27 +20,27 @@ public class EncounterGui extends DialogGui {
     private ItemScrollPane bonusPane;
     VBox encounterPane;
     DicePane dicePane;
+    StackPane encounterMain;
     private final static Image frameImage = new Image("images/ShowCaseFrame.png");
-    final BorderPane encounterMain;
 
-  public  EncounterGui(Encounter encounter) {
+
+    public EncounterGui(Encounter encounter) {
         super("", 0.7, 0.7);
         this.encounter = encounter;
-
-        encounterMain = new BorderPane();
-        encounterPane = new VBox(20);
-        encounterPane.setAlignment(Pos.CENTER);
-        encounterPane.setPrefWidth(background.getHeight() * 0.50);
-
-        bonusPane = new ItemScrollPane();
-        bonusPane.setWidth1(background.getWidth() * 0.20);
-        bonusPane.setHeight1(background.getHeight() * 0.50);
-
-
+        encounterMain = new StackPane();
         main.getChildren().clear();
         main.getChildren().add(encounterMain);
-        BorderPane.setMargin(encounterPane, new Insets(0, 10, 10, 0));
-        BorderPane.setMargin(bonusPane, new Insets(0, 0, 10, 0));
+        encounterPane = new VBox(20);
+        encounterPane.setMaxWidth(background.getWidth() * 0.50);
+        encounterPane.setMaxHeight(background.getHeight() * 0.40);
+        StackPane.setAlignment(encounterPane, Pos.TOP_LEFT);
+
+        bonusPane = new ItemScrollPane();
+        bonusPane.setWidth1(background.getWidth() * 0.25);
+        bonusPane.setHeight1(background.getHeight() * 0.40);
+        StackPane.setAlignment(bonusPane, Pos.TOP_RIGHT);
+encounterMain.getChildren().addAll(encounterPane,bonusPane);
+
         populate();
     }
 
@@ -51,23 +51,35 @@ public class EncounterGui extends DialogGui {
     }
 
     void populateDicePane() {
-        dicePane = new DicePane(encounter, background.getWidth() * 0.42, background.getHeight() * 0.25);
+        if (dicePane != null) {
+            encounterMain.getChildren().remove(dicePane);
+        }
+        dicePane = new DicePane(encounter, background.getWidth() * 0.75, background.getHeight() * 0.25);
         dicePane.getRolleIsDoneProperty().addListener(e -> populateBoni(EventTimeType.AFTER));
         dicePane.getAcceptButton().setOnMouseClicked(this::acceptHandler);
-        encounterMain.setBottom(dicePane);
+        StackPane.setAlignment(dicePane, Pos.BOTTOM_LEFT);
+        encounterMain.getChildren().add(dicePane);
+
 
     }
 
     void populateCenterPane() {
+
+
+        //encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+
         //TODO füllen der Encounter pane
+
         encounterPane.getChildren().clear();
-        encounterMain.setCenter(encounterPane);
+
     }
 
     void populateBonusPane() {
 
+
+
         populateBoni(EventTimeType.BEFORE);
-        encounterMain.setRight(bonusPane);
+
     }
 
     private void populateBoni(EventTimeType timeType) {

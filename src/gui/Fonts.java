@@ -37,7 +37,9 @@ public class Fonts {
         SimpleStringProperty font = new SimpleStringProperty();
 
         SimpleDoubleProperty sizeprop = new SimpleDoubleProperty();
-        sizeprop.bind(primaryStage.widthProperty().multiply(size * 0.06));
+        SimpleDoubleProperty t = new SimpleDoubleProperty();
+        t.setValue(1);
+        sizeprop.bind(t.multiply(Toolkit.getDefaultToolkit().getScreenSize().getWidth()).multiply(size * 0.06));
         if (type.equals(FontTyp.ITALIC)) {
 
             font.bind(Bindings.concat("-fx-font:", sizeprop.intValue(), " 'UglyQua-Italic' ; -fx-text-fill: " + color.toString().replace("0x", "#") + ";"));

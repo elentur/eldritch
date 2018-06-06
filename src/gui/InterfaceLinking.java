@@ -92,7 +92,6 @@ public class InterfaceLinking {
         }
         root.getChildren().add(dlg);
         dlg.showAndWait();
-        System.out.println("fertig");
 
     }
 }

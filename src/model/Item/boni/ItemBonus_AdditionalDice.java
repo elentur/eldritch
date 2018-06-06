@@ -40,7 +40,8 @@ public class ItemBonus_AdditionalDice extends ItemBonus {
     }
     @Override
     public String getText() {
-        return ResourceUtil.get("${additionalDice}",Bonus.class,value+"", test.getText(), situation.getText() );
+        System.out.println(situation.getText());
+        return ResourceUtil.get("${additionalDice}",Bonus.class,value+"",  situation.getText() );
     }
 
 }

@@ -88,7 +88,7 @@ public class CombatEncounterGui extends EncounterGui {
         Label toughnessValue = new Label(m.getToughness() + "");
         toughnessValue.getStyleClass().add("text-stroke-black");
         toughnessValue.setTranslateY(-10);
-        toughnessValue.styleProperty().bind(Fonts.getFont(0.6, Fonts.WHITE, Fonts.FontTyp.BOLD));
+        toughnessValue.styleProperty().bind(Fonts.getFont(0.6, Fonts.GREEN, Fonts.FontTyp.BOLD));
         StackPane toughnessPane = new StackPane(toughness, toughnessValue);
      //   toughnessPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 

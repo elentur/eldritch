@@ -35,6 +35,10 @@ public class DicePane extends HBox {
         this.encounter = encounter;
         this.width = width;
         this.height = height;
+        this.setMinHeight(height);
+        this.setMaxHeight(height);
+        this.setMinWidth(width);
+        this.setMaxWidth(width);
         Preparation preparation = encounter.getPreparation();
         int dice = preparation.getNumberOfDice();
 
@@ -87,6 +91,7 @@ public class DicePane extends HBox {
         });
         diceButtonContainer.getChildren().add(diceButton);
         HBox.setHgrow(diceButtonContainer, Priority.ALWAYS);
+
         acceptButton = new InfoTextButton("${accept_Button}");
         this.setAlignment(Pos.CENTER_LEFT);
         this.setSpacing(20);
@@ -157,7 +162,7 @@ public class DicePane extends HBox {
         light2.setTranslateZ(-400);
         AmbientLight ambientLight = new AmbientLight(Color.color(0.2, 0.2, 0.2));
         root.getChildren().addAll(ambientLight, light, light2);
-        SubScene subScene = new SubScene(root, width, height, true,
+        SubScene subScene = new SubScene(root, width*0.60, height, true,
                 SceneAntialiasing.BALANCED);
         subScene.setCamera(camera);
         //subScene.setFill(Color.BLUE);

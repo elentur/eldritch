@@ -41,6 +41,8 @@ public class CombatEncounterGUITest extends Application {
             primaryStage.close();
             System.exit(0);
         });
+        scene.getStylesheets().add("css/rootStyle.css");
+        primaryStage.setOnCloseRequest(e->   System.exit(0));
         InterfaceLinking.init(primaryStage);
         primaryStage.show();
         primaryStage.setMaximized(true);
@@ -55,22 +57,8 @@ public class CombatEncounterGUITest extends Application {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Vampire());
         monsters.add(new Shan());
-        monsters.add(new HoundOfTindalos());
-        monsters.add(new Vampire());
-        monsters.add(new Shan());
-        monsters.add(new HoundOfTindalos());
+       // monsters.add(new HoundOfTindalos());
 
-        monsters.add(new Vampire());
-        monsters.add(new Shan());
-        monsters.add(new HoundOfTindalos());
-
-        monsters.add(new Vampire());
-        monsters.add(new Shan());
-        monsters.add(new HoundOfTindalos());
-
-        monsters.add(new Vampire());
-        monsters.add(new Shan());
-        monsters.add(new HoundOfTindalos());
 
 
         return new CombatEncounter(monsters, inv);

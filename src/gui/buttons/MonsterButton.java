@@ -46,7 +46,7 @@ public class MonsterButton extends ItemButton {
 
 
         Label willTestSymbol = new Label(TestType.WILL.getSymbol());
-        willTestSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
+        willTestSymbol.styleProperty().bind(Fonts.getFont(0.18, Fonts.BLUE, Fonts.FontTyp.NORMAL));
         Label willTest = new Label(monster.getWillTest() + "");
         willTest.styleProperty().bind(Fonts.getFont(0.2, Fonts.BLUE, Fonts.FontTyp.NORMAL));
         Label horrorValue = new Label(monster.getHorror() + "");
@@ -55,20 +55,28 @@ public class MonsterButton extends ItemButton {
         sanity.setFitHeight(30);
         VBox symbolsLeft = new VBox(10, willTestSymbol, sanity);
         VBox valuesLeft = new VBox(10, willTest, horrorValue);
+        valuesLeft.setMinWidth(30);
+        valuesLeft.setMaxWidth(30);
+        symbolsLeft.setMinWidth(30);
+        symbolsLeft.setMaxWidth(30);
         valuesLeft.setAlignment(Pos.CENTER_RIGHT);
         HBox left= new HBox(symbolsLeft,valuesLeft);
 
 
         Label strengthTestSymbol = new Label(TestType.STRENGTH.getSymbol());
-        strengthTestSymbol.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
+        strengthTestSymbol.styleProperty().bind(Fonts.getFont(0.18, Fonts.RED, Fonts.FontTyp.NORMAL));
         Label strengthTest = new Label(monster.getStrengthTest() + "");
         strengthTest.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
         Label attackValue = new Label(monster.getDamage() + "");
         attackValue.styleProperty().bind(Fonts.getFont(0.2, Fonts.RED, Fonts.FontTyp.NORMAL));
         ImageView health = new ImageView( healthImage);
-
+        health.setFitHeight(30);
         VBox symbolsRight = new VBox(10, strengthTestSymbol, health);
         VBox valuesRight = new VBox(10, strengthTest, attackValue);
+        valuesRight.setMinWidth(30);
+        valuesRight.setMaxWidth(30);
+        symbolsRight.setMinWidth(30);
+        symbolsRight.setMaxWidth(30);
         valuesRight.setAlignment(Pos.CENTER_RIGHT);
         HBox right= new HBox(symbolsRight,valuesRight);
 
@@ -78,7 +86,7 @@ public class MonsterButton extends ItemButton {
         Label toughnessValue = new Label(monster.getToughness()+"");
         toughnessValue.getStyleClass().add("text-stroke-black");
         toughnessValue.setPadding(new Insets(0,10,0,10));
-        toughnessValue.styleProperty().bind(Fonts.getFont(0.4, Fonts.WHITE, Fonts.FontTyp.BOLD));
+        toughnessValue.styleProperty().bind(Fonts.getFont(0.4, Fonts.GREEN, Fonts.FontTyp.BOLD));
         HBox values = new HBox(10,left,right,new StackPane(toughness,toughnessValue));
 
         Label special = new Label("Test text fsf fsd sd sdfggd g dfg df dfggdf gdfgfd sfdfsd sdfdsfds sdfdsfd");

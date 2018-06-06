@@ -23,6 +23,8 @@ public class ItemScrollPane extends StackPane {
     private final ArrowButton down;
 
     public ItemScrollPane() {
+        up= new ArrowButton(ArrowButton.ArrowDir.UP);
+        down=new ArrowButton(ArrowButton.ArrowDir.DOWN);
         flowPane = new FlowPane();
         scrollPane = new ScrollPane(flowPane);
         scrollPane.setFitToWidth(true);
@@ -32,7 +34,9 @@ public class ItemScrollPane extends StackPane {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.maxHeightProperty().bind(this.heightProperty());
-        scrollPane.maxWidthProperty().bind(this.widthProperty().multiply(0.8));
+        scrollPane.maxWidthProperty().bind(this.widthProperty().subtract(80));
+
+        StackPane.setAlignment(scrollPane,Pos.TOP_LEFT);
 
         flowPane.setPadding(new Insets(20, 30, 20, 0));
         flowPane.setHgap(20);
@@ -43,17 +47,15 @@ public class ItemScrollPane extends StackPane {
         frame.widthProperty().bind(scrollPane.widthProperty());
         frame.heightProperty().bind(scrollPane.heightProperty());
         frame.setMouseTransparent(true);
+        StackPane.setAlignment(frame,Pos.TOP_LEFT);
 
         flowPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,CornerRadii.EMPTY,Insets.EMPTY)));
-        this.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+         //this.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
 
-        up= new ArrowButton(ArrowButton.ArrowDir.UP);
-        up.translateXProperty().bind(scrollPane.translateXProperty().add(scrollPane.widthProperty()).subtract(up.widthProperty()));
-        down=new ArrowButton(ArrowButton.ArrowDir.DOWN);
-        down.translateXProperty().bind(scrollPane.translateXProperty().add(scrollPane.widthProperty()).subtract(down.widthProperty()));
-       down.translateYProperty().bind(scrollPane.translateYProperty().add(scrollPane.heightProperty().subtract(down.heightProperty())));
 
+          StackPane.setAlignment(up,Pos.TOP_RIGHT);
+        StackPane.setAlignment(down,Pos.BOTTOM_RIGHT);
 
 
         down.setOnMousePressed(e->Animations.scroll(scrollPane,1,down));
@@ -66,6 +68,7 @@ public class ItemScrollPane extends StackPane {
         down.visibleProperty().bind(scrollPane.heightProperty().lessThan(flowPane.heightProperty()));
 
         this.getChildren().addAll(scrollPane,frame,up,down);
+
     }
 
 
@@ -77,11 +80,13 @@ public class ItemScrollPane extends StackPane {
 
     public void setWidth1(double width) {
         this.setWidth(width);
+        this.setMaxWidth(width);
 
     }
 
     public void setHeight1(double height) {
         this.setHeight(height);
+        this.setMaxHeight(height);
 
 
     }

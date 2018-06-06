@@ -5,6 +5,7 @@ import gui.buttons.Button;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -111,20 +112,32 @@ public class Animations {
         }
         effectOverlayIsRunning=true;
 
+
+
         StackPane pane = (StackPane) activeStage.getScene().getRoot();
         group.setEffect(Effects.dropShadow);
         pane.getChildren().add(group);
-        FadeTransition st1 = new FadeTransition(Duration.millis(3000), group);
+
+        ScaleTransition st2 = new ScaleTransition(Duration.millis(200), group);
+        st2.setFromX(5);
+        st2.setToX(1);
+        st2.setFromY(5);
+        st2.setToY(1);
+
+        FadeTransition st1 = new FadeTransition(Duration.millis(2000), group);
         st1.setDelay(Duration.millis(500));
         st1.setFromValue(1);
         st1.setToValue(0);
-        st1.playFromStart();
-        st1.setOnFinished(a -> {
+                st1.setOnFinished(a -> {
             effectOverlayIsRunning=false;
-           pane.getChildren().remove(group);
+            pane.getChildren().remove(group);
             GameService.getInstance().getInsertions().remove(effect);
 
         });
+
+        SequentialTransition t = new SequentialTransition(st2,st1);
+        t.playFromStart();
+
 
     }
 }

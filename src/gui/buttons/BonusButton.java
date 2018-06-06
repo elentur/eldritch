@@ -18,7 +18,7 @@ public class BonusButton extends Button {
         Tooltip tooltip = new Tooltip();
         tooltip.getStyleClass().add("bonus");
         Tooltip.install(imageView, tooltip);
-        tooltip.styleProperty().bind(Fonts.getFont(0.17,Fonts.DARK,Fonts.FontTyp.ITALIC));
+        tooltip.styleProperty().bind(Fonts.getFont(0.17,Fonts.DARK,Fonts.FontTyp.NORMAL));
         tooltip.setText(bonus.getParentName()+"\n"+bonus.getText());
         tooltip.setTextAlignment(TextAlignment.CENTER);
         tooltip.setWrapText(true);
