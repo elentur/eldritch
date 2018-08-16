@@ -7,7 +7,7 @@ import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
 import expetions.NoFailsAvailableException;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.Setter;
 import model.Item.Bonus;

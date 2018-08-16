@@ -16,7 +16,7 @@ public abstract class ChoiceDialog extends DialogGui {
     private final static Image newBackground = new Image("images/ShowCase.jpg");
     private final Choice choice;
     public ChoiceDialog( double width, double height, Choice choice ) {
-        super("", 0.3, 0.3);
+        super("", width, height);
         Label headline =new Label(choice.getHeadline()) ;
         headline.styleProperty().bind(Fonts.getFont(0.4,Fonts.DARK, Fonts.FontTyp.BOLD));
         headline.setAlignment(Pos.CENTER);

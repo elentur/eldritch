@@ -1,4 +1,4 @@
-package gamemechanics;
+package gamemechanics.encounter;
 
 import Service.EventService;
 import Service.GameService;
@@ -6,6 +6,7 @@ import container.ItemContainer;
 import container.Result;
 import enums.SituationType;
 import enums.TestType;
+import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -164,4 +165,17 @@ public class CombatEncounter extends Encounter {
         }
 
     }
+
+    @Override
+    public String getNameId() {
+        return  "${combat_encounter}";
+    }
+
+
+
+    @Override
+    public String getId() {
+        return "&combat_encounter";
+    }
+
 }

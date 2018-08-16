@@ -4,7 +4,7 @@ import enums.BonusType;
 import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import model.Item.ItemBonus;
 

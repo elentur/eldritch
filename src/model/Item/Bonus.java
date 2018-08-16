@@ -1,8 +1,7 @@
 package model.Item;
 
 import enums.*;
-import gamemechanics.Encounter;
-import model.Item.Item;
+import gamemechanics.encounter.Encounter;
 
 public interface Bonus {
     void execute(Encounter encounter);

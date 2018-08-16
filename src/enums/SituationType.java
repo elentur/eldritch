@@ -6,7 +6,8 @@ public enum SituationType {
     NONE(""),
     COMBAT_ENCOUNTER("${combat_encounter}"),
     SPELL_EFFECT("${spell_effect}"),
-    ALL("${all}");
+    ALL("${all}"),
+    STANDARD_ENCOUNTER("${standard_encounter}");
 
     private String key;
 

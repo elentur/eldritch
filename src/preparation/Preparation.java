@@ -6,7 +6,7 @@ import container.ItemContainer;
 import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.Setter;
 import model.Item.Investigator;
@@ -35,7 +35,7 @@ public class Preparation {
 
 
 
-    Preparation(TestType testTyp, Investigator investigator, SituationType situation, Encounter encounter) {
+    public Preparation(TestType testTyp, Investigator investigator, SituationType situation, Encounter encounter) {
         this.testTyp = testTyp;
         this.situation = situation;
         this.investigator = investigator;

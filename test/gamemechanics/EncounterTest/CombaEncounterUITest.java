@@ -6,7 +6,7 @@ import container.Result;
 import enums.EventTimeType;
 import expetions.EncounterException;
 import factory.ItemFactory;
-import gamemechanics.CombatEncounter;
+import gamemechanics.encounter.CombatEncounter;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.geometry.Insets;

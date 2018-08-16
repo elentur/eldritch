@@ -1,18 +1,16 @@
 package gui.encounters;
 
 import enums.EventTimeType;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.Encounter;
 import gui.DialogGui;
 import gui.DicePane;
 import gui.ItemScrollPane;
 import gui.buttons.BonusButton;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import model.Item.Bonus;
 
 public class EncounterGui extends DialogGui {
@@ -68,7 +66,7 @@ encounterMain.getChildren().addAll(encounterPane,bonusPane);
 
         //encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
-        //TODO füllen der Encounter pane
+        //TODO füllen der encounter pane
 
         encounterPane.getChildren().clear();
 

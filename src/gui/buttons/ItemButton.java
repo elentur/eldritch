@@ -43,7 +43,7 @@ public class ItemButton extends Group {
 
     }
 
-    private void setEventsForButton(Node node) {
+    protected void setEventsForButton(Node node) {
         node.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
         node.setOnMouseExited(e -> {
             actualNode.setEffect(null);

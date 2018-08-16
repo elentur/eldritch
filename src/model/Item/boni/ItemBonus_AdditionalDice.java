@@ -1,7 +1,7 @@
 package model.Item.boni;
 
 import enums.*;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.Setter;
 import model.Item.Bonus;

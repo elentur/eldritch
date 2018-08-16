@@ -1,7 +1,7 @@
 package gui.encounters;
 
 import enums.TestType;
-import gamemechanics.CombatEncounter;
+import gamemechanics.encounter.CombatEncounter;
 import gui.*;
 import gui.buttons.MonsterButton;
 import javafx.geometry.Insets;

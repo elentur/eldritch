@@ -3,7 +3,7 @@ package gamemechanics.EncounterTest;
 import Service.GameService;
 import container.ItemContainer;
 import factory.ItemFactory;
-import gamemechanics.CombatEncounter;
+import gamemechanics.encounter.CombatEncounter;
 import gui.Fonts;
 import gui.InterfaceLinking;
 import javafx.application.Application;
@@ -15,7 +15,6 @@ import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.Item.investigators.AgnesBaker;
-import model.Item.monsters.HoundOfTindalos;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
 

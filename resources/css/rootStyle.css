@@ -30,6 +30,12 @@
 -fx-line-spacing: 0.01em;
 }
 
+.transparent .viewport{
+ -fx-background-color: transparent;
+}
+.transparent {
+ -fx-background-color: transparent;
+}
 .bonus {
  -fx-background-image: url('../images/ItemBack.png');
        -fx-background-position:  center;

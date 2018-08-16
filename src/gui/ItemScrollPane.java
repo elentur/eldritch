@@ -21,6 +21,7 @@ public class ItemScrollPane extends StackPane {
 
     private final ArrowButton up;
     private final ArrowButton down;
+    private final Rectangle frame;
 
     public ItemScrollPane() {
         up= new ArrowButton(ArrowButton.ArrowDir.UP);
@@ -43,7 +44,7 @@ public class ItemScrollPane extends StackPane {
         flowPane.setVgap(20);
 
         flowPane.setAlignment(Pos.CENTER);
-        Rectangle frame = new Rectangle(10,10,new ImagePattern(frameImage));
+       frame = new Rectangle(10,10,new ImagePattern(frameImage));
         frame.widthProperty().bind(scrollPane.widthProperty());
         frame.heightProperty().bind(scrollPane.heightProperty());
         frame.setMouseTransparent(true);
@@ -54,7 +55,7 @@ public class ItemScrollPane extends StackPane {
 
 
 
-          StackPane.setAlignment(up,Pos.TOP_RIGHT);
+        StackPane.setAlignment(up,Pos.TOP_RIGHT);
         StackPane.setAlignment(down,Pos.BOTTOM_RIGHT);
 
 
@@ -92,4 +93,15 @@ public class ItemScrollPane extends StackPane {
     }
 
 
+    public void disableBackground(boolean disabled) {
+        if(disabled){
+            this.getChildren().remove(frame);
+            scrollPane.getStyleClass().remove("show-case");
+            scrollPane.getStyleClass().add("transparent");
+        }else{
+            this.getChildren().add(1,frame);
+            scrollPane.getStyleClass().add("show-case");
+            scrollPane.getStyleClass().remove("transparent");
+        }
+    }
 }

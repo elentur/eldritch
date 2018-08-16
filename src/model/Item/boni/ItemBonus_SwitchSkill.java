@@ -4,18 +4,15 @@ import enums.BonusType;
 import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
-import gamemechanics.CombatEncounter;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.CombatEncounter;
+import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.Setter;
 import model.Item.Bonus;
 import model.Item.Item;
 import model.Item.ItemBonus;
-import model.Item.SpellConsequence;
 import preparation.Preparation;
 import utils.ResourceUtil;
-
-import java.util.List;
 
 @Getter
 @Setter

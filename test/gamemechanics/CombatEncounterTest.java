@@ -3,6 +3,7 @@ package gamemechanics;
 import Service.GameService;
 import container.ItemContainer;
 import factory.ItemFactory;
+import gamemechanics.encounter.CombatEncounter;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.investigators.AgnesBaker;

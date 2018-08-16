@@ -3,7 +3,7 @@ package Service;
 import container.ItemContainer;
 import enums.FieldType;
 import enums.SituationType;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.Encounter;
 import gamemechanics.choice.Choice;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;

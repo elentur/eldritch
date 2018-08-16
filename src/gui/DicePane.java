@@ -2,8 +2,8 @@ package gui;
 
 import container.Die;
 import container.Result;
-import gamemechanics.CombatEncounter;
-import gamemechanics.Encounter;
+import gamemechanics.encounter.CombatEncounter;
+import gamemechanics.encounter.Encounter;
 import gui.buttons.InfoTextButton;
 import gui.buttons.RoundButton;
 import javafx.beans.property.BooleanProperty;

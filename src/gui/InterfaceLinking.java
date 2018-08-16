@@ -1,14 +1,18 @@
 package gui;
 
 import Service.GameService;
-import gamemechanics.CombatEncounter;
-import gamemechanics.Encounter;
+import gamemechanics.choice.EncounterChoice;
+import gamemechanics.encounter.CombatEncounter;
+import gamemechanics.encounter.Encounter;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.YesNoChoice;
+import gamemechanics.encounter.StandardEncounter;
+import gui.choice.EncounterChoiceGUI;
 import gui.choice.YesNoDialog;
 import gui.effectoverlays.LooseEffectOverlay;
 import gui.effectoverlays.SpendEffectOverlay;
 import gui.encounters.CombatEncounterGui;
+import gui.encounters.EncounterGui;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
@@ -69,7 +73,8 @@ public class InterfaceLinking {
         DialogGui dlg = null;
         if (choice instanceof YesNoChoice) {
             dlg = new YesNoDialog((YesNoChoice) choice);
-
+        }else if (choice instanceof EncounterChoice) {
+            dlg = new EncounterChoiceGUI((EncounterChoice) choice);
         }
         if(dlg==null){
             return;
@@ -85,6 +90,9 @@ public class InterfaceLinking {
         DialogGui dlg = null;
         if (encounter instanceof CombatEncounter) {
              dlg = new CombatEncounterGui((CombatEncounter) encounter);
+
+        }else {
+            dlg = new EncounterGui( encounter);
 
         }
         if(dlg==null){
