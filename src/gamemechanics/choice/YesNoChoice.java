@@ -1,6 +1,7 @@
 package gamemechanics.choice;
 
 
+import enums.ChoiceType;
 import enums.YesNo;
 import model.Effect;
 
@@ -12,7 +13,7 @@ public class YesNoChoice extends Choice{
     private YesNo value;
 
     public YesNoChoice(String headline, String info, List<Effect> effectOnYes, List<Effect> effectsOnNo){
-        super(headline,info);
+        super(ChoiceType.YES_NO,headline,info);
         this.effectOnYes= effectOnYes;
         this.effectsOnNo=effectsOnNo;
     }

@@ -36,7 +36,7 @@
 .transparent {
  -fx-background-color: transparent;
 }
-.bonus {
+.tooltip {
  -fx-background-image: url('../images/ItemBack.png');
        -fx-background-position:  center;
        -fx-background-repeat: no-repeat;

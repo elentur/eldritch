@@ -25,7 +25,7 @@ public class EncounterGUITest extends Application {
     public void start(Stage primaryStage) {
         Fonts.init(primaryStage);
 
-        EncounterChoice encounterChoice = new EncounterChoice("encounterChoice","",new Field(FieldType.CITY).getEncounters());
+        EncounterChoice encounterChoice = new EncounterChoice(new Field(FieldType.CITY,0));
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
         scene.setFill(Color.RED);

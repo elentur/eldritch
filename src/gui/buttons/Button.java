@@ -1,17 +1,21 @@
 package gui.buttons;
 
 import gui.Effects;
+import gui.Fonts;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextAlignment;
 
 public class Button extends StackPane {
+    private final Tooltip tooltip;
     private BooleanProperty enabled = new SimpleBooleanProperty(true);
     private BooleanProperty armed = new SimpleBooleanProperty(false);
     final ImageView imageView;
@@ -66,6 +70,17 @@ public class Button extends StackPane {
                 this.imageView.setEffect(null);
             }
         });
+        tooltip = new Tooltip();
+        tooltip.getStyleClass().add("tooltip");
+        tooltip.styleProperty().bind(Fonts.getFont(0.17,Fonts.DARK,Fonts.FontTyp.NORMAL));
+        tooltip.setTextAlignment(TextAlignment.CENTER);
+        tooltip.setWrapText(true);
+        tooltip.setMaxWidth(200);
+
+    }
+    protected void setTooltipText(String text) {
+        Tooltip.install(imageView, tooltip);
+        tooltip.setText(text);
     }
 
     void hoverOut() {

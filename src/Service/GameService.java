@@ -30,7 +30,7 @@ public class GameService {
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
-        Field f = new Field(FieldType.CITY);
+        Field f = new Field(FieldType.CITY,0);
         f.getInvestigators().add(inv);
         return f;
     }

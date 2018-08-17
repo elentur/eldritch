@@ -2,16 +2,21 @@ package gui.encounters;
 
 import enums.EventTimeType;
 import gamemechanics.encounter.Encounter;
+import gamemechanics.encounter.StandardEncounter;
 import gui.DialogGui;
 import gui.DicePane;
+import gui.Fonts;
 import gui.ItemScrollPane;
 import gui.buttons.BonusButton;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 import model.Item.Bonus;
+
 
 public class EncounterGui extends DialogGui {
     final Encounter encounter;
@@ -66,10 +71,22 @@ encounterMain.getChildren().addAll(encounterPane,bonusPane);
 
         //encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
-        //TODO füllen der encounter pane
-
         encounterPane.getChildren().clear();
 
+        switch (encounter.getEncounterType()){
+            case STANDARD_ENCOUNTER:
+                populateCenterForStandardEncounter((StandardEncounter) encounter);
+                break;
+        }
+
+    }
+
+    private void populateCenterForStandardEncounter(StandardEncounter encounter) {
+        dicePane.getRolleIsDoneProperty().addListener(e -> encounter.showResultInformation());
+        Label startText = new Label(encounter.getEncounterStartText());
+        startText.setWrapText(true);
+        startText.styleProperty().bind(Fonts.getFont(0.18, Fonts.DARK, Fonts.FontTyp.ITALIC));
+        encounterPane.getChildren().add(startText);
     }
 
     void populateBonusPane() {

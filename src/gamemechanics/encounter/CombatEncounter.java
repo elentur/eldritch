@@ -4,6 +4,7 @@ import Service.EventService;
 import Service.GameService;
 import container.ItemContainer;
 import container.Result;
+import enums.EncounterType;
 import enums.SituationType;
 import enums.TestType;
 import gamemechanics.SkillTest;
@@ -29,14 +30,15 @@ public class CombatEncounter extends Encounter {
     private Monster activeMonster;
     private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
-    private GameService game;
+
 
 
 
     private EventService eventService = new EventService();
 
     public CombatEncounter(List<Monster> monsters, Investigator investigator) {
-        this.game = GameService.getInstance();
+        super(EncounterType.COMBAT_ENCOUNTER);
+       setGame(GameService.getInstance());
         this.originalMonsters = monsters;
         this.monsters = new HashMap<>();
         for(Monster m : monsters){
@@ -48,11 +50,11 @@ public class CombatEncounter extends Encounter {
 
     private void activatePassiveBoni() {
         Function<Bonus,Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
-                && bonus.getField().equalsWithAll(game.getFieldOfInvestigator(investigator).getType())
+                && bonus.getField().equalsWithAll(getGame().getFieldOfInvestigator(investigator).getType())
                 && bonus.isActivated()
                 && bonus.isUsable()
                 && bonus.isPassive();
-        ItemContainer<Item> bonusItems = game.getBonusItemsforInvestigator(investigator);
+        ItemContainer<Item> bonusItems = getGame().getBonusItemsforInvestigator(investigator);
 
         for(Bonus b :bonusItems.getBoniWithFilter(filter)){
             b.execute(this);

@@ -1,9 +1,13 @@
 package gamemechanics.encounter;
 
+import Service.GameService;
 import container.Result;
+import enums.EncounterType;
 import enums.ItemType;
 import enums.SituationType;
 import enums.TestType;
+import gamemechanics.SkillTest;
+import gamemechanics.choice.InformationChoice;
 import lombok.Getter;
 import lombok.Setter;
 import model.Item.Investigator;
@@ -19,12 +23,19 @@ import java.util.UUID;
 @Getter
 @Setter
 public abstract class Encounter implements Item {
+    private final EncounterType encounterType;
+
     public String uniqueId = UUID.randomUUID().toString();
+    private GameService game;
     int encounterPart;
     Result result;
     Investigator investigator;
-    private TestType testType;
+    private TestType[] testType;
     private SituationType situationType;
+
+    public Encounter(EncounterType type) {
+        encounterType = type;
+    }
 
 
     public Result getResult() {
@@ -32,7 +43,11 @@ public abstract class Encounter implements Item {
     }
 
     public Result check() {
-        return null;
+        SkillTest skillTest = new SkillTest(getPreparation().getTestTyp(), getPreparation().getModificationForSkillTest());
+        result = skillTest.execute(investigator);
+        result.setMinNumberOfSuccesses(1);
+
+        return result;
     }
 
     public Preparation getPreparation() {
@@ -63,5 +78,28 @@ public abstract class Encounter implements Item {
     public String getName() {
         return ResourceUtil.get(getNameId(), "encounter");
 
+    }
+
+    public void showResultInformation(){
+        InformationChoice informationChoice;
+        if (result.isSuccess()) {
+            informationChoice = new InformationChoice(ResourceUtil.get("${success}", "ui"), getEncounterSuccessText(), new ArrayList<>());
+        } else {
+            informationChoice = new InformationChoice(ResourceUtil.get("${fail}", "ui"), getEncounterFailText(), new ArrayList<>());
+        }
+
+        getGame().addChoice(informationChoice);
+    }
+
+    public String getEncounterStartText() {
+        return "";
+    }
+
+    public String getEncounterFailText() {
+        return "";
+    }
+
+    public String getEncounterSuccessText() {
+        return "";
     }
 }

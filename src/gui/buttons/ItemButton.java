@@ -2,11 +2,14 @@ package gui.buttons;
 
 import gui.Animations;
 import gui.Effects;
+import gui.Fonts;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.text.TextAlignment;
 import model.Item.Item;
 
 public class ItemButton extends Group {
@@ -15,6 +18,7 @@ public class ItemButton extends Group {
     ImageView backside;
     ImageView frontside;
     protected final Item item;
+    private final Tooltip tooltip;
 
 
     protected Node actualNode;
@@ -41,8 +45,18 @@ public class ItemButton extends Group {
         setEventsForButton(actualNode);
         setEventsForButton(oldNode);
 
-    }
+        tooltip = new Tooltip();
+        tooltip.getStyleClass().add("tooltip");
+        tooltip.styleProperty().bind(Fonts.getFont(0.17,Fonts.DARK,Fonts.FontTyp.NORMAL));
+        tooltip.setTextAlignment(TextAlignment.CENTER);
+        tooltip.setWrapText(true);
+        tooltip.setMaxWidth(200);
 
+    }
+    protected void setTooltipText(String text) {
+        Tooltip.install(frontside, tooltip);
+        tooltip.setText(text);
+    }
     protected void setEventsForButton(Node node) {
         node.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
         node.setOnMouseExited(e -> {

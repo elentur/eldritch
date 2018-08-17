@@ -1,18 +1,21 @@
 package gamemechanics.choice;
 
 
+import enums.ChoiceType;
 import enums.YesNo;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
+import model.Field;
+import utils.ResourceUtil;
 
 import java.util.List;
 
 public class EncounterChoice extends Choice{
     private final List<Encounter> encounters;
 
-    public EncounterChoice(String headline, String info, List<Encounter> encounters){
-        super(headline,info);
-        this.encounters = encounters;
+    public EncounterChoice( Field field){
+        super(ChoiceType.ENCOUNTER, field.getName() +"\n" +ResourceUtil.get("${encounter_choice}","ui"),"");
+        this.encounters = field.getEncounters();
     }
 
 

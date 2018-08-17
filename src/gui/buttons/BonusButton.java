@@ -13,16 +13,7 @@ public class BonusButton extends Button {
     public BonusButton(Bonus bonus) {
         super(createImage(bonus));
         this.bonus = bonus;
-
-
-        Tooltip tooltip = new Tooltip();
-        tooltip.getStyleClass().add("bonus");
-        Tooltip.install(imageView, tooltip);
-        tooltip.styleProperty().bind(Fonts.getFont(0.17,Fonts.DARK,Fonts.FontTyp.NORMAL));
-        tooltip.setText(bonus.getParentName()+"\n"+bonus.getText());
-        tooltip.setTextAlignment(TextAlignment.CENTER);
-        tooltip.setWrapText(true);
-        tooltip.setMaxWidth(200);
+        setTooltipText(bonus.getParentName()+"\n"+bonus.getText());
 
 
     }

@@ -2,17 +2,20 @@ package gui;
 
 import Service.GameService;
 import gamemechanics.choice.EncounterChoice;
+import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.YesNoChoice;
 import gamemechanics.encounter.StandardEncounter;
 import gui.choice.EncounterChoiceGUI;
+import gui.choice.InformationDialog;
 import gui.choice.YesNoDialog;
 import gui.effectoverlays.LooseEffectOverlay;
 import gui.effectoverlays.SpendEffectOverlay;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
@@ -50,13 +53,13 @@ public class InterfaceLinking {
         if (effect == null) {
             return;
         }
-        Group group=null;
+        Group group = null;
         if (effect instanceof Spend) {
-             group = new SpendEffectOverlay( (Spend) effect);
-        }else if (effect instanceof Loose) {
-            group = new LooseEffectOverlay( (Loose) effect);
+            group = new SpendEffectOverlay((Spend) effect);
+        } else if (effect instanceof Loose) {
+            group = new LooseEffectOverlay((Loose) effect);
         }
-        Animations.effectOverlayAnimations(group,primaryStage,effect);
+        Animations.effectOverlayAnimations(group, primaryStage, effect);
     }
 
 
@@ -71,16 +74,22 @@ public class InterfaceLinking {
             return;
         }
         DialogGui dlg = null;
-        if (choice instanceof YesNoChoice) {
+      switch (choice.getChoiceType()){
+          case YES_NO:
             dlg = new YesNoDialog((YesNoChoice) choice);
-        }else if (choice instanceof EncounterChoice) {
+            break;
+          case ENCOUNTER:
             dlg = new EncounterChoiceGUI((EncounterChoice) choice);
+            break;
+          case INFORMATION:
+              dlg = new InformationDialog((InformationChoice) choice);
+              break;
         }
-        if(dlg==null){
+        if (dlg == null) {
             return;
         }
         root.getChildren().add(dlg);
-        dlg.showAndWait();
+        Platform.runLater(dlg::showAndWait);
     }
 
     private void startEncounterDialog(Encounter encounter) {
@@ -88,18 +97,19 @@ public class InterfaceLinking {
             return;
         }
         DialogGui dlg = null;
-        if (encounter instanceof CombatEncounter) {
-             dlg = new CombatEncounterGui((CombatEncounter) encounter);
-
-        }else {
-            dlg = new EncounterGui( encounter);
-
+        switch (encounter.getEncounterType()) {
+            case COMBAT_ENCOUNTER:
+                dlg = new CombatEncounterGui((CombatEncounter) encounter);
+                break;
+            default:
+                dlg = new EncounterGui(encounter);
+                break;
         }
-        if(dlg==null){
+        if (dlg == null) {
             return;
         }
         root.getChildren().add(dlg);
-        dlg.showAndWait();
+        Platform.runLater(dlg::showAndWait);
 
     }
 }

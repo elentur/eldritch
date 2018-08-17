@@ -9,7 +9,7 @@ public enum FieldType {
     WILDNESS("${wildness}"),
     SEA("${sea}"),
     OTHER_WORLD("${other_world}"),
-    ALL("${other_world}");
+    ALL("${all}");
 
 
     private String key;
