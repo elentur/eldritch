@@ -1,5 +1,5 @@
 package enums;
 
 public enum ConditionType {
-    BLESSED,CURSED,NONE
+    BLESSED,CURSED,DETAINED,NONE
 }

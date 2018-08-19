@@ -15,6 +15,7 @@ import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.Item.investigators.AgnesBaker;
+import model.Item.monsters.HoundOfTindalos;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
 
@@ -56,7 +57,7 @@ public class CombatEncounterGUITest extends Application {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Vampire());
         monsters.add(new Shan());
-       // monsters.add(new HoundOfTindalos());
+        monsters.add(new HoundOfTindalos());
 
 
 

@@ -7,9 +7,9 @@ import enums.ItemType;
 import enums.SituationType;
 import enums.TestType;
 import gamemechanics.SkillTest;
-import gamemechanics.choice.InformationChoice;
 import lombok.Getter;
 import lombok.Setter;
+import model.Effect;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
@@ -24,13 +24,15 @@ import java.util.UUID;
 @Setter
 public abstract class Encounter implements Item {
     private final EncounterType encounterType;
-
+protected static final int PASS =0;
+    protected static final int FAIL =1;
     public String uniqueId = UUID.randomUUID().toString();
     private GameService game;
     int encounterPart;
     Result result;
     Investigator investigator;
     private TestType[] testType;
+    private Effect[][] effect;
     private SituationType situationType;
 
     public Encounter(EncounterType type) {
@@ -80,15 +82,15 @@ public abstract class Encounter implements Item {
 
     }
 
-    public void showResultInformation(){
-        InformationChoice informationChoice;
+    public String getResultInformation(){
+
         if (result.isSuccess()) {
-            informationChoice = new InformationChoice(ResourceUtil.get("${success}", "ui"), getEncounterSuccessText(), new ArrayList<>());
+           return getEncounterSuccessText();
         } else {
-            informationChoice = new InformationChoice(ResourceUtil.get("${fail}", "ui"), getEncounterFailText(), new ArrayList<>());
+          return getEncounterFailText();
         }
 
-        getGame().addChoice(informationChoice);
+
     }
 
     public String getEncounterStartText() {
@@ -101,5 +103,13 @@ public abstract class Encounter implements Item {
 
     public String getEncounterSuccessText() {
         return "";
+    }
+
+    public void executeEffect() {
+        if (result.isSuccess()&&effect[encounterPart][0]!=null) {
+            effect[encounterPart][0].execute();
+        }else if(!result.isSuccess()&&effect[encounterPart][1]!=null){
+            effect[encounterPart][1].execute();
+        }
     }
 }

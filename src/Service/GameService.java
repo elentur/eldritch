@@ -1,10 +1,9 @@
 package Service;
 
 import container.ItemContainer;
-import enums.FieldType;
 import enums.SituationType;
-import gamemechanics.encounter.Encounter;
 import gamemechanics.choice.Choice;
+import gamemechanics.encounter.Encounter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +16,7 @@ public class GameService {
     private static GameService ourInstance = new GameService();
 
     private final ObservableList<Effect> insertions;
+    private Field field;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -30,9 +30,9 @@ public class GameService {
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
-        Field f = new Field(FieldType.CITY,0);
-        f.getInvestigators().add(inv);
-        return f;
+
+        field.getInvestigators().add(inv);
+        return field;
     }
 
 
@@ -68,5 +68,9 @@ public class GameService {
     }
     public void addEncounter(Encounter encounter) {
         this.encounter.set(encounter);
+    }
+
+    public void setField(Field f) {
+        field = f;
     }
 }

@@ -16,7 +16,8 @@ public enum ItemType {
     ITEM_TOME_MAGICAL("&itemTomeMagical", Arrays.asList("Item","Tome","Magical")),
     ALLEY("&alley", Collections.singletonList("Alley")),
     INCANTATION("&incantation", Collections.singletonList("Incantation")),
-    ENCOUNTER("&encounter", Collections.singletonList("encounter"));
+    ENCOUNTER("&encounter", Collections.singletonList("encounter")),
+    ARTIFACT("&artifact", Collections.singletonList("artifact"));
     private String key;
     private List<String> parts;
 
@@ -33,4 +34,6 @@ public enum ItemType {
     public List<String> getParts(){
          return parts;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package model.effects;
 
 
+import enums.EffectTyps;
 import enums.SpendType;
 import lombok.Getter;
 import model.Effect;
@@ -15,13 +16,13 @@ public class Loose extends Effect {
     private  Monster monster;
 
     public Loose(SpendType spendType, int value, Investigator investigator) {
-
+        super(EffectTyps.LOOSE);
         this.spendType = spendType;
         this.value = value;
         this.investigator = investigator;
     }
     public Loose(SpendType spendType, int value, Monster monster) {
-
+        super(EffectTyps.LOOSE);
         this.spendType = spendType;
         this.value = value;
         this.monster = monster;

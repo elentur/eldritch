@@ -1,5 +1,7 @@
 package enums;
 
+import lombok.Getter;
+import lombok.Setter;
 import utils.ResourceUtil;
 
 public enum TestType {
@@ -15,11 +17,15 @@ public enum TestType {
 
     private final String symbol;
     private String key;
+    @Getter
+    @Setter
+    private int mod;
 
      TestType(String key, String symbol) {
         this.key = key;
         this.symbol = symbol;
     }
+
 
     public String getText() {
         return ResourceUtil.get(key,this.getClass());

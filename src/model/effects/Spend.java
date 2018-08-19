@@ -1,6 +1,7 @@
 package model.effects;
 
 
+import enums.EffectTyps;
 import enums.SpendType;
 import lombok.Getter;
 import model.Effect;
@@ -13,7 +14,7 @@ public class Spend extends Effect {
     private final Investigator investigator;
 
     public Spend(SpendType spendType, int value, Investigator investigator) {
-
+        super(EffectTyps.SPEND);
         this.spendType = spendType;
         this.value = value;
         this.investigator = investigator;

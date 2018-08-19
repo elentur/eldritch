@@ -8,12 +8,14 @@ import gui.DicePane;
 import gui.Fonts;
 import gui.ItemScrollPane;
 import gui.buttons.BonusButton;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import model.Item.Bonus;
 
@@ -36,13 +38,15 @@ public class EncounterGui extends DialogGui {
         encounterPane = new VBox(20);
         encounterPane.setMaxWidth(background.getWidth() * 0.50);
         encounterPane.setMaxHeight(background.getHeight() * 0.40);
+        encounterPane.setAlignment(Pos.TOP_CENTER);
+        encounterPane.setPadding(new Insets(10));
         StackPane.setAlignment(encounterPane, Pos.TOP_LEFT);
 
         bonusPane = new ItemScrollPane();
         bonusPane.setWidth1(background.getWidth() * 0.25);
         bonusPane.setHeight1(background.getHeight() * 0.40);
         StackPane.setAlignment(bonusPane, Pos.TOP_RIGHT);
-encounterMain.getChildren().addAll(encounterPane,bonusPane);
+        encounterMain.getChildren().addAll(encounterPane, bonusPane);
 
         populate();
     }
@@ -69,11 +73,11 @@ encounterMain.getChildren().addAll(encounterPane,bonusPane);
     void populateCenterPane() {
 
 
-        //encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+       // encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
         encounterPane.getChildren().clear();
 
-        switch (encounter.getEncounterType()){
+        switch (encounter.getEncounterType()) {
             case STANDARD_ENCOUNTER:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
@@ -82,17 +86,16 @@ encounterMain.getChildren().addAll(encounterPane,bonusPane);
     }
 
     private void populateCenterForStandardEncounter(StandardEncounter encounter) {
-        dicePane.getRolleIsDoneProperty().addListener(e -> encounter.showResultInformation());
         Label startText = new Label(encounter.getEncounterStartText());
         startText.setWrapText(true);
-        startText.styleProperty().bind(Fonts.getFont(0.18, Fonts.DARK, Fonts.FontTyp.ITALIC));
-        encounterPane.getChildren().add(startText);
+        startText.setTextAlignment(TextAlignment.CENTER);
+        startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
+       // startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+
+        encounterPane.getChildren().addAll(startText);
     }
 
     void populateBonusPane() {
-
-
-
         populateBoni(EventTimeType.BEFORE);
 
     }
@@ -120,8 +123,11 @@ encounterMain.getChildren().addAll(encounterPane,bonusPane);
 
     private void acceptHandler(MouseEvent e) {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
-            encounter.completeEncounterPart();
-            populate();
+            if(encounter.completeEncounterPart()==3){
+                this.close();
+            }else {
+                populate();
+            }
         }
     }
 

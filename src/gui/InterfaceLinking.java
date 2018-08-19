@@ -1,13 +1,12 @@
 package gui;
 
 import Service.GameService;
+import gamemechanics.choice.Choice;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.InformationChoice;
+import gamemechanics.choice.YesNoChoice;
 import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
-import gamemechanics.choice.Choice;
-import gamemechanics.choice.YesNoChoice;
-import gamemechanics.encounter.StandardEncounter;
 import gui.choice.EncounterChoiceGUI;
 import gui.choice.InformationDialog;
 import gui.choice.YesNoDialog;
@@ -17,7 +16,6 @@ import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lombok.extern.java.Log;
@@ -53,13 +51,29 @@ public class InterfaceLinking {
         if (effect == null) {
             return;
         }
-        Group group = null;
-        if (effect instanceof Spend) {
-            group = new SpendEffectOverlay((Spend) effect);
-        } else if (effect instanceof Loose) {
-            group = new LooseEffectOverlay((Loose) effect);
+        switch (effect.getEffectTyp()) {
+            case OR:
+                break;
+            case AND:
+                break;
+            case LOOSE:
+                Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
+                break;
+            case SPEND:
+                Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
+                break;
+            case RANDOM_ITEM:
+                break;
+            case GAIN_CONDITION:
+                break;
+            case ASSET_FROM_RESERVE:
+                break;
+            default:
+                break;
+
         }
-        Animations.effectOverlayAnimations(group, primaryStage, effect);
+
+
     }
 
 
@@ -74,16 +88,16 @@ public class InterfaceLinking {
             return;
         }
         DialogGui dlg = null;
-      switch (choice.getChoiceType()){
-          case YES_NO:
-            dlg = new YesNoDialog((YesNoChoice) choice);
-            break;
-          case ENCOUNTER:
-            dlg = new EncounterChoiceGUI((EncounterChoice) choice);
-            break;
-          case INFORMATION:
-              dlg = new InformationDialog((InformationChoice) choice);
-              break;
+        switch (choice.getChoiceType()) {
+            case YES_NO:
+                dlg = new YesNoDialog((YesNoChoice) choice);
+                break;
+            case ENCOUNTER:
+                dlg = new EncounterChoiceGUI((EncounterChoice) choice);
+                break;
+            case INFORMATION:
+                dlg = new InformationDialog((InformationChoice) choice);
+                break;
         }
         if (dlg == null) {
             return;
