@@ -19,4 +19,9 @@ public class NullEffect extends Effect {
     public void execute() {
 
     }
+
+    @Override
+    public String getText() {
+        return "";
+    }
 }

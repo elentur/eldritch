@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.Item.Investigator;
+import utils.ResourceUtil;
 
 @Getter
 @Log
@@ -23,5 +24,12 @@ public class BecomeDelayed extends Effect {
         super.execute();
 
         log.info("Delayed" );
+    }
+
+    @Override
+    public String getText() {
+
+        return ResourceUtil.get("${become}","effect"  ) + " "+ResourceUtil.get("${delayed}","effect"  ) +".";
+
     }
 }

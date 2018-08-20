@@ -6,6 +6,7 @@ import enums.SpendType;
 import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
+import utils.ResourceUtil;
 
 @Getter
 public class Spend extends Effect {
@@ -37,5 +38,13 @@ public class Spend extends Effect {
                 break;
         }
 
+    }
+
+    @Override
+    public String getText() {
+        if(spendType==null ||value ==0){
+            return ResourceUtil.get("${spend}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  )+".";
+        }
+        return ResourceUtil.get("${spend}","effect"  ) + " "+ value + " " + spendType.getText() +"."  ;
     }
 }

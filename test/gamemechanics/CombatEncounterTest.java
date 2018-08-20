@@ -2,8 +2,10 @@ package gamemechanics;
 
 import Service.GameService;
 import container.ItemContainer;
+import enums.FieldType;
 import factory.ItemFactory;
 import gamemechanics.encounter.CombatEncounter;
+import model.Field;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.investigators.AgnesBaker;

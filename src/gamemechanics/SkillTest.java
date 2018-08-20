@@ -25,6 +25,9 @@ public class SkillTest {
         int skill;
         ConditionType conditionTyp = ConditionType.NONE;
         DiceRollerService service = new DiceRollerService();
+        if(typ.equals(TestType.NONE)){
+            return service.rollDice(0, conditionTyp);
+        }
         if (inv == null) {
            skill = 1;
         }else {
@@ -39,9 +42,8 @@ public class SkillTest {
 
         int value = skill + mod<1?1:skill+mod;
 
-        Result result=service.rollDice(value, conditionTyp);
+        return service.rollDice(value, conditionTyp);
 
-        return result;
     }
 
 }

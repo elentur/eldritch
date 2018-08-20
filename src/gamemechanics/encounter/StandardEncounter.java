@@ -24,10 +24,14 @@ public class StandardEncounter extends Encounter {
     private final Field field;
 
     public StandardEncounter(Investigator inv, String encounterID) {
-        super(EncounterType.STANDARD_ENCOUNTER);
+       this(inv,encounterID,EncounterType.STANDARD_ENCOUNTER);
+    }
+    public StandardEncounter(Investigator inv, String encounterID, EncounterType encounterType) {
+        super(encounterType);
         setInvestigator(inv);
         this.encounterID = encounterID;
         setTestType(new TestType[3]);
+        setMinNumberOfSuccesses(new int[]{1,1,1});
         setEffect(new Effect[3][2]);
         setSituationType(SituationType.STANDARD_ENCOUNTER);
         setGame(GameService.getInstance());
@@ -80,11 +84,11 @@ public class StandardEncounter extends Encounter {
         List<Effect> effects = new ArrayList<>();
         if (result.isSuccess()) {
             header = ResourceUtil.get("${success}", "ui");
-            text = getEncounterSuccessText();
+            text = getEncounterSuccessText()+"\n"+getEffect()[getEncounterPart()][PASS].getText();
             effects.add(getEffect()[getEncounterPart()][PASS]);
         } else {
             header = ResourceUtil.get("${fail}", "ui");
-            text = getEncounterFailText();
+            text = getEncounterFailText()+"\n"+getEffect()[getEncounterPart()][FAIL].getText();
             effects.add(getEffect()[getEncounterPart()][FAIL]);
         }
         getGame().addChoice(new InformationChoice(header, text,effects ));

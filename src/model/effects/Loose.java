@@ -7,6 +7,7 @@ import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
 import model.Item.Monster;
+import utils.ResourceUtil;
 
 @Getter
 public class Loose extends Effect {
@@ -46,5 +47,13 @@ public class Loose extends Effect {
                 break;
         }
 
+    }
+
+    @Override
+    public String getText() {
+        if(spendType==null ||value ==0){
+            return ResourceUtil.get("${loose}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  )+".";
+        }
+        return ResourceUtil.get("${loose}","effect"  ) + " "+ value + " " + spendType.getText() +"."  ;
     }
 }

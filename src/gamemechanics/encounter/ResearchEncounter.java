@@ -14,12 +14,14 @@ import utils.ResourceUtil;
 
 @Getter
 @Setter
-public class ResearchEncounter extends Encounter{
+public class ResearchEncounter extends StandardEncounter{
 
     private final String encounterID;
     private final Field field;
-    public ResearchEncounter(Investigator inv, String encounterID){
-        super(EncounterType.STANDARD_ENCOUNTER);
+    private final String oldOneID;
+
+    public ResearchEncounter(Investigator inv, String encounterID, String oldOneID){
+       super(inv,encounterID,EncounterType.RESEARCH_ENCOUNTER);
         setInvestigator(inv);
         this.encounterID = encounterID;
         setTestType(new TestType[3]);
@@ -27,50 +29,20 @@ public class ResearchEncounter extends Encounter{
         setSituationType(SituationType.STANDARD_ENCOUNTER);
         setGame(GameService.getInstance());
         this.field = getGame().getFieldOfInvestigator(inv);
+        this.oldOneID=oldOneID;
     }
 
 
 
     @Override
     public String getNameId() {
-        return  "${standard_encounter}";
+        return  "${research_encounter"+"_"+oldOneID+"}";
     }
 
 
 
     @Override
     public String getId() {
-        return "&standard_encounter";
-    }
-
-
-    public Preparation getPreparation(){
-
-        return new Preparation(getTestType()[getEncounterPart()],getInvestigator(),getSituationType(),this);
-    }
-
-    public String getEncounterStartText(){
-        return   ResourceUtil.get("${"+encounterID+"_"+field.getType().getText().toLowerCase()+"_start}", getNameId().replaceAll("[{}\\$]",""));
-    }
-    public String getEncounterFailText(){
-        String key ="${"+encounterID+"_"+field.getType().getText().toLowerCase()+"_fail}";
-        String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]",""));
-        if(value.equals(key)){
-            return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]",""));
-        }
-        return value;
-    }
-    public String getEncounterSuccessText(){
-        String key ="${"+encounterID+"_"+field.getType().getText().toLowerCase()+"_success}";
-        String value =   ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]",""));
-        if(value.equals(key)){
-            return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]",""));
-        }
-        return value;
-    }
-
-    public int completeEncounterPart() {
-        setEncounterPart(3);
-        return getEncounterPart();
+        return "&research_encounter"+"_"+oldOneID;
     }
 }

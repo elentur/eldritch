@@ -52,23 +52,14 @@ public class InterfaceLinking {
             return;
         }
         switch (effect.getEffectTyp()) {
-            case OR:
-                break;
-            case AND:
-                break;
             case LOOSE:
                 Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
                 break;
             case SPEND:
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
                 break;
-            case RANDOM_ITEM:
-                break;
-            case GAIN_CONDITION:
-                break;
-            case ASSET_FROM_RESERVE:
-                break;
             default:
+                GameService.getInstance().getInsertions().remove(effect);
                 break;
 
         }

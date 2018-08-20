@@ -2,17 +2,20 @@ package gui;
 
 import container.Die;
 import container.Result;
+import enums.TestType;
 import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import gui.buttons.InfoTextButton;
 import gui.buttons.RoundButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import preparation.Preparation;
@@ -39,64 +42,73 @@ public class DicePane extends HBox {
         this.setMaxHeight(height);
         this.setMinWidth(width);
         this.setMaxWidth(width);
+        this.setPadding(new Insets(0,20,0,20));
         Preparation preparation = encounter.getPreparation();
-        int dice = preparation.getNumberOfDice();
-
-        Group root = new Group();
-        dicesScene = createSubScene(
-                new PerspectiveCamera(), root);
-        double gap = DiceGui.cubeWidth;
-        double x = DiceGui.cubeWidth * 1.8;
-        double y = DiceGui.cubeWidth * 1.8;
-        diceGuis = new HashMap<>();
-        for (int i = 0; i < dice; i++) {
-            DiceGui diceGui = new DiceGui();
-            diceGui.setTranslateX(gap + (i % 6) * x);
-            diceGui.setTranslateY(gap + (i / 6) * y);
-            diceGuis.put(diceGui, null);
-        }
-        root.getChildren().addAll(diceGuis.keySet());
-        dicesScene.setEffect(Effects.dropShadow);
-        VBox diceButtonContainer = new VBox();
-        diceButtonContainer.setAlignment(Pos.TOP_CENTER);
-        diceButton = new RoundButton("${dice_Button}");
-        diceButton.setOnMouseClicked(e -> {
-            if (e.getButton().equals(MouseButton.PRIMARY)) {
-                Result result = encounter.check();
-                int i = 0;
-                for (DiceGui diceGui : diceGuis.keySet()) {
-
-                    Die die = result.get(i);
-                    diceGuis.put(diceGui, die);
-                    diceGui.rollDie(die);
-                    diceGui.rolledProperty().addListener(a -> diceRollHandler());
-                    diceGui.rerollButton.setOnMouseClicked(a -> {
-
-                        result.rerollDie(die);
-                        refresh();
-                        diceGui.rollDie(die);
-
-                    });
-                    diceGui.shiftButton.setOnMouseClicked(a -> {
-
-                        result.shiftDie(die);
-                        refresh();
-                        diceGui.shiftDie(die);
-                    });
-                    i++;
-                }
-                this.getChildren().remove(diceButtonContainer);
-
-            }
-        });
-        diceButtonContainer.getChildren().add(diceButton);
-        HBox.setHgrow(diceButtonContainer, Priority.ALWAYS);
-
         acceptButton = new InfoTextButton("${accept_Button}");
+        if(preparation.getTestTyp().equals(TestType.NONE)) {
+            Region region = new Region();
+            HBox.setHgrow(region, Priority.ALWAYS);
+            acceptButton.setStyleProperty(Fonts.getFont(0.25, Fonts.GREEN , Fonts.FontTyp.NORMAL));
+            acceptButton.setInfoText( ResourceUtil.get("${success}", "ui"));
+            encounter.check();
+            this.getChildren().addAll(region,acceptButton);
+        }else {
+            int dice = preparation.getNumberOfDice();
+
+            Group root = new Group();
+            dicesScene = createSubScene(
+                    new PerspectiveCamera(), root);
+            double gap = DiceGui.cubeWidth;
+            double x = DiceGui.cubeWidth * 1.8;
+            double y = DiceGui.cubeWidth * 1.8;
+            diceGuis = new HashMap<>();
+            for (int i = 0; i < dice; i++) {
+                DiceGui diceGui = new DiceGui();
+                diceGui.setTranslateX(gap + (i % 6) * x);
+                diceGui.setTranslateY(gap + (i / 6) * y);
+                diceGuis.put(diceGui, null);
+            }
+            root.getChildren().addAll(diceGuis.keySet());
+            dicesScene.setEffect(Effects.dropShadow);
+            VBox diceButtonContainer = new VBox();
+            diceButtonContainer.setAlignment(Pos.TOP_CENTER);
+            diceButton = new RoundButton("${dice_Button}");
+            diceButton.setOnMouseClicked(e -> {
+                if (e.getButton().equals(MouseButton.PRIMARY)) {
+                    Result result = encounter.check();
+                    int i = 0;
+                    for (DiceGui diceGui : diceGuis.keySet()) {
+
+                        Die die = result.get(i);
+                        diceGuis.put(diceGui, die);
+                        diceGui.rollDie(die);
+                        diceGui.rolledProperty().addListener(a -> diceRollHandler());
+                        diceGui.rerollButton.setOnMouseClicked(a -> {
+
+                            result.rerollDie(die);
+                            refresh();
+                            diceGui.rollDie(die);
+
+                        });
+                        diceGui.shiftButton.setOnMouseClicked(a -> {
+
+                            result.shiftDie(die);
+                            refresh();
+                            diceGui.shiftDie(die);
+                        });
+                        i++;
+                    }
+                    this.getChildren().remove(diceButtonContainer);
+
+                }
+            });
+            diceButtonContainer.getChildren().add(diceButton);
+            HBox.setHgrow(diceButtonContainer, Priority.ALWAYS);
+            this.getChildren().addAll(dicesScene, diceButtonContainer);
+        }
+
         this.setAlignment(Pos.CENTER_LEFT);
         this.setSpacing(20);
-
-        this.getChildren().addAll(dicesScene, diceButtonContainer);
         this.getStyleClass().add("small-show-case");
 
         // diceButtonContainer.setBorder(new Border(new BorderStroke(Fonts.RED, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.MEDIUM)));
@@ -125,7 +137,7 @@ public class DicePane extends HBox {
                         ResourceUtil.get("${loose_x_sanity}", "ui", (ce.getActiveMonster().getHorror() - encounter.getResult().getNumberOfSuccess()) + "");
                 acceptButton.setStyleProperty(Fonts.getFont(0.25, color, Fonts.FontTyp.NORMAL));
             } else {
-                acceptButton.setStyleProperty(Fonts.getFont(0.5, color, Fonts.FontTyp.NORMAL));
+                acceptButton.setStyleProperty(Fonts.getFont(0.25, color, Fonts.FontTyp.NORMAL));
             }
             acceptButton.setInfoText(encounter.getResult().isSuccess() ? ResourceUtil.get("${success}", "ui") : ResourceUtil.get("${fail}", "ui") + damage);
 

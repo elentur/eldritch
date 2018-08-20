@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.Item.Investigator;
+import utils.ResourceUtil;
 
 @Getter
 @Log
@@ -33,5 +34,13 @@ public class AssetFromReserve extends Effect {
                 break;
         }
         log.info(itemType.toString() );
+    }
+
+    @Override
+    public String getText() {
+        if(itemType==null ||value ==0){
+            return ResourceUtil.get("${gain}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  );
+        }
+       return ResourceUtil.get("${gain}","effect"  ) + " "+ value + " " + itemType.getText() + " " + ResourceUtil.get("${reserve}","effect"  ) ;
     }
 }

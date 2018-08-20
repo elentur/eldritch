@@ -14,7 +14,7 @@ public class EncounterChoice extends Choice{
     private final List<Encounter> encounters;
 
     public EncounterChoice( Field field){
-        super(ChoiceType.ENCOUNTER, field.getName() +"\n" +ResourceUtil.get("${encounter_choice}","ui"),"");
+        super(ChoiceType.ENCOUNTER, field.getName() +" - " +field.getType().getText()+"\n" +ResourceUtil.get("${encounter_choice}","ui"),"");
         this.encounters = field.getEncounters();
     }
 

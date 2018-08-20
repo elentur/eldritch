@@ -19,4 +19,5 @@ public Effect(EffectTyps effectTyp){
    public  void execute(){
       GameService.getInstance().addEffect(this);
    }
+   public abstract String getText();
 }

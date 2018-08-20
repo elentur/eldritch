@@ -3,6 +3,7 @@ package model;
 import enums.FieldType;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.StandardEncounter;
+import gamemechanics.encounter.researchencounter.ResearchEncounter0;
 import gamemechanics.encounter.standardencounter.StandardEncounter0;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Field {
     public List<Encounter> getEncounters() {
         List<Encounter> encounters = new ArrayList<>();
         encounters.add(new StandardEncounter0(new AgnesBaker()));
+        encounters.add(new ResearchEncounter0(new AgnesBaker()));
         return encounters;
     }
 

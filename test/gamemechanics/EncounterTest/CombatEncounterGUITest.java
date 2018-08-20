@@ -2,6 +2,7 @@ package gamemechanics.EncounterTest;
 
 import Service.GameService;
 import container.ItemContainer;
+import enums.FieldType;
 import factory.ItemFactory;
 import gamemechanics.encounter.CombatEncounter;
 import gui.Fonts;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Field;
 import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.Monster;
@@ -32,6 +34,8 @@ public class CombatEncounterGUITest extends Application {
     public void start(Stage primaryStage) {
         Fonts.init(primaryStage);
 
+        Field f = new Field(FieldType.WILDNESS,0);
+        GameService.getInstance().setField(f);
         CombatEncounter encounter = initCombatEncounter();
         StackPane root = new StackPane();
         Scene scene = new Scene(root);

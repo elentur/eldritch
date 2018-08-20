@@ -24,7 +24,7 @@ import java.util.UUID;
 @Setter
 public abstract class Encounter implements Item {
     private final EncounterType encounterType;
-protected static final int PASS =0;
+    protected static final int PASS =0;
     protected static final int FAIL =1;
     public String uniqueId = UUID.randomUUID().toString();
     private GameService game;
@@ -32,6 +32,7 @@ protected static final int PASS =0;
     Result result;
     Investigator investigator;
     private TestType[] testType;
+    private int[] minNumberOfSuccesses;
     private Effect[][] effect;
     private SituationType situationType;
 
@@ -47,7 +48,7 @@ protected static final int PASS =0;
     public Result check() {
         SkillTest skillTest = new SkillTest(getPreparation().getTestTyp(), getPreparation().getModificationForSkillTest());
         result = skillTest.execute(investigator);
-        result.setMinNumberOfSuccesses(1);
+        result.setMinNumberOfSuccesses(getMinNumberOfSuccesses()[getEncounterPart()]);
 
         return result;
     }

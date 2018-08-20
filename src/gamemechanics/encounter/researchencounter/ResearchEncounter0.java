@@ -1,17 +1,18 @@
-package gamemechanics.encounter.standardencounter;
+package gamemechanics.encounter.researchencounter;
 
 import enums.ConditionType;
 import enums.ItemType;
 import enums.SpendType;
 import enums.TestType;
+import gamemechanics.encounter.ResearchEncounter;
 import gamemechanics.encounter.StandardEncounter;
 import model.Item.Investigator;
 import model.effects.*;
 
-public class StandardEncounter0 extends StandardEncounter {
+public class ResearchEncounter0 extends ResearchEncounter {
 
-    public StandardEncounter0(Investigator inv) {
-        super(inv,"se_0");
+    public ResearchEncounter0(Investigator inv) {
+        super(inv,"re_0","azathoth");
 
         switch (getField().getType()){
             case CITY:

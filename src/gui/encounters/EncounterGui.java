@@ -81,6 +81,9 @@ public class EncounterGui extends DialogGui {
             case STANDARD_ENCOUNTER:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
+            case RESEARCH_ENCOUNTER:
+                populateCenterForStandardEncounter((StandardEncounter) encounter);
+                break;
         }
 
     }

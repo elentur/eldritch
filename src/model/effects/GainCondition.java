@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.Item.Investigator;
+import utils.ResourceUtil;
 
 @Getter
 @Log
@@ -33,5 +34,14 @@ public class GainCondition extends Effect {
                 break;
         }
         log.info(conditionType.toString() );
+    }
+
+    @Override
+    public String getText() {
+        if(conditionType==null){
+            return ResourceUtil.get("${gain}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  );
+        }
+        return ResourceUtil.get("${gain}","effect"  ) + " " + conditionType.getText() + " " + ResourceUtil.get("${condition}","effect"  ) ;
+
     }
 }

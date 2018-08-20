@@ -42,3 +42,44 @@
        -fx-background-repeat: no-repeat;
        -fx-background-size: stretch;
 }
+.eldritch-text-field *.text {
+    -fx-text-alignment: center;
+
+}
+.eldritch-text-field  {
+  -fx-background-color: transparent;
+  -fx-border-color: rgba(0,0,0,0.3);
+  -fx-border-insets: 5;
+  -fx-border-width: 3;
+  -fx-border-style: solid;
+}
+
+.eldritch-text-field .scroll-pane {
+    -fx-background-color: transparent;
+
+}
+.eldritch-text-field .scroll-pane .scroll-bar .increment-button {
+            -fx-rotate: 180;
+}
+.eldritch-text-field .scroll-pane .scroll-bar .increment-button:hover,.decrement-button:hover {
+   -fx-background-color: rgba(0,0,0,0.3);
+}
+.eldritch-text-field .scroll-pane .scroll-bar .decrement-button,.increment-button {
+    -fx-background-image: url('../images/arrow.png');
+           -fx-background-position:  center;
+           -fx-background-repeat: no-repeat;
+           -fx-background-size: stretch;
+}
+
+.eldritch-text-field .scroll-pane .scroll-bar .decrement-arrow, .increment-arrow, .thumb, .track-background, .track {
+      -fx-background-color: transparent;
+}
+
+.eldritch-text-field .scroll-pane .scroll-bar:vertical{
+    -fx-background-color: transparent;
+}
+
+.eldritch-text-field .scroll-pane .viewport,.content{
+    -fx-background-color: transparent;
+}
+

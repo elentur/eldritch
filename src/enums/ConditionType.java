@@ -1,5 +1,21 @@
 package enums;
 
+import utils.ResourceUtil;
+
+import java.util.List;
+
 public enum ConditionType {
-    BLESSED,CURSED,DETAINED,NONE
+    BLESSED("${blessed}"),
+    CURSED("${cursed}"),
+    DETAINED("${detained}"),
+    NONE("");
+
+    private String key;
+
+    private ConditionType(String key) {
+        this.key = key;
+    }
+    public String getText() {
+        return ResourceUtil.get(key,this.getClass());
+    }
 }
