@@ -27,7 +27,7 @@ public class Preparation {
     protected Investigator investigator;
     protected BonusContainer<ItemBonus_AdditionalDice> additionalDiceBoni;
     protected ItemBonus_GainDice gainDiceBonus = ItemBonus_GainDice.EMPTY;
-
+    private int modification;
 
     BonusContainer<Bonus> boni;
 
@@ -41,6 +41,7 @@ public class Preparation {
         this.investigator = investigator;
         game = GameService.getInstance();
         this.encounter =encounter;
+        setModification(encounter.getMod()[encounter.getEncounterPart()]);
         calculateBoni();
 
     }
@@ -55,7 +56,7 @@ public class Preparation {
 
     public int getModificationForSkillTest() {
 
-        return getGainDiceBonus().getValue()+getAdditionDiceBoniSum();
+        return modification+getGainDiceBonus().getValue()+getAdditionDiceBoniSum();
 
     }
 

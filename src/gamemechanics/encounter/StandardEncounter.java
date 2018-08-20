@@ -32,6 +32,7 @@ public class StandardEncounter extends Encounter {
         this.encounterID = encounterID;
         setTestType(new TestType[3]);
         setMinNumberOfSuccesses(new int[]{1,1,1});
+        setMod(new int[]{0,0,0});
         setEffect(new Effect[3][2]);
         setSituationType(SituationType.STANDARD_ENCOUNTER);
         setGame(GameService.getInstance());

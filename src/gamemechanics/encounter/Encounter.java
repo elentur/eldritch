@@ -33,6 +33,7 @@ public abstract class Encounter implements Item {
     Investigator investigator;
     private TestType[] testType;
     private int[] minNumberOfSuccesses;
+    private int[] mod;
     private Effect[][] effect;
     private SituationType situationType;
 
