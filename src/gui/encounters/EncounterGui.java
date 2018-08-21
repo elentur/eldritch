@@ -73,7 +73,7 @@ public class EncounterGui extends DialogGui {
     void populateCenterPane() {
 
 
-       // encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+        // encounterPane.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
         encounterPane.getChildren().clear();
 
@@ -82,6 +82,15 @@ public class EncounterGui extends DialogGui {
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
             case RESEARCH_ENCOUNTER:
+                populateCenterForStandardEncounter((StandardEncounter) encounter);
+                break;
+            case AMERICA_ENCOUNTER:
+                populateCenterForStandardEncounter((StandardEncounter) encounter);
+                break;
+            case EUROPE_ENCOUNTER:
+                populateCenterForStandardEncounter((StandardEncounter) encounter);
+                break;
+            case ASIA_ENCOUNTER:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
         }
@@ -93,7 +102,7 @@ public class EncounterGui extends DialogGui {
         startText.setWrapText(true);
         startText.setTextAlignment(TextAlignment.CENTER);
         startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
-       // startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+        // startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
         encounterPane.getChildren().addAll(startText);
     }
@@ -126,9 +135,9 @@ public class EncounterGui extends DialogGui {
 
     private void acceptHandler(MouseEvent e) {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
-            if(encounter.completeEncounterPart()==3){
+            if (encounter.completeEncounterPart() == 3) {
                 this.close();
-            }else {
+            } else {
                 populate();
             }
         }

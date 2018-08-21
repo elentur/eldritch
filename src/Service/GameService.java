@@ -7,6 +7,8 @@ import gamemechanics.encounter.Encounter;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lombok.Getter;
+import lombok.Setter;
 import model.Effect;
 import model.Field;
 import model.Item.Investigator;
@@ -17,6 +19,9 @@ public class GameService {
 
     private final ObservableList<Effect> insertions;
     private Field field;
+    @Getter
+    @Setter
+    private Investigator activeInvestigator;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -73,4 +78,6 @@ public class GameService {
     public void setField(Field f) {
         field = f;
     }
+
+
 }

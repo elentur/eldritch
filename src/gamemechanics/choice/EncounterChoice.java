@@ -1,6 +1,7 @@
 package gamemechanics.choice;
 
 
+import Service.GameService;
 import enums.ChoiceType;
 import enums.YesNo;
 import gamemechanics.encounter.Encounter;
@@ -15,7 +16,7 @@ public class EncounterChoice extends Choice{
 
     public EncounterChoice( Field field){
         super(ChoiceType.ENCOUNTER, field.getName() +" - " +field.getType().getText()+"\n" +ResourceUtil.get("${encounter_choice}","ui"),"");
-        this.encounters = field.getEncounters();
+        this.encounters = field.getEncounters(GameService.getInstance().getActiveInvestigator());
     }
 
 

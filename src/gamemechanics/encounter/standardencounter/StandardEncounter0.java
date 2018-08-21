@@ -19,7 +19,7 @@ public class StandardEncounter0 extends StandardEncounter {
                 getEffect()[0][FAIL]=new GainCondition(ConditionType.DETAINED,inv);
                 setEncounterPart(0);
                 break;
-            case WILDNESS:
+            case WILDERNESS:
                 getEffect()[1][PASS]=new And(new RandomItem(ItemType.ITEM,1,inv),new Loose(SpendType.SANITY,1,inv));
                 getEffect()[1][FAIL]=new NullEffect();
                 setEncounterPart(1);

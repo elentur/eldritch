@@ -2,6 +2,7 @@ package gamemechanics.EncounterTest;
 
 import Service.GameService;
 import container.ItemContainer;
+import enums.FieldID;
 import enums.FieldType;
 import factory.ItemFactory;
 import gamemechanics.encounter.CombatEncounter;
@@ -34,7 +35,7 @@ public class CombatEncounterGUITest extends Application {
     public void start(Stage primaryStage) {
         Fonts.init(primaryStage);
 
-        Field f = new Field(FieldType.WILDNESS,0);
+        Field f = new Field( FieldID.FIELD_1);
         GameService.getInstance().setField(f);
         CombatEncounter encounter = initCombatEncounter();
         StackPane root = new StackPane();

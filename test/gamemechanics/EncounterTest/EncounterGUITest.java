@@ -1,7 +1,10 @@
 package gamemechanics.EncounterTest;
 
 import Service.GameService;
+import container.ItemContainer;
+import enums.FieldID;
 import enums.FieldType;
+import factory.ItemFactory;
 import gamemechanics.choice.EncounterChoice;
 import gui.Fonts;
 import gui.InterfaceLinking;
@@ -11,6 +14,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Field;
+import model.Item.Asset;
+import model.Item.Investigator;
+import model.Item.investigators.AgnesBaker;
 
 public class EncounterGUITest extends Application {
 
@@ -20,8 +26,14 @@ public class EncounterGUITest extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Investigator inv = new AgnesBaker();
+        ItemContainer<Asset> assets = new ItemFactory().getAssets();
+        //  inv.getInventory().remove(assets.get("&profaneTome"));
+        inv.getInventory().add(assets.get("&lantern"));
+        GameService.getInstance().setActiveInvestigator(inv);
         Fonts.init(primaryStage);
-        Field  f = new Field(FieldType.CITY,0);
+        Field  f = new Field( FieldID.ARKHAM);
+        f.setExpedition(true);
         GameService.getInstance().setField(f);
 
         EncounterChoice encounterChoice = new EncounterChoice( f);

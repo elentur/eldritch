@@ -16,19 +16,11 @@ import utils.ResourceUtil;
 @Setter
 public class ResearchEncounter extends StandardEncounter{
 
-    private final String encounterID;
-    private final Field field;
     private final String oldOneID;
 
     public ResearchEncounter(Investigator inv, String encounterID, String oldOneID){
        super(inv,encounterID,EncounterType.RESEARCH_ENCOUNTER);
         setInvestigator(inv);
-        this.encounterID = encounterID;
-        setTestType(new TestType[3]);
-        setEffect(new Effect[3][2]);
-        setSituationType(SituationType.STANDARD_ENCOUNTER);
-        setGame(GameService.getInstance());
-        this.field = getGame().getFieldOfInvestigator(inv);
         this.oldOneID=oldOneID;
     }
 

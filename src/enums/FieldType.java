@@ -6,7 +6,7 @@ public enum FieldType {
 
     NONE(""),
     CITY("${city}"),
-    WILDNESS("${wildness}"),
+    WILDERNESS("${wilderness}"),
     SEA("${sea}"),
     OTHER_WORLD("${other_world}"),
     ALL("${all}");
