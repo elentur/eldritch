@@ -24,8 +24,9 @@ import java.util.UUID;
 @Setter
 public abstract class Encounter implements Item {
     private final EncounterType encounterType;
-    protected static final int PASS =0;
-    protected static final int FAIL =1;
+    protected static final int START =0;
+    protected static final int PASS =1;
+    protected static final int FAIL =2;
     public String uniqueId = UUID.randomUUID().toString();
     private GameService game;
     int encounterPart;

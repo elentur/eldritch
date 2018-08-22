@@ -1,17 +1,15 @@
-package gamemechanics.encounter.expeditionencounter;
+package gamemechanics.encounter.specialencounter.shubniggurath;
 
 import enums.*;
-import gamemechanics.encounter.ExpeditionEncounter;
-import gamemechanics.encounter.StandardEncounter;
-import lombok.Getter;
-import lombok.Setter;
+import gamemechanics.encounter.OtherWorldEncounter;
+import gamemechanics.encounter.SpecialEncounter;
 import model.Item.Investigator;
 import model.effects.*;
 
-public class ExpeditionEncounter0 extends ExpeditionEncounter {
+public class SpecialEncounter0 extends SpecialEncounter {
 
-    public ExpeditionEncounter0(Investigator inv) {
-        super(inv, "exe_0");
+    public SpecialEncounter0(Investigator inv) {
+        super(inv, "spe_0", OldOnes.SHUB_NIGGURATH);
         setFieldID(FieldID.PYRAMIDS);
 
         getEffect()[0][START]=new NullEffect();

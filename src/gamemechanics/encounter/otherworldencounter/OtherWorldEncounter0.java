@@ -1,17 +1,18 @@
-package gamemechanics.encounter.expeditionencounter;
+package gamemechanics.encounter.otherworldencounter;
 
-import enums.*;
+import enums.ConditionType;
+import enums.FieldID;
+import enums.SpendType;
+import enums.TestType;
 import gamemechanics.encounter.ExpeditionEncounter;
-import gamemechanics.encounter.StandardEncounter;
-import lombok.Getter;
-import lombok.Setter;
+import gamemechanics.encounter.OtherWorldEncounter;
 import model.Item.Investigator;
 import model.effects.*;
 
-public class ExpeditionEncounter0 extends ExpeditionEncounter {
+public class OtherWorldEncounter0 extends OtherWorldEncounter {
 
-    public ExpeditionEncounter0(Investigator inv) {
-        super(inv, "exe_0");
+    public OtherWorldEncounter0(Investigator inv) {
+        super(inv, "owe_0");
         setFieldID(FieldID.PYRAMIDS);
 
         getEffect()[0][START]=new NullEffect();

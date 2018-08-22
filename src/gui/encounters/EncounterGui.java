@@ -3,10 +3,7 @@ package gui.encounters;
 import enums.EventTimeType;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.StandardEncounter;
-import gui.DialogGui;
-import gui.DicePane;
-import gui.Fonts;
-import gui.ItemScrollPane;
+import gui.*;
 import gui.buttons.BonusButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,8 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import model.Item.Bonus;
 
@@ -78,19 +75,9 @@ public class EncounterGui extends DialogGui {
         encounterPane.getChildren().clear();
 
         switch (encounter.getEncounterType()) {
-            case STANDARD_ENCOUNTER:
-                populateCenterForStandardEncounter((StandardEncounter) encounter);
+            case COMBAT_ENCOUNTER:
                 break;
-            case RESEARCH_ENCOUNTER:
-                populateCenterForStandardEncounter((StandardEncounter) encounter);
-                break;
-            case AMERICA_ENCOUNTER:
-                populateCenterForStandardEncounter((StandardEncounter) encounter);
-                break;
-            case EUROPE_ENCOUNTER:
-                populateCenterForStandardEncounter((StandardEncounter) encounter);
-                break;
-            case ASIA_ENCOUNTER:
+            default:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
         }
@@ -98,11 +85,10 @@ public class EncounterGui extends DialogGui {
     }
 
     private void populateCenterForStandardEncounter(StandardEncounter encounter) {
-        Label startText = new Label(encounter.getEncounterStartText());
+        TextField startText = new TextField(encounter.getEncounterStartText()+"\n"+encounter.getEncounterEffectText());
         startText.setWrapText(true);
-        startText.setTextAlignment(TextAlignment.CENTER);
         startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
-        // startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+         startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
         encounterPane.getChildren().addAll(startText);
     }

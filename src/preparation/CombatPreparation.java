@@ -20,7 +20,7 @@ public class CombatPreparation extends Preparation {
     public CombatPreparation(TestType testTyp, Investigator investigator, Monster monster,Encounter encounter) {
         super(testTyp,investigator,SituationType.COMBAT_ENCOUNTER,  encounter);
         this.monster = monster;
-       setModification(testTyp.equals(TestType.STRENGTH)?monster.getStrengthTest():monster.getWillTest());
+       //setModification(testTyp.equals(TestType.STRENGTH)?monster.getStrengthTest():monster.getWillTest());
 
     }
 

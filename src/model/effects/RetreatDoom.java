@@ -9,11 +9,11 @@ import model.Item.Investigator;
 import utils.ResourceUtil;
 
 @Getter
-public class AdvanceDoom extends Effect {
+public class RetreatDoom extends Effect {
     private final int value;
     private  Investigator investigator;
 
-    public AdvanceDoom(  int value,Investigator investigator) {
+    public RetreatDoom(  int value,Investigator investigator) {
         super(EffectTyps.ADVANCE_DOOM);
         this.investigator = investigator;
         this.value=value;
@@ -30,7 +30,7 @@ public class AdvanceDoom extends Effect {
     public String getText() {
 
 
-            return ResourceUtil.get("${advance_doom}","effect", value+""  ) ;
+            return ResourceUtil.get("${retreat_doom}","effect"  ,value+"") ;
 
 
     }

@@ -8,7 +8,9 @@ public enum ConditionType {
     BLESSED("${blessed}"),
     CURSED("${cursed}"),
     DETAINED("${detained}"),
-    NONE("");
+    NONE(""),
+    AMNESIA("${amnesia}"),
+    INTERNAL_INJURY("${internal_injury}");
 
     private String key;
 

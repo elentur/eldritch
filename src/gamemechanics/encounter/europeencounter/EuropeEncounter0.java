@@ -15,16 +15,19 @@ public class EuropeEncounter0 extends EuropeEncounter {
 
         switch (getField().getFieldID()){
             case LONDON:
+                getEffect()[0][START]=new NullEffect();
                 getEffect()[0][PASS]=new And(new GainClue(EffectSelector.THIS,1,inv),new GainClue(EffectSelector.ADDITIONAL,1,inv));
                 getEffect()[0][FAIL]=new NullEffect();
                 setEncounterPart(0);
                 break;
             case ROME:
-                getEffect()[1][PASS]=new And(new GainClue(EffectSelector.THIS,1,inv),new AdvanceDoom(EffectSelector.ANY,inv));
+                getEffect()[1][START]=new NullEffect();
+                getEffect()[1][PASS]=new And(new GainClue(EffectSelector.THIS,1,inv),new AdvanceDoom(1,inv));
                 getEffect()[1][FAIL]=new Loose(SpendType.HEALTH,1,inv);
                 setEncounterPart(1);
                 break;
             case ISTANBUL:
+                getEffect()[2][START]=new NullEffect();
                 getEffect()[2][PASS]=new And(new GainClue(EffectSelector.THIS,1,inv),new GainClue(EffectSelector.ADDITIONAL,1,inv));
                 getEffect()[2][FAIL]=new BecomeDelayed(inv);
                 setEncounterPart(2);

@@ -34,7 +34,7 @@ public class StandardEncounter extends Encounter {
         setTestType(new TestType[3]);
         setMinNumberOfSuccesses(new int[]{1,1,1});
         setMod(new int[]{0,0,0});
-        setEffect(new Effect[3][2]);
+        setEffect(new Effect[3][3]);
         setSituationType(SituationType.STANDARD_ENCOUNTER);
         setGame(GameService.getInstance());
         this.field = getGame().getFieldOfInvestigator(inv);
@@ -63,7 +63,9 @@ if(preparation ==null){
     public String getEncounterStartText() {
         return ResourceUtil.get("${" + encounterID + "_" + field.getType().getText().toLowerCase() + "_start}", getNameId().replaceAll("[{}\\$]", ""));
     }
-
+    public String getEncounterEffectText() {
+        return getEffect()[getEncounterPart()][START].getText();
+    }
     public String getEncounterFailText() {
         String key = "${" + encounterID + "_" + field.getType().getText().toLowerCase() + "_fail}";
         String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
@@ -83,8 +85,8 @@ if(preparation ==null){
     }
 
     public int completeEncounterPart() {
-        String header = "";
-        String text = "";
+        String header;
+        String text;
         List<Effect> effects = new ArrayList<>();
         if (result.isSuccess()) {
             header = ResourceUtil.get("${success}", "ui");

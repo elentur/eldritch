@@ -1,21 +1,19 @@
 package model.effects;
 
-
 import enums.EffectSelector;
 import enums.EffectTyps;
-import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
 import utils.ResourceUtil;
 
-@Getter
-public class AdvanceDoom extends Effect {
-    private final int value;
+public class RetreatOmen extends Effect {
     private  Investigator investigator;
-
-    public AdvanceDoom(  int value,Investigator investigator) {
+    private EffectSelector selector;
+    private int value;
+    public RetreatOmen(EffectSelector selector, int value, Investigator investigator) {
         super(EffectTyps.ADVANCE_DOOM);
         this.investigator = investigator;
+        this.selector = selector;
         this.value=value;
     }
 
@@ -29,9 +27,7 @@ public class AdvanceDoom extends Effect {
     @Override
     public String getText() {
 
-
-            return ResourceUtil.get("${advance_doom}","effect", value+""  ) ;
-
+            return ResourceUtil.get("${retreat_omen}","effect" ,value+"" ) ;
 
     }
 }

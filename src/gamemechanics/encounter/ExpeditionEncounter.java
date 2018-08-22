@@ -15,14 +15,17 @@ import java.util.List;
 @Getter
 @Setter
 public class ExpeditionEncounter extends StandardEncounter {
-private static final String[] STEP = {"start","pass","fail"};
+protected static final String[] STEP = {"start","pass","fail"};
 
     private FieldID fieldID;
 
     public ExpeditionEncounter(Investigator inv, String encounterID) {
-        super(inv, encounterID, EncounterType.EXPEDITION_ENCOUNTER);
+        this(inv,encounterID, EncounterType.EXPEDITION_ENCOUNTER);
         setInvestigator(inv);
         setEncounterPart(0);
+    }
+    public ExpeditionEncounter(Investigator inv, String encounterID, EncounterType type) {
+        super(inv, encounterID,type);
     }
 
 
@@ -78,8 +81,9 @@ private static final String[] STEP = {"start","pass","fail"};
             effects.add(getEffect()[getEncounterPart()][FAIL]);
             setEncounterPart(getEncounterPart() == 0 ? 2 : 3);
         }
-        getGame().addChoice(new InformationChoice(header, text, effects));
-
+        if(getEncounterPart()==3) {
+            getGame().addChoice(new InformationChoice(header, text, effects));
+        }
         return getEncounterPart();
     }
 }
