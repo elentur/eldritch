@@ -49,7 +49,7 @@ public abstract class Monster implements Item, IMonster {
     }
 
     @Override
-    public ItemType getItemTyp() {
+    public ItemType getSubType() {
         return ItemType.NONE;
     }
 
@@ -78,5 +78,10 @@ public abstract class Monster implements Item, IMonster {
         m.setActualToughness(this.actualToughness);
         m.setEffects(this.effects);
         return m;
+    }
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.MONSTER;
     }
 }

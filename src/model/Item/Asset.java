@@ -24,6 +24,7 @@ public abstract class Asset implements Item {
         this.price=price;
         this.bonus= createBonus();
 
+
     }
     public String getName(){
         return  ResourceUtil.get(getNameId(),"asset");
@@ -34,7 +35,12 @@ public abstract class Asset implements Item {
     }
 
     @Override
-    public ItemType getItemTyp() {
+    public ItemType getSubType() {
         return type;
+    }
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.ASSET;
     }
 }

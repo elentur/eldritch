@@ -29,9 +29,12 @@ public class Field {
     private boolean expedition;
     private boolean specialEncounter;
 
+    private List<Neighbour> neighbours;
+
     public Field( FieldID fieldID){
         this.type = fieldID.getType();
         this.fieldID = fieldID;
+        neighbours=new ArrayList<>();
 
     }
 

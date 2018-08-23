@@ -62,7 +62,7 @@ public class CombatEncounterGUITest extends Application {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Vampire());
         monsters.add(new Shan());
-        monsters.add(new HoundOfTindalos());
+        monsters.add(new Shan());
 
 
 

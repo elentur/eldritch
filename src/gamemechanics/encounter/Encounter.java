@@ -30,7 +30,7 @@ public abstract class Encounter implements Item {
     public String uniqueId = UUID.randomUUID().toString();
     private GameService game;
     int encounterPart;
-    Result result;
+    protected Result result;
     Investigator investigator;
     private TestType[] testType;
     private int[] minNumberOfSuccesses;
@@ -75,8 +75,13 @@ public abstract class Encounter implements Item {
     }
 
     @Override
-    public ItemType getItemTyp() {
+    public ItemType getItemType() {
         return ItemType.ENCOUNTER;
+    }
+
+    @Override
+    public ItemType getSubType() {
+        return ItemType.NONE;
     }
 
     @Override

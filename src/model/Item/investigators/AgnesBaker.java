@@ -21,43 +21,21 @@ import java.util.List;
 public class AgnesBaker extends Investigator {
 
     public AgnesBaker(){
+        super("&agnesBaker",
+                new SkillSet(
+                        4,
+                        3,
+                        2,
+                        2,
+                        2),
+                7,
+                5,
+                FieldID.LONDON,
+                ItemFactory.getAssets().get("&profaneTome"),
+                ItemFactory.getSpells().get("&stormOfSpirits")
+        );
 
-        this.setId("&agnesBaker");
-        this.setFirstName( "Agnes");
-        this.setLastName("Baker");
-        this.setOccupation("${agnesBakerOccupation}");
-        this.setActionText("${agnesBakerActionText}");
-        this.setBonusText("${agnesBakerBonusText}");
 
-        SkillSet skills = new SkillSet(
-               4,
-               3,
-                2,
-                2,
-                2);
-        this.setSkillSet(skills);
-        this.setHealth(7);
-        this.setSanity(5);
-        this.setActualHealth(getHealth());
-        this.setActualSanity(getSanity());
-        this.setStartingSpace("London");
-        this.setStartingPossessions(createStartingPossessions());
-        this.setBonus(createBonus());
-        ItemFactory itemFactory = new ItemFactory();
-        this.setInventory(new ItemContainer<>());
-        for (StartingPossession p : getStartingPossessions()) {
-            switch (p.getTyp()) {
-                case ASSET:
-                    this.getInventory().add(itemFactory.getAssets().get(p.getId()));
-                    break;
-                case SPELL:
-                    this.getInventory().add(itemFactory.getSpells().get(p.getId()));
-                    break;
-                default:
-                    break;
-
-            }
-        }
 
     }
     @Override
@@ -71,12 +49,5 @@ public class AgnesBaker extends Investigator {
         return boni;
     }
 
-    @Override
-    protected List<StartingPossession> createStartingPossessions() {
-        List<StartingPossession> possessions = new ArrayList<>();
-        possessions.add( new StartingPossession("&profaneTome",1,ElementTyp.ASSET));
-        possessions.add( new StartingPossession("&stormOfSpirits",1,ElementTyp.SPELL));
-        return possessions;
 
-    }
 }

@@ -36,7 +36,12 @@ public abstract class Spell implements Item {
     }
 
     @Override
-    public ItemType getItemTyp() {
+    public ItemType getSubType() {
         return type;
+    }
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.SPELL;
     }
 }

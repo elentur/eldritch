@@ -1,6 +1,8 @@
 package gui.encounters;
 
 import enums.EventTimeType;
+import enums.TestType;
+import gamemechanics.Action;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.StandardEncounter;
 import gui.*;
@@ -51,7 +53,9 @@ public class EncounterGui extends DialogGui {
     void populate() {
         populateDicePane();
         populateCenterPane();
-        populateBonusPane();
+        if (!encounter.getTestType()[encounter.getEncounterPart()].equals(TestType.NONE)) {
+            populateBonusPane();
+        }
     }
 
     void populateDicePane() {
@@ -77,6 +81,9 @@ public class EncounterGui extends DialogGui {
         switch (encounter.getEncounterType()) {
             case COMBAT_ENCOUNTER:
                 break;
+            case ACTION:
+                populateCenterForAction((Action) encounter);
+                break;
             default:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
@@ -84,11 +91,20 @@ public class EncounterGui extends DialogGui {
 
     }
 
-    private void populateCenterForStandardEncounter(StandardEncounter encounter) {
-        TextField startText = new TextField(encounter.getEncounterStartText()+"\n"+encounter.getEncounterEffectText());
+    private void populateCenterForAction(Action encounter) {
+        TextField startText = new TextField(encounter.getEncounterStartText() + "\n" + encounter.getEncounterEffectText());
         startText.setWrapText(true);
         startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
-         startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+        startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+
+        encounterPane.getChildren().addAll(startText);
+    }
+
+    private void populateCenterForStandardEncounter(StandardEncounter encounter) {
+        TextField startText = new TextField(encounter.getEncounterStartText() + "\n" + encounter.getEncounterEffectText());
+        startText.setWrapText(true);
+        startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
+        startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
         encounterPane.getChildren().addAll(startText);
     }

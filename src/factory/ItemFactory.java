@@ -13,7 +13,7 @@ public class ItemFactory {
     private static ItemContainer<Asset> assets;
     private static ItemContainer<Spell> spells;
 
-    public ItemContainer<Asset> getAssets() {
+    public static ItemContainer<Asset> getAssets() {
 
         if (assets == null) {
            File f = new File("./src/model/item/assets");
@@ -35,7 +35,7 @@ public class ItemFactory {
     }
 
 
-    public ItemContainer<Spell> getSpells() {
+    public static ItemContainer<Spell> getSpells() {
         if (spells == null) {
             File f = new File("./src/model/item/spells");
             spells = new ItemContainer<>();

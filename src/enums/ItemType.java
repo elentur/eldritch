@@ -18,7 +18,10 @@ public enum ItemType {
     INCANTATION("${incantation}", Collections.singletonList("Incantation")),
     ENCOUNTER("${encounter}", Collections.singletonList("encounter")),
     ASSET("${asset}", Collections.singletonList("asset")),
-    ARTIFACT("${artifact}", Collections.singletonList("artifact"));
+    ARTIFACT("${artifact}", Collections.singletonList("artifact")),
+    INVESTIGATOR("${investigator}", Collections.singletonList("Investigator") ),
+    MONSTER("${monster}", Collections.singletonList("Monster") ),
+    SPELL("${spell}", Collections.singletonList("Spell")  );
     private String key;
     private List<String> parts;
 

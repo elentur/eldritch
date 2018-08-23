@@ -68,7 +68,11 @@ public class CombatEncounter extends Encounter {
 
     public  void setActiveMonster(Monster monster){
         activeMonster=monster;
-        setMod(new int[3]);
+        if(activeMonster==null){
+            return;
+        }
+        setMod(new int[]{0,activeMonster.getWillTest(),activeMonster.getStrengthTest()});
+        setTestType(new TestType[]{TestType.NONE,TestType.WILL,TestType.STRENGTH});
         encounterPart =1;
         attackPreparation=null;
         horrorPreparation=null;
@@ -99,7 +103,6 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation prepareForAttack() {
         if(attackPreparation==null) {
             result = null;
-            getMod()[2] = activeMonster.getStrengthTest();
             attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster,this);
         }
         return attackPreparation;
@@ -111,7 +114,6 @@ public class CombatEncounter extends Encounter {
 
     private CombatPreparation prepareForHorrorCheck() {
         if(horrorPreparation==null) {
-            getMod()[1] = activeMonster.getWillTest();
             horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster,this);
         }
         return horrorPreparation;

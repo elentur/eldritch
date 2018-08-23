@@ -7,7 +7,8 @@ public enum SituationType {
     COMBAT_ENCOUNTER("${combat_encounter}"),
     SPELL_EFFECT("${spell_effect}"),
     ALL("${all}"),
-    STANDARD_ENCOUNTER("${standard_encounter}");
+    STANDARD_ENCOUNTER("${standard_encounter}"),
+    ACTION("${action}");
 
     private String key;
 

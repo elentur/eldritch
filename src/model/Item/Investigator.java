@@ -2,14 +2,15 @@ package model.Item;
 
 import container.ItemContainer;
 import enums.ConditionType;
+import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
+import factory.ItemFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.java.Log;
 import model.SkillSet;
-import model.StartingPossession;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@ToString(of={"firstName","skillSet","health","sanity"})
+@ToString(of = {"firstName", "skillSet", "health", "sanity"})
 @Log
 public abstract class Investigator implements Item {
     public String uniqueId = UUID.randomUUID().toString();
@@ -33,12 +34,33 @@ public abstract class Investigator implements Item {
     private int sanity;
     private int actualHealth;
     private int actualSanity;
-    private String startingSpace;
-    private List<StartingPossession> startingPossessions;
+    private FieldID startingSpace;
 
     private List<ItemBonus> bonus;
 
     private ItemContainer<Item> inventory;
+
+    public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
+        this.setId("&agnesBaker");
+        String n = id.replace("&", "");
+        this.setFirstName("${" + n + "FirstName}");
+        this.setLastName("${" + n + "LastName}");
+        this.setOccupation("${" + n + "Occupation}");
+        this.setActionText("${" + n + "ActionText}");
+        this.setBonusText("${" + n + "BonusText}");
+        this.setSkillSet(skillSet);
+        this.setHealth(health);
+        this.setSanity(sanity);
+        this.setActualHealth(getHealth());
+        this.setActualSanity(getSanity());
+        this.setStartingSpace(satrtField);
+        this.setBonus(createBonus());
+        this.setInventory(new ItemContainer<>());
+        for (Item p : startItems) {
+            this.getInventory().add(p);
+        }
+
+    }
 
     public String getOccupation() {
         return ResourceUtil.get(occupation, this.getClass());
@@ -56,40 +78,50 @@ public abstract class Investigator implements Item {
     public String getNameId() {
         return "";
     }
-
-    public String getName(){
-        return firstName +" " +lastName;
+    public String getFirstName() {
+        return ResourceUtil.get(firstName, "investigator");
     }
 
-    public String getBonusText(){
-        return ResourceUtil.get(bonusText,"investigator");
+    public String getLastName() {
+        return ResourceUtil.get(lastName, "investigator");
     }
-    @Override
-    public ItemType getItemTyp() {
-        return ItemType.NONE;
+    public String getName() {
+        return getFirstName() + " " + getLastName();
     }
 
-   protected abstract List<StartingPossession> createStartingPossessions();
+    public String getBonusText() {
+        return ResourceUtil.get(bonusText, "investigator");
+    }
 
 
     public void addHealth(int value) {
-        actualHealth+=value;
-        if(actualHealth> health){
-            actualHealth=health;
-        }else if(actualHealth<0){
-            actualHealth=0;
+        actualHealth += value;
+        if (actualHealth > health) {
+            actualHealth = health;
+        } else if (actualHealth < 0) {
+            actualHealth = 0;
         }
-        log.info(getName() +" has changed health value to " +actualHealth);
+        log.info(getName() + " has changed health value to " + actualHealth);
     }
 
     public void addSanity(int value) {
-        actualSanity+=value;
-        if(actualSanity> sanity){
-            actualSanity=sanity;
+        actualSanity += value;
+        if (actualSanity > sanity) {
+            actualSanity = sanity;
 
-        }else if(actualSanity<0){
-            actualSanity=0;
+        } else if (actualSanity < 0) {
+            actualSanity = 0;
         }
-        log.info(getName() +" has changed sanity value to " +actualSanity);
+        log.info(getName() + " has changed sanity value to " + actualSanity);
+    }
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.INVESTIGATOR;
+    }
+
+    @Override
+    public ItemType getSubType() {
+        return ItemType.NONE;
     }
 }

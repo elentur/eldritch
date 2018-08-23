@@ -18,7 +18,9 @@ public interface Item {
 
     List<ItemBonus> getBonus();
 
-    ItemType getItemTyp();
+    ItemType getSubType();
+
+    ItemType getItemType();
 
 
 }
