@@ -2,6 +2,7 @@ package model;
 
 import enums.FieldID;
 import enums.FieldType;
+import enums.SpaceType;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.americaencounter.AmericaEncounter0;
 import gamemechanics.encounter.expeditionencounter.ExpeditionEncounter0;
@@ -10,6 +11,8 @@ import gamemechanics.encounter.researchencounter.azathoth.ResearchEncounter0;
 import gamemechanics.encounter.rumorencounter.RumorEncounter0;
 import gamemechanics.encounter.specialencounter.shubniggurath.SpecialEncounter0;
 import gamemechanics.encounter.standardencounter.StandardEncounter0;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
 import model.Item.Investigator;
@@ -25,6 +28,9 @@ import java.util.Set;
 public class Field {
     private final FieldType type;
     private final FieldID fieldID;
+    private final SpaceType spaceType;
+
+    private BooleanProperty update;
 
     private boolean expedition;
     private boolean specialEncounter;
@@ -32,11 +38,15 @@ public class Field {
     private List<Neighbour> neighbours;
 
     public Field( FieldID fieldID){
+        update=new SimpleBooleanProperty(false);
         this.type = fieldID.getType();
         this.fieldID = fieldID;
+        this.spaceType = fieldID.getSpaceType();
         neighbours=new ArrayList<>();
 
     }
+
+
 
     private final Set<Investigator> investigators = new HashSet<>();
 
@@ -56,5 +66,17 @@ public class Field {
         return fieldID.getText();
     }
 
+    public void removeInvestigator(Investigator inv) {
+        getInvestigators().remove(inv);
+        update.setValue(true);
+    }
 
+    public void addInvestigator(Investigator inv) {
+        getInvestigators().add(inv);
+        update.setValue(true);
+    }
+
+    public BooleanProperty updateProperty() {
+        return update;
+    }
 }

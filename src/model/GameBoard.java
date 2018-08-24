@@ -3,6 +3,7 @@ package model;
 import enums.FieldID;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Investigator;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public class GameBoard {
         return fields.stream().filter(f -> f.getFieldID().equals(id)).findFirst().orElse(null);
     }
 
+    public void addInvestigator(Investigator inv) {
+       Field field = getField(inv.getStartingSpace());
+       field.addInvestigator(inv);
+    }
 }

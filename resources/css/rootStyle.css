@@ -1,9 +1,29 @@
-
+.field-label .expedition-label .city-label {
+ -fx-background-image: url('../images/gameBoard/Mark.png');
+    -fx-background-position:  center;
+    -fx-background-repeat: no-repeat;
+       -fx-background-size: stretch;
+}
+.field-label  {
+ -fx-background-image: url('../images/gameBoard/Mark.png');
+}
+.expedition-label {
+ -fx-background-image: url('../images/gameBoard/ExpeditionMarkWilderness.png');
+}
+.city-label {
+ -fx-background-image: url('../images/gameBoard/CityMark.png');
+}
 .show-case .viewport   {
     -fx-background-image: url('../images/ShowCase.jpg');
     -fx-background-position:  center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
+}
+
+.gameboard .viewport   {
+    -fx-background-image: url('../images/gameBoard/BackgroundPattern.jpg');
+    -fx-background-position:  center;
+    -fx-background-repeat: repeat;
 }
 
 .small-show-case     {
