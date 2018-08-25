@@ -5,7 +5,6 @@ import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
-import factory.ItemFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -41,7 +40,7 @@ public abstract class Investigator implements Item {
     private ItemContainer<Item> inventory;
 
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
-        this.setId("&agnesBaker");
+        this.setId(id);
         String n = id.replace("&", "");
         this.setFirstName("${" + n + "FirstName}");
         this.setLastName("${" + n + "LastName}");

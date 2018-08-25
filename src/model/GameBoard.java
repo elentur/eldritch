@@ -25,4 +25,15 @@ public class GameBoard {
        Field field = getField(inv.getStartingSpace());
        field.addInvestigator(inv);
     }
+
+    public void moveTo(Investigator inv, Field newField){
+        Field oldField= fieldOfInvestigator(inv);
+        oldField.removeInvestigator(inv);
+        newField.addInvestigator(inv);
+    }
+
+    public Field fieldOfInvestigator(Investigator inv){
+        return fields.stream().filter(f -> f.getInvestigators().contains(inv)).findFirst().orElse(null);
+    }
+
 }

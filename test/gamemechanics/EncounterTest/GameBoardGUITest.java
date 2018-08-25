@@ -15,6 +15,7 @@ import model.GameBoard;
 import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.investigators.AgnesBaker;
+import model.Item.investigators.AkachiOnyele;
 
 public class GameBoardGUITest extends Application {
 
@@ -31,7 +32,7 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().setActiveInvestigator(inv);
         Fonts.init(primaryStage);
         GameBoard gameBoard = GameBoardFactory.getGameBoard();
-
+        GameService.getInstance().setGameBoard(gameBoard);
         GameBoardGUI root = new GameBoardGUI(gameBoard);
         Scene scene = new Scene(root);
         scene.setFill(Color.RED);
@@ -48,6 +49,7 @@ public class GameBoardGUITest extends Application {
 
 
         gameBoard.addInvestigator(inv);
+        gameBoard.addInvestigator( new AkachiOnyele());
     }
 
 

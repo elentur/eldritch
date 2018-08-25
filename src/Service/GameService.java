@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
 import model.Field;
+import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.Item;
 
@@ -22,6 +23,7 @@ public class GameService {
     @Getter
     @Setter
     private Investigator activeInvestigator;
+    private GameBoard gameBoard;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -36,8 +38,10 @@ public class GameService {
 
     public Field getFieldOfInvestigator(Investigator inv) {
 
-        field.getInvestigators().add(inv);
-        return field;
+      return gameBoard.fieldOfInvestigator(inv);
+    }
+    public void moveTo(Investigator inv, Field newField){
+        gameBoard.moveTo(inv,newField);
     }
 
 
@@ -49,6 +53,7 @@ public class GameService {
         items.add(investigator);
         return items ;
     }
+
 
 
 
@@ -79,5 +84,13 @@ public class GameService {
         field = f;
     }
 
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
 
 }
