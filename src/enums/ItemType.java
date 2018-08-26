@@ -21,7 +21,14 @@ public enum ItemType {
     ARTIFACT("${artifact}", Collections.singletonList("artifact")),
     INVESTIGATOR("${investigator}", Collections.singletonList("Investigator") ),
     MONSTER("${monster}", Collections.singletonList("Monster") ),
-    SPELL("${spell}", Collections.singletonList("Spell")  );
+    SPELL("${spell}", Collections.singletonList("Spell")  ),
+    TOKEN("${token}", Collections.singletonList("Token")  ),
+    CLUE_TOKEN("${clue_token}", Collections.singletonList("Clue")  ),
+    GATE_TOKEN("${gate_token}", Collections.singletonList("Gate")  ),
+    RUMOR_TOKEN("${rumor_token}", Collections.singletonList("Rumor")  ),
+    MYSTERY_TOKEN("${mytsery_token}", Collections.singletonList("Mystery")  ),
+    ELDRITCH_TOKEN("${eldritch_token}", Collections.singletonList("Eldritch")  ),
+    EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  );
     private String key;
     private List<String> parts;
 

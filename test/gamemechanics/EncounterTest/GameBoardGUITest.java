@@ -2,6 +2,7 @@ package gamemechanics.EncounterTest;
 
 import Service.GameService;
 import container.ItemContainer;
+import enums.FieldID;
 import factory.GameBoardFactory;
 import factory.ItemFactory;
 import gui.Fonts;
@@ -16,6 +17,8 @@ import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
+import model.Item.monsters.Shan;
+import model.Item.monsters.Vampire;
 
 public class GameBoardGUITest extends Application {
 
@@ -50,6 +53,11 @@ public class GameBoardGUITest extends Application {
 
         gameBoard.addInvestigator(inv);
         gameBoard.addInvestigator( new AkachiOnyele());
+
+        gameBoard.addMonster( new Shan(),FieldID.ARKHAM);
+        gameBoard.addMonster( new Vampire(),FieldID.ARKHAM);
+        GameService.getInstance().addGate(FieldID.PYRAMIDS);
+        GameService.getInstance().addExpedition();
     }
 
 

@@ -1,5 +1,6 @@
 package model;
 
+import container.TokenContainer;
 import enums.FieldID;
 import enums.FieldType;
 import enums.SpaceType;
@@ -15,16 +16,19 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 import model.Item.Investigator;
-import model.Item.investigators.AgnesBaker;
+import model.Item.Monster;
+import model.Item.Token;
+import model.Item.token.ExpeditionToken;
+import model.Item.token.GateToken;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
+@Log
 public class Field {
     private final FieldType type;
     private final FieldID fieldID;
@@ -36,6 +40,9 @@ public class Field {
     private boolean specialEncounter;
 
     private List<Neighbour> neighbours;
+    private final List<Investigator> investigators;
+    private final List<Monster> monster;
+    private final TokenContainer tokens;
 
     public Field( FieldID fieldID){
         update=new SimpleBooleanProperty(false);
@@ -43,12 +50,14 @@ public class Field {
         this.fieldID = fieldID;
         this.spaceType = fieldID.getSpaceType();
         neighbours=new ArrayList<>();
-
+        investigators = new ArrayList<>();
+        monster = new ArrayList<>();
+        tokens = new TokenContainer();
     }
 
 
 
-    private final Set<Investigator> investigators = new HashSet<>();
+
 
     public List<Encounter> getEncounters(Investigator inv) {
         List<Encounter> encounters = new ArrayList<>();
@@ -76,7 +85,56 @@ public class Field {
         update.setValue(true);
     }
 
+    public void removeMonster(Monster monster) {
+        getMonster().remove(monster);
+        update.setValue(true);
+    }
+
+    public void addMonster(Monster monster) {
+        getMonster().add(monster);
+        update.setValue(true);
+    }
+
+    public void addGate(){
+        if(!hasGate()) {
+            getTokens().add(new GateToken());
+            update.setValue(true);
+        }else{
+            log.warning("There is still a gate on field " + getFieldID().getKey());
+        }
+    }
+
+    public boolean hasGate(){
+        return tokens.getGate()!=null;
+    }
+
+    public void removeGate(){
+        getTokens().remove(new GateToken());
+        update.setValue(true);
+    }
+
+    public void addExpedition(ExpeditionToken token){
+        if(!hasExpedition()) {
+            getTokens().add(token);
+            update.setValue(true);
+        }else{
+            log.warning("There is still a Expedition on field " + getFieldID().getKey());
+        }
+    }
+
+    public boolean hasExpedition(){
+        Token t = tokens.getExpedition();
+        return tokens.getExpedition()!=null;
+    }
+
+    public void removeExpedition(){
+        getTokens().remove(new GateToken());
+        update.setValue(true);
+    }
+
     public BooleanProperty updateProperty() {
         return update;
     }
+
+
 }
