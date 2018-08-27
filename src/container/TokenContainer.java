@@ -1,12 +1,13 @@
 package container;
 
 import enums.ItemType;
+import gamemechanics.encounter.RumorEncounter;
 import model.Item.Token;
-import model.Item.token.ExpeditionToken;
-import model.Item.token.GateToken;
+import model.Item.token.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class TokenContainer extends ArrayList<Token>{
@@ -21,13 +22,25 @@ public class TokenContainer extends ArrayList<Token>{
 
 
     public GateToken getGate() {
-       return  (GateToken) this.stream().filter(toke->toke.getSubType().equals(ItemType.GATE_TOKEN)).findFirst().orElse(null);
+       return  (GateToken) this.stream().filter(token->token.getSubType().equals(ItemType.GATE_TOKEN)).findFirst().orElse(null);
     }
 
     public ExpeditionToken getExpedition() {
-        return  (ExpeditionToken) this.stream().filter(toke->toke.getSubType().equals(ItemType.EXPEDITION_TOKEN)).findFirst().orElse(null);
+        return  (ExpeditionToken) this.stream().filter(token->token.getSubType().equals(ItemType.EXPEDITION_TOKEN)).findFirst().orElse(null);
     }
 
+    public MysteryToken getMystery() {
+        return  (MysteryToken) this.stream().filter(token->token.getSubType().equals(ItemType.MYSTERY_TOKEN)).findFirst().orElse(null);
+    }
+    public RumorToken getRumor() {
+        return  (RumorToken) this.stream().filter(token->token.getSubType().equals(ItemType.RUMOR_TOKEN)).findFirst().orElse(null);
+    }
 
+    public List<ClueToken> getClues() {
+        return this.stream().filter(token->token.getSubType().equals(ItemType.CLUE_TOKEN)).map(token->(ClueToken)token).collect(Collectors.toList());
+    }
 
+    public List<EldritchToken> getEldritchTokens() {
+        return this.stream().filter(token->token.getSubType().equals(ItemType.ELDRITCH_TOKEN)).map(token->(EldritchToken)token).collect(Collectors.toList());
+    }
 }

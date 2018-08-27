@@ -4,10 +4,19 @@ import container.ItemContainer;
 import enums.FieldID;
 import enums.SituationType;
 import gamemechanics.choice.Choice;
+import gamemechanics.choice.EncounterChoice;
+import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.ExpeditionEncounter;
+import gamemechanics.encounter.americaencounter.AmericaEncounter0;
+import gamemechanics.encounter.asiaencounter.AsiaEncounter0;
+import gamemechanics.encounter.europeencounter.EuropeEncounter0;
 import gamemechanics.encounter.expeditionencounter.ExpeditionEncounter0;
 import gamemechanics.encounter.otherworldencounter.OtherWorldEncounter0;
+import gamemechanics.encounter.researchencounter.azathoth.ResearchEncounter0;
+import gamemechanics.encounter.rumorencounter.RumorEncounter0;
+import gamemechanics.encounter.specialencounter.shubniggurath.SpecialEncounter0;
+import gamemechanics.encounter.standardencounter.StandardEncounter0;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +28,7 @@ import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.Monster;
-import model.Item.token.ExpeditionToken;
+import model.Item.token.*;
 
 public class GameService {
     private static GameService ourInstance = new GameService();
@@ -48,6 +57,12 @@ public class GameService {
 
     public void moveTo(Investigator inv, Field newField) {
         gameBoard.moveTo(inv, newField);
+        if(!newField.getMonster().isEmpty()){
+            GameService.getInstance().addEncounter(new CombatEncounter(newField.getMonster(),activeInvestigator));
+        }else {
+            GameService.getInstance().addChoice(new EncounterChoice(newField));
+        }
+
     }
 
     public void moveTo(Monster monster, Field newField) {
@@ -106,8 +121,33 @@ public class GameService {
         return new OtherWorldEncounter0(activeInvestigator);
     }
 
+    public Encounter drawResearchEncounter() {
+
+        return new ResearchEncounter0(activeInvestigator);
+    }
+
+    public Encounter drawSpecialEncounter() {
+        return new SpecialEncounter0(activeInvestigator);
+    }
+
+    public Encounter drawStandardEncounter() {
+        return new StandardEncounter0(activeInvestigator);
+    }
+    public Encounter drawEuropeEncounter() {
+        return new EuropeEncounter0(activeInvestigator);
+    }
+    public Encounter drawAsiaEncounter() {
+        return new AsiaEncounter0(activeInvestigator);
+    }
+    public Encounter drawAmericaEncounter() {
+        return new AmericaEncounter0(activeInvestigator);
+    }
     public ExpeditionEncounter activeExpedition() {
         return new ExpeditionEncounter0(activeInvestigator);
+    }
+
+    private ClueToken drawClue() {
+        return new ClueToken(FieldID.PYRAMIDS);
     }
 
     public void addGate(FieldID fieldID) {
@@ -129,4 +169,37 @@ public class GameService {
         Field field = gameBoard.getField(activeExpedition().getFieldID());
         field.removeExpedition();
     }
+
+
+    public void addClue() {
+        ClueToken clue = drawClue();
+        Field field = gameBoard.getField(clue.getFieldID());
+        field.addClue(clue);
+    }
+
+    public void addRandomClueOnField(FieldID fieldID) {
+        ClueToken clue = drawClue();
+        Field field = gameBoard.getField(fieldID);
+        field.addClue(clue);
+    }
+
+
+    public void addRumor(RumorToken token) {
+
+        Field field = gameBoard.getField(token.getFieldID());
+        field.addRumor(token);
+    }
+
+    public void addMystery(FieldID fieldID) {
+        MysteryToken mystery = new MysteryToken();
+        Field field = gameBoard.getField(fieldID);
+        field.addMystery(mystery);
+    }
+
+    public void addEldritchToken(FieldID fieldID, EldritchToken eldritchToken) {
+        Field field = gameBoard.getField(fieldID);
+        field.addEldritchToken(eldritchToken);
+    }
+
+
 }

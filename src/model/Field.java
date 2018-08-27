@@ -1,5 +1,6 @@
 package model;
 
+import Service.GameService;
 import container.TokenContainer;
 import enums.FieldID;
 import enums.FieldType;
@@ -20,8 +21,8 @@ import lombok.extern.java.Log;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.Item.Token;
-import model.Item.token.ExpeditionToken;
-import model.Item.token.GateToken;
+import model.Item.token.*;
+import oldVersion.elements.Expedition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,30 +45,51 @@ public class Field {
     private final List<Monster> monster;
     private final TokenContainer tokens;
 
-    public Field( FieldID fieldID){
-        update=new SimpleBooleanProperty(false);
+    public BooleanProperty updateProperty() {
+        return update;
+    }
+
+    public Field(FieldID fieldID) {
+        update = new SimpleBooleanProperty(false);
         this.type = fieldID.getType();
         this.fieldID = fieldID;
         this.spaceType = fieldID.getSpaceType();
-        neighbours=new ArrayList<>();
+        neighbours = new ArrayList<>();
         investigators = new ArrayList<>();
         monster = new ArrayList<>();
         tokens = new TokenContainer();
     }
 
 
-
-
-
     public List<Encounter> getEncounters(Investigator inv) {
         List<Encounter> encounters = new ArrayList<>();
-        encounters.add(new StandardEncounter0(inv));
-        encounters.add(new ResearchEncounter0(inv));
-        encounters.add(new AmericaEncounter0(inv));
-        encounters.add(new ExpeditionEncounter0(inv));
-        encounters.add(new OtherWorldEncounter0(inv));
-        encounters.add(new SpecialEncounter0(inv));
-        encounters.add(new RumorEncounter0(inv));
+        if(type.equals(FieldType.CITY) || type.equals(FieldType.WILDERNESS)|| type.equals(FieldType.SEA)){
+            encounters.add(GameService.getInstance().drawStandardEncounter());
+        }
+        if(fieldID.equals(FieldID.ARKHAM) || fieldID.equals(FieldID.SAN_FRANCISCO) || fieldID.equals(FieldID.BUENOS_AIRES) ){
+            encounters.add(GameService.getInstance().drawAmericaEncounter());
+        }
+        if(fieldID.equals(FieldID.TOKYO) || fieldID.equals(FieldID.SHANGHAI) || fieldID.equals(FieldID.SYDNEY) ){
+            encounters.add(GameService.getInstance().drawAsiaEncounter());
+        }
+        if(fieldID.equals(FieldID.LONDON) || fieldID.equals(FieldID.ROME) || fieldID.equals(FieldID.ISTANBUL) ){
+            encounters.add(GameService.getInstance().drawEuropeEncounter());
+        }
+        if(hasExpedition()){
+                encounters.add(tokens.getExpedition().getEncounter());
+        }
+        if(hasRumor()){
+            encounters.add(tokens.getRumor().getEncounter());
+        }
+        if(hasGate()){
+            encounters.add(tokens.getGate().getEncounter());
+        }
+        if(getNumberOfClues()>0){
+            encounters.add(tokens.getClues().get(0).getEncounter());
+        }
+        if(hasMystery()){
+            encounters.add(tokens.getMystery().getEncounter());
+        }
         return encounters;
     }
 
@@ -95,46 +117,108 @@ public class Field {
         update.setValue(true);
     }
 
-    public void addGate(){
-        if(!hasGate()) {
-            getTokens().add(new GateToken());
-            update.setValue(true);
-        }else{
+    public void addGate() {
+        if (!hasGate()) {
+            addToken(new GateToken());
+        } else {
             log.warning("There is still a gate on field " + getFieldID().getKey());
         }
     }
 
-    public boolean hasGate(){
-        return tokens.getGate()!=null;
+    public boolean hasGate() {
+        return tokens.getGate() != null;
     }
 
-    public void removeGate(){
-        getTokens().remove(new GateToken());
-        update.setValue(true);
+    public Token removeGate() {
+        return removeToken(getTokens().getGate());
     }
 
-    public void addExpedition(ExpeditionToken token){
-        if(!hasExpedition()) {
-            getTokens().add(token);
-            update.setValue(true);
-        }else{
+    public void addExpedition(ExpeditionToken token) {
+        if (!hasExpedition()) {
+            addToken(token);
+        } else {
             log.warning("There is still a Expedition on field " + getFieldID().getKey());
         }
     }
 
-    public boolean hasExpedition(){
-        Token t = tokens.getExpedition();
-        return tokens.getExpedition()!=null;
+    public boolean hasExpedition() {
+
+        return tokens.getExpedition() != null;
     }
 
-    public void removeExpedition(){
-        getTokens().remove(new GateToken());
+    public Token removeExpedition() {
+        return removeToken(getTokens().getExpedition());
+    }
+
+    public void addClue(ClueToken token) {
+        addToken(token);
+    }
+
+    public int getNumberOfClues() {
+
+        return tokens.getClues().size();
+    }
+
+    public Token removeClue(ClueToken token) {
+        return removeToken(token);
+    }
+
+
+    public void addEldritchToken(EldritchToken token) {
+        addToken(token);
+    }
+
+    public int getNumberOfEldritchTokens() {
+
+        return tokens.getEldritchTokens().size();
+    }
+
+    public Token removeEldritchToken(EldritchToken token) {
+        return removeToken(token);
+    }
+
+    public void addRumor(RumorToken token) {
+        if (!hasRumor()) {
+            addToken(token);
+        } else {
+            log.warning("There is still a Rumor on field " + getFieldID().getKey());
+        }
+    }
+
+    public boolean hasRumor() {
+
+        return tokens.getRumor() != null;
+    }
+
+    public Token removeRumor() {
+        return removeToken(getTokens().getRumor());
+    }
+
+    public void addMystery(MysteryToken token) {
+        if (!hasMystery()) {
+            addToken(token);
+        } else {
+            log.warning("There is still a Mystery on field " + getFieldID().getKey());
+        }
+    }
+
+    public boolean hasMystery() {
+
+        return tokens.getMystery() != null;
+    }
+
+    public Token removeMystery() {
+        return removeToken(getTokens().getMystery());
+    }
+    private void addToken(Token token) {
+        getTokens().add(token);
         update.setValue(true);
     }
 
-    public BooleanProperty updateProperty() {
-        return update;
+    private Token removeToken(Token token) {
+        getTokens().remove(token);
+        update.setValue(true);
+        return token;
     }
-
 
 }

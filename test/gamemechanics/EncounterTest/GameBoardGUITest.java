@@ -5,6 +5,7 @@ import container.ItemContainer;
 import enums.FieldID;
 import factory.GameBoardFactory;
 import factory.ItemFactory;
+import gamemechanics.encounter.rumorencounter.RumorEncounter0;
 import gui.Fonts;
 import gui.GameBoard.GameBoardGUI;
 import gui.InterfaceLinking;
@@ -19,6 +20,8 @@ import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
+import model.Item.token.EldritchToken;
+import model.Item.token.RumorToken;
 
 public class GameBoardGUITest extends Application {
 
@@ -57,6 +60,10 @@ public class GameBoardGUITest extends Application {
         gameBoard.addMonster( new Shan(),FieldID.ARKHAM);
         gameBoard.addMonster( new Vampire(),FieldID.ARKHAM);
         GameService.getInstance().addGate(FieldID.PYRAMIDS);
+        GameService.getInstance().addClue();
+        GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS,new RumorEncounter0(inv)));
+        GameService.getInstance().addMystery(FieldID.PYRAMIDS);
+        GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0(inv)));
         GameService.getInstance().addExpedition();
     }
 
