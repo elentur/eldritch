@@ -9,13 +9,11 @@ import gui.*;
 import gui.buttons.BonusButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import model.Item.Bonus;
 
 
@@ -135,7 +133,7 @@ public class EncounterGui extends DialogGui {
         }
     }
 
-    private void acceptHandler(MouseEvent e) {
+    protected void acceptHandler(MouseEvent e) {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
             if (encounter.completeEncounterPart() == 3) {
                 this.close();

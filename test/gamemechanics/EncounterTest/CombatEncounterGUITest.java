@@ -3,7 +3,6 @@ package gamemechanics.EncounterTest;
 import Service.GameService;
 import container.ItemContainer;
 import enums.FieldID;
-import enums.FieldType;
 import factory.ItemFactory;
 import gamemechanics.encounter.CombatEncounter;
 import gui.Fonts;
@@ -18,7 +17,6 @@ import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.Item.investigators.AgnesBaker;
-import model.Item.monsters.HoundOfTindalos;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
 
@@ -66,7 +64,7 @@ public class CombatEncounterGUITest extends Application {
 
 
 
-        return new CombatEncounter(monsters, inv);
+        return null;// new CombatEncounter(monsters, inv);
     }
 
 

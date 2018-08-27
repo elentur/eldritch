@@ -1,14 +1,17 @@
 package gui.encounters;
 
+import Service.GameService;
 import enums.TestType;
+import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.CombatEncounter;
-import gui.*;
-import gui.buttons.MonsterButton;
+import gui.Effects;
+import gui.Fonts;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -16,7 +19,7 @@ import javafx.scene.shape.Rectangle;
 import model.Item.Monster;
 import utils.ResourceUtil;
 
-import java.util.concurrent.Callable;
+import java.util.List;
 
 public class CombatEncounterGui extends EncounterGui {
 
@@ -28,51 +31,15 @@ public class CombatEncounterGui extends EncounterGui {
     public CombatEncounterGui(CombatEncounter encounter) {
         super(encounter);
 
-
     }
 
     @Override
     void populate() {
-        CombatEncounter encounter = (CombatEncounter)this.encounter;
-        if(encounter.getEncounterPart()==0) {
-            showMonsterSelection();
-        }else {
-            super.populate();
-        }
-    }
-
-    private void showMonsterSelection() {
-        CombatEncounter encounter = (CombatEncounter)this.encounter;
-        if (encounter.getMonsters().size() > 1) {
-            ItemScrollPane monsterSelection = new ItemScrollPane();
-            monsterSelection.setWidth1(background.getWidth() * 0.6);
-            monsterSelection.setHeight1(background.getHeight() * 0.7);
-            main.getChildren().clear();
-            main.getChildren().add(monsterSelection);
-            for (Monster monster : encounter.getAvailableMonster()) {
-                MonsterButton monsterButton = new MonsterButton(monster);
-                monsterSelection.getScrollableChildren().add(monsterButton);
-                monsterButton.setOnMouseClicked(e -> {
-                    if (e.getButton().equals(MouseButton.PRIMARY)) {
-                        encounter.setActiveMonster(monster);
-                        populate();
-                        dicePane.setDiceSceneVisible(false);
-                        Callable<Void> c = () -> {
-                            dicePane.setDiceSceneVisible(true);
-                            return null;
-                        };
-                        Animations.startRotateFromTo(monsterSelection, encounterMain, main, c);
-                    }
-                });
-            }
-        } else if(encounter.getMonsters().size()==1) {
-            encounter.setActiveMonster(encounter.getAvailableMonster().get(0));
-            populate();
-        }else{
-            this.close();
-        }
+        super.populate();
 
     }
+
+
 
     void populateCenterPane() {
         CombatEncounter encounter = (CombatEncounter)this.encounter;
@@ -178,7 +145,20 @@ public class CombatEncounterGui extends EncounterGui {
       //  encounterPane.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
 
     }
-
+    @Override
+    protected void acceptHandler(MouseEvent e) {
+        if (e.getButton().equals(MouseButton.PRIMARY)) {
+            if (encounter.completeEncounterPart() == 3) {
+                this.close();
+                List<Monster> monsters = ((CombatEncounter)encounter).getMonsters();
+                if(!monsters.isEmpty()){
+                    GameService.getInstance().addChoice(new MonsterChoice(monsters));
+                }
+            } else {
+                populate();
+            }
+        }
+    }
 
 
 }

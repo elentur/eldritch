@@ -25,85 +25,79 @@ import java.util.function.Function;
 @Setter
 @ToString(of = {"activeMonster", "investigator"})
 public class CombatEncounter extends Encounter {
-    private List<Monster> originalMonsters;
-    private Map<Monster,Monster> monsters;
+    private List<Monster> monsters;
     private Monster activeMonster;
+    private Monster original;
     private CombatPreparation attackPreparation;
     private CombatPreparation horrorPreparation;
 
 
-
-
     private EventService eventService = new EventService();
 
-    public CombatEncounter(List<Monster> monsters, Investigator investigator) {
+    public CombatEncounter(Monster monster, List<Monster> monsters, Investigator investigator) {
         super(EncounterType.COMBAT_ENCOUNTER);
-       setGame(GameService.getInstance());
-        this.originalMonsters = monsters;
-        this.monsters = new HashMap<>();
-        for(Monster m : monsters){
-            this.monsters.put(m.clone(),m);
-        }
         this.investigator = investigator;
-
+        setGame(GameService.getInstance());
+        this.monsters = monsters;
+        this.setActiveMonster(monster);
         activatePassiveBoni();
     }
 
     private void activatePassiveBoni() {
-        Function<Bonus,Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
+        Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
                 && bonus.getField().equalsWithAll(getGame().getFieldOfInvestigator(investigator).getType())
                 && bonus.isActivated()
                 && bonus.isUsable()
                 && bonus.isPassive();
         ItemContainer<Item> bonusItems = getGame().getBonusItemsforInvestigator(investigator);
 
-        for(Bonus b :bonusItems.getBoniWithFilter(filter)){
+        for (Bonus b : bonusItems.getBoniWithFilter(filter)) {
             b.execute(this);
         }
     }
 
-    public List<Monster> getAvailableMonster() {
-        return new ArrayList<>(monsters.keySet());
-    }
 
-    public  void setActiveMonster(Monster monster){
-        activeMonster=monster;
-        if(activeMonster==null){
+    public void setActiveMonster(Monster monster) {
+        original = monster;
+        activeMonster = monster.clone();
+        if (activeMonster == null) {
             return;
         }
-        setMod(new int[]{0,activeMonster.getWillTest(),activeMonster.getStrengthTest()});
-        setTestType(new TestType[]{TestType.NONE,TestType.WILL,TestType.STRENGTH});
-        encounterPart =1;
-        attackPreparation=null;
-        horrorPreparation=null;
+        setMod(new int[]{0, activeMonster.getWillTest(), activeMonster.getStrengthTest()});
+        setTestType(new TestType[]{TestType.NONE, TestType.WILL, TestType.STRENGTH});
+        encounterPart = 1;
+        attackPreparation = null;
+        horrorPreparation = null;
     }
 
     public void sanityLoss() {
         eventService.looseSanity(investigator, activeMonster.getHorror() - result.getNumberOfSuccess());
     }
+
     public void healthLoss() {
         eventService.looseHealth(investigator, activeMonster.getDamage() - result.getNumberOfSuccess());
     }
+
     public void monsterDamage() {
-        eventService.looseHealth(activeMonster, result.getNumberOfSuccess());
+        eventService.looseHealth(original, result.getNumberOfSuccess());
     }
 
     @Override
-    public Preparation getPreparation(){
+    public Preparation getPreparation() {
 
-       if (  encounterPart ==1)  {
+        if (encounterPart == 1) {
             return prepareForHorrorCheck();
-        }else{
-           return prepareForAttack();
-       }
+        } else {
+            return prepareForAttack();
+        }
 
     }
 
 
     private CombatPreparation prepareForAttack() {
-        if(attackPreparation==null) {
+        if (attackPreparation == null) {
             result = null;
-            attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster,this);
+            attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster, this);
         }
         return attackPreparation;
     }
@@ -113,29 +107,24 @@ public class CombatEncounter extends Encounter {
     }
 
     private CombatPreparation prepareForHorrorCheck() {
-        if(horrorPreparation==null) {
-            horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster,this);
+        if (horrorPreparation == null) {
+            horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster, this);
         }
         return horrorPreparation;
     }
 
-    public void removeActiveMonster() {
-        Monster org = this.monsters.get(getActiveMonster());
-        org.setActualToughness(getActiveMonster().getActualToughness());
-        this.monsters.remove(getActiveMonster());
-        setActiveMonster(null);
-    }
+
 
     @Override
     public Result check() {
-        if (  encounterPart==1) {
+        if (encounterPart == 1) {
             return horrorCheck();
         } else {
             return attackCheck();
         }
     }
 
-    private Result horrorCheck( ) {
+    private Result horrorCheck() {
 
         SkillTest skillTest = new SkillTest(horrorPreparation.getTestTyp(), horrorPreparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
@@ -143,7 +132,7 @@ public class CombatEncounter extends Encounter {
         return result;
     }
 
-    private Result attackCheck( ) {
+    private Result attackCheck() {
 
         SkillTest skillTest = new SkillTest(attackPreparation.getTestTyp(), attackPreparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
@@ -160,25 +149,20 @@ public class CombatEncounter extends Encounter {
     }
 
     @Override
-    public int completeEncounterPart(){
-        if(encounterPart==2) {
+    public int completeEncounterPart() {
+        if (encounterPart == 2) {
             healthLoss();
             monsterDamage();
-            removeActiveMonster();
-            encounterPart=0;
-            return encounterPart;
-        }else{
+        } else {
             sanityLoss();
-            return super.completeEncounterPart();
         }
-
+        return super.completeEncounterPart();
     }
 
     @Override
     public String getNameId() {
-        return  "${combat_encounter}";
+        return "${combat_encounter}";
     }
-
 
 
     @Override

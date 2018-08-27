@@ -1,5 +1,5 @@
 package enums;
 
 public enum ChoiceType {
-   INFORMATION,YES_NO,ENCOUNTER
+   INFORMATION,YES_NO, COMBAT_ENCOUNTER, ENCOUNTER
 }

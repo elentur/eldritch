@@ -1,11 +1,13 @@
 package model.Item;
 
+import Service.GameService;
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Effect;
+import model.Field;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -59,9 +61,14 @@ public abstract class Monster implements Item, IMonster {
         actualToughness+=value;
         if(actualToughness> toughness){
             actualToughness=toughness;
-        }else if(actualToughness<0){
-            actualToughness=0;
+        }else if(actualToughness<=0){
+            die();
         }
+    }
+
+    public  void die(){
+       Field field= GameService.getInstance().getFieldOfMonster(this);
+       field.removeMonster(this);
     }
 
     public Monster clone(){

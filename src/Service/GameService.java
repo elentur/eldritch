@@ -5,7 +5,7 @@ import enums.FieldID;
 import enums.SituationType;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.EncounterChoice;
-import gamemechanics.encounter.CombatEncounter;
+import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.ExpeditionEncounter;
 import gamemechanics.encounter.americaencounter.AmericaEncounter0;
@@ -14,7 +14,6 @@ import gamemechanics.encounter.europeencounter.EuropeEncounter0;
 import gamemechanics.encounter.expeditionencounter.ExpeditionEncounter0;
 import gamemechanics.encounter.otherworldencounter.OtherWorldEncounter0;
 import gamemechanics.encounter.researchencounter.azathoth.ResearchEncounter0;
-import gamemechanics.encounter.rumorencounter.RumorEncounter0;
 import gamemechanics.encounter.specialencounter.shubniggurath.SpecialEncounter0;
 import gamemechanics.encounter.standardencounter.StandardEncounter0;
 import javafx.beans.property.SimpleObjectProperty;
@@ -55,10 +54,14 @@ public class GameService {
         return gameBoard.fieldOfInvestigator(inv);
     }
 
+    public Field getFieldOfMonster(Monster monster) {
+        return gameBoard.fieldOfMonster(monster);
+    }
+
     public void moveTo(Investigator inv, Field newField) {
         gameBoard.moveTo(inv, newField);
         if(!newField.getMonster().isEmpty()){
-            GameService.getInstance().addEncounter(new CombatEncounter(newField.getMonster(),activeInvestigator));
+            GameService.getInstance().addChoice(new MonsterChoice(newField));
         }else {
             GameService.getInstance().addChoice(new EncounterChoice(newField));
         }
@@ -72,7 +75,8 @@ public class GameService {
 
     public ItemContainer<Item> getBonusItemsforInvestigator(Investigator investigator) {
         ItemContainer<Item> items = new ItemContainer<>();
-        for (Investigator inv : getFieldOfInvestigator(investigator).getInvestigators()) {
+        Field f = getFieldOfInvestigator(investigator);
+        for (Investigator inv : f.getInvestigators()) {
             items.addAll(inv.getInventory().getItemsWidthSituationTyp(SituationType.ALL));
         }
         items.add(investigator);

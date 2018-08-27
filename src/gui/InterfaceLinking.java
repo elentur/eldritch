@@ -1,14 +1,12 @@
 package gui;
 
 import Service.GameService;
-import gamemechanics.choice.Choice;
-import gamemechanics.choice.EncounterChoice;
-import gamemechanics.choice.InformationChoice;
-import gamemechanics.choice.YesNoChoice;
+import gamemechanics.choice.*;
 import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import gui.choice.EncounterChoiceGUI;
 import gui.choice.InformationDialog;
+import gui.choice.MonsterChoiceGUI;
 import gui.choice.YesNoDialog;
 import gui.effectoverlays.LooseEffectOverlay;
 import gui.effectoverlays.SpendEffectOverlay;
@@ -85,6 +83,9 @@ public class InterfaceLinking {
                 break;
             case ENCOUNTER:
                 dlg = new EncounterChoiceGUI((EncounterChoice) choice);
+                break;
+            case COMBAT_ENCOUNTER:
+                dlg = new MonsterChoiceGUI((MonsterChoice) choice);
                 break;
             case INFORMATION:
                 dlg = new InformationDialog((InformationChoice) choice);

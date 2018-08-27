@@ -39,7 +39,7 @@ public class GameBoard {
         newField.addMonster(monster);
     }
 
-    private Field fieldOfMonster(Monster monster) {
+    public Field fieldOfMonster(Monster monster) {
         return fields.stream().filter(f -> f.getMonster().contains(monster)).findFirst().orElse(null);
     }
 

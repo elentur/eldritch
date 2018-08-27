@@ -1,29 +1,13 @@
 package gamemechanics;
 
-import Service.GameService;
-import container.ItemContainer;
-import enums.FieldType;
-import factory.ItemFactory;
-import gamemechanics.encounter.CombatEncounter;
-import model.Field;
-import model.Item.Investigator;
-import model.Item.Item;
-import model.Item.investigators.AgnesBaker;
-import model.Item.monsters.Vampire;
-import model.Item.Monster;
 import org.junit.Test;
-import org.testng.Assert;
-import preparation.Preparation;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class CombatEncounterTest {
 
     @Test
     public void testCombatEncounter() {
-        Investigator inv = new AgnesBaker();
+     /*   Investigator inv = new AgnesBaker();
         Monster monster = new Vampire();
         GameService game = GameService.getInstance();
         List<Monster> monsters = new ArrayList<>();
@@ -36,7 +20,7 @@ public class CombatEncounterTest {
         Preparation preparation = combatEncounter.getPreparation();
         ItemContainer<Item> expectedItems = new ItemContainer<>();
         expectedItems.add(new ItemFactory().getAssets().get("&profaneTome"));
-        expectedItems.add(new ItemFactory().getSpells().get("&stormOfSpirits"));
+        expectedItems.add(new ItemFactory().getSpells().get("&stormOfSpirits"));*/
 
 
     }
