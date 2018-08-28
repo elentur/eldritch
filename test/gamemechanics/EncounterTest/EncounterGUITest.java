@@ -30,7 +30,6 @@ public class EncounterGUITest extends Application {
         ItemContainer<Asset> assets = new ItemFactory().getAssets();
         //  inv.getInventory().remove(assets.get("&profaneTome"));
         inv.getInventory().add(assets.get("&lantern"));
-        GameService.getInstance().setActiveInvestigator(inv);
         Fonts.init(primaryStage);
         Field  f = new Field( FieldID.ARKHAM);
         f.setExpedition(true);

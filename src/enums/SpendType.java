@@ -1,5 +1,6 @@
 package enums;
 
+import lombok.Getter;
 import utils.ResourceUtil;
 
 public enum SpendType {
@@ -7,9 +8,13 @@ public enum SpendType {
     NONE(""),
     SANITY("${sanity}"),
     HEALTH("${health}"),
-    CLUE("${clue}");
+    CLUE("${clue}"),
+    TRAIN_TICKET("${train_ticket}"),
+    SHIP_TICKET("${ship_ticket}"),
+    FOCUS("${focus}");
 
 
+    @Getter
     private String key;
 
     SpendType(String key) {

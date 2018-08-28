@@ -1,5 +1,6 @@
 package gui.encounters;
 
+import Service.GameService;
 import enums.EventTimeType;
 import enums.TestType;
 import gamemechanics.Action;
@@ -137,6 +138,7 @@ public class EncounterGui extends DialogGui {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
             if (encounter.completeEncounterPart() == 3) {
                 this.close();
+                GameService.getInstance().setActiveInvestigator();
             } else {
                 populate();
             }

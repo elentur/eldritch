@@ -1,5 +1,6 @@
 package Service;
 
+import container.InvestigatorContainer;
 import container.ItemContainer;
 import enums.FieldID;
 import enums.SituationType;
@@ -16,6 +17,7 @@ import gamemechanics.encounter.otherworldencounter.OtherWorldEncounter0;
 import gamemechanics.encounter.researchencounter.azathoth.ResearchEncounter0;
 import gamemechanics.encounter.specialencounter.shubniggurath.SpecialEncounter0;
 import gamemechanics.encounter.standardencounter.StandardEncounter0;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,25 +31,62 @@ import model.Item.Item;
 import model.Item.Monster;
 import model.Item.token.*;
 
+import java.util.List;
+
 public class GameService {
     private static GameService ourInstance = new GameService();
 
     private final ObservableList<Effect> insertions;
     private Field field;
+
     @Getter
-    @Setter
-    private Investigator activeInvestigator;
+    private ObjectProperty<Investigator> activeInvestigator;
     private GameBoard gameBoard;
+    private InvestigatorContainer investigators;
 
     public static GameService getInstance() {
         return ourInstance;
     }
 
+    public void startGame(InvestigatorContainer investigators,GameBoard gameBoard){
+        setGameBoard(gameBoard);
+        this.investigators = investigators;
+        for (Investigator inv : investigators){
+            gameBoard.addInvestigator(inv);
+        }
+        activeInvestigator.setValue(investigators.get(0));
+
+    }
+
+    public  void setActiveInvestigator(){
+        int i = (investigators.indexOf(activeInvestigator.getValue())+1)%investigators.size();
+        activeInvestigator.setValue(investigators.get(i));
+
+    }
+    public Investigator getActiveInvestigator(){
+        return activeInvestigator.getValue();
+    }
+
+    public Investigator getStartInvestigator(){
+        return    investigators.get(0);
+    }
+    public void setStartInvestigator(){
+        investigators.add(investigators.remove(0));
+    }
+    public Investigator[] getInactiveInvestigators() {
+        Investigator[] invs = new Investigator[investigators.size()-1];
+        int index = (investigators.indexOf(activeInvestigator.getValue())+1)%investigators.size();
+        for(int i = 0; i < invs.length;i++){
+            invs[i] = investigators.get((index+i)%investigators.size());
+        }
+        return invs;
+    }
     private SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
 
     private GameService() {
         insertions = FXCollections.observableArrayList();
+        activeInvestigator = new SimpleObjectProperty<>(null);
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
@@ -122,32 +161,32 @@ public class GameService {
     }
 
     public Encounter drawOtherWorldEncounter() {
-        return new OtherWorldEncounter0(activeInvestigator);
+        return new OtherWorldEncounter0(getActiveInvestigator());
     }
 
     public Encounter drawResearchEncounter() {
 
-        return new ResearchEncounter0(activeInvestigator);
+        return new ResearchEncounter0(getActiveInvestigator());
     }
 
     public Encounter drawSpecialEncounter() {
-        return new SpecialEncounter0(activeInvestigator);
+        return new SpecialEncounter0(getActiveInvestigator());
     }
 
     public Encounter drawStandardEncounter() {
-        return new StandardEncounter0(activeInvestigator);
+        return new StandardEncounter0(getActiveInvestigator());
     }
     public Encounter drawEuropeEncounter() {
-        return new EuropeEncounter0(activeInvestigator);
+        return new EuropeEncounter0(getActiveInvestigator());
     }
     public Encounter drawAsiaEncounter() {
-        return new AsiaEncounter0(activeInvestigator);
+        return new AsiaEncounter0(getActiveInvestigator());
     }
     public Encounter drawAmericaEncounter() {
-        return new AmericaEncounter0(activeInvestigator);
+        return new AmericaEncounter0(getActiveInvestigator());
     }
     public ExpeditionEncounter activeExpedition() {
-        return new ExpeditionEncounter0(activeInvestigator);
+        return new ExpeditionEncounter0(getActiveInvestigator());
     }
 
     private ClueToken drawClue() {
@@ -203,6 +242,11 @@ public class GameService {
     public void addEldritchToken(FieldID fieldID, EldritchToken eldritchToken) {
         Field field = gameBoard.getField(fieldID);
         field.addEldritchToken(eldritchToken);
+    }
+
+
+    public ObjectProperty<Investigator> getActiveInvestigatorProperty() {
+        return activeInvestigator;
     }
 
 

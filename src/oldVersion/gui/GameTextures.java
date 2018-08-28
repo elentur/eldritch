@@ -79,7 +79,7 @@ public class GameTextures {
 		clue= new Image("oldVersion/images/clue.png",75,75, true, false, backgroundLoading);
 		
 		
-		gameBoard= new Image("oldVersion/images/gameBoard/GameBoard.jpg",5804,3594, true, false, backgroundLoading);
+		gameBoard= new Image("oldVersion/images/gameBoard/gameboard.jpg",5804,3594, true, false, backgroundLoading);
 		mark= new Image("oldVersion/images/gameBoard/Mark.png",66,58, true, false, backgroundLoading);
 		cityMark= new Image("oldVersion/images/gameBoard/CityMark.png",518,154, true, false, backgroundLoading);
 		expeditionMarkWilderness= new Image("oldVersion/images/gameBoard/ExpeditionMarkWilderness.png",558,170, true, false, backgroundLoading);

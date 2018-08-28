@@ -1,4 +1,4 @@
-package gui.GameBoard;
+package gui.gameboard;
 
 
 import gui.Fonts;

@@ -12,8 +12,11 @@ import gui.effectoverlays.LooseEffectOverlay;
 import gui.effectoverlays.SpendEffectOverlay;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
+import gui.interfaceelements.ActiveInvestigatorGUI;
+import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lombok.extern.java.Log;
@@ -29,6 +32,7 @@ public class InterfaceLinking {
     private static StackPane pane;
 
     public static StackPane root;
+    public static Interface interfaceGui;
     private static Stage primaryStage;
 
 
@@ -41,7 +45,17 @@ public class InterfaceLinking {
                 createEffectOverlay(e.getList().get(0));
             }
         });
+        game.getActiveInvestigatorProperty().addListener(e -> updateInvestigatorInterface());
 
+
+    }
+
+    private void updateInvestigatorInterface() {
+        ActiveInvestigatorGUI activeInvestigatorGUI = interfaceGui.getActiveInvestigatorGUI();
+        activeInvestigatorGUI.update();
+
+        InactiveInvestigatorsGUI inactiveInvestigatorsGUI = interfaceGui.getInactiveInvestigatorsGUI();
+        inactiveInvestigatorsGUI.update();
     }
 
 
@@ -69,6 +83,11 @@ public class InterfaceLinking {
     public static void init(Stage stage) {
         primaryStage = stage;
         root = (StackPane) primaryStage.getScene().getRoot();
+        for(Node n: root.getChildren()){
+            if(n instanceof Interface){
+                interfaceGui= (Interface)n;
+            }
+        }
     }
 
 

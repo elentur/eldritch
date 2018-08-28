@@ -1,4 +1,4 @@
-package gui.GameBoard;
+package gui.gameboard;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;

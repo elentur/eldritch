@@ -202,6 +202,7 @@ public class Field {
     public Token removeMystery() {
         return removeToken(getTokens().getMystery());
     }
+
     private void addToken(Token token) {
         getTokens().add(token);
         update.setValue(true);

@@ -20,13 +20,13 @@ public class AsiaEncounter extends StandardEncounter{
 
     @Override
     public String getNameId() {
-        return  "${america_encounter}";
+        return  "${asia_encounter}";
     }
 
 
 
     @Override
     public String getId() {
-        return "&america_encounter";
+        return "&asia_encounter";
     }
 }

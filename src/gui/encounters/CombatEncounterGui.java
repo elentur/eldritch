@@ -52,7 +52,7 @@ public class CombatEncounterGui extends EncounterGui {
         monsterImage.setEffect(Effects.innerShadow);
 
         Rectangle toughness = new Rectangle(80, 80, new ImagePattern(toughnessImage));
-        Label toughnessValue = new Label(m.getToughness() + "");
+        Label toughnessValue = new Label(m.getActualToughness() + "");
         toughnessValue.getStyleClass().add("text-stroke-black");
         toughnessValue.setTranslateY(-10);
         toughnessValue.styleProperty().bind(Fonts.getFont(0.6, Fonts.GREEN, Fonts.FontTyp.BOLD));
@@ -153,6 +153,10 @@ public class CombatEncounterGui extends EncounterGui {
                 List<Monster> monsters = ((CombatEncounter)encounter).getMonsters();
                 if(!monsters.isEmpty()){
                     GameService.getInstance().addChoice(new MonsterChoice(monsters));
+                }else{
+                    if(!GameService.getInstance().getFieldOfInvestigator(encounter.getInvestigator()).getMonster().isEmpty()){
+                        GameService.getInstance().setActiveInvestigator();
+                    }
                 }
             } else {
                 populate();

@@ -1,16 +1,8 @@
-package gui.GameBoard;
+package gui.gameboard;
 
-import enums.FieldID;
-import enums.FieldType;
 import gui.buttons.FieldButton;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.Field;

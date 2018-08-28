@@ -138,11 +138,8 @@ public class FieldButton extends Group {
         rumor.setEffect(Effects.dropShadow);
 
         //  this.setBorder(new Border(new BorderStroke(Fonts.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(1.0), BorderStroke.MEDIUM)));
-
-
-
-        field.updateProperty().addListener((observable,oldV,newV) -> {
-            if(newV.booleanValue()){
+        field.getUpdate().addListener(e -> {
+            if(field.getUpdate().getValue()){
                 update();
                 field.getUpdate().setValue(false);
             }
@@ -226,7 +223,7 @@ public class FieldButton extends Group {
             invImg.setFitHeight(60);
             invImg.setFitWidth(60);
             monsters.getChildren().add(invImg);
-            if(!mouseOver){
+            if(!mouseOver && field.getMonster().size()>1){
                 Label number = new Label(field.getMonster().size()+"");
                 number.styleProperty().bind(Fonts.getFont(0.25,Fonts.RED,Fonts.FontTyp.BOLD));
                 monsters.getChildren().add(number);

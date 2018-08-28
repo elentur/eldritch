@@ -1,17 +1,7 @@
-package gui.GameBoard;
+package gui.gameboard;
 
-import gui.buttons.Button;
-import gui.buttons.InfoTextButton;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.transform.Scale;
 import model.GameBoard;
 
 
