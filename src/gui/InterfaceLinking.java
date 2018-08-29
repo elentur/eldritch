@@ -32,7 +32,7 @@ public class InterfaceLinking {
     private static StackPane pane;
 
     public static StackPane root;
-    public static Interface interfaceGui;
+    private static Interface interfaceGui;
     private static Stage primaryStage;
 
 
@@ -71,7 +71,7 @@ public class InterfaceLinking {
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
                 break;
             default:
-                GameService.getInstance().getInsertions().remove(effect);
+//                GameService.getInstance().getInsertions().remove(effect);
                 break;
 
         }
@@ -113,7 +113,7 @@ public class InterfaceLinking {
         if (dlg == null) {
             return;
         }
-        root.getChildren().add(dlg);
+        root.getChildren().add(root.getChildren().size()-1,dlg);
         Platform.runLater(dlg::showAndWait);
     }
 
@@ -133,7 +133,7 @@ public class InterfaceLinking {
         if (dlg == null) {
             return;
         }
-        root.getChildren().add(dlg);
+        root.getChildren().add(root.getChildren().size()-1,dlg);
         Platform.runLater(dlg::showAndWait);
 
     }

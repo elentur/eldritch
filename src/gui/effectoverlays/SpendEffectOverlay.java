@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.effects.Spend;
 
-public class SpendEffectOverlay extends Group {
+public class SpendEffectOverlay extends Overlay {
 private final static Image sanityImage = new Image("images/Sanity.png",150,150,true,true,false);
     private final static Image healthImage = new Image("images/Health.png",150,150,true,true,false);
     private final static Image clueImage = new Image("images/Clue.png",150,150,true,true,false);

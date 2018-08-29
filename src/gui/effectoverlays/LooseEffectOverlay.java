@@ -1,5 +1,6 @@
 package gui.effectoverlays;
 
+import Service.GameService;
 import gui.Fonts;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -7,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.effects.Loose;
 
-public class LooseEffectOverlay extends Group {
+public class LooseEffectOverlay extends Overlay {
 
 
     public LooseEffectOverlay(Loose loose) {
@@ -31,6 +32,22 @@ public class LooseEffectOverlay extends Group {
             default:
 
                 break;
+        }
+        if(loose.getInvestigator() != null) {
+            if (loose.getInvestigator().equals(GameService.getInstance().getActiveInvestigator())){
+                setX(-800);
+                setY(350);
+            }
+            else if (loose.getInvestigator().equals(GameService.getInstance().getInactiveInvestigators()[0])){
+                setX(-850);
+                setY(150);
+            } else if (loose.getInvestigator().equals(GameService.getInstance().getInactiveInvestigators()[1])){
+                setX(-850);
+                setY(0);
+            } else if (loose.getInvestigator().equals(GameService.getInstance().getInactiveInvestigators()[2])){
+                setX(-850);
+                setY(-200);
+            }
         }
         this.getChildren().addAll(img,value);
         this.setMouseTransparent(true);

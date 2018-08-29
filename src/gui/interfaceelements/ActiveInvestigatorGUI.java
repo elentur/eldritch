@@ -4,6 +4,9 @@ import Service.GameService;
 import enums.SpendType;
 import gui.Effects;
 import gui.Fonts;
+import gui.buttons.InvestigatorButton;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -27,6 +30,8 @@ public class ActiveInvestigatorGUI extends Group {
     private final TokenImage trainImage;
     private final TokenImage shipImage;
 
+    private final UpdateListener listener;
+    private Investigator inv;
     public ActiveInvestigatorGUI() {
         ImageView frame = new ImageView(frameImage);
         portrait = new ImageView();
@@ -68,22 +73,39 @@ public class ActiveInvestigatorGUI extends Group {
         shipImage.setTranslateX(130);
         shipImage.setTranslateY(-15);
 
-
+        listener = new UpdateListener();
         this.getChildren().addAll(portrait, frame,name,healthImage,sanityImage,clueImage,focusImage,trainImage,shipImage);
         this.setEffect(Effects.dropShadow);
     }
 
     public void update() {
-        Investigator inv = GameService.getInstance().getActiveInvestigator();
-        if (inv != null) {
+        if(inv != GameService.getInstance().getActiveInvestigator() ) {
+            if(inv!=null){
+                inv.getUpdate().removeListener(listener);
+            }
+            inv = GameService.getInstance().getActiveInvestigator();
+            inv.getUpdate().addListener(listener);
             portrait.setImage(new Image("images/investigator/" + inv.getId() + ".jpg", 250, 242, true, true, true));
             name.setText(inv.getName());
+        }
+        if (inv != null) {
+
             healthImage.setValue(inv.getActualHealth()+"");
             sanityImage.setValue(inv.getActualSanity()+"");
             clueImage.setValue("1");
             focusImage.setValue("1");
             trainImage.setValue("1");
             shipImage.setValue("1");
+        }
+    }
+
+    private class UpdateListener implements ChangeListener<Boolean> {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            if(newValue){
+                update();
+                inv.getUpdate().setValue(false);
+            }
         }
     }
 }

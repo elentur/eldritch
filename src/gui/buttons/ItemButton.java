@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.TextAlignment;
+import lombok.Setter;
 import model.Item.Item;
 
 public class ItemButton extends Group {
@@ -17,6 +18,8 @@ public class ItemButton extends Group {
     protected final static Image backgroundImage = new Image("images/ItemBack.png", 200, 150, true, true, true);
     ImageView backside;
     ImageView frontside;
+    @Setter
+    private boolean showBackSide;
     protected final Item item;
     private final Tooltip tooltip;
 
@@ -27,7 +30,7 @@ public class ItemButton extends Group {
     public ItemButton(String type, Item item) {
         this.item = item;
          backside = new ImageView(backgroundImage);
-
+        showBackSide=true;
         Image itemImage = new Image("images/"+type+"/" + item.getId() + ".jpg", 200, 150, true, true, true);
          frontside = new ImageView(itemImage);
         ImageView shape = new ImageView(backgroundImage);
@@ -64,7 +67,7 @@ public class ItemButton extends Group {
             this.setEffect(Effects.dropShadow);
         });
         node.setOnMouseClicked(e -> {
-            if (e.getButton().equals(MouseButton.SECONDARY)) {
+            if (e.getButton().equals(MouseButton.SECONDARY) && showBackSide) {
                 Animations.startRotateFromTo(actualNode, oldNode, this);
                 Node temp = actualNode;
                 actualNode = oldNode;

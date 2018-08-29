@@ -4,10 +4,11 @@ import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.AncientOneGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 
-public class Interface extends StackPane {
+public class Interface extends Group {
 
     @Getter
     private final ActiveInvestigatorGUI activeInvestigatorGUI;
@@ -15,14 +16,18 @@ public class Interface extends StackPane {
     private final InactiveInvestigatorsGUI inactiveInvestigatorsGUI;
     @Getter
     private final AncientOneGUI ancientOneGUI;
-   public Interface(){
+   public Interface(StackPane parent){
+
+       StackPane.setAlignment(this,Pos.TOP_LEFT);
        activeInvestigatorGUI = new ActiveInvestigatorGUI();
-       StackPane.setAlignment(activeInvestigatorGUI, Pos.BOTTOM_LEFT);
+       activeInvestigatorGUI.translateYProperty().bind(parent.heightProperty().subtract(250));
        inactiveInvestigatorsGUI = new InactiveInvestigatorsGUI();
-       inactiveInvestigatorsGUI.setAlignment(Pos.CENTER_LEFT);
+       inactiveInvestigatorsGUI.prefHeightProperty().bind(parent.heightProperty().multiply(0.5));
+       inactiveInvestigatorsGUI.translateYProperty().bind(parent.heightProperty().multiply(0.5).subtract(inactiveInvestigatorsGUI.heightProperty().multiply(0.5)));
        ancientOneGUI = new AncientOneGUI();
-       StackPane.setAlignment(ancientOneGUI, Pos.TOP_LEFT);
-       this.setMouseTransparent(true);
+
+
+
        this.getStyleClass().add("transparent");
 
 

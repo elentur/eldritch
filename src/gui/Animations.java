@@ -2,15 +2,15 @@ package gui;
 
 import Service.GameService;
 import gui.buttons.Button;
-import javafx.animation.AnimationTimer;
-import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.SequentialTransition;
+import gui.effectoverlays.Overlay;
+import gui.interfaceelements.InactiveInvestigatorsGUI;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Effect;
@@ -37,7 +37,7 @@ public class Animations {
     }
 
     static void startRotateFromTo(Node oldNode, Node node, Pane pane) {
-        startRotateFromTo(oldNode,node,pane,null);
+        startRotateFromTo(oldNode, node, pane, null);
     }
 
     public static void startRotateFromTo(Node oldNode, Node node, Pane pane, Callable<Void> func) {
@@ -106,38 +106,66 @@ public class Animations {
     }
 
 
-    public static void effectOverlayAnimations(Group group, Stage activeStage, Effect effect) {
-        if(!(activeStage.getScene().getRoot() instanceof StackPane) ||effectOverlayIsRunning){
+    public static void effectOverlayAnimations(Overlay group, Stage activeStage, Effect effect) {
+        if (!(activeStage.getScene().getRoot() instanceof StackPane) || effectOverlayIsRunning) {
             return;
         }
-        effectOverlayIsRunning=true;
-
-
-
-        StackPane pane = (StackPane) activeStage.getScene().getRoot();
+        effectOverlayIsRunning = true;
+        StackPane root = (StackPane) activeStage.getScene().getRoot();
+        EffectLayer pane = (EffectLayer)root.getChildren().get(root.getChildren().size()-1);
         group.setEffect(Effects.dropShadow);
         pane.getChildren().add(group);
 
         ScaleTransition st2 = new ScaleTransition(Duration.millis(200), group);
         st2.setFromX(5);
-        st2.setToX(1);
+        st2.setToX(0.5);
         st2.setFromY(5);
-        st2.setToY(1);
+        st2.setToY(0.5);
 
-        FadeTransition st1 = new FadeTransition(Duration.millis(2000), group);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(200), group);
+        tt.setFromX(0);
+        tt.setToX(group.getX());
+        tt.setFromY(0);
+        tt.setToY(group.getY());
+
+        FadeTransition st1 = new FadeTransition(Duration.millis(1000), group);
         st1.setDelay(Duration.millis(500));
         st1.setFromValue(1);
         st1.setToValue(0);
-                st1.setOnFinished(a -> {
-            effectOverlayIsRunning=false;
+        st1.setOnFinished(a -> {
+            effectOverlayIsRunning = false;
             pane.getChildren().remove(group);
             GameService.getInstance().getInsertions().remove(effect);
 
         });
 
-        SequentialTransition t = new SequentialTransition(st2,st1);
+        ParallelTransition t = new ParallelTransition(st2,tt, st1);
         t.playFromStart();
 
 
+    }
+
+    public static void startInvestigatorScroll(Node node1, Node node2, double w) {
+        AnimationTimer timer = new AnimationTimer() {
+
+            private long lastUpdate = 0;
+            private double speed = 10;
+
+            @Override
+            public void handle(long time) {
+                if (lastUpdate > 0) {
+                    node1.setLayoutY(node1.getLayoutY() + speed);
+                    node2.setLayoutY(node2.getLayoutY() - speed);
+                    if (node2.getLayoutY() <= 0) {
+                        node1.setLayoutY(0);
+                        node2.setLayoutY(0);
+                        stop();
+                    }
+                }
+                lastUpdate = time;
+            }
+        };
+
+        timer.start();
     }
 }

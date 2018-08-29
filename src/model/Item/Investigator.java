@@ -5,6 +5,8 @@ import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,12 +37,15 @@ public abstract class Investigator implements Item {
     private int actualSanity;
     private FieldID startingSpace;
 
+    private BooleanProperty update;
+
     private List<ItemBonus> bonus;
 
     private ItemContainer<Item> inventory;
 
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
         this.setId(id);
+        update = new SimpleBooleanProperty(false);
         String n = id.replace("&", "");
         this.setFirstName("${" + n + "FirstName}");
         this.setLastName("${" + n + "LastName}");
@@ -101,6 +106,7 @@ public abstract class Investigator implements Item {
             actualHealth = 0;
         }
         log.info(getName() + " has changed health value to " + actualHealth);
+        update.setValue(true);
     }
 
     public void addSanity(int value) {
@@ -112,6 +118,7 @@ public abstract class Investigator implements Item {
             actualSanity = 0;
         }
         log.info(getName() + " has changed sanity value to " + actualSanity);
+        update.setValue(true);
     }
 
     @Override
