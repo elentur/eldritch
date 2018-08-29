@@ -3,14 +3,12 @@ package gui;
 import Service.GameService;
 import gui.buttons.Button;
 import gui.effectoverlays.Overlay;
-import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Effect;
@@ -161,6 +159,37 @@ public class Animations {
                         node2.setLayoutY(0);
                         stop();
                     }
+                }
+                lastUpdate = time;
+            }
+        };
+
+        timer.start();
+    }
+
+    public static void zoomTo(Node node) {
+        AnimationTimer timer = new AnimationTimer() {
+
+            private long lastUpdate = 0;
+
+            double scaleX =  InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleX();
+            double scaleY =  InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleY();
+
+            double x = ((node.getTranslateX()+100)*scaleX-960) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getWidth()*scaleX-1920);
+            double y = ((node.getTranslateY()+100)*scaleY-640) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getHeight()*scaleY-1280);
+           private int speed =20;
+            private double speedX = (x-InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue())/speed;
+            private double speedY = (y-InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue())/speed;
+            private int count=0;
+            @Override
+            public void handle(long time) {
+                if (lastUpdate > 0) {
+                    InterfaceLinking.gameBoardGUI.getScrollPane().setVvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue()+speedY);
+                    InterfaceLinking.gameBoardGUI.getScrollPane().setHvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue()+speedX);
+                    if (count>=speed) {
+                        stop();
+                    }
+                    count++;
                 }
                 lastUpdate = time;
             }

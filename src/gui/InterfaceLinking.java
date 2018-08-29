@@ -12,6 +12,7 @@ import gui.effectoverlays.LooseEffectOverlay;
 import gui.effectoverlays.SpendEffectOverlay;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
+import gui.gameboard.GameBoardGUI;
 import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.application.Platform;
@@ -32,7 +33,8 @@ public class InterfaceLinking {
     private static StackPane pane;
 
     public static StackPane root;
-    private static Interface interfaceGui;
+    public static Interface interfaceGui;
+    public static GameBoardGUI gameBoardGUI;
     private static Stage primaryStage;
 
 
@@ -86,6 +88,8 @@ public class InterfaceLinking {
         for(Node n: root.getChildren()){
             if(n instanceof Interface){
                 interfaceGui= (Interface)n;
+            }else if(n instanceof GameBoardGUI){
+                gameBoardGUI= (GameBoardGUI) n;
             }
         }
     }

@@ -2,11 +2,15 @@ package gui.interfaceelements;
 
 import Service.GameService;
 import gui.Animations;
+import gui.InterfaceLinking;
+import gui.buttons.FieldButton;
 import gui.buttons.InvestigatorButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.Rectangle;
+import model.Field;
 import model.Item.Investigator;
 
 
@@ -31,14 +35,14 @@ public class InactiveInvestigatorsGUI extends FlowPane {
     public void update() {
         if (this.getChildren().isEmpty()) {
             for (Investigator inv : GameService.getInstance().getInactiveInvestigators()) {
-                InvestigatorButton investigatorButton = new InvestigatorButton(inv);
+                InvestigatorButton investigatorButton = buildButton(inv);
                 this.getChildren().add(0, investigatorButton);
             }
         } else {
             Investigator[] invs = GameService.getInstance().getInactiveInvestigators();
             InvestigatorButton oldButton = (InvestigatorButton) this.getChildren().remove(this.getChildren().size() - 1);
             oldButton.clearListener();
-            InvestigatorButton investigatorButton = new InvestigatorButton(invs[invs.length - 1]);
+            InvestigatorButton investigatorButton = buildButton(invs[invs.length - 1]);
             this.getChildren().add(0, investigatorButton);
             double w = this.getHeight() / 3 - 7;
             this.setLayoutY(this.getLayoutY() - w);
@@ -47,5 +51,21 @@ public class InactiveInvestigatorsGUI extends FlowPane {
         }
 
 
+    }
+
+    private InvestigatorButton buildButton(Investigator inv){
+        InvestigatorButton investigatorButton = new InvestigatorButton(inv);
+        investigatorButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                Field field = GameService.getInstance().getFieldOfInvestigator(inv);
+                FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
+                if(fieldButton!=null){
+                    Animations.zoomTo(fieldButton);
+                }
+
+            }
+
+        });
+        return investigatorButton;
     }
 }

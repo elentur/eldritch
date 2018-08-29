@@ -13,7 +13,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.TextAlignment;
-import model.Effect;
+import lombok.Getter;
 import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
@@ -32,6 +32,7 @@ public class FieldButton extends Group {
 
 
 
+    @Getter
     private final Field field;
     private final FlowPane investigators;
     private final FlowPane monsters;

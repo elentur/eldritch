@@ -1,18 +1,25 @@
 package gui.gameboard;
 
 import gui.buttons.FieldButton;
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.Field;
 import model.GameBoard;
 
-public class WorldMapGUI extends Group {
+import java.util.ArrayList;
+import java.util.List;
+
+public class WorldMapGUI extends MapGUI {
     private final static Image backgroundImage = new Image("images/gameBoard/GameBoard.jpg");
     private final Rectangle background;
+    private final List<FieldButton> fieldButtonList;
 
+    public Rectangle getBack(){
+        return background;
+    }
     public WorldMapGUI(GameBoard gameBoard) {
+        fieldButtonList = new ArrayList<>();
         background = new Rectangle(5804, 3594);
         background.setFill(new ImagePattern(backgroundImage));
         this.getChildren().add(background);
@@ -147,8 +154,18 @@ public class WorldMapGUI extends Group {
                 this.getChildren().add(new FieldLabel(field.getFieldID().getKey(), x, y));
                 break;
         }
-
-        this.getChildren().add(new FieldButton(field, x, y));
+        FieldButton fieldButton = new FieldButton(field, x, y);
+        fieldButtonList.add(fieldButton);
+        this.getChildren().add(fieldButton);
     }
 
+    @Override
+    public FieldButton getFieldButton(Field field) {
+        for (FieldButton fieldButton : fieldButtonList) {
+            if (fieldButton.getField().equals(field)) {
+                return fieldButton;
+            }
+        }
+        return null;
+    }
 }
