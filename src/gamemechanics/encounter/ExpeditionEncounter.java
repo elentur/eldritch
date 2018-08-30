@@ -19,13 +19,12 @@ protected static final String[] STEP = {"start","pass","fail"};
 
     private FieldID fieldID;
 
-    public ExpeditionEncounter(Investigator inv, String encounterID) {
-        this(inv,encounterID, EncounterType.EXPEDITION_ENCOUNTER);
-        setInvestigator(inv);
+    public ExpeditionEncounter( String encounterID) {
+        this(encounterID, EncounterType.EXPEDITION_ENCOUNTER);
         setEncounterPart(0);
     }
-    public ExpeditionEncounter(Investigator inv, String encounterID, EncounterType type) {
-        super(inv, encounterID,type);
+    public ExpeditionEncounter( String encounterID, EncounterType type) {
+        super( encounterID,type);
     }
 
 

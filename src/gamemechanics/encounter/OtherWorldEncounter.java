@@ -18,9 +18,9 @@ public class OtherWorldEncounter extends ExpeditionEncounter {
 
     private FieldID fieldID;
 
-    public OtherWorldEncounter(Investigator inv, String encounterID) {
-        super(inv, encounterID, EncounterType.OTHER_WORLD_ENCOUNTER);
-        setInvestigator(inv);
+    public OtherWorldEncounter( String encounterID) {
+        super( encounterID, EncounterType.OTHER_WORLD_ENCOUNTER);
+
         setEncounterPart(0);
     }
 

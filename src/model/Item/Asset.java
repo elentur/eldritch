@@ -1,5 +1,6 @@
 package model.Item;
 
+import container.ItemStack;
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public abstract class Asset implements Item {
     private final ItemType type;
     private final int price;
     private final List<ItemBonus> bonus;
+    private ItemStack stack;
 
     public Asset(ItemType type, int price ){
         this.type = type;
@@ -42,5 +44,14 @@ public abstract class Asset implements Item {
     @Override
     public ItemType getItemType() {
         return ItemType.ASSET;
+    }
+
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
     }
 }

@@ -1,11 +1,14 @@
 package model.Item.token;
 
 import Service.GameService;
+import container.ItemStack;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
 import model.Item.Token;
 
 public class MysteryToken extends Token {
+    private ItemStack stack;
+
     public MysteryToken() {
         super(ItemType.MYSTERY_TOKEN);
     }
@@ -22,6 +25,15 @@ public class MysteryToken extends Token {
 
     @Override
     public Encounter getEncounter() {
-        return GameService.getInstance().drawSpecialEncounter();
+        return GameService.getInstance().getSpecialEncounter().draw();
     }
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
+    }
+
 }

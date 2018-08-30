@@ -1,6 +1,7 @@
 package gamemechanics.encounter;
 
 import Service.GameService;
+import container.ItemStack;
 import container.Result;
 import enums.EncounterType;
 import enums.ItemType;
@@ -10,6 +11,7 @@ import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
+import model.Field;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
@@ -37,6 +39,8 @@ public abstract class Encounter implements Item {
     private int[] mod;
     private Effect[][] effect;
     private SituationType situationType;
+    private Field field;
+    private ItemStack stack;
 
     public Encounter(EncounterType type) {
         encounterType = type;
@@ -48,6 +52,8 @@ public abstract class Encounter implements Item {
     }
 
     public Result check() {
+
+
         SkillTest skillTest = new SkillTest(getPreparation().getTestTyp(), getPreparation().getModificationForSkillTest());
         result = skillTest.execute(investigator);
         result.setMinNumberOfSuccesses(getMinNumberOfSuccesses()[getEncounterPart()]);
@@ -113,11 +119,18 @@ public abstract class Encounter implements Item {
         return "";
     }
 
-    public void executeEffect() {
-        if (result.isSuccess()&&effect[encounterPart][0]!=null) {
-            effect[encounterPart][0].execute();
-        }else if(!result.isSuccess()&&effect[encounterPart][1]!=null){
-            effect[encounterPart][1].execute();
-        }
+    public void init() {
+        setEncounterPart(0);
+        game=GameService.getInstance();
+        setInvestigator(game.getEncounteringInvestigator());
+        this.field = game.getFieldOfInvestigator(getInvestigator());
+    }
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
     }
 }

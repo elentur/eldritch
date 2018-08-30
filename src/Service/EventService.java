@@ -15,7 +15,7 @@ public class EventService {
         if(value<=0){
             return;
         }
-       new Loose(SpendType.HEALTH,-value,inv).execute();
+        GameService.getInstance().addEffect(new Loose(SpendType.HEALTH,-value,inv));
         if(inv.getActualHealth()==0) {
             System.out.println(inv.getFirstName() + " is dead");
         }
@@ -28,7 +28,7 @@ public class EventService {
         if(value<=0){
             return;
         }
-        new Loose(SpendType.SANITY,-value,inv).execute();
+        GameService.getInstance().addEffect(new Loose(SpendType.SANITY,-value,inv));
         if(inv.getActualSanity()==0) {
             System.out.println(inv.getFirstName() + " is dead");
         }
@@ -42,7 +42,7 @@ public class EventService {
         if(value<=0){
             return;
         }
-        new Loose(SpendType.HEALTH,-value,monster).execute();
+       GameService.getInstance().addEffect(new Loose(SpendType.HEALTH,-value,monster));
         if(monster.getActualToughness()==0) {
             System.out.println(monster.getName() + " is dead");
         }

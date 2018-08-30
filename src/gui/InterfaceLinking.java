@@ -62,7 +62,7 @@ public class InterfaceLinking {
 
 
     private void createEffectOverlay(Effect effect) {
-        if (effect == null) {
+        if (effect == null || !GameService.getInstance().getInsertions().contains(effect)) {
             return;
         }
         switch (effect.getEffectTyp()) {
@@ -73,7 +73,8 @@ public class InterfaceLinking {
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
                 break;
             default:
-//                GameService.getInstance().getInsertions().remove(effect);
+                effect.execute();
+              GameService.getInstance().getInsertions().remove(effect);
                 break;
 
         }

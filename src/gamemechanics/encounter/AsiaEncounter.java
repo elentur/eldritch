@@ -11,9 +11,8 @@ public class AsiaEncounter extends StandardEncounter{
 
 
 
-    public AsiaEncounter(Investigator inv, String encounterID){
-       super(inv,encounterID,EncounterType.ASIA_ENCOUNTER);
-        setInvestigator(inv);
+    public AsiaEncounter( String encounterID){
+       super(encounterID,EncounterType.ASIA_ENCOUNTER);
     }
 
 

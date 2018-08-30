@@ -1,5 +1,6 @@
 package model.Item.investigators;
 
+import Service.GameService;
 import container.ItemContainer;
 import enums.*;
 import factory.ItemFactory;
@@ -31,8 +32,8 @@ public class AgnesBaker extends Investigator {
                 7,
                 5,
                 FieldID.LONDON,
-                ItemFactory.getAssets().get("&profaneTome"),
-                ItemFactory.getSpells().get("&stormOfSpirits")
+                GameService.getInstance().getAssets().get("&profaneTome"),
+                GameService.getInstance().getSpells().get("&stormOfSpirits")
         );
 
 

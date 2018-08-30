@@ -54,9 +54,6 @@ public class CombatEncounterGUITest extends Application {
 
     private CombatEncounter initCombatEncounter() {
         Investigator inv = new AgnesBaker();
-        ItemContainer<Asset> assets = new ItemFactory().getAssets();
-      //  inv.getInventory().remove(assets.get("&profaneTome"));
-        inv.getInventory().add(assets.get("&lantern"));
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Vampire());
         monsters.add(new Shan());

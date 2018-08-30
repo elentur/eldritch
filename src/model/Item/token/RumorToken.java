@@ -1,5 +1,6 @@
 package model.Item.token;
 
+import container.ItemStack;
 import enums.FieldID;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
@@ -11,6 +12,7 @@ import model.Item.Token;
 public class RumorToken extends Token {
     private final RumorEncounter encounter;
     private final FieldID fieldID;
+    private ItemStack stack;
 
     public RumorToken(FieldID fieldID, RumorEncounter encounter) {
         super(ItemType.RUMOR_TOKEN);
@@ -31,5 +33,13 @@ public class RumorToken extends Token {
     @Override
     public Encounter getEncounter() {
         return encounter;
+    }
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
     }
 }

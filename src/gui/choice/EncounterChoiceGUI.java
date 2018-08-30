@@ -25,6 +25,7 @@ public class EncounterChoiceGUI extends ChoiceDialog {
             EncounterButton button= new EncounterButton(encounter);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
+
                    close();
                 }
             });

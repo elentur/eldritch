@@ -3,7 +3,6 @@ package gamemechanics.choice;
 
 import Service.GameService;
 import enums.ChoiceType;
-import enums.YesNo;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
 import model.Field;
@@ -31,7 +30,7 @@ public class EncounterChoice extends Choice{
     }
 
 
-    public List<gamemechanics.encounter.Encounter> getEncounters() {
+    public List<Encounter> getEncounters() {
         return encounters;
     }
 }

@@ -14,9 +14,8 @@ public class SpecialEncounter extends ExpeditionEncounter {
     private FieldID fieldID;
     private final OldOnes oldOne;
 
-    public SpecialEncounter(Investigator inv, String encounterID, OldOnes oldOne) {
-        super(inv, encounterID, EncounterType.SPECIAL_ENCOUNTER);
-        setInvestigator(inv);
+    public SpecialEncounter( String encounterID, OldOnes oldOne) {
+        super( encounterID, EncounterType.SPECIAL_ENCOUNTER);
         setEncounterPart(0);
         this.oldOne=oldOne;
     }

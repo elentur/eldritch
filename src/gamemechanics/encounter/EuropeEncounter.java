@@ -11,9 +11,8 @@ public class EuropeEncounter extends StandardEncounter{
 
 
 
-    public EuropeEncounter(Investigator inv, String encounterID){
-       super(inv,encounterID,EncounterType.EUROPE_ENCOUNTER);
-        setInvestigator(inv);
+    public EuropeEncounter( String encounterID){
+       super(encounterID,EncounterType.EUROPE_ENCOUNTER);
     }
 
 

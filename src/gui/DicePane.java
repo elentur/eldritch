@@ -18,6 +18,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import model.Item.Investigator;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -50,6 +51,7 @@ public class DicePane extends HBox {
             HBox.setHgrow(region, Priority.ALWAYS);
             acceptButton.setStyleProperty(Fonts.getFont(0.25, Fonts.GREEN , Fonts.FontTyp.NORMAL));
             acceptButton.setInfoText( ResourceUtil.get("${success}", "ui"));
+
             encounter.check();
             this.getChildren().addAll(region,acceptButton);
         }else {

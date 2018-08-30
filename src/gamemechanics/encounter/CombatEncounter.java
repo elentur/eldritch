@@ -43,6 +43,12 @@ public class CombatEncounter extends Encounter {
         activatePassiveBoni();
     }
 
+    @Override
+    public void init(){
+        super.init();
+        setEncounterPart(1);
+    }
+
     private void activatePassiveBoni() {
         Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
                 && bonus.getField().equalsWithAll(getGame().getFieldOfInvestigator(investigator).getType())

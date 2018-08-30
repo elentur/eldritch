@@ -12,9 +12,8 @@ public class RumorEncounter extends StandardEncounter{
 
 
 
-    public RumorEncounter(Investigator inv, String encounterID){
-       super(inv,encounterID,EncounterType.RUMOR_ENCOUNTER);
-        setInvestigator(inv);
+    public RumorEncounter( String encounterID){
+       super(encounterID,EncounterType.RUMOR_ENCOUNTER);
     }
 
     @Override

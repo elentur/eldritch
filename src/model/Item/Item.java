@@ -1,6 +1,7 @@
 package model.Item;
 
 
+import container.ItemStack;
 import enums.ItemType;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface Item {
     ItemType getItemType();
 
 
+    void setStack(ItemStack itemStack);
+    void discard();
 }

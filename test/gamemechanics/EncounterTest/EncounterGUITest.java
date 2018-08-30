@@ -27,9 +27,6 @@ public class EncounterGUITest extends Application {
     @Override
     public void start(Stage primaryStage) {
         Investigator inv = new AgnesBaker();
-        ItemContainer<Asset> assets = new ItemFactory().getAssets();
-        //  inv.getInventory().remove(assets.get("&profaneTome"));
-        inv.getInventory().add(assets.get("&lantern"));
         Fonts.init(primaryStage);
         Field  f = new Field( FieldID.ARKHAM);
         f.setExpedition(true);

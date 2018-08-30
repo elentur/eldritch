@@ -1,6 +1,7 @@
 package model.Item;
 
 import Service.GameService;
+import container.ItemStack;
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public abstract class Monster implements Item, IMonster {
     private int toughness;
     private int actualToughness;
     private List<Effect> effects;
+    private ItemStack stack;
 
 
     @Override
@@ -90,5 +92,14 @@ public abstract class Monster implements Item, IMonster {
     @Override
     public ItemType getItemType() {
         return ItemType.MONSTER;
+    }
+
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
     }
 }

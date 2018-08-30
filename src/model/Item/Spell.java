@@ -1,5 +1,6 @@
 package model.Item;
 
+import container.ItemStack;
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Setter
 @EqualsAndHashCode
 public abstract class Spell implements Item {
+    private ItemStack stack;
     public String uniqueId = UUID.randomUUID().toString();
     private ItemType type;
     private List<ItemBonus> bonus;
@@ -44,4 +46,14 @@ public abstract class Spell implements Item {
     public ItemType getItemType() {
         return ItemType.SPELL;
     }
+
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
+    }
+
 }

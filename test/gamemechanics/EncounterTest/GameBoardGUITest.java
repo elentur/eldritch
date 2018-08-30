@@ -40,14 +40,9 @@ public class GameBoardGUITest extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Investigator inv = new AgnesBaker();
-        ItemContainer<Asset> assets = new ItemFactory().getAssets();
-        //  inv.getInventory().remove(assets.get("&profaneTome"));
-        inv.getInventory().add(assets.get("&lantern"));
         Fonts.init(primaryStage);
         GameBoard gameBoard = GameBoardFactory.getGameBoard();
         GameBoardGUI gameboardGUI = new GameBoardGUI(gameBoard);
-       // Group effectLayer = new Group();
         StackPane root = new StackPane();
         root.getChildren().addAll(gameboardGUI,new Interface(root),new EffectLayer());
         Scene scene = new Scene(root);
@@ -63,16 +58,16 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
 
-        GameService.getInstance().startGame(new InvestigatorContainer(Arrays.asList(new Investigator[]{inv, new AkachiOnyele(), new CharlieKane(), new DianaStanley()})), gameBoard);
+        GameService.getInstance().startGame(new InvestigatorContainer(Arrays.asList(new Investigator[]{ new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley()})), gameBoard);
 
         gameBoard.addMonster(new Shan(), FieldID.ARKHAM);
         gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
 
         GameService.getInstance().addGate(FieldID.PYRAMIDS);
         GameService.getInstance().addClue();
-        GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS, new RumorEncounter0(inv)));
+        GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS, new RumorEncounter0()));
         GameService.getInstance().addMystery(FieldID.PYRAMIDS);
-        GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0(inv)));
+        GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
     }
 

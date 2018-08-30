@@ -1,5 +1,6 @@
 package model.Item.investigators;
 
+import Service.GameService;
 import enums.*;
 import factory.ItemFactory;
 import gamemechanics.choice.Choice;
@@ -27,7 +28,7 @@ public class CharlieKane extends Investigator {
                 4,
                 8,
                 FieldID.SAN_FRANCISCO,
-                ItemFactory.getAssets().get("&personalAssistant")
+                GameService.getInstance().getAssets().get("&personalAssistant")
         );
 
 

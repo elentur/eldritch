@@ -21,15 +21,14 @@ import java.util.List;
 public class StandardEncounter extends Encounter {
 
     private final String encounterID;
-    private final Field field;
+
     private Preparation preparation;
 
-    public StandardEncounter(Investigator inv, String encounterID) {
-       this(inv,encounterID,EncounterType.STANDARD_ENCOUNTER);
+    public StandardEncounter( String encounterID) {
+       this(encounterID,EncounterType.STANDARD_ENCOUNTER);
     }
-    public StandardEncounter(Investigator inv, String encounterID, EncounterType encounterType) {
+    public StandardEncounter( String encounterID, EncounterType encounterType) {
         super(encounterType);
-        setInvestigator(inv);
         this.encounterID = encounterID;
         setTestType(new TestType[3]);
         setMinNumberOfSuccesses(new int[]{1,1,1});
@@ -37,7 +36,6 @@ public class StandardEncounter extends Encounter {
         setEffect(new Effect[3][3]);
         setSituationType(SituationType.STANDARD_ENCOUNTER);
         setGame(GameService.getInstance());
-        this.field = getGame().getFieldOfInvestigator(inv);
     }
 
 
@@ -54,20 +52,20 @@ public class StandardEncounter extends Encounter {
 
 
     public Preparation getPreparation() {
-if(preparation ==null){
-    preparation = new Preparation(getTestType()[getEncounterPart()], getInvestigator(), getSituationType(), this);
-}
+        if(preparation ==null){
+            preparation = new Preparation(getTestType()[getEncounterPart()], getInvestigator(), getSituationType(), this);
+        }
         return preparation;
     }
 
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + encounterID + "_" + field.getType().getText().toLowerCase() + "_start}", getNameId().replaceAll("[{}\\$]", ""));
+        return ResourceUtil.get("${" + encounterID + "_" + getField().getType().getText().toLowerCase() + "_start}", getNameId().replaceAll("[{}\\$]", ""));
     }
     public String getEncounterEffectText() {
         return getEffect()[getEncounterPart()][START].getText();
     }
     public String getEncounterFailText() {
-        String key = "${" + encounterID + "_" + field.getType().getText().toLowerCase() + "_fail}";
+        String key = "${" + encounterID + "_" + getField().getType().getText().toLowerCase() + "_fail}";
         String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
         if (value.equals(key)) {
             return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));
@@ -76,7 +74,7 @@ if(preparation ==null){
     }
 
     public String getEncounterSuccessText() {
-        String key = "${" + encounterID + "_" + field.getType().getText().toLowerCase() + "_success}";
+        String key = "${" + encounterID + "_" + getField().getType().getText().toLowerCase() + "_success}";
         String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
         if (value.equals(key)) {
             return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));

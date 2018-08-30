@@ -1,5 +1,6 @@
 package model.Item.investigators;
 
+import Service.GameService;
 import enums.*;
 import factory.ItemFactory;
 import gamemechanics.choice.Choice;
@@ -27,8 +28,8 @@ public class DianaStanley extends Investigator {
                 7,
                 5,
                 FieldID.FIELD_7,
-                ItemFactory.getAssets().get("&arcaneManuscripts"),
-                ItemFactory.getSpells().get("&wither")
+                GameService.getInstance().getAssets().get("&arcaneManuscripts"),
+                GameService.getInstance().getSpells().get("&wither")
         );
 
 

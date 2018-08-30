@@ -108,6 +108,7 @@ public class Animations {
         if (!(activeStage.getScene().getRoot() instanceof StackPane) || effectOverlayIsRunning) {
             return;
         }
+        effect.execute();
         effectOverlayIsRunning = true;
         StackPane root = (StackPane) activeStage.getScene().getRoot();
         EffectLayer pane = (EffectLayer)root.getChildren().get(root.getChildren().size()-1);
@@ -133,6 +134,7 @@ public class Animations {
         st1.setOnFinished(a -> {
             effectOverlayIsRunning = false;
             pane.getChildren().remove(group);
+
             GameService.getInstance().getInsertions().remove(effect);
 
         });
@@ -175,8 +177,9 @@ public class Animations {
             double scaleX =  InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleX();
             double scaleY =  InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleY();
 
-            double x = ((node.getTranslateX()+100)*scaleX-960) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getWidth()*scaleX-1920);
-            double y = ((node.getTranslateY()+100)*scaleY-640) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getHeight()*scaleY-1280);
+            double x = clamp(((node.getTranslateX()+100)*scaleX-960) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getWidth()*scaleX-1920),0,1);
+            double y = clamp(((node.getTranslateY()+100)*scaleY-640) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getHeight()*scaleY-1280),0,1);
+
            private int speed =20;
             private double speedX = (x-InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue())/speed;
             private double speedY = (y-InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue())/speed;

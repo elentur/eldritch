@@ -19,9 +19,8 @@ public class ResearchEncounter extends StandardEncounter{
 
     private final OldOnes oldOne;
 
-    public ResearchEncounter(Investigator inv, String encounterID, OldOnes oldOne){
-       super(inv,encounterID,EncounterType.RESEARCH_ENCOUNTER);
-        setInvestigator(inv);
+    public ResearchEncounter( String encounterID, OldOnes oldOne){
+       super(encounterID,EncounterType.RESEARCH_ENCOUNTER);
         this.oldOne=oldOne;
     }
 

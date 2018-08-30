@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.Item.Bonus;
+import model.effects.NextInvestigator;
 
 
 public class EncounterGui extends DialogGui {
@@ -30,6 +31,7 @@ public class EncounterGui extends DialogGui {
     public EncounterGui(Encounter encounter) {
         super("", 0.7, 0.7);
         this.encounter = encounter;
+        this.encounter.init();
         encounterMain = new StackPane();
         main.getChildren().clear();
         main.getChildren().add(encounterMain);
@@ -138,12 +140,16 @@ public class EncounterGui extends DialogGui {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
             if (encounter.completeEncounterPart() == 3) {
                 this.close();
-                GameService.getInstance().setActiveInvestigator();
+                GameService.getInstance().addEffect(new NextInvestigator());
             } else {
                 populate();
             }
         }
     }
 
-
+    @Override
+    public void close() {
+        super.close();
+        GameService.getInstance().addEncounter(null);
+    }
 }

@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model.Item.Monster;
+import model.effects.NextInvestigator;
 import utils.ResourceUtil;
 
 import java.util.List;
@@ -155,7 +156,7 @@ public class CombatEncounterGui extends EncounterGui {
                     GameService.getInstance().addChoice(new MonsterChoice(monsters));
                 }else{
                     if(!GameService.getInstance().getFieldOfInvestigator(encounter.getInvestigator()).getMonster().isEmpty()){
-                        GameService.getInstance().setActiveInvestigator();
+                       GameService.getInstance().addEffect(new NextInvestigator());
                     }
                 }
             } else {

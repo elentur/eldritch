@@ -1,5 +1,6 @@
 package model.Item.investigators;
 
+import Service.GameService;
 import enums.*;
 import factory.ItemFactory;
 import gamemechanics.choice.Choice;
@@ -27,8 +28,8 @@ public class AkachiOnyele extends Investigator {
                 5,
                 7,
                 FieldID.FIELD_15,
-                ItemFactory.getAssets().get("&profaneTome"),
-                ItemFactory.getSpells().get("&stormOfSpirits")
+               GameService.getInstance().getAssets().get("&profaneTome"),
+                GameService.getInstance().getSpells().get("&stormOfSpirits")
         );
 
 

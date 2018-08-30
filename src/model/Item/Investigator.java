@@ -1,6 +1,7 @@
 package model.Item;
 
 import container.ItemContainer;
+import container.ItemStack;
 import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
@@ -42,6 +43,7 @@ public abstract class Investigator implements Item {
     private List<ItemBonus> bonus;
 
     private ItemContainer<Item> inventory;
+    private ItemStack stack;
 
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
         this.setId(id);
@@ -130,4 +132,13 @@ public abstract class Investigator implements Item {
     public ItemType getSubType() {
         return ItemType.NONE;
     }
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
+    }
+
 }
