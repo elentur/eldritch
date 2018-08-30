@@ -32,7 +32,7 @@ public class EncounterButton extends ItemButton{
     private void setClickEvent() {
         addEventHandler(MouseEvent.MOUSE_CLICKED,e->{
             if (e.getButton().equals(MouseButton.PRIMARY)) {
-                GameService.getInstance().addEncounter(encounter);
+                GameService.getInstance().addEncounter(encounter.draw());
             }
         });
 

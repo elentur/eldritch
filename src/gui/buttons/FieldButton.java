@@ -31,13 +31,12 @@ public class FieldButton extends Group {
     private final static Image rumorImage = new Image("images/gameBoard/Rumor.png", 100, 100, true, true, false);
 
 
-
     @Getter
     private final Field field;
     private final FlowPane investigators;
     private final FlowPane monsters;
     private final FlowPane gateExpedition;
-    private  boolean mouseOver;
+    private boolean mouseOver;
     private final ImageView gate;
     private final ImageView expedition;
     private final ImageView clue;
@@ -47,6 +46,7 @@ public class FieldButton extends Group {
     private final ImageView mystery;
     private final ImageView rumor;
 
+    private boolean isDragging;
 
     public FieldButton(Field field, double x, double y) {
         Button button = new Button(getBackgroundImage(field));
@@ -55,7 +55,7 @@ public class FieldButton extends Group {
         this.setTranslateX(x);
         this.setTranslateY(y);
 
-        gateExpedition = new FlowPane(5,5);
+        gateExpedition = new FlowPane(5, 5);
         gateExpedition.setTranslateX(70);
         gateExpedition.setTranslateY(-200);
         gateExpedition.setOrientation(Orientation.HORIZONTAL);
@@ -63,7 +63,7 @@ public class FieldButton extends Group {
         gateExpedition.setPrefWidth(405);
         this.getChildren().add(gateExpedition);
 
-        investigators = new FlowPane(5,5);
+        investigators = new FlowPane(5, 5);
         investigators.setTranslateY(150);
         investigators.setTranslateX(-50);
         investigators.setOrientation(Orientation.HORIZONTAL);
@@ -71,14 +71,13 @@ public class FieldButton extends Group {
         investigators.setPrefWidth(255);
         this.getChildren().add(investigators);
 
-        monsters = new FlowPane(5,5);
+        monsters = new FlowPane(5, 5);
         monsters.translateYProperty().bind(monsters.heightProperty().multiply(-1));
         monsters.setTranslateX(-50);
         monsters.setOrientation(Orientation.HORIZONTAL);
         monsters.setAlignment(Pos.CENTER);
         monsters.setPrefWidth(255);
         this.getChildren().add(monsters);
-
 
 
         gate = new ImageView(gateImage);
@@ -98,7 +97,7 @@ public class FieldButton extends Group {
         clue.setTranslateX(120);
         clue.setEffect(Effects.dropShadow);
         clueLabel = new Label("");
-        clueLabel.styleProperty().bind(Fonts.getFont(0.5,Fonts.WHITE, Fonts.FontTyp.BOLD));
+        clueLabel.styleProperty().bind(Fonts.getFont(0.5, Fonts.WHITE, Fonts.FontTyp.BOLD));
         clueLabel.setTranslateY(-40);
         clueLabel.setTranslateX(120);
         clueLabel.setPrefWidth(100);
@@ -115,7 +114,7 @@ public class FieldButton extends Group {
         eldritch.setTranslateX(-80);
         eldritch.setEffect(Effects.dropShadow);
         eldritchLabel = new Label("");
-        eldritchLabel.styleProperty().bind(Fonts.getFont(0.5,Fonts.WHITE, Fonts.FontTyp.BOLD));
+        eldritchLabel.styleProperty().bind(Fonts.getFont(0.5, Fonts.WHITE, Fonts.FontTyp.BOLD));
         eldritchLabel.setTranslateY(70);
         eldritchLabel.setTranslateX(-80);
         eldritchLabel.setPrefWidth(100);
@@ -140,26 +139,30 @@ public class FieldButton extends Group {
 
         //  this.setBorder(new Border(new BorderStroke(Fonts.GREEN, BorderStrokeStyle.SOLID, new CornerRadii(1.0), BorderStroke.MEDIUM)));
         field.getUpdate().addListener(e -> {
-            if(field.getUpdate().getValue()){
+            if (field.getUpdate().getValue()) {
                 update();
                 field.getUpdate().setValue(false);
             }
         });
 
 
-        button.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-            if (e.getButton().equals(MouseButton.PRIMARY)) {
-                GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(),field);
+
+        button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+            if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
+                GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
             }
+            isDragging = false;
+        });
+        button.addEventHandler(MouseEvent.DRAG_DETECTED, e -> isDragging = true);
+
+
+        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
+            mouseOver = true;
+            update();
         });
 
-        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e->{
-                mouseOver=true;
-                update();
-        });
-
-        button.addEventHandler(MouseEvent.MOUSE_EXITED, e->{
-            mouseOver=false;
+        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
+            mouseOver = false;
             update();
         });
         update();
@@ -179,39 +182,39 @@ public class FieldButton extends Group {
     private void createTokens() {
         this.getChildren().remove(clue);
         this.getChildren().remove(clueLabel);
-        if(field.getNumberOfClues()>0){
+        if (field.getNumberOfClues() > 0) {
             this.getChildren().add(clue);
-            if(field.getNumberOfClues()>1){
-                clueLabel.setText(field.getNumberOfClues()+"");
+            if (field.getNumberOfClues() > 1) {
+                clueLabel.setText(field.getNumberOfClues() + "");
                 this.getChildren().add(clueLabel);
             }
         }
         this.getChildren().remove(eldritch);
         this.getChildren().remove(eldritchLabel);
-        if(field.getNumberOfEldritchTokens()>0){
+        if (field.getNumberOfEldritchTokens() > 0) {
             this.getChildren().add(eldritch);
-            if(field.getNumberOfEldritchTokens()>1){
-                eldritchLabel.setText(field.getNumberOfEldritchTokens()+"");
+            if (field.getNumberOfEldritchTokens() > 1) {
+                eldritchLabel.setText(field.getNumberOfEldritchTokens() + "");
                 this.getChildren().add(eldritchLabel);
             }
         }
 
         this.getChildren().remove(rumor);
-        if(field.hasRumor()){
+        if (field.hasRumor()) {
             this.getChildren().add(rumor);
         }
         this.getChildren().remove(mystery);
-        if(field.hasMystery()){
+        if (field.hasMystery()) {
             this.getChildren().add(mystery);
         }
     }
 
     private void createGateExpedition() {
         gateExpedition.getChildren().clear();
-        if(field.hasGate()){
+        if (field.hasGate()) {
             gateExpedition.getChildren().add(gate);
         }
-        if(field.hasExpedition()){
+        if (field.hasExpedition()) {
             gateExpedition.getChildren().add(expedition);
         }
     }
@@ -219,14 +222,14 @@ public class FieldButton extends Group {
     private void createMonster() {
         monsters.getChildren().clear();
 
-        for(Monster monster : field.getMonster()){
-            ImageView invImg = new ImageView("images/monster/"+ monster.getId()+".jpg");
+        for (Monster monster : field.getMonster()) {
+            ImageView invImg = new ImageView("images/monster/" + monster.getId() + ".jpg");
             invImg.setFitHeight(60);
             invImg.setFitWidth(60);
             monsters.getChildren().add(invImg);
-            if(!mouseOver && field.getMonster().size()>1){
-                Label number = new Label(field.getMonster().size()+"");
-                number.styleProperty().bind(Fonts.getFont(0.25,Fonts.RED,Fonts.FontTyp.BOLD));
+            if (!mouseOver && field.getMonster().size() > 1) {
+                Label number = new Label(field.getMonster().size() + "");
+                number.styleProperty().bind(Fonts.getFont(0.25, Fonts.RED, Fonts.FontTyp.BOLD));
                 monsters.getChildren().add(number);
                 break;
             }
@@ -235,8 +238,8 @@ public class FieldButton extends Group {
 
     private void createInvestigators() {
         investigators.getChildren().clear();
-        for(Investigator inv : field.getInvestigators()){
-            ImageView invImg = new ImageView("images/investigator/"+ inv.getId()+".jpg");
+        for (Investigator inv : field.getInvestigators()) {
+            ImageView invImg = new ImageView("images/investigator/" + inv.getId() + ".jpg");
             invImg.setFitHeight(60);
             invImg.setFitWidth(60);
             investigators.getChildren().add(invImg);

@@ -1,5 +1,6 @@
 package model.Item;
 
+import container.ItemStack;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public abstract class Token implements Item {
 
     public final String uniqueId = UUID.randomUUID().toString();
     private final ItemType type;
+    private ItemStack stack;
 
     protected Token(ItemType type) {
         this.type = type;
@@ -47,4 +49,17 @@ public abstract class Token implements Item {
     }
 
     public abstract Encounter getEncounter();
+
+    @Override
+    public void setStack(ItemStack itemStack){
+        stack=itemStack;
+    }
+    @Override
+    public void discard(){
+        stack.discard(this);
+    }
+    @Override
+    public Token draw(){
+        return (Token) getStack().draw();
+    }
 }

@@ -133,4 +133,8 @@ public abstract class Encounter implements Item {
     public void discard(){
         stack.discard(this);
     }
+    @Override
+    public Encounter draw(){
+        return (Encounter) getStack().draw();
+    }
 }

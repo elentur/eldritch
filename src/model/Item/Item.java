@@ -26,4 +26,5 @@ public interface Item {
 
     void setStack(ItemStack itemStack);
     void discard();
+    Item  draw();
 }

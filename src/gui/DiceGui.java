@@ -94,7 +94,7 @@ class DiceGui extends Group {
         shiftButton.setTranslateY(-40);
         shiftButton.setVisible(false);
         PhongMaterial redMaterial = new PhongMaterial();
-        redMaterial.setSpecularColor(Color.WHITE);
+        redMaterial.setSpecularColor(Color.BLACK);
         redMaterial.setDiffuseMap(backgroundImage);
         meshView = new MeshView(mesh);
         meshView.setMaterial(redMaterial);

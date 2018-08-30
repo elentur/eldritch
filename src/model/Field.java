@@ -56,16 +56,16 @@ public class Field {
     public List<Encounter> getEncounters(Investigator inv) {
         List<Encounter> encounters = new ArrayList<>();
         if(type.equals(FieldType.CITY) || type.equals(FieldType.WILDERNESS)|| type.equals(FieldType.SEA)){
-            encounters.add(GameService.getInstance().getStandardEncounters().draw());
+            encounters.add(GameService.getInstance().getStandardEncounters().showFirst());
         }
         if(fieldID.equals(FieldID.ARKHAM) || fieldID.equals(FieldID.SAN_FRANCISCO) || fieldID.equals(FieldID.BUENOS_AIRES) ){
-            encounters.add(GameService.getInstance().getAmericaEncounter().draw());
+            encounters.add(GameService.getInstance().getAmericaEncounter().showFirst());
         }
         if(fieldID.equals(FieldID.TOKYO) || fieldID.equals(FieldID.SHANGHAI) || fieldID.equals(FieldID.SYDNEY) ){
-            encounters.add(GameService.getInstance().getAsiaEncounter().draw());
+            encounters.add(GameService.getInstance().getAsiaEncounter().showFirst());
         }
         if(fieldID.equals(FieldID.LONDON) || fieldID.equals(FieldID.ROME) || fieldID.equals(FieldID.ISTANBUL) ){
-            encounters.add(GameService.getInstance().getEuropeEncounter().draw());
+            encounters.add(GameService.getInstance().getEuropeEncounter().showFirst());
         }
         if(hasExpedition()){
                 encounters.add(tokens.getExpedition().getEncounter());
@@ -81,9 +81,6 @@ public class Field {
         }
         if(hasMystery()){
             encounters.add(tokens.getMystery().getEncounter());
-        }
-        for(Encounter e : encounters){
-            e.discard();
         }
         return encounters;
     }

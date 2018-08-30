@@ -25,7 +25,7 @@ public class MysteryToken extends Token {
 
     @Override
     public Encounter getEncounter() {
-        return GameService.getInstance().getSpecialEncounter().draw();
+        return GameService.getInstance().getSpecialEncounter().showFirst();
     }
     @Override
     public void setStack(ItemStack itemStack){

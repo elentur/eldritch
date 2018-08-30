@@ -82,6 +82,8 @@ public class StandardEncounter extends Encounter {
         return value;
     }
 
+
+
     public int completeEncounterPart() {
         String header;
         String text;

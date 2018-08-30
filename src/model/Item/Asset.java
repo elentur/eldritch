@@ -2,6 +2,7 @@ package model.Item;
 
 import container.ItemStack;
 import enums.ItemType;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,4 +55,9 @@ public abstract class Asset implements Item {
     public void discard(){
         stack.discard(this);
     }
+    @Override
+    public Asset draw(){
+        return (Asset) getStack().draw();
+    }
+
 }

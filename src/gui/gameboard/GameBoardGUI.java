@@ -12,11 +12,11 @@ import model.GameBoard;
 public class GameBoardGUI extends StackPane {
 
     @Getter
-    private final  Group zoomGroup;
+    private final Group zoomGroup;
     @Getter
-    private final   ZoomableScrollPane scrollPane;
+    private final ZoomableScrollPane scrollPane;
     @Getter
-    private final  WorldMapGUI map;
+    private final WorldMapGUI map;
 
     public GameBoardGUI(GameBoard gameBoard) {
 
@@ -27,16 +27,16 @@ public class GameBoardGUI extends StackPane {
 
         scrollPane = new ZoomableScrollPane(zoomGroup);
         scrollPane.getStyleClass().add("gameboard");
-scrollPane.setPannable(true);
+        scrollPane.setPannable(true);
         this.getChildren().add(scrollPane);
 
 
     }
 
-    public FieldButton getFieldButton(Field field){
-        for(Node node : zoomGroup.getChildren()){
-            FieldButton fieldButton = ((MapGUI)node).getFieldButton(field);
-            if(fieldButton!=null) return fieldButton;
+    public FieldButton getFieldButton(Field field) {
+        for (Node node : zoomGroup.getChildren()) {
+            FieldButton fieldButton = ((MapGUI) node).getFieldButton(field);
+            if (fieldButton != null) return fieldButton;
         }
         return null;
     }

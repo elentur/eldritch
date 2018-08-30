@@ -1,5 +1,6 @@
 package model.Item.token;
 
+import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
@@ -7,12 +8,10 @@ import gamemechanics.encounter.ExpeditionEncounter;
 import model.Item.Token;
 
 public class ExpeditionToken extends Token {
-    private final ExpeditionEncounter encounter;
     private ItemStack stack;
 
-    public ExpeditionToken(ExpeditionEncounter encounter) {
+    public ExpeditionToken() {
         super(ItemType.EXPEDITION_TOKEN);
-        this.encounter=encounter;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class ExpeditionToken extends Token {
 
     @Override
     public Encounter getEncounter() {
-        return encounter;
+        return GameService.getInstance().getExpeditionEncounter().showFirst();
     }
 
     @Override

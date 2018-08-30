@@ -150,6 +150,7 @@ public class EncounterGui extends DialogGui {
     @Override
     public void close() {
         super.close();
+        encounter.discard();
         GameService.getInstance().addEncounter(null);
     }
 }

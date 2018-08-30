@@ -40,6 +40,7 @@ public class GameBoardGUITest extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         Fonts.init(primaryStage);
         GameBoard gameBoard = GameBoardFactory.getGameBoard();
         GameBoardGUI gameboardGUI = new GameBoardGUI(gameBoard);

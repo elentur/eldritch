@@ -50,4 +50,13 @@ public class RumorEncounter extends StandardEncounter{
     public String getId() {
         return "&rumor_encounter";
     }
+
+    @Override
+    public Encounter draw() {
+        return this;
+    }
+    @Override
+    public void discard() {
+       //TODO
+    }
 }

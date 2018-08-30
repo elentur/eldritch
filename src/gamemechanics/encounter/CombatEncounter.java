@@ -48,6 +48,15 @@ public class CombatEncounter extends Encounter {
         super.init();
         setEncounterPart(1);
     }
+    @Override
+    public void discard(){
+       //TODO
+    }
+
+    @Override
+    public Encounter draw() {
+        return this;
+    }
 
     private void activatePassiveBoni() {
         Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)

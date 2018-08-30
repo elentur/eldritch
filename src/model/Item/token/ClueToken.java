@@ -31,7 +31,7 @@ public class ClueToken extends Token {
 
     @Override
     public Encounter getEncounter() {
-        return GameService.getInstance().getReseaarchEncounter().draw();
+        return GameService.getInstance().getReseaarchEncounter().showFirst();
     }
     @Override
     public void setStack(ItemStack itemStack){

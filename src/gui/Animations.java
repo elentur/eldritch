@@ -4,6 +4,7 @@ import Service.GameService;
 import gui.buttons.Button;
 import gui.effectoverlays.Overlay;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -105,6 +106,7 @@ public class Animations {
 
 
     public static void effectOverlayAnimations(Overlay group, Stage activeStage, Effect effect) {
+
         if (!(activeStage.getScene().getRoot() instanceof StackPane) || effectOverlayIsRunning) {
             return;
         }
@@ -140,6 +142,7 @@ public class Animations {
         });
 
         ParallelTransition t = new ParallelTransition(st2,tt, st1);
+
         t.playFromStart();
 
 

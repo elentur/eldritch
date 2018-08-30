@@ -3,6 +3,7 @@ package model.Item;
 import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -101,5 +102,10 @@ public abstract class Monster implements Item, IMonster {
     @Override
     public void discard(){
         stack.discard(this);
+    }
+
+    @Override
+    public Monster draw(){
+        return (Monster) getStack().draw();
     }
 }

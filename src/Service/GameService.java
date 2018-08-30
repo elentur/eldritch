@@ -225,7 +225,7 @@ public class GameService {
 
     public void addExpedition() {
         Field field = gameBoard.getField(activeExpedition().getFieldID());
-        field.addExpedition(new ExpeditionToken(activeExpedition()));
+        field.addExpedition(new ExpeditionToken());
     }
 
     public void removeExpedition() {

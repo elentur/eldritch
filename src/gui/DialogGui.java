@@ -1,6 +1,7 @@
 package gui;
 
 import Service.GameService;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
@@ -58,7 +59,10 @@ public abstract class DialogGui extends StackPane {
 
     }
     public void close(){
+        Platform.runLater(this::closeEvent);
 
+    }
+    private void closeEvent(){
         InterfaceLinking.root.getChildren().remove(this);
         com.sun.javafx.tk.Toolkit.getToolkit().exitNestedEventLoop(this, null);
     }

@@ -2,6 +2,7 @@ package model.Item;
 
 import container.ItemStack;
 import enums.ItemType;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +55,10 @@ public abstract class Spell implements Item {
     @Override
     public void discard(){
         stack.discard(this);
+    }
+    @Override
+    public Spell draw(){
+        return (Spell) getStack().draw();
     }
 
 }

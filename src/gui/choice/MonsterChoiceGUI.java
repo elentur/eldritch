@@ -24,10 +24,11 @@ public class MonsterChoiceGUI extends ChoiceDialog {
             MonsterButton button= new MonsterButton(monster);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
+                    close();
                     List<Monster>  remain = new ArrayList<>(monsters);
                     remain.remove(monster);
                     GameService.getInstance().addEncounter(new CombatEncounter(monster,remain, GameService.getInstance().getActiveInvestigator()));
-                   close();
+
                 }
             });
             scrollPane.getScrollableChildren().addAll(button);

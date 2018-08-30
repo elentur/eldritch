@@ -25,7 +25,7 @@ public class GateToken extends Token {
 
     @Override
     public Encounter getEncounter() {
-        return GameService.getInstance().getOtherWorldEncounter().draw();
+        return GameService.getInstance().getOtherWorldEncounter().showFirst();
     }
     @Override
     public void setStack(ItemStack itemStack){

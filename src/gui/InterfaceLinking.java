@@ -30,13 +30,23 @@ public class InterfaceLinking {
 
     static InterfaceLinking instance = new InterfaceLinking();
 
-    private static StackPane pane;
-
     public static StackPane root;
     public static Interface interfaceGui;
     public static GameBoardGUI gameBoardGUI;
     private static Stage primaryStage;
 
+
+    public static void init(Stage stage) {
+        primaryStage = stage;
+        root = (StackPane) primaryStage.getScene().getRoot();
+        for(Node n: root.getChildren()){
+            if(n instanceof Interface){
+                interfaceGui= (Interface)n;
+            }else if(n instanceof GameBoardGUI){
+                gameBoardGUI= (GameBoardGUI) n;
+            }
+        }
+    }
 
     private InterfaceLinking() {
         GameService game = GameService.getInstance();
@@ -62,39 +72,26 @@ public class InterfaceLinking {
 
 
     private void createEffectOverlay(Effect effect) {
-        if (effect == null || !GameService.getInstance().getInsertions().contains(effect)) {
+        if (effect == null ) {
             return;
         }
         switch (effect.getEffectTyp()) {
             case LOOSE:
-                Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
+            Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
                 break;
             case SPEND:
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
                 break;
             default:
                 effect.execute();
-              GameService.getInstance().getInsertions().remove(effect);
+                Platform.runLater(() -> GameService.getInstance().getInsertions().remove(effect));
+
                 break;
 
         }
 
 
     }
-
-
-    public static void init(Stage stage) {
-        primaryStage = stage;
-        root = (StackPane) primaryStage.getScene().getRoot();
-        for(Node n: root.getChildren()){
-            if(n instanceof Interface){
-                interfaceGui= (Interface)n;
-            }else if(n instanceof GameBoardGUI){
-                gameBoardGUI= (GameBoardGUI) n;
-            }
-        }
-    }
-
 
     private void startChoiceDialog(Choice choice) {
         if (choice == null) {
@@ -119,7 +116,8 @@ public class InterfaceLinking {
             return;
         }
         root.getChildren().add(root.getChildren().size()-1,dlg);
-        Platform.runLater(dlg::showAndWait);
+       // Platform.runLater(dlg::showAndWait);
+        dlg.showAndWait();
     }
 
     private void startEncounterDialog(Encounter encounter) {
@@ -139,7 +137,8 @@ public class InterfaceLinking {
             return;
         }
         root.getChildren().add(root.getChildren().size()-1,dlg);
-        Platform.runLater(dlg::showAndWait);
+       //Platform.runLater(dlg::showAndWait);
+       dlg.showAndWait();
 
     }
 }

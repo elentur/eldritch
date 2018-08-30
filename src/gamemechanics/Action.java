@@ -91,6 +91,7 @@ public class Action extends Encounter {
         return value;
     }
 
+
     public int completeEncounterPart() {
         if (result.isSuccess()) {
             getGame().addEffect(getEffect()[getEncounterPart()][PASS]);

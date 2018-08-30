@@ -6,6 +6,7 @@ import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
+import gamemechanics.encounter.Encounter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
@@ -140,5 +141,8 @@ public abstract class Investigator implements Item {
     public void discard(){
         stack.discard(this);
     }
-
+    @Override
+    public Investigator draw(){
+        return (Investigator) getStack().draw();
+    }
 }
