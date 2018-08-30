@@ -32,9 +32,9 @@ public class And extends Effect {
         if(effects== null || effects.isEmpty()){
             return ResourceUtil.get("${gain}","effect" ) + " " + ResourceUtil.get("${nothing}","effect"  );
         }
-        StringBuilder value = new StringBuilder(effects.get(0).getText()) ;
+        StringBuilder value = new StringBuilder(effects.get(0).getText().substring(0, effects.get(0).getText().length()-1));
         for(int i =1; i < effects.size();i++){
-            value.append(" ").append(ResourceUtil.get("${and}", "effect" )).append(" ").append(effects.get(i).getText());
+            value.append(" ").append(ResourceUtil.get("${and}", "effect" )).append(" ").append(effects.get(i).getText(), 0, effects.get(i).getText().length()-1);
         }
         return value.toString()+".";
     }

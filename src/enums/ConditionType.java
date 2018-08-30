@@ -2,12 +2,11 @@ package enums;
 
 import utils.ResourceUtil;
 
-import java.util.List;
-
 public enum ConditionType {
     BLESSED("${blessed}"),
     CURSED("${cursed}"),
     DETAINED("${detained}"),
+    DEPT("${dept}"),
     NONE(""),
     AMNESIA("${amnesia}"),
     INTERNAL_INJURY("${internal_injury}");

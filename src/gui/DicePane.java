@@ -18,7 +18,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import model.Item.Investigator;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -166,11 +165,11 @@ public class DicePane extends HBox {
 
     private SubScene createSubScene(PerspectiveCamera camera, Group root) {
         camera.setFieldOfView(1);
-        PointLight light = new PointLight(Color.WHITE);
+        PointLight light = new PointLight(Color.GRAY);
         light.setTranslateX(50);
         light.setTranslateY(-300);
         light.setTranslateZ(-400);
-        PointLight light2 = new PointLight(Color.WHITE);
+        PointLight light2 = new PointLight(Color.GRAY);
         light2.setTranslateX(400);
         light2.setTranslateY(0);
         light2.setTranslateZ(-400);
