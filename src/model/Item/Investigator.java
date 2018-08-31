@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.java.Log;
+import model.Item.token.ClueToken;
 import model.SkillSet;
 import utils.ResourceUtil;
 
@@ -44,6 +45,7 @@ public abstract class Investigator implements Item {
     private List<ItemBonus> bonus;
 
     private ItemContainer<Item> inventory;
+    private ItemContainer<ClueToken> clues;
     private ItemStack stack;
 
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
@@ -62,6 +64,7 @@ public abstract class Investigator implements Item {
         this.setActualSanity(getSanity());
         this.setStartingSpace(satrtField);
         this.setBonus(createBonus());
+        this.clues = new ItemContainer<>();
         this.setInventory(new ItemContainer<>());
         for (Item p : startItems) {
             this.getInventory().add(p);
@@ -144,5 +147,20 @@ public abstract class Investigator implements Item {
     @Override
     public Investigator draw(){
         return (Investigator) getStack().draw();
+    }
+
+    public void addClue(ClueToken clueToken) {
+        clues.add(clueToken);
+        update.setValue(true);
+    }
+
+    public ClueToken getClue() {
+        if(clues.isEmpty()) {
+            return null;
+        }
+        ClueToken clue=  clues.remove(0);
+        clue.discard();
+        update.setValue(true);
+        return clue;
     }
 }

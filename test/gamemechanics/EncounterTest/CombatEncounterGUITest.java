@@ -33,8 +33,6 @@ public class CombatEncounterGUITest extends Application {
     public void start(Stage primaryStage) {
         Fonts.init(primaryStage);
 
-        Field f = new Field( FieldID.FIELD_1);
-        GameService.getInstance().setField(f);
         CombatEncounter encounter = initCombatEncounter();
         StackPane root = new StackPane();
         Scene scene = new Scene(root);

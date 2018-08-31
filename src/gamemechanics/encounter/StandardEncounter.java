@@ -22,7 +22,6 @@ public class StandardEncounter extends Encounter {
 
     private final String encounterID;
 
-    private Preparation preparation;
 
     public StandardEncounter( String encounterID) {
        this(encounterID,EncounterType.STANDARD_ENCOUNTER);
@@ -52,10 +51,10 @@ public class StandardEncounter extends Encounter {
 
 
     public Preparation getPreparation() {
-        if(preparation ==null){
-            preparation = new Preparation(getTestType()[getEncounterPart()], getInvestigator(), getSituationType(), this);
+        if(super.getPreparation() ==null){
+            setPreparation(new Preparation(getTestType()[getEncounterPart()], getInvestigator(), getSituationType(), this));
         }
-        return preparation;
+        return super.getPreparation();
     }
 
     public String getEncounterStartText() {

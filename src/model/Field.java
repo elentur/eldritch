@@ -152,6 +152,9 @@ public class Field {
     }
 
     public Token removeClue(ClueToken token) {
+        if(token == null && getNumberOfClues()>0){
+            return removeToken( tokens.getClues().get(0));
+        }
         return removeToken(token);
     }
 

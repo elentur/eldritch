@@ -9,6 +9,7 @@ import gui.choice.InformationDialog;
 import gui.choice.MonsterChoiceGUI;
 import gui.choice.YesNoDialog;
 import gui.effectoverlays.LooseEffectOverlay;
+import gui.effectoverlays.SpawnClueEffectOverlay;
 import gui.effectoverlays.SpendEffectOverlay;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.effects.Loose;
+import model.effects.SpawnClue;
 import model.effects.Spend;
 
 @Log
@@ -81,6 +83,9 @@ public class InterfaceLinking {
                 break;
             case SPEND:
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
+                break;
+            case SPAWN_CLUE:
+                Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
                 break;
             default:
                 effect.execute();

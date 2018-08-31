@@ -101,7 +101,7 @@ public class ActiveInvestigatorGUI extends Group {
 
             healthImage.setValue(inv.getActualHealth() + "");
             sanityImage.setValue(inv.getActualSanity() + "");
-            clueImage.setValue("1");
+            clueImage.setValue(inv.getClues().size()+"");
             focusImage.setValue("1");
             trainImage.setValue("1");
             shipImage.setValue("1");

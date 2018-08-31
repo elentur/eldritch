@@ -37,7 +37,6 @@ public class GameService {
     private static GameService ourInstance = new GameService();
 
     private final ObservableList<Effect> insertions;
-    private Field field;
 
     @Getter
     private ObjectProperty<Investigator> activeInvestigator;
@@ -48,6 +47,9 @@ public class GameService {
     private ItemStack<Asset> assets;
     @Getter
     private ItemStack<Spell> spells;
+
+    @Getter
+    private ItemStack<ClueToken> clueTokens;
 
     @Getter
     private ItemStack<StandardEncounter> standardEncounters;
@@ -130,6 +132,7 @@ public class GameService {
         europeEncounter = ItemFactory.getEuropeEncounter();
         asiaEncounter = ItemFactory.getAsiaEncounter();
         americaEncounter = ItemFactory.getAmericaEncounter();
+        clueTokens= ItemFactory.getClueTokens();
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
@@ -189,11 +192,6 @@ public class GameService {
     public void addEncounter(Encounter encounter) {
         this.encounter.set(encounter);
     }
-
-    public void setField(Field f) {
-        field = f;
-    }
-
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;

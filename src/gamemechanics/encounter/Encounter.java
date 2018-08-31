@@ -41,6 +41,7 @@ public abstract class Encounter implements Item {
     private SituationType situationType;
     private Field field;
     private ItemStack stack;
+    private Preparation preparation;
 
     public Encounter(EncounterType type) {
         encounterType = type;
@@ -61,8 +62,9 @@ public abstract class Encounter implements Item {
         return result;
     }
 
+
     public Preparation getPreparation() {
-        return null;
+        return preparation;
     }
 
     public int completeEncounterPart() {
@@ -121,6 +123,7 @@ public abstract class Encounter implements Item {
 
     public void init() {
         setEncounterPart(0);
+        setPreparation(null);
         game=GameService.getInstance();
         setInvestigator(game.getEncounteringInvestigator());
         this.field = game.getFieldOfInvestigator(getInvestigator());

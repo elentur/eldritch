@@ -28,11 +28,6 @@ public class EncounterGUITest extends Application {
     public void start(Stage primaryStage) {
         Investigator inv = new AgnesBaker();
         Fonts.init(primaryStage);
-        Field  f = new Field( FieldID.ARKHAM);
-        f.setExpedition(true);
-        GameService.getInstance().setField(f);
-
-        EncounterChoice encounterChoice = new EncounterChoice( f);
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
         scene.setFill(Color.RED);
@@ -46,7 +41,6 @@ public class EncounterGUITest extends Application {
         InterfaceLinking.init(primaryStage);
         primaryStage.show();
         primaryStage.setMaximized(true);
-        GameService.getInstance().addChoice(encounterChoice);
     }
 
 

@@ -2,11 +2,13 @@ package factory;
 
 import container.ItemContainer;
 import container.ItemStack;
+import enums.FieldID;
 import enums.OldOnes;
 import gamemechanics.encounter.*;
 import lombok.extern.java.Log;
 import model.Item.Asset;
 import model.Item.Spell;
+import model.Item.token.ClueToken;
 
 import java.io.File;
 
@@ -24,6 +26,8 @@ public class ItemFactory {
     private static ItemContainer<AmericaEncounter> americaEncounters;
     private static ItemContainer<AsiaEncounter> asiaEncounters;
     private static ItemContainer<EuropeEncounter> europeEncounters;
+
+    private static ItemContainer<ClueToken> clueTokens;
 
     public static ItemStack<Asset> getAssets() {
 
@@ -194,4 +198,13 @@ public class ItemFactory {
         return new ItemStack<>(asiaEncounters);
     }
 
+    public static ItemStack<ClueToken> getClueTokens() {
+        if (clueTokens == null) {
+            clueTokens = new ItemContainer<>();
+           for(FieldID fieldID : FieldID.values()){
+               clueTokens.add(new ClueToken(fieldID));
+           }
+        }
+        return new ItemStack<>(clueTokens);
+    }
 }

@@ -8,12 +8,13 @@ import javafx.scene.image.ImageView;
 import model.effects.Spend;
 
 public class SpendEffectOverlay extends Overlay {
-private final static Image sanityImage = new Image("images/Sanity.png",150,150,true,true,false);
-    private final static Image healthImage = new Image("images/Health.png",150,150,true,true,false);
-    private final static Image clueImage = new Image("images/Clue.png",150,150,true,true,false);
+private final static Image sanityImage = new Image("images/effect/Sanity.png",150,150,true,true,false);
+    private final static Image healthImage = new Image("images/effect/Health.png",150,150,true,true,false);
+    private final static Image clueImage = new Image("images/effect/Clue.png",150,150,true,true,false);
 
     public SpendEffectOverlay(Spend spend) {
 
+        super(spend);
         Label value = new Label((-spend.getValue()) + "");
         ImageView img ;
         value.getStyleClass().add("text-stroke-white");
@@ -35,6 +36,7 @@ private final static Image sanityImage = new Image("images/Sanity.png",150,150,t
                 img= null;
                 break;
         }
+        setCord(spend.getInvestigator());
         this.getChildren().addAll(img,value);
         this.setMouseTransparent(true);
     }

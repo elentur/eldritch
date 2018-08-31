@@ -59,13 +59,12 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
 
-        GameService.getInstance().startGame(new InvestigatorContainer(Arrays.asList(new Investigator[]{ new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley()})), gameBoard);
+        GameService.getInstance().startGame(new InvestigatorContainer(Arrays.asList(new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley())), gameBoard);
 
         gameBoard.addMonster(new Shan(), FieldID.ARKHAM);
         gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
 
         GameService.getInstance().addGate(FieldID.PYRAMIDS);
-        GameService.getInstance().addClue();
         GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS, new RumorEncounter0()));
         GameService.getInstance().addMystery(FieldID.PYRAMIDS);
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));

@@ -105,43 +105,51 @@ public class Animations {
     }
 
 
-    public static void effectOverlayAnimations(Overlay group, Stage activeStage, Effect effect) {
+    public static void effectOverlayAnimations(Overlay overlay, Stage activeStage, Effect effect) {
 
         if (!(activeStage.getScene().getRoot() instanceof StackPane) || effectOverlayIsRunning) {
             return;
         }
-        effect.execute();
+
         effectOverlayIsRunning = true;
+        int delay = overlay.init();
+
+
         StackPane root = (StackPane) activeStage.getScene().getRoot();
         EffectLayer pane = (EffectLayer)root.getChildren().get(root.getChildren().size()-1);
-        group.setEffect(Effects.dropShadow);
-        pane.getChildren().add(group);
 
-        ScaleTransition st2 = new ScaleTransition(Duration.millis(200), group);
+        ScaleTransition st0=new ScaleTransition(Duration.millis(1), overlay);
+        st0.setOnFinished(e->{
+            effect.execute();
+            overlay.setEffect(Effects.dropShadow);
+            pane.getChildren().add(overlay);
+        });
+        ScaleTransition st2 = new ScaleTransition(Duration.millis(200), overlay);
         st2.setFromX(5);
         st2.setToX(0.5);
         st2.setFromY(5);
         st2.setToY(0.5);
 
-        TranslateTransition tt = new TranslateTransition(Duration.millis(200), group);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(200), overlay);
         tt.setFromX(0);
-        tt.setToX(group.getX());
+        tt.setToX(overlay.getX());
         tt.setFromY(0);
-        tt.setToY(group.getY());
+        tt.setToY(overlay.getY());
 
-        FadeTransition st1 = new FadeTransition(Duration.millis(1000), group);
+        FadeTransition st1 = new FadeTransition(Duration.millis(1000), overlay);
         st1.setDelay(Duration.millis(500));
         st1.setFromValue(1);
         st1.setToValue(0);
         st1.setOnFinished(a -> {
             effectOverlayIsRunning = false;
-            pane.getChildren().remove(group);
+            pane.getChildren().remove(overlay);
 
             GameService.getInstance().getInsertions().remove(effect);
 
         });
 
-        ParallelTransition t = new ParallelTransition(st2,tt, st1);
+        ParallelTransition t = new ParallelTransition(st0,st2,tt, st1);
+        t.setDelay(Duration.millis(delay));
 
         t.playFromStart();
 

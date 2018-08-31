@@ -33,9 +33,6 @@ public class ActionGUITest extends Application {
     public void start(Stage primaryStage) {
         Investigator inv = new AgnesBaker();
         Fonts.init(primaryStage);
-        Field f = new Field(FieldID.ARKHAM);
-        f.setExpedition(true);
-        GameService.getInstance().setField(f);
 
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
