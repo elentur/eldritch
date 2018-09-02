@@ -2,18 +2,10 @@ package gui.buttons;
 
 import Service.GameService;
 import gamemechanics.encounter.Encounter;
-import gamemechanics.encounter.standardencounter.StandardEncounter0;
-import gui.Animations;
 import gui.Effects;
-import gui.Fonts;
-import javafx.event.EventType;
 import javafx.scene.Node;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.TextAlignment;
-
-import java.util.concurrent.Callable;
 
 public class EncounterButton extends ItemButton{
     private final Encounter encounter;
@@ -35,7 +27,6 @@ public class EncounterButton extends ItemButton{
                 GameService.getInstance().addEncounter(encounter.draw());
             }
         });
-
     }
 
     @Override

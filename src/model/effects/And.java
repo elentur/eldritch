@@ -1,6 +1,7 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
@@ -22,9 +23,8 @@ public class And extends Effect {
     @Override
     public void execute() {
         super.execute();
-        for (Effect e: effects){
-            e.execute();
-        }
+        GameService.getInstance().addAllEffect(effects);
+
     }
 
     @Override

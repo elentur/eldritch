@@ -44,4 +44,49 @@ public class SkillSet {
                 return 1;
         }
     }
+
+    public void improve(TestType testType, int value) {
+        switch (testType){
+            case STRENGTH:
+                strengthMod+=value;
+                if(strengthMod>2){
+                    strengthMod=2;
+                }else if(strengthMod <0){
+                    strengthMod=0;
+                }
+                break;
+            case LORE:
+                loreMod+=value;
+                if(loreMod>2){
+                    loreMod=2;
+                }else if(loreMod <0){
+                    loreMod=0;
+                }
+                break;
+            case WILL:
+                willMod+=value;
+                if(willMod>2){
+                    willMod=2;
+                }else if(willMod <0){
+                    willMod=0;
+                }
+                break;
+            case OBSERVATION:
+                observationMod+=value;
+                if(observationMod>2){
+                    observationMod=2;
+                }else if(observationMod <0){
+                    observationMod=0;
+                }
+                break;
+            case INFLUENCE:
+                influenceMod+=value;
+                if(influenceMod>2){
+                    influenceMod=2;
+                }else if(influenceMod <0){
+                    influenceMod=0;
+                }
+                break;
+        }
+    }
 }

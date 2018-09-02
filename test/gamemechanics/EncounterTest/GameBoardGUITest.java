@@ -2,25 +2,20 @@ package gamemechanics.EncounterTest;
 
 import Service.GameService;
 import container.InvestigatorContainer;
-import container.ItemContainer;
 import enums.FieldID;
 import factory.GameBoardFactory;
-import factory.ItemFactory;
 import gamemechanics.encounter.rumorencounter.RumorEncounter0;
 import gui.EffectLayer;
 import gui.Fonts;
 import gui.Interface;
-import gui.gameboard.GameBoardGUI;
 import gui.InterfaceLinking;
+import gui.gameboard.GameBoardGUI;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameBoard;
-import model.Item.Asset;
-import model.Item.Investigator;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
@@ -45,7 +40,9 @@ public class GameBoardGUITest extends Application {
         GameBoard gameBoard = GameBoardFactory.getGameBoard();
         GameBoardGUI gameboardGUI = new GameBoardGUI(gameBoard);
         StackPane root = new StackPane();
-        root.getChildren().addAll(gameboardGUI,new Interface(root),new EffectLayer());
+        Interface inter = new Interface(root);
+
+        root.getChildren().addAll(gameboardGUI,inter,new EffectLayer());
         Scene scene = new Scene(root);
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
@@ -69,6 +66,7 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().addMystery(FieldID.PYRAMIDS);
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
+       // gameboardGUI.getChildren().add(new ImproveEffectOverlay(new Improve(TestType.LORE,2,GameService.getInstance().getActiveInvestigator())));
     }
 
 

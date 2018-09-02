@@ -15,7 +15,7 @@ public class Improve extends Effect {
     private final TestType testType;
 
     public Improve(TestType testType,int value, Investigator investigator) {
-        super(EffectTyps.SPAWN_CLUE);
+        super(EffectTyps.IMPROVE);
         this.value = value;
         this.testType =testType;
         this.investigator = investigator;
@@ -25,7 +25,7 @@ public class Improve extends Effect {
     @Override
     public void execute() {
         super.execute();
-
+        investigator.improve(testType,value);
 
     }
 

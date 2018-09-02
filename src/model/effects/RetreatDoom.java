@@ -1,7 +1,7 @@
 package model.effects;
 
 
-import enums.EffectSelector;
+import Service.GameService;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
@@ -14,7 +14,7 @@ public class RetreatDoom extends Effect {
     private  Investigator investigator;
 
     public RetreatDoom(  int value,Investigator investigator) {
-        super(EffectTyps.ADVANCE_DOOM);
+        super(EffectTyps.RETREAT_DOOM);
         this.investigator = investigator;
         this.value=value;
     }
@@ -23,7 +23,7 @@ public class RetreatDoom extends Effect {
     public void execute() {
         super.execute();
 
-
+        GameService.getInstance().getDoomTrack().retreatDoom(value);
     }
 
     @Override

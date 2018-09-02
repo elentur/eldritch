@@ -5,29 +5,19 @@ import container.ItemContainer;
 import container.ItemStack;
 import enums.FieldID;
 import enums.OldOnes;
+import enums.OmenStates;
 import enums.SituationType;
 import factory.ItemFactory;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.*;
-import gamemechanics.encounter.americaencounter.AmericaEncounter0;
-import gamemechanics.encounter.asiaencounter.AsiaEncounter0;
-import gamemechanics.encounter.europeencounter.EuropeEncounter0;
-import gamemechanics.encounter.expeditionencounter.ExpeditionEncounter0;
-import gamemechanics.encounter.otherworldencounter.OtherWorldEncounter0;
-import gamemechanics.encounter.researchencounter.azathoth.ResearchEncounter0;
-import gamemechanics.encounter.specialencounter.shubniggurath.SpecialEncounter0;
-import gamemechanics.encounter.standardencounter.StandardEncounter0;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
-import lombok.Setter;
-import model.Effect;
-import model.Field;
-import model.GameBoard;
+import model.*;
 import model.Item.*;
 import model.Item.token.*;
 
@@ -70,20 +60,25 @@ public class GameService {
     @Getter
     private Investigator encounteringInvestigator;
 
+    @Getter
+    private DoomTrack doomTrack;
+    @Getter
+    private OmenTrack omenTrack;
+
     public static GameService getInstance() {
         return ourInstance;
     }
 
     public void startGame(InvestigatorContainer investigators, GameBoard gameBoard) {
+
         setGameBoard(gameBoard);
-
-
         this.investigators = investigators;
         for (Investigator inv : investigators) {
             gameBoard.addInvestigator(inv);
         }
         activeInvestigator.setValue(investigators.get(0));
         encounteringInvestigator=activeInvestigator.getValue();
+
     }
 
     public void setActiveInvestigator() {
@@ -133,6 +128,9 @@ public class GameService {
         asiaEncounter = ItemFactory.getAsiaEncounter();
         americaEncounter = ItemFactory.getAmericaEncounter();
         clueTokens= ItemFactory.getClueTokens();
+        doomTrack = new DoomTrack(15);
+        omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
+
     }
 
     public Field getFieldOfInvestigator(Investigator inv) {
@@ -268,5 +266,8 @@ public class GameService {
     }
 
 
+    public void addAllEffect(List<Effect> list) {
+        insertions.addAll(list);
+    }
 
 }

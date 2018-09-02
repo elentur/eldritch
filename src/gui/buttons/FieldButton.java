@@ -1,6 +1,7 @@
 package gui.buttons;
 
 import Service.GameService;
+import gui.Animations;
 import gui.Effects;
 import gui.Fonts;
 import javafx.geometry.Orientation;
@@ -146,10 +147,10 @@ public class FieldButton extends Group {
         });
 
 
-
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
                 GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
+               // GameService.getInstance().addEffect(new AdvanceOmen(EffectSelector.ANY,1,GameService.getInstance().getActiveInvestigator()));
             }
             isDragging = false;
         });
@@ -180,42 +181,57 @@ public class FieldButton extends Group {
     }
 
     private void createTokens() {
-        this.getChildren().remove(clue);
-        this.getChildren().remove(clueLabel);
-        if (field.getNumberOfClues() > 0) {
+        if (field.getNumberOfClues() <= 0) {
+            this.getChildren().remove(clue);
+
+        } else if (field.getNumberOfClues() > 0 && !this.getChildren().contains(clue)) {
             this.getChildren().add(clue);
-            if (field.getNumberOfClues() > 1) {
-                clueLabel.setText(field.getNumberOfClues() + "");
-                this.getChildren().add(clueLabel);
-            }
+            Animations.spawnEffect(clue);
         }
-        this.getChildren().remove(eldritch);
-        this.getChildren().remove(eldritchLabel);
-        if (field.getNumberOfEldritchTokens() > 0) {
+        this.getChildren().remove(clueLabel);
+        if (field.getNumberOfClues() > 1) {
+            clueLabel.setText(field.getNumberOfClues() + "");
+            this.getChildren().add(clueLabel);
+        }
+        if (field.getNumberOfEldritchTokens() <= 0) {
+            this.getChildren().remove(eldritch);
+        } else if (field.getNumberOfEldritchTokens() > 0 && !this.getChildren().contains(eldritch)) {
             this.getChildren().add(eldritch);
-            if (field.getNumberOfEldritchTokens() > 1) {
-                eldritchLabel.setText(field.getNumberOfEldritchTokens() + "");
-                this.getChildren().add(eldritchLabel);
-            }
+
+            Animations.spawnEffect(eldritch);
         }
 
-        this.getChildren().remove(rumor);
-        if (field.hasRumor()) {
-            this.getChildren().add(rumor);
+        this.getChildren().remove(eldritchLabel);
+        if (field.getNumberOfEldritchTokens() > 1) {
+            eldritchLabel.setText(field.getNumberOfEldritchTokens() + "");
+            this.getChildren().add(eldritchLabel);
         }
-        this.getChildren().remove(mystery);
-        if (field.hasMystery()) {
+        if (!field.hasRumor()) {
+            this.getChildren().remove(rumor);
+        } else if (field.hasRumor() && !this.getChildren().contains(rumor)) {
+            this.getChildren().add(rumor);
+            Animations.spawnEffect(rumor);
+        }
+        if (!field.hasMystery()) {
+            this.getChildren().remove(mystery);
+        } else if (field.hasMystery() && !this.getChildren().contains(mystery)) {
             this.getChildren().add(mystery);
+            Animations.spawnEffect(mystery);
         }
     }
 
     private void createGateExpedition() {
-        gateExpedition.getChildren().clear();
-        if (field.hasGate()) {
+        if (!field.hasGate()) {
+            gateExpedition.getChildren().remove(gate);
+        } else if (field.hasGate() && !gateExpedition.getChildren().contains(gate)) {
             gateExpedition.getChildren().add(gate);
+            Animations.spawnEffect(gate);
         }
-        if (field.hasExpedition()) {
+        if (!field.hasExpedition()) {
+            gateExpedition.getChildren().remove(expedition);
+        } else if (field.hasExpedition() && !gateExpedition.getChildren().contains(expedition)) {
             gateExpedition.getChildren().add(expedition);
+            Animations.spawnEffect(expedition);
         }
     }
 

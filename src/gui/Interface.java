@@ -3,6 +3,7 @@ package gui;
 import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.AncientOneGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
+import gui.interfaceelements.OmenTrackGUI;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
@@ -16,6 +17,8 @@ public class Interface extends Group {
     private final InactiveInvestigatorsGUI inactiveInvestigatorsGUI;
     @Getter
     private final AncientOneGUI ancientOneGUI;
+    @Getter
+    private final OmenTrackGUI omenTrack;
    public Interface(StackPane parent){
 
        StackPane.setAlignment(this,Pos.TOP_LEFT);
@@ -25,13 +28,17 @@ public class Interface extends Group {
        inactiveInvestigatorsGUI.prefHeightProperty().bind(parent.heightProperty().multiply(0.5));
        inactiveInvestigatorsGUI.translateYProperty().bind(parent.heightProperty().multiply(0.5).subtract(inactiveInvestigatorsGUI.heightProperty().multiply(0.5)));
        ancientOneGUI = new AncientOneGUI();
+       omenTrack= new OmenTrackGUI();
+       omenTrack.translateXProperty().bind(parent.widthProperty().subtract(150));
+       omenTrack.setTranslateY(150);
 
 
 
        this.getStyleClass().add("transparent");
 
-
-        this.getChildren().addAll(activeInvestigatorGUI,ancientOneGUI,inactiveInvestigatorsGUI);
+       this.setTranslateX(-10);
+       this.setTranslateY(-10);
+        this.getChildren().addAll(activeInvestigatorGUI,ancientOneGUI,inactiveInvestigatorsGUI,omenTrack);
    }
 
 

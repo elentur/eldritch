@@ -6,7 +6,6 @@ import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
-import gamemechanics.encounter.Encounter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
@@ -162,5 +161,9 @@ public abstract class Investigator implements Item {
         clue.discard();
         update.setValue(true);
         return clue;
+    }
+
+    public void improve(TestType testType, int value) {
+        getSkillSet().improve( testType,  value);
     }
 }

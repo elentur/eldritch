@@ -1,9 +1,7 @@
 package gui;
 
-import Service.GameService;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -14,9 +12,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.awt.*;
 
@@ -61,11 +56,15 @@ public abstract class DialogGui extends StackPane {
     public void close(){
         Platform.runLater(this::closeEvent);
 
+
     }
     private void closeEvent(){
         InterfaceLinking.root.getChildren().remove(this);
         com.sun.javafx.tk.Toolkit.getToolkit().exitNestedEventLoop(this, null);
+        afterClose();
     }
+
+    protected  void afterClose(){}
 
     public void showAndWait() {
 

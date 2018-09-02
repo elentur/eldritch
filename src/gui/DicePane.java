@@ -44,7 +44,7 @@ public class DicePane extends HBox {
         this.setMaxWidth(width);
         this.setPadding(new Insets(0,20,0,20));
         Preparation preparation = encounter.getPreparation();
-        acceptButton = new InfoTextButton("${accept_Button}");
+        acceptButton = new InfoTextButton("${accept_button}");
         if(preparation.getTestTyp().equals(TestType.NONE)) {
             Region region = new Region();
             HBox.setHgrow(region, Priority.ALWAYS);
@@ -73,7 +73,7 @@ public class DicePane extends HBox {
             dicesScene.setEffect(Effects.dropShadow);
             VBox diceButtonContainer = new VBox();
             diceButtonContainer.setAlignment(Pos.TOP_CENTER);
-            diceButton = new RoundButton("${dice_Button}");
+            diceButton = new RoundButton("${dice_button}");
             diceButton.setOnMouseClicked(e -> {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     Result result = encounter.check();

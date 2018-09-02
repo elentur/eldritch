@@ -4,13 +4,8 @@ import Service.GameService;
 import gamemechanics.choice.*;
 import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
-import gui.choice.EncounterChoiceGUI;
-import gui.choice.InformationDialog;
-import gui.choice.MonsterChoiceGUI;
-import gui.choice.YesNoDialog;
-import gui.effectoverlays.LooseEffectOverlay;
-import gui.effectoverlays.SpawnClueEffectOverlay;
-import gui.effectoverlays.SpendEffectOverlay;
+import gui.choice.*;
+import gui.effectoverlays.*;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
 import gui.gameboard.GameBoardGUI;
@@ -23,9 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lombok.extern.java.Log;
 import model.Effect;
-import model.effects.Loose;
-import model.effects.SpawnClue;
-import model.effects.Spend;
+import model.effects.*;
 
 @Log
 public class InterfaceLinking {
@@ -41,11 +34,11 @@ public class InterfaceLinking {
     public static void init(Stage stage) {
         primaryStage = stage;
         root = (StackPane) primaryStage.getScene().getRoot();
-        for(Node n: root.getChildren()){
-            if(n instanceof Interface){
-                interfaceGui= (Interface)n;
-            }else if(n instanceof GameBoardGUI){
-                gameBoardGUI= (GameBoardGUI) n;
+        for (Node n : root.getChildren()) {
+            if (n instanceof Interface) {
+                interfaceGui = (Interface) n;
+            } else if (n instanceof GameBoardGUI) {
+                gameBoardGUI = (GameBoardGUI) n;
             }
         }
     }
@@ -74,18 +67,49 @@ public class InterfaceLinking {
 
 
     private void createEffectOverlay(Effect effect) {
-        if (effect == null ) {
+        if (effect == null) {
             return;
         }
         switch (effect.getEffectTyp()) {
             case LOOSE:
-            Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
+                Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
                 break;
             case SPEND:
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
                 break;
             case SPAWN_CLUE:
                 Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
+                break;
+            case GAIN_CLUE:
+                Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
+                break;
+            case IMPROVE:
+                Animations.effectOverlayAnimations(new ImproveEffectOverlay((Improve) effect), primaryStage, effect);
+                break;
+            case ADVANCE_DOOM:
+                Animations.effectOverlayAnimations(new DoomEffectOverlay((AdvanceDoom) effect), primaryStage, effect);
+                break;
+            case RETREAT_DOOM:
+                Animations.effectOverlayAnimations(new DoomEffectOverlay((RetreatDoom) effect), primaryStage, effect);
+                break;
+            case ADVANCE_OMEN:
+                Animations.effectOverlayAnimations(new OmenEffectOverlay((AdvanceOmen) effect), primaryStage, effect);
+                break;
+            case RETREAT_OMEN:
+                Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
+                break;
+            case AND:
+                Platform.runLater(() -> {
+                    GameService.getInstance().getInsertions().remove(effect);
+                    effect.execute();
+                });
+
+                break;
+            case OR:
+                Platform.runLater(() -> {
+                    GameService.getInstance().getInsertions().remove(effect);
+                    effect.execute();
+                });
                 break;
             default:
                 effect.execute();
@@ -116,12 +140,15 @@ public class InterfaceLinking {
             case INFORMATION:
                 dlg = new InformationDialog((InformationChoice) choice);
                 break;
+            case EFFECT:
+                dlg = new EffectChoiceGUI((EffectChoice) choice);
+                break;
         }
         if (dlg == null) {
             return;
         }
-        root.getChildren().add(root.getChildren().size()-1,dlg);
-       // Platform.runLater(dlg::showAndWait);
+        root.getChildren().add(root.getChildren().size() - 1, dlg);
+        // Platform.runLater(dlg::showAndWait);
         dlg.showAndWait();
     }
 
@@ -141,9 +168,9 @@ public class InterfaceLinking {
         if (dlg == null) {
             return;
         }
-        root.getChildren().add(root.getChildren().size()-1,dlg);
-       //Platform.runLater(dlg::showAndWait);
-       dlg.showAndWait();
+        root.getChildren().add(root.getChildren().size() - 1, dlg);
+        //Platform.runLater(dlg::showAndWait);
+        dlg.showAndWait();
 
     }
 }

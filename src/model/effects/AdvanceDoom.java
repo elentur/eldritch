@@ -1,7 +1,7 @@
 package model.effects;
 
 
-import enums.EffectSelector;
+import Service.GameService;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
@@ -22,7 +22,7 @@ public class AdvanceDoom extends Effect {
     @Override
     public void execute() {
         super.execute();
-
+        GameService.getInstance().getDoomTrack().advanceDoom(value);
 
     }
 

@@ -1,17 +1,13 @@
 package gui.choice;
 
-import Service.GameService;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.encounter.Encounter;
-import gui.Animations;
 import gui.ItemScrollPane;
 import gui.buttons.EncounterButton;
-import gui.buttons.ItemButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 public class EncounterChoiceGUI extends ChoiceDialog {
 
@@ -25,7 +21,6 @@ public class EncounterChoiceGUI extends ChoiceDialog {
             EncounterButton button= new EncounterButton(encounter);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-
                    close();
                 }
             });

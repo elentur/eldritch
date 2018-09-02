@@ -4,10 +4,12 @@ import Service.GameService;
 import gui.buttons.Button;
 import gui.effectoverlays.Overlay;
 import javafx.animation.*;
-import javafx.application.Platform;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.Glow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -116,10 +118,10 @@ public class Animations {
 
 
         StackPane root = (StackPane) activeStage.getScene().getRoot();
-        EffectLayer pane = (EffectLayer)root.getChildren().get(root.getChildren().size()-1);
+        EffectLayer pane = (EffectLayer) root.getChildren().get(root.getChildren().size() - 1);
 
-        ScaleTransition st0=new ScaleTransition(Duration.millis(1), overlay);
-        st0.setOnFinished(e->{
+        ScaleTransition st0 = new ScaleTransition(Duration.millis(1), overlay);
+        st0.setOnFinished(e -> {
             effect.execute();
             overlay.setEffect(Effects.dropShadow);
             pane.getChildren().add(overlay);
@@ -148,7 +150,7 @@ public class Animations {
 
         });
 
-        ParallelTransition t = new ParallelTransition(st0,st2,tt, st1);
+        ParallelTransition t = new ParallelTransition(st0, st2, tt, st1);
         t.setDelay(Duration.millis(delay));
 
         t.playFromStart();
@@ -185,22 +187,34 @@ public class Animations {
 
             private long lastUpdate = 0;
 
-            double scaleX =  InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleX();
-            double scaleY =  InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleY();
+            double scaleX = InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleX();
+            double scaleY = InterfaceLinking.gameBoardGUI.getZoomGroup().getScaleY();
 
-            double x = clamp(((node.getTranslateX()+100)*scaleX-960) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getWidth()*scaleX-1920),0,1);
-            double y = clamp(((node.getTranslateY()+100)*scaleY-640) /(InterfaceLinking.gameBoardGUI.getMap().getLayoutBounds().getHeight()*scaleY-1280),0,1);
 
-           private int speed =20;
-            private double speedX = (x-InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue())/speed;
-            private double speedY = (y-InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue())/speed;
-            private int count=0;
+
+            double x;
+            double y;
+
+            private int speed = 20;
+            private double speedX;
+            private double speedY;
+            private int count = 0;
+
+
+
             @Override
             public void handle(long time) {
+                if(lastUpdate==0){
+                   Point2D nodePoint= InterfaceLinking.gameBoardGUI.getMap().getLocalToParentTransform().transform(node.getTranslateX(),node.getTranslateY());
+                     x = clamp(((nodePoint.getX() + 100) * scaleX - 960) / (InterfaceLinking.gameBoardGUI.getZoomGroup().getLayoutBounds().getWidth() * scaleX - 1920), 0, 1);
+                     y = clamp(((nodePoint.getY() + 100) * scaleY - 640) / (InterfaceLinking.gameBoardGUI.getZoomGroup().getLayoutBounds().getHeight() * scaleY - 1280), 0, 1);
+                    speedX = (x - InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue()) / speed;
+                    speedY = (y - InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue()) / speed;
+                }
                 if (lastUpdate > 0) {
-                    InterfaceLinking.gameBoardGUI.getScrollPane().setVvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue()+speedY);
-                    InterfaceLinking.gameBoardGUI.getScrollPane().setHvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue()+speedX);
-                    if (count>=speed) {
+                    InterfaceLinking.gameBoardGUI.getScrollPane().setVvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue() + speedY);
+                    InterfaceLinking.gameBoardGUI.getScrollPane().setHvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue() + speedX);
+                    if (count >= speed) {
                         stop();
                     }
                     count++;
@@ -210,5 +224,56 @@ public class Animations {
         };
 
         timer.start();
+    }
+
+    public static void spawnEffect(Node node) {
+        AnimationTimer timer = new AnimationTimer() {
+
+            private long lastUpdate = 0;
+            // private  ColorAdjust glow = new ColorAdjust(0.0, 0.1, 0.3, 0.0);
+            private Glow glow = new Glow(0);
+            private double speed = 0.1;
+
+
+            @Override
+            public void handle(long time) {
+                if (lastUpdate > 0) {
+                    glow.setLevel(glow.getLevel() + speed);
+                    node.setEffect(glow);
+                    if (glow.getLevel() >= 1.5) {
+                        speed = -0.05;
+                    } else if (glow.getLevel() <= 0) {
+                        node.setEffect(null);
+                        stop();
+                    }
+
+                }
+                lastUpdate = time;
+            }
+        };
+
+        timer.start();
+    }
+
+    public static void rotateOmen(Group circle, ImageView oldOne, ImageView newOne, int rotate) {
+
+        RotateTransition rt = new RotateTransition(Duration.millis(200),circle);
+        if(circle.getRotate()==0 && rotate==270){
+            rt.setFromAngle(360);
+        }else if(circle.getRotate()==270 && rotate==0){
+            rt.setFromAngle(-90);
+        }
+        rt.setToAngle(rotate);
+
+        ScaleTransition st1 = new ScaleTransition(Duration.millis(200), oldOne);
+        st1.setToX(0.5);
+        st1.setToY(0.5);
+        ScaleTransition st2 = new ScaleTransition(Duration.millis(200), newOne);
+        st2.setToX(1.0);
+        st2.setToY(1.0);
+
+        ParallelTransition t = new ParallelTransition(rt, st1,st2);
+
+        t.playFromStart();
     }
 }

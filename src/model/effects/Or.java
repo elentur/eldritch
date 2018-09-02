@@ -1,7 +1,9 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
+import gamemechanics.choice.EffectChoice;
 import lombok.Getter;
 import model.Effect;
 import utils.ResourceUtil;
@@ -22,6 +24,7 @@ public class Or extends Effect {
     @Override
     public void execute() {
         super.execute();
+        GameService.getInstance().addChoice(new EffectChoice(effects));
     }
 
     @Override
