@@ -17,7 +17,18 @@ public class InvestigatorContainer extends ArrayList<Investigator>{
     }
 
 
+    @Override
+    public boolean add(Investigator value){
+        return value != null && super.add(value);
+    }
 
+    @Override
+    public void add(int index,Investigator value){
+        if(value==null){
+            return;
+        }
+        super.add(index,value);
+    }
     public Investigator get(String s) {
         if(s == null){
             return null;

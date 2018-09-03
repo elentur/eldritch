@@ -12,11 +12,11 @@ import utils.ResourceUtil;
 
 @Getter
 @Log
-public class RandomArtifact extends Effect {
+public class GainArtifact extends Effect {
     private final ItemType itemType;
     private final Investigator investigator;
 
-    public RandomArtifact(ItemType itemType, Investigator investigator) {
+    public GainArtifact(ItemType itemType, Investigator investigator) {
         super(EffectTyps.RANDOM_ARTIFACT);
         this.itemType = itemType;
         this.investigator = investigator;
@@ -28,10 +28,10 @@ public class RandomArtifact extends Effect {
         super.execute();
         switch (itemType) {
             case ANY :
-              //  investigator.getInventory().add(GameService.getInstance().getArtifacts().draw());
+                investigator.getInventory().add(GameService.getInstance().getArtifacts().draw());
                 break;
             default:
-              //  investigator.getInventory().add(GameService.getInstance().getArtifacts().getByItemType(itemType));
+                investigator.getInventory().add(GameService.getInstance().getArtifacts().getByItemType(itemType));
                 break;
         }
         log.info(itemType.toString() );
@@ -42,7 +42,7 @@ public class RandomArtifact extends Effect {
         if(itemType==null){
             return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${gain}","effect"  ,ResourceUtil.get("${random_asset}","effect" ,itemType.getText()  ) ) ;
+        return ResourceUtil.get("${gain}","effect"  ,ResourceUtil.get("${random_artifact}","effect" ,itemType.getText()  ) ) ;
 
     }
 }

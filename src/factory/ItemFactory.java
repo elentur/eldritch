@@ -6,6 +6,7 @@ import enums.FieldID;
 import enums.OldOnes;
 import gamemechanics.encounter.*;
 import lombok.extern.java.Log;
+import model.Item.Artifact;
 import model.Item.Asset;
 import model.Item.Spell;
 import model.Item.token.ClueToken;
@@ -16,6 +17,7 @@ import java.io.File;
 public class ItemFactory {
 
     private static ItemContainer<Asset> assets;
+    private static ItemContainer<Artifact> artifacts;
     private static ItemContainer<Spell> spells;
 
     private static ItemContainer<StandardEncounter> standardEncounters;
@@ -45,7 +47,22 @@ public class ItemFactory {
         }
         return new ItemStack<>(assets);
     }
+    public static ItemStack<Artifact> getArtifacts() {
 
+        if (artifacts == null) {
+            File f = new File("./src/model/item/artifacts");
+            artifacts = new ItemContainer<>();
+            for (String name: f.list()){
+                try {
+                    Artifact artifact = (Artifact) Class.forName("model.Item.artifacts."+name.replace(".java","")).newInstance();
+                    artifacts.add(artifact);
+                } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return new ItemStack<>(artifacts);
+    }
 
     public static ItemStack<Spell> getSpells() {
         if (spells == null) {

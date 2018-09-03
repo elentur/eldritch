@@ -25,9 +25,11 @@ public class InfoTextButton extends TextButton {
         infoText.styleProperty().bind(Fonts.getFont(0.2,Fonts.DARK,Fonts.FontTyp.NORMAL));
         infoText.getStyleClass().addAll("text-stroke-black","stroke-thin","short-line-spacing");
         infoText.setPrefWidth(backgroundImage.getWidth()*0.85);
-        infoText.setPrefHeight(backgroundImage.getHeight()*0.5);
+       // infoText.setPrefHeight(backgroundImage.getHeight()*0.5);
         infoText.setTextAlignment(TextAlignment.CENTER);
         infoText.setAlignment(Pos.CENTER);
+        infoText.setWrapText(true);
+        imageView.fitHeightProperty().bind(infoText.heightProperty().add(label.heightProperty()));
      //   infoText.setBorder(new Border(new BorderStroke(Fonts.RED, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.MEDIUM)));
         this.getChildren().add(infoText);
 

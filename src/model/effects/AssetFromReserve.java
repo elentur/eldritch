@@ -1,8 +1,10 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
 import enums.ItemType;
+import gamemechanics.choice.ReserveChoice;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
@@ -13,13 +15,11 @@ import utils.ResourceUtil;
 @Log
 public class AssetFromReserve extends Effect {
     private final ItemType itemType;
-    private final int value;
     private final Investigator investigator;
 
-    public AssetFromReserve(ItemType itemType, int value, Investigator investigator) {
+    public AssetFromReserve(ItemType itemType, Investigator investigator) {
         super(EffectTyps.ASSET_FROM_RESERVE);
         this.itemType = itemType;
-        this.value = value;
         this.investigator = investigator;
     }
 
@@ -27,20 +27,15 @@ public class AssetFromReserve extends Effect {
     @Override
     public void execute() {
         super.execute();
-        switch (itemType) {
-            case ITEM :
-                break;
-            default:
-                break;
-        }
+        GameService.getInstance().addChoice(new ReserveChoice(true,itemType));
         log.info(itemType.toString() );
     }
 
     @Override
     public String getText() {
-        if(itemType==null ||value ==0){
-            return ResourceUtil.get("${gain}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  );
+        if(itemType==null){
+            return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${nothing}","effect"  ));
         }
-       return ResourceUtil.get("${gain}","effect"  ) + " "+ value + " " + itemType.getText() + " " + ResourceUtil.get("${reserve}","effect"  ) ;
+       return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${reserve}","effect", itemType.getText()  )) ;
     }
 }

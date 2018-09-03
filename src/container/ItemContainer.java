@@ -25,6 +25,18 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
 
 
 
+    @Override
+    public boolean add(T value){
+        return value != null && super.add(value);
+    }
+
+    @Override
+    public void add(int index,T value){
+        if(value==null){
+            return;
+        }
+        super.add(index,value);
+    }
     public T get(String s) {
         if(s == null){
             return null;
@@ -52,7 +64,9 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
 
 
     public ItemContainer<Item> getItemsWidthSituationTyp(SituationType situationTyp) {
-        return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus->bonus.getSituation().equalsWithAll(situationTyp)))
-                .collect(Collectors.toCollection(ItemContainer::new));
+
+        return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus -> bonus.getSituation().equalsWithAll(situationTyp)))
+                    .collect(Collectors.toCollection(ItemContainer::new));
+
     }
 }

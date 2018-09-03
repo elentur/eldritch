@@ -36,6 +36,8 @@ public class GameService {
     @Getter
     private ItemStack<Asset> assets;
     @Getter
+    private ItemStack<Artifact> artifacts;
+    @Getter
     private ItemStack<Spell> spells;
 
     @Getter
@@ -64,6 +66,7 @@ public class GameService {
     private DoomTrack doomTrack;
     @Getter
     private OmenTrack omenTrack;
+    private Reserve reserve;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -78,6 +81,7 @@ public class GameService {
         }
         activeInvestigator.setValue(investigators.get(0));
         encounteringInvestigator=activeInvestigator.getValue();
+        reserve.init();
 
     }
 
@@ -118,7 +122,9 @@ public class GameService {
         insertions = FXCollections.observableArrayList();
         activeInvestigator = new SimpleObjectProperty<>(null);
         assets = ItemFactory.getAssets();
+        artifacts = ItemFactory.getArtifacts();
         spells = ItemFactory.getSpells();
+        reserve = new Reserve(assets);
         standardEncounters = ItemFactory.getStandardEncounters();
         specialEncounter = ItemFactory.getSpecialEncounters(OldOnes.SHUB_NIGGURATH);
         reseaarchEncounter = ItemFactory.getResearchEncounters(OldOnes.AZATHOTH);
@@ -130,6 +136,7 @@ public class GameService {
         clueTokens= ItemFactory.getClueTokens();
         doomTrack = new DoomTrack(15);
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
+
 
     }
 
@@ -270,4 +277,7 @@ public class GameService {
         insertions.addAll(list);
     }
 
+    public Reserve getReserve() {
+        return reserve;
+    }
 }

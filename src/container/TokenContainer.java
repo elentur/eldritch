@@ -19,7 +19,18 @@ public class TokenContainer extends ArrayList<Token>{
         super();
     }
 
+    @Override
+    public boolean add(Token value){
+        return value != null && super.add(value);
+    }
 
+    @Override
+    public void add(int index,Token value){
+        if(value==null){
+            return;
+        }
+        super.add(index,value);
+    }
 
     public GateToken getGate() {
        return  (GateToken) this.stream().filter(token->token.getSubType().equals(ItemType.GATE_TOKEN)).findFirst().orElse(null);

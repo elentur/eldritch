@@ -98,11 +98,8 @@ public class InterfaceLinking {
             case RETREAT_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
                 break;
-            case ASSET_FROM_RESERVE:
-                Animations.effectOverlayAnimations(new AssetOverlay((AssetFromReserve) effect), primaryStage, effect);
-                break;
             case RANDOM_ASSET:
-                Animations.effectOverlayAnimations(new AssetOverlay((RandomAsset) effect), primaryStage, effect);
+                Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
                 break;
             case AND:
                 Platform.runLater(() -> {
@@ -118,9 +115,9 @@ public class InterfaceLinking {
                 });
                 break;
             default:
-                effect.execute();
-                Platform.runLater(() -> GameService.getInstance().getInsertions().remove(effect));
 
+                Platform.runLater(() -> GameService.getInstance().getInsertions().remove(effect));
+                effect.execute();
                 break;
 
         }
@@ -142,6 +139,9 @@ public class InterfaceLinking {
                 break;
             case COMBAT_ENCOUNTER:
                 dlg = new MonsterChoiceGUI((MonsterChoice) choice);
+                break;
+            case RESERVE_CHOICE:
+                dlg = new ReserveChoiceGUI((ReserveChoice) choice);
                 break;
             case INFORMATION:
                 dlg = new InformationDialog((InformationChoice) choice);

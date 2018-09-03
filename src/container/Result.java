@@ -3,6 +3,7 @@ package container;
 import enums.ConditionType;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,18 @@ public class Result extends ArrayList<Die> {
     private int reroll;
     private int shift;
     private int shiftValue;
+    @Override
+    public boolean add(Die value) {
+        return value != null && super.add(value);
+    }
 
+    @Override
+    public void add(int index,Die value){
+        if(value==null){
+            return;
+        }
+        super.add(index,value);
+    }
     public Result(ConditionType typ, int minNumberOfSuccesses){
         this.typ = typ;
         this.minNumberOfSuccesses=minNumberOfSuccesses;

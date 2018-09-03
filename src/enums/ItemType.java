@@ -18,7 +18,7 @@ public enum ItemType {
     INCANTATION("${incantation}", Collections.singletonList("Incantation")),
     ENCOUNTER("${encounter}", Collections.singletonList("encounter")),
     ASSET("${asset}", Collections.singletonList("asset")),
-    ARTIFACT("${artifact}", Collections.singletonList("artifact")),
+    ARTIFACT("${artifact}", Collections.singletonList("artifacts")),
     INVESTIGATOR("${investigator}", Collections.singletonList("Investigator") ),
     MONSTER("${monster}", Collections.singletonList("Monster") ),
     SPELL("${spell}", Collections.singletonList("Spell")  ),
@@ -29,13 +29,13 @@ public enum ItemType {
     MYSTERY_TOKEN("${mytsery_token}", Collections.singletonList("Mystery")  ),
     ELDRITCH_TOKEN("${eldritch_token}", Collections.singletonList("Eldritch")  ),
     EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  ),
-    ANY("",null );
+    ANY("${any}",null );
     private String key;
     private List<String> parts;
 
     private ItemType(String key, List<String> parts) {
         this.key = key;
-        parts = parts;
+       this.parts = parts;
     }
 
     public String getText() {
@@ -47,5 +47,15 @@ public enum ItemType {
          return parts;
     }
 
+    public boolean equalsWithAny(ItemType o){
+        return o.equals(this) || this.equals(ANY);
+    }
 
+    public boolean equalsWithParts(ItemType o){
+        if(o.equals(ANY)){
+            return true;
+        }
+     return this.parts.containsAll(o.parts);
+
+    }
 }

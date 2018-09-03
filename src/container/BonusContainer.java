@@ -4,6 +4,7 @@ import enums.EventTimeType;
 import enums.SituationType;
 import enums.TestType;
 import model.Item.Bonus;
+import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_AdditionalDice;
 import model.Item.boni.ItemBonus_GainDice;
@@ -25,7 +26,18 @@ public class BonusContainer<T extends Bonus> extends ArrayList<T>{
         super();
     }
 
+    @Override
+    public boolean add(T value){
+        return value != null && super.add(value);
+    }
 
+    @Override
+    public void add(int index,T value){
+        if(value==null){
+            return;
+        }
+        super.add(index,value);
+    }
 
     public BonusContainer<T> getAllByEventTime(EventTimeType eventTime) {
         if(eventTime == null){

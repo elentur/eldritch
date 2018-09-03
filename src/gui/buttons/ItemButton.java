@@ -22,6 +22,7 @@ public class ItemButton extends Group {
     private boolean showBackSide;
     protected final Item item;
     private final Tooltip tooltip;
+    private boolean isSelected;
 
 
     protected Node actualNode;
@@ -64,7 +65,9 @@ public class ItemButton extends Group {
         node.setOnMouseEntered(e -> actualNode.setEffect(Effects.hover));
         node.setOnMouseExited(e -> {
             actualNode.setEffect(null);
-            this.setEffect(Effects.dropShadow);
+            if(!isSelected) {
+                this.setEffect(Effects.dropShadow);
+            }
         });
         node.setOnMouseClicked(e -> {
             if (e.getButton().equals(MouseButton.SECONDARY) && showBackSide) {
@@ -99,4 +102,12 @@ public class ItemButton extends Group {
         return backsideInfo;
     }
 
+    public void switchSelected() {
+        isSelected=!isSelected;
+        if(isSelected){
+            this.setEffect(Effects.disabled);
+        }else{
+            this.setEffect(Effects.dropShadow);
+        }
+    }
 }
