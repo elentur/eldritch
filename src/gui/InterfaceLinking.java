@@ -98,6 +98,12 @@ public class InterfaceLinking {
             case RETREAT_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
                 break;
+            case ASSET_FROM_RESERVE:
+                Animations.effectOverlayAnimations(new AssetOverlay((AssetFromReserve) effect), primaryStage, effect);
+                break;
+            case RANDOM_ASSET:
+                Animations.effectOverlayAnimations(new AssetOverlay((RandomAsset) effect), primaryStage, effect);
+                break;
             case AND:
                 Platform.runLater(() -> {
                     GameService.getInstance().getInsertions().remove(effect);

@@ -28,7 +28,8 @@ public enum ItemType {
     RUMOR_TOKEN("${rumor_token}", Collections.singletonList("Rumor")  ),
     MYSTERY_TOKEN("${mytsery_token}", Collections.singletonList("Mystery")  ),
     ELDRITCH_TOKEN("${eldritch_token}", Collections.singletonList("Eldritch")  ),
-    EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  );
+    EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  ),
+    ANY("",null );
     private String key;
     private List<String> parts;
 

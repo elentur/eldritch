@@ -1,13 +1,16 @@
 package container;
 
+import enums.ItemType;
 import factory.ItemFactory;
 import gui.buttons.ItemButton;
 import model.Item.Item;
+import model.Item.ItemBonus;
 import model.Item.Spell;
 
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.function.Function;
 
 public class ItemStack<T extends Item> {
 
@@ -54,5 +57,9 @@ public class ItemStack<T extends Item> {
 
     public void discard(T item) {
         traystack.add(item);
+    }
+
+    public T getByItemType(ItemType itemType) {
+        return drawStack.stream().filter(item->item.getItemType().equals(itemType)).findFirst().orElse(null);
     }
 }

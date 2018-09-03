@@ -1,6 +1,8 @@
 package gui.buttons;
 
 import Service.GameService;
+import enums.ItemType;
+import enums.SpendType;
 import gui.Animations;
 import gui.Effects;
 import gui.Fonts;
@@ -18,6 +20,9 @@ import lombok.Getter;
 import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
+import model.effects.Loose;
+import model.effects.RandomAsset;
+import model.effects.Spend;
 
 public class FieldButton extends Group {
 
@@ -149,8 +154,8 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-                GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
-               // GameService.getInstance().addEffect(new AdvanceOmen(EffectSelector.ANY,1,GameService.getInstance().getActiveInvestigator()));
+               GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
+              // GameService.getInstance().addEffect(new RandomAsset(ItemType.ANY,1,GameService.getInstance().getActiveInvestigator()));
             }
             isDragging = false;
         });

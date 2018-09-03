@@ -1,6 +1,7 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
 import enums.ItemType;
 import lombok.Getter;
@@ -11,15 +12,13 @@ import utils.ResourceUtil;
 
 @Getter
 @Log
-public class RandomItem extends Effect {
+public class RandomAsset extends Effect {
     private final ItemType itemType;
-    private final int value;
     private final Investigator investigator;
 
-    public RandomItem(ItemType itemType, int value, Investigator investigator) {
-        super(EffectTyps.RANDOM_ITEM);
+    public RandomAsset(ItemType itemType,  Investigator investigator) {
+        super(EffectTyps.RANDOM_ASSET);
         this.itemType = itemType;
-        this.value = value;
         this.investigator = investigator;
     }
 
@@ -28,9 +27,11 @@ public class RandomItem extends Effect {
     public void execute() {
         super.execute();
         switch (itemType) {
-            case ITEM :
+            case ANY :
+                investigator.getInventory().add(GameService.getInstance().getAssets().draw());
                 break;
             default:
+                investigator.getInventory().add(GameService.getInstance().getAssets().getByItemType(itemType));
                 break;
         }
         log.info(itemType.toString() );
@@ -38,10 +39,10 @@ public class RandomItem extends Effect {
 
     @Override
     public String getText() {
-        if(itemType==null ||value ==0){
-            return ResourceUtil.get("${gain}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  );
+        if(itemType==null){
+            return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${gain}","effect"  ) + " "+ value + " " + ResourceUtil.get("${random}","effect"  ) +  itemType.getText() +"." ;
+        return ResourceUtil.get("${gain}","effect"  ,ResourceUtil.get("${random_asset}","effect" ,itemType.getText()  ) ) ;
 
     }
 }

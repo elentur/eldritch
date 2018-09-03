@@ -10,6 +10,7 @@ import lombok.Setter;
 import model.Effect;
 import model.Field;
 import model.Item.Investigator;
+import model.effects.NullEffect;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -87,16 +88,18 @@ public class StandardEncounter extends Encounter {
         String header;
         String text;
         List<Effect> effects = new ArrayList<>();
-        if (result.isSuccess()) {
-            header = ResourceUtil.get("${success}", "ui");
-            text = getEncounterSuccessText()+"\n"+getEffect()[getEncounterPart()][PASS].getText();
-            effects.add(getEffect()[getEncounterPart()][PASS]);
-        } else {
-            header = ResourceUtil.get("${fail}", "ui");
-            text = getEncounterFailText()+"\n"+getEffect()[getEncounterPart()][FAIL].getText();
-            effects.add(getEffect()[getEncounterPart()][FAIL]);
+        if(getEffect()[getEncounterPart()][START]instanceof NullEffect) {
+            if (result.isSuccess()) {
+                header = ResourceUtil.get("${success}", "ui");
+                text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
+                effects.add(getEffect()[getEncounterPart()][PASS]);
+            } else {
+                header = ResourceUtil.get("${fail}", "ui");
+                text = getEncounterFailText() + "\n" + getEffect()[getEncounterPart()][FAIL].getText();
+                effects.add(getEffect()[getEncounterPart()][FAIL]);
+            }
+            getGame().addChoice(new InformationChoice(header, text, effects));
         }
-        getGame().addChoice(new InformationChoice(header, text,effects ));
         setEncounterPart(3);
         return getEncounterPart();
     }

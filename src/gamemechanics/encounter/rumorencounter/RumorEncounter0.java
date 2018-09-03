@@ -2,11 +2,8 @@ package gamemechanics.encounter.rumorencounter;
 
 import enums.ConditionType;
 import enums.ItemType;
-import enums.SpendType;
 import enums.TestType;
 import gamemechanics.encounter.RumorEncounter;
-import gamemechanics.encounter.StandardEncounter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class RumorEncounter0 extends RumorEncounter {
@@ -21,7 +18,7 @@ public class RumorEncounter0 extends RumorEncounter {
     public void init() {
         super.init();
         getEffect()[0][START] = new NullEffect();
-        getEffect()[0][PASS] = new Or(new RandomItem(ItemType.ASSET, 1, getInvestigator()), new AssetFromReserve(ItemType.ASSET, 1, getInvestigator()));
+        getEffect()[0][PASS] = new Or(new RandomAsset(ItemType.ANY, 1, getInvestigator()), new AssetFromReserve(ItemType.ANY, 1, getInvestigator()));
         getEffect()[0][FAIL] = new GainCondition(ConditionType.DETAINED, getInvestigator());
         setEncounterPart(0);
         getTestType()[0] = TestType.OBSERVATION;
