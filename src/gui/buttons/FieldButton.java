@@ -21,6 +21,7 @@ import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.effects.AssetFromReserve;
+import oldVersion.gameBuild.Game;
 
 public class FieldButton extends Group {
 
@@ -152,9 +153,7 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-               GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
-              // GameService.getInstance().addEffect(new GainAsset(ItemType.ANY,1,GameService.getInstance().getActiveInvestigator()));
-               // GameService.getInstance().addEffect(new AssetFromReserve(ItemType.ITEM,GameService.getInstance().getActiveInvestigator()));
+              GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
             }
             isDragging = false;
         });

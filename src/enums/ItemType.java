@@ -29,7 +29,10 @@ public enum ItemType {
     MYSTERY_TOKEN("${mytsery_token}", Collections.singletonList("Mystery")  ),
     ELDRITCH_TOKEN("${eldritch_token}", Collections.singletonList("Eldritch")  ),
     EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  ),
-    ANY("${any}",null );
+    ANY("${any}",null ),
+    CONDITION("${condition}", Collections.singletonList("Condition")  ),
+    BLESSED_CONDITION("${blessed_condition}", Collections.singletonList("Blessed Condition")  ),
+    MYTHOS("${mythos}", Collections.singletonList("Mythos")  );
     private String key;
     private List<String> parts;
 

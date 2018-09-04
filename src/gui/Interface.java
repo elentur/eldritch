@@ -7,6 +7,10 @@ import gui.interfaceelements.OmenTrackGUI;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.QuadCurve;
+import javafx.stage.Screen;
 import lombok.Getter;
 
 public class Interface extends Group {
@@ -29,7 +33,7 @@ public class Interface extends Group {
        inactiveInvestigatorsGUI.translateYProperty().bind(parent.heightProperty().multiply(0.5).subtract(inactiveInvestigatorsGUI.heightProperty().multiply(0.5)));
        ancientOneGUI = new AncientOneGUI();
        omenTrack= new OmenTrackGUI();
-       omenTrack.translateXProperty().bind(parent.widthProperty().subtract(150));
+       omenTrack.setTranslateX(Screen.getPrimary().getBounds().getWidth()-150);
        omenTrack.setTranslateY(150);
 
 

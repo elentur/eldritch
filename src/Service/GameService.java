@@ -41,6 +41,9 @@ public class GameService {
     private ItemStack<Spell> spells;
 
     @Getter
+    private ItemStack<Condition> conditions;
+
+    @Getter
     private ItemStack<ClueToken> clueTokens;
 
     @Getter
@@ -124,6 +127,7 @@ public class GameService {
         assets = ItemFactory.getAssets();
         artifacts = ItemFactory.getArtifacts();
         spells = ItemFactory.getSpells();
+        conditions= ItemFactory.getConditions();
         reserve = new Reserve(assets);
         standardEncounters = ItemFactory.getStandardEncounters();
         specialEncounter = ItemFactory.getSpecialEncounters(OldOnes.SHUB_NIGGURATH);

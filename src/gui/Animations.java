@@ -3,6 +3,7 @@ package gui;
 import Service.GameService;
 import gui.buttons.Button;
 import gui.effectoverlays.Overlay;
+import gui.interfaceelements.OmenTrackGUI;
 import javafx.animation.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -12,11 +13,13 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Effect;
 
 import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 
 public class Animations {
@@ -255,7 +258,7 @@ public class Animations {
         timer.start();
     }
 
-    public static void rotateOmen(Group circle, ImageView oldOne, ImageView newOne, int rotate) {
+    public static void rotateOmen(Group circle, Node oldOne, Node newOne, int rotate) {
 
         RotateTransition rt = new RotateTransition(Duration.millis(200),circle);
         if(circle.getRotate()==0 && rotate==270){
@@ -274,6 +277,36 @@ public class Animations {
 
         ParallelTransition t = new ParallelTransition(rt, st1,st2);
 
+        t.playFromStart();
+    }
+
+    public static void setOmenEditable(OmenTrackGUI omenTrackGUI, Runnable r) {
+        ScaleTransition st1 = new ScaleTransition(Duration.millis(400), omenTrackGUI);
+        st1.setToX(2);
+        st1.setToY(2);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(400), omenTrackGUI);
+        tt.setToX(omenTrackGUI.getParent().getLayoutBounds().getWidth()/2);
+        tt.setToY(omenTrackGUI.getParent().getLayoutBounds().getHeight()/2);
+
+        ParallelTransition t = new ParallelTransition(tt, st1);
+        t.setOnFinished( e-> r.run() );
+
+        t.playFromStart();
+
+    }
+
+
+    public static void setOmenUnEditable(OmenTrackGUI omenUnEditable, Runnable r) {
+
+        ScaleTransition st1 = new ScaleTransition(Duration.millis(400), omenUnEditable);
+        st1.setToX(1);
+        st1.setToY(1);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(400), omenUnEditable);
+        tt.setToX(Screen.getPrimary().getBounds().getWidth()-150);
+        tt.setToY(150);
+
+        ParallelTransition t = new ParallelTransition(tt, st1);
+        t.setOnFinished( e-> r.run() );
         t.playFromStart();
     }
 }

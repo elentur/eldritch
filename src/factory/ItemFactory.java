@@ -8,6 +8,7 @@ import gamemechanics.encounter.*;
 import lombok.extern.java.Log;
 import model.Item.Artifact;
 import model.Item.Asset;
+import model.Item.Condition;
 import model.Item.Spell;
 import model.Item.token.ClueToken;
 
@@ -19,6 +20,8 @@ public class ItemFactory {
     private static ItemContainer<Asset> assets;
     private static ItemContainer<Artifact> artifacts;
     private static ItemContainer<Spell> spells;
+
+    private static ItemContainer<Condition> conditions;
 
     private static ItemContainer<StandardEncounter> standardEncounters;
     private static ItemContainer<ExpeditionEncounter> expeditionEncounters;
@@ -78,9 +81,24 @@ public class ItemFactory {
             }
         }
 
-        return new ItemStack(spells);
+        return new ItemStack<>(spells);
     }
+    public static ItemStack<Condition> getConditions() {
+        if (conditions == null) {
+            File f = new File("./src/model/item/conditions");
+            conditions = new ItemContainer<>();
+            for (String name: f.list()){
+                try {
+                    Condition condition = (Condition) Class.forName("model.Item.conditions."+name.replace(".java","")).newInstance();
+                    conditions.add(condition);
+                } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
+        return new ItemStack<>(conditions);
+    }
     public static ItemStack<StandardEncounter> getStandardEncounters() {
 
         if (standardEncounters == null) {

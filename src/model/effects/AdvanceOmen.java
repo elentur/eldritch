@@ -22,8 +22,11 @@ public class AdvanceOmen extends Effect {
     @Override
     public void execute() {
         super.execute();
-        GameService.getInstance().getOmenTrack().advanceOmen(value);
-
+        if(selector.equals(EffectSelector.ANY)){
+            GameService.getInstance().getOmenTrack().setEditable(true);
+        }else {
+            GameService.getInstance().getOmenTrack().advanceOmen(value);
+        }
     }
 
     @Override

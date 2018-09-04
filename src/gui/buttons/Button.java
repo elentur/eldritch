@@ -8,14 +8,18 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
+import lombok.Setter;
 
 public class Button extends StackPane {
     private final Tooltip tooltip;
+    @Setter
+    private Effect disabledEffect;
     private BooleanProperty enabled = new SimpleBooleanProperty(true);
     private BooleanProperty armed = new SimpleBooleanProperty(false);
     final ImageView imageView;
@@ -24,6 +28,7 @@ public class Button extends StackPane {
 
 
     public Button(Image image) {
+        disabledEffect = Effects.disabled;
         imageView = new ImageView(image);
         this.maxWidthProperty().bind(image.widthProperty());
         this.maxHeightProperty().bind(image.heightProperty());
@@ -65,7 +70,7 @@ public class Button extends StackPane {
         enabled.addListener(e -> {
             this.setDisable(!isEnabled());
             if (isDisabled()) {
-                this.imageView.setEffect(Effects.disabled);
+                this.imageView.setEffect(disabledEffect);
             } else {
                 this.imageView.setEffect(null);
             }

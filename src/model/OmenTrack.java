@@ -3,6 +3,8 @@ package model;
 import enums.OmenStates;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 public class OmenTrack {
 
@@ -10,6 +12,8 @@ public class OmenTrack {
     private int value;
     private final OmenStates[] states;
     private final BooleanProperty update;
+    @Getter
+    private boolean editable;
 
     public OmenTrack(OmenStates startValue) {
         value = startValue.ordinal();
@@ -40,5 +44,9 @@ public class OmenTrack {
 
     public OmenStates getOmen() {
         return states[value];
+    }
+    public void setEditable(boolean value){
+        editable=value;
+        update.set(true);
     }
 }

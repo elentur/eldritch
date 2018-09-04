@@ -39,9 +39,9 @@ public class GainCondition extends Effect {
     @Override
     public String getText() {
         if(conditionType==null){
-            return ResourceUtil.get("${gain}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  );
+            return ResourceUtil.get("${gain}","effect"  , ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${gain}","effect"  ) + " " + conditionType.getText() + " " + ResourceUtil.get("${condition}","effect"  ) ;
+        return ResourceUtil.get("${gain}","effect" , conditionType.getText() + " " + ResourceUtil.get("${condition}","effect"  )) ;
 
     }
 }

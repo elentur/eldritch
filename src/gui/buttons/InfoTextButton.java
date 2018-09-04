@@ -20,16 +20,16 @@ public class InfoTextButton extends TextButton {
         infoText.setWrapText(true);
         infoText.setMouseTransparent(true);
         StackPane.setAlignment(infoText, Pos.TOP_CENTER);
-        StackPane.setAlignment(label, Pos.BOTTOM_CENTER);
+        //StackPane.setAlignment(label, Pos.BOTTOM_CENTER);
         label.setTranslateY(-12);
         infoText.styleProperty().bind(Fonts.getFont(0.2,Fonts.DARK,Fonts.FontTyp.NORMAL));
         infoText.getStyleClass().addAll("text-stroke-black","stroke-thin","short-line-spacing");
         infoText.setPrefWidth(backgroundImage.getWidth()*0.85);
-       // infoText.setPrefHeight(backgroundImage.getHeight()*0.5);
         infoText.setTextAlignment(TextAlignment.CENTER);
         infoText.setAlignment(Pos.CENTER);
         infoText.setWrapText(true);
         imageView.fitHeightProperty().bind(infoText.heightProperty().add(label.heightProperty()));
+        imageView.fitHeightProperty().addListener(e->StackPane.setAlignment(label, Pos.BOTTOM_CENTER));
      //   infoText.setBorder(new Border(new BorderStroke(Fonts.RED, BorderStrokeStyle.SOLID, new CornerRadii(10.0), BorderStroke.MEDIUM)));
         this.getChildren().add(infoText);
 
