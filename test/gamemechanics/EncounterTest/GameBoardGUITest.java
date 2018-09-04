@@ -60,13 +60,7 @@ public class GameBoardGUITest extends Application {
 
         gameBoard.addMonster(new Shan(), FieldID.ARKHAM);
         gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
+
 
 
         GameService.getInstance().addGate(FieldID.PYRAMIDS);
