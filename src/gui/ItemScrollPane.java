@@ -1,6 +1,5 @@
 package gui;
 
-import gui.buttons.ArrowButton;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
-import oldVersion.gameItems.Stack;
 
 
 public class ItemScrollPane extends StackPane {
