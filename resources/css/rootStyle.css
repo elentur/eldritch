@@ -96,7 +96,10 @@
       -fx-background-color: transparent;
 }
 .eldritch-text-field  .thumb {
-      -fx-background-color:  rgba(114,49,0,1);
+          -fx-background-image: url('../images/ScrollBar.png');
+          -fx-background-position:  center;
+          -fx-background-repeat: no-repeat;
+          -fx-background-size: stretch;
 }
 .eldritch-text-field .scroll-pane .scroll-bar:vertical{
     -fx-background-color: transparent;

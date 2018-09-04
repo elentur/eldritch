@@ -29,11 +29,12 @@ public class ItemScrollPane extends StackPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.getStylesheets().add("css/rootStyle.css");
+        scrollPane.getStyleClass().add("show-case");
         this.getStyleClass().add("eldritch-text-field");
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.maxHeightProperty().bind(this.heightProperty());
-        scrollPane.maxWidthProperty().bind(this.widthProperty().subtract(80));
+        scrollPane.maxWidthProperty().bind(this.widthProperty());
 
         StackPane.setAlignment(scrollPane,Pos.CENTER);
 
@@ -46,12 +47,12 @@ public class ItemScrollPane extends StackPane {
         frame.widthProperty().bind(scrollPane.widthProperty());
         frame.heightProperty().bind(scrollPane.heightProperty());
         frame.setMouseTransparent(true);
-        StackPane.setAlignment(frame,Pos.TOP_LEFT);
+        StackPane.setAlignment(frame,Pos.CENTER);
 
         flowPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT,CornerRadii.EMPTY,Insets.EMPTY)));
          //this.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
-    this.setMaxHeight(Screen.getPrimary().getBounds().getHeight()*0.35);
-    StackPane.setMargin(this, new Insets(0,50,0,50));
+        this.setMaxHeight(Screen.getPrimary().getBounds().getHeight()*0.35);
+        //StackPane.setMargin(this, new Insets(0,50,0,50));
         StackPane.setAlignment(this,Pos.BOTTOM_CENTER);
         this.getChildren().addAll(scrollPane,frame);
 

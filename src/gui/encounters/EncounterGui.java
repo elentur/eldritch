@@ -25,7 +25,6 @@ public class EncounterGui extends DialogGui {
     VBox encounterPane;
     DicePane dicePane;
     StackPane encounterMain;
-    private final static Image frameImage = new Image("images/ShowCaseFrame.png");
 
 
     public EncounterGui(Encounter encounter) {
