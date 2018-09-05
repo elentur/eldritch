@@ -19,7 +19,7 @@ public class StandardEncounter1 extends StandardEncounter {
         switch (getField().getType()) {
             case CITY:
                 getEffect()[0][START] = new NullEffect();
-                getEffect()[0][PASS] = new SpawnClue(1,getInvestigator());
+                getEffect()[0][PASS] = new SpawnClue(1);
                 getEffect()[0][FAIL] = new GainCondition(ConditionType.DEPT, getInvestigator());
                 setEncounterPart(0);
                 break;

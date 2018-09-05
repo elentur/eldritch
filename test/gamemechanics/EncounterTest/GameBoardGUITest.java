@@ -16,14 +16,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameBoard;
+import model.Item.Mythos;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
 import model.Item.monsters.Shan;
 import model.Item.monsters.Vampire;
+import model.Item.mythos.Mythos0;
 import model.Item.token.EldritchToken;
 import model.Item.token.RumorToken;
+import model.effects.SpawnGate;
 
 import java.util.Arrays;
 
@@ -58,16 +61,11 @@ public class GameBoardGUITest extends Application {
 
         GameService.getInstance().startGame(new InvestigatorContainer(Arrays.asList(new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley())), gameBoard);
 
-        gameBoard.addMonster(new Shan(), FieldID.ARKHAM);
-        gameBoard.addMonster(new Vampire(), FieldID.ARKHAM);
-
-
-
-        GameService.getInstance().addGate(FieldID.PYRAMIDS);
         GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS, new RumorEncounter0()));
         GameService.getInstance().addMystery(FieldID.PYRAMIDS);
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
+
        // gameboardGUI.getChildren().add(new ImproveEffectOverlay(new Improve(TestType.LORE,2,GameService.getInstance().getActiveInvestigator())));
     }
 

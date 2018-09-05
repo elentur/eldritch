@@ -15,13 +15,11 @@ import utils.ResourceUtil;
 @Log
 public class SpawnClue extends Effect {
     private final int value;
-    private final Investigator investigator;
     private ClueToken token;
 
-    public SpawnClue(int value, Investigator investigator) {
+    public SpawnClue(int value) {
         super(EffectTyps.SPAWN_CLUE);
         this.value = value;
-        this.investigator = investigator;
     }
 
 

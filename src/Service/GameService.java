@@ -3,15 +3,15 @@ package Service;
 import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
-import enums.FieldID;
-import enums.OldOnes;
-import enums.OmenStates;
-import enums.SituationType;
+import enums.*;
 import factory.ItemFactory;
+import factory.MonsterFactory;
+import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.*;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -20,6 +20,7 @@ import lombok.Getter;
 import model.*;
 import model.Item.*;
 import model.Item.token.*;
+import model.effects.*;
 
 import java.util.List;
 
@@ -30,8 +31,14 @@ public class GameService {
 
     @Getter
     private ObjectProperty<Investigator> activeInvestigator;
+    private int count;
+
+    @Getter
+    private Investigator encounteringInvestigator;
     private GameBoard gameBoard;
     private InvestigatorContainer investigators;
+    @Getter
+    private ItemStack<Monster> monsterPool;
 
     @Getter
     private ItemStack<Asset> assets;
@@ -45,6 +52,8 @@ public class GameService {
 
     @Getter
     private ItemStack<ClueToken> clueTokens;
+    @Getter
+    private ItemStack<GateToken> gateTokens;
 
     @Getter
     private ItemStack<StandardEncounter> standardEncounters;
@@ -62,14 +71,16 @@ public class GameService {
     private ItemStack<AsiaEncounter> asiaEncounter;
     @Getter
     private ItemStack<AmericaEncounter> americaEncounter;
-    @Getter
-    private Investigator encounteringInvestigator;
+
 
     @Getter
     private DoomTrack doomTrack;
     @Getter
     private OmenTrack omenTrack;
     private Reserve reserve;
+
+    @Getter
+    private final Phases phases;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -82,21 +93,30 @@ public class GameService {
         for (Investigator inv : investigators) {
             gameBoard.addInvestigator(inv);
         }
+        count = 1;
         activeInvestigator.setValue(investigators.get(0));
-        encounteringInvestigator=activeInvestigator.getValue();
+        encounteringInvestigator = activeInvestigator.getValue();
         reserve.init();
 
     }
 
     public void setActiveInvestigator() {
+        if (count >= investigators.size()) {
+            count = 0;
+            addEffect(new SwitchPhase());
+        }
         int i = (investigators.indexOf(activeInvestigator.getValue()) + 1) % investigators.size();
         activeInvestigator.setValue(investigators.get(i));
-        encounteringInvestigator=activeInvestigator.getValue();
+        encounteringInvestigator = activeInvestigator.getValue();
+        count++;
+
 
     }
+
     public Investigator getEncounteringInvestigator() {
         return encounteringInvestigator;
     }
+
     public Investigator getActiveInvestigator() {
         return activeInvestigator.getValue();
     }
@@ -107,6 +127,9 @@ public class GameService {
 
     public void setStartInvestigator() {
         investigators.add(investigators.remove(0));
+        activeInvestigator.setValue(getStartInvestigator());
+        encounteringInvestigator = getStartInvestigator();
+        count=1;
     }
 
     public Investigator[] getInactiveInvestigators() {
@@ -127,7 +150,7 @@ public class GameService {
         assets = ItemFactory.getAssets();
         artifacts = ItemFactory.getArtifacts();
         spells = ItemFactory.getSpells();
-        conditions= ItemFactory.getConditions();
+        conditions = ItemFactory.getConditions();
         reserve = new Reserve(assets);
         standardEncounters = ItemFactory.getStandardEncounters();
         specialEncounter = ItemFactory.getSpecialEncounters(OldOnes.SHUB_NIGGURATH);
@@ -137,9 +160,13 @@ public class GameService {
         europeEncounter = ItemFactory.getEuropeEncounter();
         asiaEncounter = ItemFactory.getAsiaEncounter();
         americaEncounter = ItemFactory.getAmericaEncounter();
-        clueTokens= ItemFactory.getClueTokens();
+        clueTokens = ItemFactory.getClueTokens();
+        gateTokens=ItemFactory.getGateTokens();
         doomTrack = new DoomTrack(15);
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
+        phases = new Phases();
+        monsterPool= MonsterFactory.getMonster();
+
 
 
     }
@@ -154,11 +181,7 @@ public class GameService {
 
     public void moveTo(Investigator inv, Field newField) {
         gameBoard.moveTo(inv, newField);
-        if (!newField.getMonster().isEmpty()) {
-            GameService.getInstance().addChoice(new MonsterChoice(newField));
-        } else {
-            GameService.getInstance().addChoice(new EncounterChoice(newField));
-        }
+
 
     }
 
@@ -211,7 +234,6 @@ public class GameService {
     }
 
 
-
     public ExpeditionEncounter activeExpedition() {
         return expeditionEncounter.showFirst();
     }
@@ -220,10 +242,7 @@ public class GameService {
         return new ClueToken(FieldID.PYRAMIDS);
     }
 
-    public void addGate(FieldID fieldID) {
-        Field field = gameBoard.getField(fieldID);
-        field.addGate();
-    }
+
 
     public void removeGate(FieldID fieldID) {
         Field field = gameBoard.getField(fieldID);
@@ -283,5 +302,19 @@ public class GameService {
 
     public Reserve getReserve() {
         return reserve;
+    }
+
+    public void doMonsterFlood() {
+        boolean spawnedAMonster = false;
+        for(Field field: gameBoard.getFields()){
+            GateToken gate=  field.getGate();
+            if(gate!= null && gate.getOmenState().equals(getOmenTrack().getOmen())){
+                addEffect(new SpawnMonster(field));
+                spawnedAMonster=true;
+            }
+        }
+        if(!spawnedAMonster){
+            addEffect(new SpawnGate());
+        }
     }
 }

@@ -161,6 +161,51 @@ public class Animations {
 
     }
 
+    public static void effectOverlayPhaseSwitch(Overlay overlay, Stage activeStage, Effect effect) {
+
+        if (!(activeStage.getScene().getRoot() instanceof StackPane) || effectOverlayIsRunning) {
+            return;
+        }
+
+        effectOverlayIsRunning = true;
+        int delay = overlay.init();
+
+
+        StackPane root = (StackPane) activeStage.getScene().getRoot();
+        EffectLayer pane = (EffectLayer) root.getChildren().get(root.getChildren().size() - 1);
+
+        ScaleTransition st0 = new ScaleTransition(Duration.millis(1), overlay);
+        st0.setOnFinished(e -> {
+            effect.execute();
+            overlay.setEffect(Effects.dropShadow);
+            pane.getChildren().add(overlay);
+        });
+        FadeTransition ft0 = new FadeTransition(Duration.millis(500), overlay);
+        ft0.setFromValue(0);
+        ft0.setToValue(1);
+
+        TranslateTransition tt = new TranslateTransition(Duration.millis(3000), overlay);
+        tt.setFromX(0);
+        tt.setToX(-100);
+
+        FadeTransition st1 = new FadeTransition(Duration.millis(3000), overlay);
+        st1.setDelay(Duration.millis(500));
+        st1.setFromValue(1);
+        st1.setToValue(0);
+        st1.setOnFinished(a -> {
+            effectOverlayIsRunning = false;
+            pane.getChildren().remove(overlay);
+            GameService.getInstance().getInsertions().remove(effect);
+        });
+
+        ParallelTransition t = new ParallelTransition(st0, ft0, tt, st1);
+        t.setDelay(Duration.millis(delay));
+
+        t.playFromStart();
+
+
+    }
+
     public static void startInvestigatorScroll(Node node1, Node node2, double w) {
         AnimationTimer timer = new AnimationTimer() {
 

@@ -52,8 +52,8 @@ public class Loose extends Effect {
     @Override
     public String getText() {
         if(spendType==null ||value ==0){
-            return ResourceUtil.get("${loose}","effect"  ) + " " + ResourceUtil.get("${nothing}","effect"  )+".";
+            return ResourceUtil.get("${loose}","effect" , ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${loose}","effect"  ) + " "+ value + " " + spendType.getText() +"."  ;
+        return ResourceUtil.get("${loose}","effect"  , value + " " + spendType.getText()) ;
     }
 }

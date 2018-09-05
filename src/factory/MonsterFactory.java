@@ -1,6 +1,8 @@
 package factory;
 
 
+import container.ItemContainer;
+import container.ItemStack;
 import lombok.extern.java.Log;
 import model.Item.Monster;
 
@@ -12,12 +14,12 @@ import java.util.List;
 @Log
 public class MonsterFactory {
 
-    List<Monster> monster=null;
+    private static ItemContainer<Monster> monster=null;
 
-    public List<Monster> getMonster() {
+    public static ItemStack<Monster> getMonster() {
         if (monster == null) {
             File f = new File("./src/model/item/monsters");
-            monster = new ArrayList<>();
+            monster = new ItemContainer<>();
             for (String name: f.list()){
                 try {
                     Monster m = (Monster) Class.forName("model.Item.monsters."+name.replace(".java","")).newInstance();
@@ -32,6 +34,6 @@ public class MonsterFactory {
             }
         }
 
-        return monster;
+        return new ItemStack<>(monster);
     }
 }

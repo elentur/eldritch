@@ -80,6 +80,9 @@ public class InterfaceLinking {
             case SPAWN_CLUE:
                 Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
                 break;
+            case SPAWN_GATE:
+                Animations.effectOverlayAnimations(new SpawnGateEffectOverlay((SpawnGate) effect), primaryStage, effect);
+                break;
             case GAIN_CLUE:
                 Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
                 break;
@@ -101,6 +104,9 @@ public class InterfaceLinking {
             case RANDOM_ASSET:
                 Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
                 break;
+            case SWITCH_PHASE:
+                Animations.effectOverlayPhaseSwitch(new SwitchPhaseOverlay((SwitchPhase) effect), primaryStage, effect);
+                break;
             case AND:
                 Platform.runLater(() -> {
                     GameService.getInstance().getInsertions().remove(effect);
@@ -109,6 +115,12 @@ public class InterfaceLinking {
 
                 break;
             case OR:
+                Platform.runLater(() -> {
+                    GameService.getInstance().getInsertions().remove(effect);
+                    effect.execute();
+                });
+                break;
+            case MONSTER_FLOOD:
                 Platform.runLater(() -> {
                     GameService.getInstance().getInsertions().remove(effect);
                     effect.execute();

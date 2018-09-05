@@ -11,6 +11,7 @@ import model.Item.Asset;
 import model.Item.Condition;
 import model.Item.Spell;
 import model.Item.token.ClueToken;
+import model.Item.token.GateToken;
 
 import java.io.File;
 
@@ -33,6 +34,7 @@ public class ItemFactory {
     private static ItemContainer<EuropeEncounter> europeEncounters;
 
     private static ItemContainer<ClueToken> clueTokens;
+    private static ItemContainer<GateToken> gateTokens;
 
     public static ItemStack<Asset> getAssets() {
 
@@ -241,5 +243,21 @@ public class ItemFactory {
            }
         }
         return new ItemStack<>(clueTokens);
+    }
+
+    public static ItemStack<GateToken> getGateTokens() {
+        if (gateTokens == null) {
+            File f = new File("./src/model/Item/token/gatetoken");
+            gateTokens = new ItemContainer<>();
+            for (String name: f.list()){
+                try {
+                    GateToken gateToken = (GateToken) Class.forName("model.Item.token.gatetoken."+name.replace(".java","")).newInstance();
+                    gateTokens.add(gateToken);
+                } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return new ItemStack<>(gateTokens);
     }
 }

@@ -109,9 +109,9 @@ public class Field {
         update.setValue(true);
     }
 
-    public void addGate() {
+    public void addGate(GateToken token) {
         if (!hasGate()) {
-            addToken(new GateToken());
+            addToken(token);
         } else {
             log.warning("There is still a gate on field " + getFieldID().getKey());
         }
@@ -124,7 +124,9 @@ public class Field {
     public Token removeGate() {
         return removeToken(getTokens().getGate());
     }
-
+    public GateToken getGate() {
+       return tokens.getGate();
+    }
     public void addExpedition(ExpeditionToken token) {
         if (!hasExpedition()) {
             addToken(token);
@@ -216,5 +218,6 @@ public class Field {
         update.setValue(true);
         return token;
     }
+
 
 }

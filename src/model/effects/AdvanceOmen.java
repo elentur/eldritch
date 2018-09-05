@@ -9,14 +9,15 @@ import model.Item.Investigator;
 import utils.ResourceUtil;
 @Getter
 public class AdvanceOmen extends Effect {
-    private  Investigator investigator;
     private EffectSelector selector;
     private int value;
-    public AdvanceOmen(EffectSelector selector, int value, Investigator investigator) {
+    public AdvanceOmen(EffectSelector selector, int value) {
         super(EffectTyps.ADVANCE_OMEN);
-        this.investigator = investigator;
         this.selector = selector;
         this.value=value;
+    }
+    public AdvanceOmen( int value) {
+        this(EffectSelector.THIS,value);
     }
 
     @Override
