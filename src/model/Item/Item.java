@@ -22,6 +22,7 @@ public interface Item {
     ItemType getSubType();
 
     ItemType getItemType();
+    void executeReckoning(Investigator inv, boolean autoFail);
 
 
     void setStack(ItemStack itemStack);

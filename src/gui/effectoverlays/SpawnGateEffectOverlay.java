@@ -20,6 +20,9 @@ public class SpawnGateEffectOverlay extends Overlay {
     @Override
     public int init() {
         super.init();
+        if(spawnGate.getToken()== null){
+            return 0;
+        }
         Field field= GameService.getInstance().getGameBoard().getField(spawnGate.getToken().getFieldID());
         FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
         Animations.zoomTo(fieldButton);

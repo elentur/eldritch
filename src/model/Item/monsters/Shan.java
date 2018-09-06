@@ -6,6 +6,7 @@ import model.Item.Monster;
 public class Shan extends Monster {
 
     public Shan(){
+        super(3);
         this.setId("&shan");
         this.setName("${shan}");
         this.setWillTest(-1);

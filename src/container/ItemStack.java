@@ -34,7 +34,7 @@ public class ItemStack<T extends Item> {
     }
     public T draw() {
         unempty();
-        return drawStack.remove(0);
+        return drawStack.isEmpty()?null:drawStack.remove(0);
     }
 
     public T showFirst() {

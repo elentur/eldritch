@@ -11,12 +11,15 @@ import lombok.Setter;
 @EqualsAndHashCode
 public abstract class Effect {
 private final EffectTyps effectTyp;
+@Getter
+private boolean executed =false;
 public Effect(EffectTyps effectTyp){
    this.effectTyp=effectTyp;
 }
 
 
    public  void execute(){
+    executed=true;
     //  GameService.getInstance().addEffect(this);
    }
    public abstract String getText();

@@ -11,6 +11,7 @@ import gamemechanics.choice.Choice;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.*;
+import gui.InterfaceLinking;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,9 +20,11 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import model.*;
 import model.Item.*;
+import model.Item.ancientOnes.Azathoth;
 import model.Item.token.*;
 import model.effects.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameService {
@@ -36,9 +39,12 @@ public class GameService {
     @Getter
     private Investigator encounteringInvestigator;
     private GameBoard gameBoard;
+    @Getter
     private InvestigatorContainer investigators;
     @Getter
     private ItemStack<Monster> monsterPool;
+    @Getter
+    private AncientOne ancientOne;
 
     @Getter
     private ItemStack<Asset> assets;
@@ -129,7 +135,7 @@ public class GameService {
         investigators.add(investigators.remove(0));
         activeInvestigator.setValue(getStartInvestigator());
         encounteringInvestigator = getStartInvestigator();
-        count=1;
+        count = 1;
     }
 
     public Investigator[] getInactiveInvestigators() {
@@ -161,12 +167,12 @@ public class GameService {
         asiaEncounter = ItemFactory.getAsiaEncounter();
         americaEncounter = ItemFactory.getAmericaEncounter();
         clueTokens = ItemFactory.getClueTokens();
-        gateTokens=ItemFactory.getGateTokens();
+        gateTokens = ItemFactory.getGateTokens();
         doomTrack = new DoomTrack(15);
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
         phases = new Phases();
-        monsterPool= MonsterFactory.getMonster();
-
+        monsterPool = MonsterFactory.getMonster();
+        ancientOne = new Azathoth();
 
 
     }
@@ -215,6 +221,16 @@ public class GameService {
 
     public void addEffect(Effect effect) {
         insertions.add(effect);
+
+    }
+
+    public void addAllEffect(List<Effect> list) {
+        insertions.addAll(list);
+
+    }
+    public void addEffectAfter(Effect effect) {
+        insertions.add(0, effect);
+
     }
 
     public SimpleObjectProperty<Encounter> getEncounterProperty() {
@@ -241,7 +257,6 @@ public class GameService {
     private ClueToken drawClue() {
         return new ClueToken(FieldID.PYRAMIDS);
     }
-
 
 
     public void removeGate(FieldID fieldID) {
@@ -296,25 +311,10 @@ public class GameService {
     }
 
 
-    public void addAllEffect(List<Effect> list) {
-        insertions.addAll(list);
-    }
 
     public Reserve getReserve() {
         return reserve;
     }
 
-    public void doMonsterFlood() {
-        boolean spawnedAMonster = false;
-        for(Field field: gameBoard.getFields()){
-            GateToken gate=  field.getGate();
-            if(gate!= null && gate.getOmenState().equals(getOmenTrack().getOmen())){
-                addEffect(new SpawnMonster(field));
-                spawnedAMonster=true;
-            }
-        }
-        if(!spawnedAMonster){
-            addEffect(new SpawnGate());
-        }
-    }
+
 }

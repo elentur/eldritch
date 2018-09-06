@@ -140,4 +140,6 @@ public abstract class Encounter implements Item {
     public Encounter draw(){
         return (Encounter) getStack().draw();
     }
+    @Override
+    public void executeReckoning(Investigator inv, boolean autoFail){}
 }

@@ -26,8 +26,6 @@ public abstract class ItemBonus implements Bonus {
 
 
 
-    @Override
-    public void reckoning(){}
 
 
     public ItemBonus(Item parentItem){

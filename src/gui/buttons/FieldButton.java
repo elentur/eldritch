@@ -1,6 +1,7 @@
 package gui.buttons;
 
 import Service.GameService;
+import enums.FieldID;
 import enums.PhaseTypes;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
@@ -21,6 +22,8 @@ import lombok.Getter;
 import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
+import model.effects.SpawnClue;
+import model.effects.SpawnMonster;
 import model.effects.SwitchPhase;
 import oldVersion.gameBuild.Game;
 
@@ -155,8 +158,9 @@ public class FieldButton extends Group {
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
                 if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)){
-                     GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
+                    GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
                     GameService.getInstance().setActiveInvestigator();
+                   // GameService.getInstance().addEffect(new SwitchPhase());
                 }else if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER)&&
                         GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)){
                     if (!field.getMonster().isEmpty()) {

@@ -56,5 +56,7 @@ public abstract class Artifact implements Item {
     public Artifact draw(){
         return (Artifact) getStack().draw();
     }
+    @Override
+    public void executeReckoning(Investigator inv, boolean autoFail){}
 
 }

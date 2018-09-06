@@ -5,7 +5,7 @@ import container.ItemStack;
 import enums.Dificulty;
 import enums.ItemType;
 import enums.MythosType;
-import factory.ItemFactory;
+import gamemechanics.choice.InformationChoice;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,25 +28,34 @@ public abstract class Mythos implements Item {
 
     private List<Effect> effects;
 
-    public Mythos(MythosType mythosType,Dificulty dificulty) {
+    public Mythos(MythosType mythosType, Dificulty dificulty) {
         type = mythosType;
-        bonus=createBonus();
-        this.dificulty=dificulty;
-        effects=new ArrayList<>();
+        bonus = createBonus();
+        this.dificulty = dificulty;
+        effects = new ArrayList<>();
     }
-    public String getName(){
-        return  ResourceUtil.get(getNameId(),"mythos");
+
+    public String getName() {
+        return ResourceUtil.get(getNameId(), "mythos");
+    }
+
+    public String getText() {
+        return ResourceUtil.get(getNameId().replace("}", "_text}"), "mythos");
     }
 
     public String toString() {
         return getName();
     }
 
-    public void execute(){
-        for(Effect effect : effects){
-            GameService.getInstance().addEffect(effect);
+    public void execute() {
+        StringBuilder text = new StringBuilder(getText());
+        for (Effect effect:effects){
+            text.append("\n"+effect.getText());
         }
+        InformationChoice info = new InformationChoice(getName(), text.toString() , effects);
+        GameService.getInstance().addChoice(info);
     }
+
     @Override
     public ItemType getSubType() {
         return ItemType.NONE;
@@ -58,15 +67,17 @@ public abstract class Mythos implements Item {
     }
 
     @Override
-    public void setStack(ItemStack itemStack){
-        stack=itemStack;
+    public void setStack(ItemStack itemStack) {
+        stack = itemStack;
     }
+
     @Override
-    public void discard(){
+    public void discard() {
         stack.discard(this);
     }
+
     @Override
-    public Mythos draw(){
+    public Mythos draw() {
         return (Mythos) getStack().draw();
     }
 
@@ -74,5 +85,9 @@ public abstract class Mythos implements Item {
     public List<ItemBonus> createBonus() {
         List<ItemBonus> boni = new ArrayList<>();
         return boni;
+    }
+
+    @Override
+    public void executeReckoning(Investigator inv, boolean autoFail) {
     }
 }

@@ -5,6 +5,7 @@ import gui.buttons.Button;
 import gui.effectoverlays.Overlay;
 import gui.interfaceelements.OmenTrackGUI;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -145,17 +146,16 @@ public class Animations {
         st1.setDelay(Duration.millis(500));
         st1.setFromValue(1);
         st1.setToValue(0);
-        st1.setOnFinished(a -> {
-            effectOverlayIsRunning = false;
-            pane.getChildren().remove(overlay);
 
-            GameService.getInstance().getInsertions().remove(effect);
-
-        });
 
         ParallelTransition t = new ParallelTransition(st0, st2, tt, st1);
         t.setDelay(Duration.millis(delay));
+        t.setOnFinished(a -> {
+            effectOverlayIsRunning = false;
+            pane.getChildren().remove(overlay);
+            GameService.getInstance().getInsertions().remove(effect);
 
+        });
         t.playFromStart();
 
 
@@ -176,7 +176,7 @@ public class Animations {
 
         ScaleTransition st0 = new ScaleTransition(Duration.millis(1), overlay);
         st0.setOnFinished(e -> {
-            effect.execute();
+
             overlay.setEffect(Effects.dropShadow);
             pane.getChildren().add(overlay);
         });
@@ -200,6 +200,7 @@ public class Animations {
 
         ParallelTransition t = new ParallelTransition(st0, ft0, tt, st1);
         t.setDelay(Duration.millis(delay));
+        t.setOnFinished(a-> Platform.runLater(effect::execute));
 
         t.playFromStart();
 

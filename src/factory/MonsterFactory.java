@@ -24,6 +24,10 @@ public class MonsterFactory {
                 try {
                     Monster m = (Monster) Class.forName("model.Item.monsters."+name.replace(".java","")).newInstance();
                     monster.add(m);
+                   for(int i =1; i <m.getCount();i++){
+                       monster.add(m.getClass().newInstance());
+                   }
+
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {

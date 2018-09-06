@@ -1,20 +1,19 @@
 package model.Item.mythos;
 
-import enums.*;
+import enums.Dificulty;
+import enums.ItemType;
+import gamemechanics.encounter.rumorencounter.RumorEncounter0;
 import model.Item.Item;
+import model.Item.MythosBlue;
 import model.Item.MythosGreen;
 import model.effects.Reckoning;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.function.Function;
 
-public class Mythos0 extends MythosGreen {
+public class MythosTestRumor extends MythosBlue {
 
-    public Mythos0() {
-        super(Dificulty.EASY);
-        getEffects().add(new Reckoning(Collections.singletonList(ItemType.CONDITION), true));
+    public MythosTestRumor() {
+        super(new RumorEncounter0(),Dificulty.EASY);
     }
 
     @Override

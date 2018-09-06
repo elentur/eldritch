@@ -166,4 +166,6 @@ public abstract class Investigator implements Item {
     public void improve(TestType testType, int value) {
         getSkillSet().improve( testType,  value);
     }
+    @Override
+    public void executeReckoning(Investigator inv, boolean autoFail){}
 }

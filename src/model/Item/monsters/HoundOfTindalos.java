@@ -6,6 +6,7 @@ import model.Item.Monster;
 public class HoundOfTindalos extends Monster {
 
     public HoundOfTindalos(){
+        super(2);
         this.setId("&houndOfTindalos");
         this.setName("${hound_of_tindalos}");
         this.setWillTest(0);

@@ -13,16 +13,20 @@ import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.effects.*;
+import oldVersion.gameBuild.Game;
 
 @Log
 public class InterfaceLinking {
 
+    @Getter
     static InterfaceLinking instance = new InterfaceLinking();
 
     public static StackPane root;
@@ -49,7 +53,9 @@ public class InterfaceLinking {
         game.getEncounterProperty().addListener(e -> startEncounterDialog(game.getEncounterProperty().getValue()));
         game.getInsertions().addListener((ListChangeListener<? super Effect>) e -> {
             if (!e.getList().isEmpty()) {
-                createEffectOverlay(e.getList().get(0));
+                if (!e.getList().get(0).isExecuted()) {
+                    createEffectOverlay(e.getList().get(0));
+                }
             }
         });
         game.getActiveInvestigatorProperty().addListener(e -> updateInvestigatorInterface());
@@ -98,6 +104,9 @@ public class InterfaceLinking {
             case ADVANCE_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((AdvanceOmen) effect), primaryStage, effect);
                 break;
+            case SPAWN_MONSTER:
+                Animations.effectOverlayAnimations(new SpawnMonsterEffectOverlay((SpawnMonster) effect), primaryStage, effect);
+                break;
             case RETREAT_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
                 break;
@@ -107,34 +116,17 @@ public class InterfaceLinking {
             case SWITCH_PHASE:
                 Animations.effectOverlayPhaseSwitch(new SwitchPhaseOverlay((SwitchPhase) effect), primaryStage, effect);
                 break;
-            case AND:
-                Platform.runLater(() -> {
-                    GameService.getInstance().getInsertions().remove(effect);
-                    effect.execute();
-                });
-
-                break;
-            case OR:
-                Platform.runLater(() -> {
-                    GameService.getInstance().getInsertions().remove(effect);
-                    effect.execute();
-                });
-                break;
-            case MONSTER_FLOOD:
-                Platform.runLater(() -> {
-                    GameService.getInstance().getInsertions().remove(effect);
-                    effect.execute();
-                });
+            case MONSTER_SURGE:
+                effect.execute();
+                GameService.getInstance().getInsertions().remove(effect);
                 break;
             default:
-
-                Platform.runLater(() -> GameService.getInstance().getInsertions().remove(effect));
-                effect.execute();
+                Platform.runLater(() -> {
+                    GameService.getInstance().getInsertions().remove(effect);
+                    effect.execute();
+                });
                 break;
-
         }
-
-
     }
 
     private void startChoiceDialog(Choice choice) {

@@ -6,6 +6,7 @@ import model.Item.Monster;
 public class Vampire extends Monster {
 
     public Vampire(){
+        super(5);
         this.setId("&vampire");
         this.setName("${vampire}");
         this.setWillTest(0);

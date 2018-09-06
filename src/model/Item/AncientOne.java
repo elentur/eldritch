@@ -4,28 +4,24 @@ import container.ItemStack;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
 import lombok.Getter;
-import lombok.Setter;
 import utils.ResourceUtil;
 
 import java.util.List;
 import java.util.UUID;
 
+public abstract class AncientOne implements Item {
 
-@Getter
-@Setter
-public abstract class Token implements Item {
-
+    @Getter
     public final String uniqueId = UUID.randomUUID().toString();
-    private final ItemType type;
-    private ItemStack stack;
 
-    protected Token(ItemType type) {
-        this.type = type;
+
+    protected AncientOne() {
+
     }
 
     @Override
     public String getName() {
-        return  ResourceUtil.get(getNameId(),"token");
+        return  ResourceUtil.get(getNameId(),"ancientone");
     }
 
     @Override
@@ -40,27 +36,26 @@ public abstract class Token implements Item {
 
     @Override
     public ItemType getSubType() {
-        return type;
+        return null;
     }
 
     @Override
     public ItemType getItemType() {
-        return ItemType.TOKEN;
+        return ItemType.ANCIENT_ONE;
     }
 
     public abstract Encounter getEncounter();
 
     @Override
     public void setStack(ItemStack itemStack){
-        stack=itemStack;
     }
     @Override
     public void discard(){
-        stack.discard(this);
+
     }
     @Override
     public Token draw(){
-        return (Token) getStack().draw();
+        return null;
     }
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}

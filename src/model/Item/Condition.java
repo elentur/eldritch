@@ -53,4 +53,7 @@ public abstract class Condition implements Item {
     public Condition draw(){
         return (Condition) getStack().draw();
     }
+    @Override
+    public void executeReckoning(Investigator inv, boolean autoFail){}
+
 }

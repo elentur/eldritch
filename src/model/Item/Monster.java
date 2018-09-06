@@ -3,7 +3,6 @@ package model.Item;
 import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
-import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +20,10 @@ import java.util.UUID;
 @EqualsAndHashCode(of = {"uniqueId"})
 @ToString(exclude = {"id", "effects",})
 public abstract class Monster implements Item, IMonster {
+    private final int count;
+    public Monster(int count){
+        this.count=count;
+    }
     public String uniqueId = UUID.randomUUID().toString();
     public String id;
     private String name;
@@ -75,7 +78,7 @@ public abstract class Monster implements Item, IMonster {
     }
 
     public Monster clone(){
-        Monster m = new Monster() {
+        Monster m = new Monster(count) {
         };
         m.setUniqueId(this.uniqueId);
         m.setId(this.id);
@@ -103,6 +106,9 @@ public abstract class Monster implements Item, IMonster {
     public void discard(){
         stack.discard(this);
     }
+    @Override
+    public void executeReckoning(Investigator inv, boolean autoFail){}
+
 
     @Override
     public Monster draw(){

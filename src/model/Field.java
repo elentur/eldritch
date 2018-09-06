@@ -191,6 +191,9 @@ public class Field {
         return removeToken(getTokens().getRumor());
     }
 
+    public RumorToken getRumor() {
+        return tokens.getRumor();
+    }
     public void addMystery(MysteryToken token) {
         if (!hasMystery()) {
             addToken(token);

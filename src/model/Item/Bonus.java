@@ -5,7 +5,6 @@ import gamemechanics.encounter.Encounter;
 
 public interface Bonus {
     void execute(Encounter encounter);
-    void reckoning();
     BonusType getBonusType();
     SituationType getSituation();
     EventTimeType getEventTime();

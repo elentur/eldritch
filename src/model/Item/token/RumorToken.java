@@ -7,16 +7,18 @@ import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.ExpeditionEncounter;
 import gamemechanics.encounter.RumorEncounter;
 import lombok.Getter;
+import model.Item.Mythos;
+import model.Item.MythosBlue;
 import model.Item.Token;
 @Getter
 public class RumorToken extends Token {
-    private final RumorEncounter encounter;
+    private final MythosBlue mythos;
     private final FieldID fieldID;
     private ItemStack stack;
 
-    public RumorToken(FieldID fieldID, RumorEncounter encounter) {
+    public RumorToken(FieldID fieldID, MythosBlue mythos) {
         super(ItemType.RUMOR_TOKEN);
-        this.encounter=encounter;
+         this.mythos = mythos;
         this.fieldID=fieldID;
     }
 
@@ -30,9 +32,12 @@ public class RumorToken extends Token {
         return "${rumor_token}";
     }
 
+    public Mythos getMythos(){
+        return mythos;
+    }
     @Override
     public Encounter getEncounter() {
-        return encounter;
+        return mythos.getEncounter();
     }
     @Override
     public void setStack(ItemStack itemStack){
