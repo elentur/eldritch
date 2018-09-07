@@ -2,10 +2,6 @@ package gamemechanics.encounter.expeditionencounter;
 
 import enums.*;
 import gamemechanics.encounter.ExpeditionEncounter;
-import gamemechanics.encounter.StandardEncounter;
-import lombok.Getter;
-import lombok.Setter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class ExpeditionEncounter0 extends ExpeditionEncounter {
@@ -33,7 +29,7 @@ public class ExpeditionEncounter0 extends ExpeditionEncounter {
         getTestType()[1] = TestType.LORE;
 
 
-        getEffect()[2][START] = new And(new Loose(SpendType.HEALTH, 1, getInvestigator()), new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
+        getEffect()[2][START] = new And(new LooseOrGainHealthSanity(SpendType.HEALTH, 1, getInvestigator()), new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
         getEffect()[2][PASS] = new RetreatDoom(1, getInvestigator());
         getEffect()[2][FAIL] = new NullEffect();
         getTestType()[2] = TestType.OBSERVATION;

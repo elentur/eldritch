@@ -28,7 +28,7 @@ public class StandardEncounter0 extends StandardEncounter {
                 break;
             case WILDERNESS:
                 getEffect()[1][START] = new NullEffect();
-                getEffect()[1][PASS] = new And(new GainAsset(ItemType.ITEM,  getInvestigator()), new Loose(SpendType.SANITY, 1, getInvestigator()));
+                getEffect()[1][PASS] = new And(new GainAsset(ItemType.ITEM,  getInvestigator()), new LooseOrGainHealthSanity(SpendType.SANITY, 1, getInvestigator()));
                 getEffect()[1][FAIL] = new NullEffect();
                 setEncounterPart(1);
                 break;

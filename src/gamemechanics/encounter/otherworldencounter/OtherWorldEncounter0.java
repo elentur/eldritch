@@ -4,9 +4,7 @@ import enums.ConditionType;
 import enums.FieldID;
 import enums.SpendType;
 import enums.TestType;
-import gamemechanics.encounter.ExpeditionEncounter;
 import gamemechanics.encounter.OtherWorldEncounter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class OtherWorldEncounter0 extends OtherWorldEncounter {
@@ -32,7 +30,7 @@ public class OtherWorldEncounter0 extends OtherWorldEncounter {
         getTestType()[1] = TestType.LORE;
 
 
-        getEffect()[2][START]=new And(new Loose(SpendType.HEALTH,1,getInvestigator()),new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
+        getEffect()[2][START]=new And(new LooseOrGainHealthSanity(SpendType.HEALTH,1,getInvestigator()),new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
         getEffect()[2][PASS] = new RetreatDoom(1,getInvestigator());
         getEffect()[2][FAIL] = new NullEffect();
         getTestType()[2] = TestType.OBSERVATION;

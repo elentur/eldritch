@@ -27,7 +27,7 @@ public abstract class Artifact implements Item {
 
     }
     public String getName(){
-        return  ResourceUtil.get(getNameId(),"artifacts");
+        return  ResourceUtil.get(getNameId(),"artifact");
     }
 
     public String toString() {
@@ -41,7 +41,7 @@ public abstract class Artifact implements Item {
 
     @Override
     public ItemType getItemType() {
-        return ItemType.ASSET;
+        return ItemType.ARTIFACT;
     }
 
     @Override
@@ -59,4 +59,11 @@ public abstract class Artifact implements Item {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
 
+    public String getInfoText() {
+        StringBuilder infoText = new StringBuilder();
+        for(Bonus bonus: getBonus()){
+            infoText.append("Bonus: ").append(bonus.getText()).append("\n");
+        }
+        return infoText.toString();
+    }
 }

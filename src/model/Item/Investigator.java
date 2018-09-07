@@ -1,5 +1,6 @@
 package model.Item;
 
+import container.Inventory;
 import container.ItemContainer;
 import container.ItemStack;
 import enums.ConditionType;
@@ -43,8 +44,14 @@ public abstract class Investigator implements Item {
 
     private List<ItemBonus> bonus;
 
-    private ItemContainer<Item> inventory;
+    private Inventory inventory;
     private ItemContainer<ClueToken> clues;
+    private int focus;
+    private int shipTicket;
+    private int trainTicket;
+
+
+
     private ItemStack stack;
 
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
@@ -64,7 +71,7 @@ public abstract class Investigator implements Item {
         this.setStartingSpace(satrtField);
         this.setBonus(createBonus());
         this.clues = new ItemContainer<>();
-        this.setInventory(new ItemContainer<>());
+        this.inventory=new Inventory();
         for (Item p : startItems) {
             this.getInventory().add(p);
         }
@@ -168,4 +175,31 @@ public abstract class Investigator implements Item {
     }
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
+
+    public int getFocus() {
+        return focus;
+    }
+
+    public void setFocus(int focus) {
+        this.focus = focus;
+        update.setValue(true);
+    }
+
+    public int getShipTicket() {
+        return shipTicket;
+    }
+
+    public void setShipTicket(int shipTicket) {
+        this.shipTicket = shipTicket;
+        update.setValue(true);
+    }
+
+    public int getTrainTicket() {
+        return trainTicket;
+    }
+
+    public void setTrainTicket(int trainTicket) {
+        this.trainTicket = trainTicket;
+        update.setValue(true);
+    }
 }

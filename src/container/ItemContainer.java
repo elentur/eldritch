@@ -45,11 +45,15 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
         return opt.orElse(null);
     }
 
-    public ItemContainer<Item> getItemsWidthFilter(Function<ItemBonus,Boolean> filter) {
+    public ItemContainer<Item> getItemsWidthBoniFilter(Function<ItemBonus,Boolean> filter) {
         return this.stream().filter(item -> item.getBonus().stream().anyMatch(filter::apply))
                 .collect(Collectors.toCollection(ItemContainer::new));
     }
 
+    public ItemContainer<Item> getItemsWidthTypeFilter(Function<Item,Boolean> filter) {
+        return this.stream().filter(filter::apply)
+                .collect(Collectors.toCollection(ItemContainer::new));
+    }
     public BonusContainer<Bonus> getBoniWithFilter(Function<Bonus,Boolean> filter) {
         return this.stream().collect(BonusContainer<ItemBonus>::new, ItemContainer::addAll, BonusContainer::addAll)
                 .stream().filter(filter::apply).collect(Collectors.toCollection(BonusContainer::new));

@@ -33,7 +33,8 @@ public enum ItemType {
     CONDITION("${condition}", Collections.singletonList("Condition")  ),
     BLESSED_CONDITION("${blessed_condition}", Collections.singletonList("Blessed Condition")  ),
     MYTHOS("${mythos}", Collections.singletonList("Mythos")  ),
-    ANCIENT_ONE("${ancient_one}", Collections.singletonList("Ancient One") );
+    ANCIENT_ONE("${ancient_one}", Collections.singletonList("Ancient One") ),
+    AMNESIA_CONDITION("${amnesia_condition}", Collections.singletonList("Amnesia Condition")  );
     private String key;
     private List<String> parts;
 

@@ -1,19 +1,24 @@
 package gui.effectoverlays;
 
-import Service.GameService;
 import gui.Fonts;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.effects.Loose;
+import model.effects.LooseOrGainHealthSanity;
 
-public class LooseEffectOverlay extends Overlay {
+public class LooseOrGainHealthSanityEffectOverlay extends Overlay {
 
 
-    public LooseEffectOverlay(Loose loose) {
+    public LooseOrGainHealthSanityEffectOverlay(LooseOrGainHealthSanity loose) {
         super(loose);
-        Label value = new Label((loose.getValue()) + "");
+        if(loose.getValue()==0){
+            return;
+        }
+        String sign ="";
+        if(loose.getValue()>0){
+            sign="+" ;
+        }
+        Label value = new Label((sign + loose.getValue()) + "");
         ImageView img = null;
         value.getStyleClass().add("text-stroke-white");
         if (loose.getMonster() != null) {

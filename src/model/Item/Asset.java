@@ -61,4 +61,11 @@ public abstract class Asset implements Item {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
 
+    public String getInfoText() {
+        StringBuilder infoText = new StringBuilder();
+        for(Bonus bonus: getBonus()){
+            infoText.append("Bonus: ").append(bonus.getText()).append("\n");
+        }
+        return infoText.toString();
+    }
 }

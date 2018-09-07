@@ -11,27 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AighteenthDerringer extends Artifact {
+public class CultesDesGoules extends Artifact {
 
-    public AighteenthDerringer() {
-        super(ItemType.TRINKET_WEAPON);
+    public CultesDesGoules() {
+        super(ItemType.ITEM_TOME);
     }
 
     @Override
     public String getId() {
-        return "&18Derringer";
+        return "&cultesDesGoules";
     }
 
     @Override
     public String getNameId() {
-        return "${18_derringer}";
+        return "${cultes_des_goules}";
     }
 
     @Override
     public List<ItemBonus> createBonus() {
         List<ItemBonus> boni = new ArrayList<>();
-        ItemBonus_DiceResult bonus1 = new ItemBonus_DiceResult(1,1,TestType.STRENGTH,SituationType.COMBAT_ENCOUNTER,this);
-        boni.add(bonus1);
         return boni;
     }
 

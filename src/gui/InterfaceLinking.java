@@ -13,7 +13,6 @@ import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -21,7 +20,6 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.effects.*;
-import oldVersion.gameBuild.Game;
 
 @Log
 public class InterfaceLinking {
@@ -77,8 +75,8 @@ public class InterfaceLinking {
             return;
         }
         switch (effect.getEffectTyp()) {
-            case LOOSE:
-                Animations.effectOverlayAnimations(new LooseEffectOverlay((Loose) effect), primaryStage, effect);
+            case LOOSE_OR_GAIN_HEALTH_SANITY:
+                Animations.effectOverlayAnimations(new LooseOrGainHealthSanityEffectOverlay((LooseOrGainHealthSanity) effect), primaryStage, effect);
                 break;
             case SPEND:
                 Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);

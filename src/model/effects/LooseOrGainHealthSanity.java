@@ -10,20 +10,20 @@ import model.Item.Monster;
 import utils.ResourceUtil;
 
 @Getter
-public class Loose extends Effect {
+public class LooseOrGainHealthSanity extends Effect {
     private final SpendType spendType;
     private final int value;
     private  Investigator investigator;
     private  Monster monster;
 
-    public Loose(SpendType spendType, int value, Investigator investigator) {
-        super(EffectTyps.LOOSE);
+    public LooseOrGainHealthSanity(SpendType spendType, int value, Investigator investigator) {
+        super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
         this.spendType = spendType;
         this.value = value;
         this.investigator = investigator;
     }
-    public Loose(SpendType spendType, int value, Monster monster) {
-        super(EffectTyps.LOOSE);
+    public LooseOrGainHealthSanity(SpendType spendType, int value, Monster monster) {
+        super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
         this.spendType = spendType;
         this.value = value;
         this.monster = monster;

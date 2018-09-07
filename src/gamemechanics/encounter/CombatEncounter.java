@@ -1,11 +1,11 @@
 package gamemechanics.encounter;
 
-import Service.EventService;
 import Service.GameService;
 import container.ItemContainer;
 import container.Result;
 import enums.EncounterType;
 import enums.SituationType;
+import enums.SpendType;
 import enums.TestType;
 import gamemechanics.SkillTest;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import model.Item.Bonus;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.Monster;
+import model.effects.LooseOrGainHealthSanity;
 import preparation.CombatPreparation;
 import preparation.Preparation;
 
@@ -32,7 +33,6 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation horrorPreparation;
 
 
-    private EventService eventService = new EventService();
 
     public CombatEncounter(Monster monster, List<Monster> monsters, Investigator investigator) {
         super(EncounterType.COMBAT_ENCOUNTER);
@@ -85,16 +85,22 @@ public class CombatEncounter extends Encounter {
         horrorPreparation = null;
     }
 
-    public void sanityLoss() {
-        eventService.looseSanity(investigator, activeMonster.getHorror() - result.getNumberOfSuccess());
+    private void sanityLoss() {
+
+        int dmg =  activeMonster.getHorror() - result.getNumberOfSuccess();
+        dmg = dmg<0?0:dmg;
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY,-dmg,investigator));
     }
 
-    public void healthLoss() {
-        eventService.looseHealth(investigator, activeMonster.getDamage() - result.getNumberOfSuccess());
+    private void healthLoss() {
+       int dmg =  activeMonster.getDamage() - result.getNumberOfSuccess();
+       dmg = dmg<0?0:dmg;
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-dmg,investigator));
+
     }
 
-    public void monsterDamage() {
-        eventService.looseHealth(original, result.getNumberOfSuccess());
+    private void monsterDamage() {
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-result.getNumberOfSuccess(),original));
     }
 
     @Override

@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 public class EncounterButton extends ItemButton{
     private final Encounter encounter;
     public EncounterButton(Encounter encounter){
-        super("encounter",encounter);
+        super(encounter);
         this.encounter =encounter;
         setClickEvent();
 

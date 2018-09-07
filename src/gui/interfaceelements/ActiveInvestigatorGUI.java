@@ -46,6 +46,10 @@ public class ActiveInvestigatorGUI extends Group {
         portrait.setOnMouseClicked(e->{
             if(e.getButton().equals(MouseButton.PRIMARY)){
                 zoomTo(inv);
+            }else{
+                InventoryDialog inventoryDialog= new InventoryDialog(inv.getInventory());
+                InterfaceLinking.root.getChildren().add( InterfaceLinking.root.getChildren().size() - 1, inventoryDialog);
+                inventoryDialog.showAndWait();
             }
         });
 
@@ -102,9 +106,9 @@ public class ActiveInvestigatorGUI extends Group {
             healthImage.setValue(inv.getActualHealth() + "");
             sanityImage.setValue(inv.getActualSanity() + "");
             clueImage.setValue(inv.getClues().size()+"");
-            focusImage.setValue("1");
-            trainImage.setValue("1");
-            shipImage.setValue("1");
+            focusImage.setValue(inv.getFocus()+"");
+            trainImage.setValue(inv.getTrainTicket()+"");
+            shipImage.setValue(inv.getShipTicket()+"");
         }
     }
 

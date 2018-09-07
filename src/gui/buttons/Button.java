@@ -88,14 +88,14 @@ public class Button extends StackPane {
         tooltip.setText(text);
     }
 
-    void hoverOut() {
+    protected void hoverOut() {
 
         imageView.setEffect(null);
         actualNode.setEffect(Effects.dropShadow);
 
     }
 
-    void hoverIn() {
+    protected void hoverIn() {
 
         imageView.setEffect(Effects.hover);
 
@@ -117,7 +117,7 @@ public class Button extends StackPane {
         return armed.getValue();
     }
 
-    private void setArmed(boolean v) {
+    protected void setArmed(boolean v) {
         armed.setValue(v);
     }
 

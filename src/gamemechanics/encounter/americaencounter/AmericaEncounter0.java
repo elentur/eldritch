@@ -4,7 +4,6 @@ import enums.EffectSelector;
 import enums.SpendType;
 import enums.TestType;
 import gamemechanics.encounter.AmericaEncounter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class AmericaEncounter0 extends AmericaEncounter {
@@ -29,7 +28,7 @@ public class AmericaEncounter0 extends AmericaEncounter {
             case SAN_FRANCISCO:
                 getEffect()[1][START]=new NullEffect();
                 getEffect()[1][PASS]=new And(new GainClue(EffectSelector.THIS,1,getInvestigator()),new AdvanceOmen(1));
-                getEffect()[1][FAIL]=new Loose(SpendType.HEALTH,1,getInvestigator());
+                getEffect()[1][FAIL]=new LooseOrGainHealthSanity(SpendType.HEALTH,1,getInvestigator());
                 setEncounterPart(1);
                 break;
             case BUENOS_AIRES:

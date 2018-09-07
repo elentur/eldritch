@@ -15,7 +15,7 @@ public class InvestigatorButton extends ItemButton {
     private final UpdateListener listener;
 
     public InvestigatorButton(Investigator inv) {
-        super("investigator", inv);
+        super( inv);
         this.inv = inv;
 
         this.setShowBackSide(false);

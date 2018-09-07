@@ -30,7 +30,7 @@ public class StandardEncounter1 extends StandardEncounter {
                 setEncounterPart(1);
                 break;
             case SEA:
-                getEffect()[2][START] = new And(new Move(1,getInvestigator()),new Loose(SpendType.SANITY,1, getInvestigator()));
+                getEffect()[2][START] = new And(new Move(1,getInvestigator()),new LooseOrGainHealthSanity(SpendType.SANITY,1, getInvestigator()));
                 getEffect()[2][PASS] = new NullEffect();
                 getEffect()[2][FAIL] = new NullEffect();
                 setEncounterPart(2);

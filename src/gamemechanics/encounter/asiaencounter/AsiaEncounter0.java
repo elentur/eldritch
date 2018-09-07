@@ -3,9 +3,7 @@ package gamemechanics.encounter.asiaencounter;
 import enums.EffectSelector;
 import enums.SpendType;
 import enums.TestType;
-import gamemechanics.encounter.AmericaEncounter;
 import gamemechanics.encounter.AsiaEncounter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class AsiaEncounter0 extends AsiaEncounter {
@@ -30,7 +28,7 @@ public class AsiaEncounter0 extends AsiaEncounter {
             case SHANGHAI:
                 getEffect()[1][START]=new NullEffect();
                 getEffect()[1][PASS]=new And(new GainClue(EffectSelector.THIS,1,getInvestigator()),new AdvanceDoom(1,getInvestigator()));
-                getEffect()[1][FAIL]=new Loose(SpendType.HEALTH,1,getInvestigator());
+                getEffect()[1][FAIL]=new LooseOrGainHealthSanity(SpendType.HEALTH,1,getInvestigator());
                 setEncounterPart(1);
                 break;
             case SYDNEY:

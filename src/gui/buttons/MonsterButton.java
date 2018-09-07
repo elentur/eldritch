@@ -23,7 +23,7 @@ public class MonsterButton extends ItemButton {
 
 
     public MonsterButton(Monster monster) {
-        super("monster",monster);
+        super(monster);
 
     }
 

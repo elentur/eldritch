@@ -1,9 +1,7 @@
 package gamemechanics.encounter.specialencounter.shubniggurath;
 
 import enums.*;
-import gamemechanics.encounter.OtherWorldEncounter;
 import gamemechanics.encounter.SpecialEncounter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class SpecialEncounter0 extends SpecialEncounter {
@@ -29,7 +27,7 @@ public class SpecialEncounter0 extends SpecialEncounter {
         getTestType()[1] = TestType.LORE;
 
 
-        getEffect()[2][START]=new And(new Loose(SpendType.HEALTH,1,getInvestigator()),new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
+        getEffect()[2][START]=new And(new LooseOrGainHealthSanity(SpendType.HEALTH,1,getInvestigator()),new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
         getEffect()[2][PASS] = new RetreatDoom(1,getInvestigator());
         getEffect()[2][FAIL] = new NullEffect();
         getTestType()[2] = TestType.OBSERVATION;

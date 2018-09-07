@@ -1,6 +1,7 @@
 package model.Item;
 
 import container.ItemStack;
+import enums.ConditionType;
 import enums.ItemType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -56,4 +57,11 @@ public abstract class Condition implements Item {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
 
+    public String getInfoText() {
+        StringBuilder infoText = new StringBuilder();
+        for(Bonus bonus: getBonus()){
+            infoText.append("Bonus: ").append(bonus.getText()).append("\n");
+        }
+        return infoText.toString();
+    }
 }

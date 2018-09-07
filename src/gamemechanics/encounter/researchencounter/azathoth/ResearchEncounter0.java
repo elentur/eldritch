@@ -2,7 +2,6 @@ package gamemechanics.encounter.researchencounter.azathoth;
 
 import enums.*;
 import gamemechanics.encounter.ResearchEncounter;
-import model.Item.Investigator;
 import model.effects.*;
 
 public class ResearchEncounter0 extends ResearchEncounter {
@@ -27,7 +26,7 @@ public class ResearchEncounter0 extends ResearchEncounter {
             case WILDERNESS:
                 getEffect()[1][START]=new NullEffect();
                 getEffect()[1][PASS]=new And(new GainClue(EffectSelector.THIS,1,getInvestigator()),new AdvanceOmen(1));
-                getEffect()[1][FAIL]=new Loose(SpendType.HEALTH,1,getInvestigator());
+                getEffect()[1][FAIL]=new LooseOrGainHealthSanity(SpendType.HEALTH,1,getInvestigator());
                 setEncounterPart(1);
                 break;
             case SEA:
