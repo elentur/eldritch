@@ -10,13 +10,11 @@ import gui.*;
 import gui.buttons.BonusButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.Item.Bonus;
-import model.effects.NextInvestigator;
 
 
 public class EncounterGui extends DialogGui {
@@ -39,6 +37,7 @@ public class EncounterGui extends DialogGui {
         encounterPane.setMaxHeight(background.getHeight() * 0.40);
         encounterPane.setAlignment(Pos.TOP_CENTER);
         encounterPane.setPadding(new Insets(10));
+        encounterPane.setFillWidth(true);
         StackPane.setAlignment(encounterPane, Pos.TOP_LEFT);
 
         bonusPane = new ItemScrollPane();
@@ -96,7 +95,7 @@ public class EncounterGui extends DialogGui {
         startText.setWrapText(true);
         startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
         startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
-
+        startText.getStyleClass().add("");
         encounterPane.getChildren().addAll(startText);
     }
 
@@ -139,7 +138,7 @@ public class EncounterGui extends DialogGui {
         if (e.getButton().equals(MouseButton.PRIMARY)) {
             if (encounter.completeEncounterPart() == 3) {
                 this.close();
-                GameService.getInstance().addEffect(new NextInvestigator());
+               // GameService.getInstance().addEffect(new NextInvestigator());
             } else {
                 populate();
             }

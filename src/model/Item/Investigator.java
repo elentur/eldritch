@@ -7,6 +7,7 @@ import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
+import gamemechanics.Action;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import lombok.ToString;
 import lombok.extern.java.Log;
 import model.Item.token.ClueToken;
 import model.SkillSet;
+import utils.MathUtils;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -50,9 +52,11 @@ public abstract class Investigator implements Item {
     private int shipTicket;
     private int trainTicket;
 
+    private int maxActions;
 
 
     private ItemStack stack;
+    private List<Action> doneActions;
 
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
         this.setId(id);
@@ -71,11 +75,12 @@ public abstract class Investigator implements Item {
         this.setStartingSpace(satrtField);
         this.setBonus(createBonus());
         this.clues = new ItemContainer<>();
-        this.inventory=new Inventory();
+        this.inventory = new Inventory();
         for (Item p : startItems) {
             this.getInventory().add(p);
         }
-
+        doneActions = new ArrayList<>();
+        maxActions=2;
     }
 
     public String getOccupation() {
@@ -94,6 +99,7 @@ public abstract class Investigator implements Item {
     public String getNameId() {
         return "";
     }
+
     public String getFirstName() {
         return ResourceUtil.get(firstName, "investigator");
     }
@@ -101,6 +107,7 @@ public abstract class Investigator implements Item {
     public String getLastName() {
         return ResourceUtil.get(lastName, "investigator");
     }
+
     public String getName() {
         return getFirstName() + " " + getLastName();
     }
@@ -142,16 +149,19 @@ public abstract class Investigator implements Item {
     public ItemType getSubType() {
         return ItemType.NONE;
     }
+
     @Override
-    public void setStack(ItemStack itemStack){
-        stack=itemStack;
+    public void setStack(ItemStack itemStack) {
+        stack = itemStack;
     }
+
     @Override
-    public void discard(){
+    public void discard() {
         stack.discard(this);
     }
+
     @Override
-    public Investigator draw(){
+    public Investigator draw() {
         return (Investigator) getStack().draw();
     }
 
@@ -161,29 +171,27 @@ public abstract class Investigator implements Item {
     }
 
     public ClueToken getClue() {
-        if(clues.isEmpty()) {
+        if (clues.isEmpty()) {
             return null;
         }
-        ClueToken clue=  clues.remove(0);
+        ClueToken clue = clues.remove(0);
         clue.discard();
         update.setValue(true);
         return clue;
     }
 
     public void improve(TestType testType, int value) {
-        getSkillSet().improve( testType,  value);
+        getSkillSet().improve(testType, value);
     }
+
     @Override
-    public void executeReckoning(Investigator inv, boolean autoFail){}
+    public void executeReckoning(Investigator inv, boolean autoFail) {
+    }
 
     public int getFocus() {
         return focus;
     }
 
-    public void setFocus(int focus) {
-        this.focus = focus;
-        update.setValue(true);
-    }
 
     public int getShipTicket() {
         return shipTicket;
@@ -191,6 +199,16 @@ public abstract class Investigator implements Item {
 
     public void setShipTicket(int shipTicket) {
         this.shipTicket = shipTicket;
+        update.setValue(true);
+    }
+    public void addShipTicket(int shipTicket) {
+        this.shipTicket += shipTicket;
+        MathUtils.clamp(shipTicket,0,2-trainTicket);
+        update.setValue(true);
+    }
+    public void removeShipTicket(int shipTicket) {
+        this.shipTicket -= shipTicket;
+        MathUtils.clamp(shipTicket,0,2-trainTicket);
         update.setValue(true);
     }
 
@@ -202,4 +220,33 @@ public abstract class Investigator implements Item {
         this.trainTicket = trainTicket;
         update.setValue(true);
     }
+    public void addTrainTicket(int trainTicket) {
+        this.trainTicket += trainTicket;
+        MathUtils.clamp(trainTicket,0,2-shipTicket);
+        update.setValue(true);
+    }
+    public void removerainTicket(int trainTicket) {
+        this.trainTicket -= trainTicket;
+        MathUtils.clamp(trainTicket,0,2-shipTicket);
+        update.setValue(true);
+    }
+    public void addFocus(int value) {
+        this.focus += value;
+        MathUtils.clamp(value, 0, 2);
+        update.setValue(true);
+    }
+
+    public void removeFocus(int value) {
+        this.focus -= value;
+        MathUtils.clamp(value, 0, 2);
+        update.setValue(true);
+    }
+
+    public void addDoneAction(Action action) {
+        this.doneActions.add(action);
+    }
+    public List<Action> getDoneActions(){
+        return doneActions;
+    }
+
 }

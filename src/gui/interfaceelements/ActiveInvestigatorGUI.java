@@ -2,10 +2,7 @@ package gui.interfaceelements;
 
 import Service.GameService;
 import enums.SpendType;
-import gui.Animations;
-import gui.Effects;
-import gui.Fonts;
-import gui.InterfaceLinking;
+import gui.*;
 import gui.buttons.FieldButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

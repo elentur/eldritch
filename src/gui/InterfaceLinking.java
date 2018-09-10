@@ -90,6 +90,12 @@ public class InterfaceLinking {
             case GAIN_CLUE:
                 Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
                 break;
+            case GAIN_FOCUS:
+                Animations.effectOverlayAnimations(new GainEffectOverlay((GainFocus) effect), primaryStage, effect);
+                break;
+            case GAIN_TICKET:
+                Animations.effectOverlayAnimations(new GainEffectOverlay((GainTicket) effect), primaryStage, effect);
+                break;
             case IMPROVE:
                 Animations.effectOverlayAnimations(new ImproveEffectOverlay((Improve) effect), primaryStage, effect);
                 break;

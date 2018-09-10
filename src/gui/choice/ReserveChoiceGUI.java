@@ -2,19 +2,20 @@ package gui.choice;
 
 import Service.GameService;
 import enums.YesNo;
-import gamemechanics.choice.MonsterChoice;
+import expetions.ReserveException;
+import gamemechanics.choice.InformationChoice;
 import gamemechanics.choice.ReserveChoice;
-import gamemechanics.encounter.CombatEncounter;
+import gui.Fonts;
 import gui.ItemScrollPane;
-import gui.buttons.ItemButton;
-import gui.buttons.MonsterButton;
+import gui.buttons.InventoryItemButton;
 import gui.buttons.YesNoButton;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextAlignment;
 import model.Item.Asset;
-import model.Item.Monster;
 import model.effects.GainAsset;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class ReserveChoiceGUI extends ChoiceDialog {
 
         ItemScrollPane scrollPane = new ItemScrollPane();
         for(Asset asset : assets) {
-            ItemButton button= new ItemButton(asset);
+            InventoryItemButton button= new InventoryItemButton(asset);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     if(choosen.contains(asset)){
@@ -38,8 +39,8 @@ public class ReserveChoiceGUI extends ChoiceDialog {
                     }else{
                         choosen.add(asset);
                     }
-                    if(choice.isSingleSelect()) {
 
+                    if(choice.isSingleSelect()) {
                         GameService.getInstance().getReserve().remove(choosen.get(0));
                         GameService.getInstance().addEffect(new GainAsset(choosen.get(0),GameService.getInstance().getEncounteringInvestigator()));
                         close();
@@ -53,13 +54,23 @@ public class ReserveChoiceGUI extends ChoiceDialog {
         scrollPane.disableBackground(true);
         main.getChildren().add(scrollPane);
         if(!choice.isSingleSelect()) {
+            Label success =new Label( "Success: " +choice.getSuccess()) ;
+            success.styleProperty().bind(Fonts.getFont(0.4,Fonts.DARK, Fonts.FontTyp.BOLD));
+            success.setAlignment(Pos.CENTER);
+            success.setTextAlignment(TextAlignment.CENTER);
+            getTexts().getChildren().add(success);
             YesNoButton okButton = new YesNoButton(YesNo.YES);
             okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-
-                    //TODO
-                    GameService.getInstance().getReserve().buy(choosen, 4);
-                    close();
+                    try {
+                        List<Asset> bought = GameService.getInstance().getReserve().buy(choosen, choice.getSuccess());
+                        for (Asset asset: bought){
+                            GameService.getInstance().addEffect(new GainAsset(asset,GameService.getInstance().getEncounteringInvestigator()));
+                        }
+                        close();
+                    }catch (ReserveException ex){
+                        GameService.getInstance().addChoice(new InformationChoice("",ex.getMessage(),new ArrayList<>()));
+                    }
                 }
             });
             StackPane.setAlignment(okButton, Pos.BOTTOM_RIGHT);

@@ -3,12 +3,8 @@ package gui.effectoverlays;
 import Service.GameService;
 import gui.Fonts;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import model.effects.Spend;
 import model.effects.SwitchPhase;
-import oldVersion.gameBuild.Game;
 
 public class SwitchPhaseOverlay extends Overlay {
 

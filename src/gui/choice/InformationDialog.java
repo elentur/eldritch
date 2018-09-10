@@ -2,11 +2,9 @@ package gui.choice;
 
 import enums.YesNo;
 import gamemechanics.choice.InformationChoice;
-import gamemechanics.choice.YesNoChoice;
 import gui.buttons.YesNoButton;
 import javafx.geometry.Pos;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.StackPane;
 
 public class InformationDialog extends ChoiceDialog {
 
@@ -17,6 +15,9 @@ public class InformationDialog extends ChoiceDialog {
         yesButton.setOnMouseClicked(e->choice.setValue(true));
         StackPane.setAlignment(yesButton, Pos.BOTTOM_RIGHT);
         main.getChildren().addAll(yesButton);
+        if(choice.getInfo()== null || choice.getInfo().trim().equals("")){
+            choice.setValue(true);
+        }
 
      //   main.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
     }

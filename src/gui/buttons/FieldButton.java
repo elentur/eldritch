@@ -1,13 +1,13 @@
 package gui.buttons;
 
 import Service.GameService;
-import enums.FieldID;
 import enums.PhaseTypes;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
 import gui.Animations;
 import gui.Effects;
 import gui.Fonts;
+import gui.interfaceelements.ContextWheel;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -19,13 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
+import lombok.Setter;
 import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
-import model.effects.SpawnClue;
-import model.effects.SpawnMonster;
-import model.effects.SwitchPhase;
-import oldVersion.gameBuild.Game;
 
 public class FieldButton extends Group {
 
@@ -45,6 +42,8 @@ public class FieldButton extends Group {
     private final FlowPane investigators;
     private final FlowPane monsters;
     private final FlowPane gateExpedition;
+    @Setter
+    private  ContextWheel wheel;
     private boolean mouseOver;
     private final ImageView gate;
     private final ImageView expedition;
@@ -54,6 +53,7 @@ public class FieldButton extends Group {
     private final Label eldritchLabel;
     private final ImageView mystery;
     private final ImageView rumor;
+
 
     private boolean isDragging;
 
@@ -158,9 +158,14 @@ public class FieldButton extends Group {
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
                 if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)){
-                    GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
-                    GameService.getInstance().setActiveInvestigator();
+                  //  GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
+                  //  GameService.getInstance().setActiveInvestigator();
                    // GameService.getInstance().addEffect(new SwitchPhase());
+                    if( GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)&&
+                            wheel==null){
+                       this.wheel = new ContextWheel(field.getFieldAction());
+                        this.getChildren().add(wheel);
+                    }
                 }else if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER)&&
                         GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)){
                     if (!field.getMonster().isEmpty()) {

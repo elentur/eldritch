@@ -223,4 +223,7 @@ public class Field {
     }
 
 
+    public FieldActions getFieldAction() {
+        return new FieldActions(this);
+    }
 }

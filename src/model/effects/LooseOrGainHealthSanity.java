@@ -54,6 +54,10 @@ public class LooseOrGainHealthSanity extends Effect {
         if(spendType==null ||value ==0){
             return ResourceUtil.get("${loose}","effect" , ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${loose}","effect"  , value + " " + spendType.getText()) ;
+        if(value < 0) {
+            return ResourceUtil.get("${loose}", "effect", value + " " + spendType.getText());
+        }else{
+            return ResourceUtil.get("${gain}", "effect", value + " " + spendType.getText());
+        }
     }
 }

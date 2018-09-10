@@ -2,22 +2,22 @@ package gui.choice;
 
 import gamemechanics.choice.Choice;
 import gui.DialogGui;
-import gui.Effects;
 import gui.Fonts;
 import gui.TextField;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.TextAlignment;
-import model.Effect;
+import lombok.Getter;
 
 
 public abstract class ChoiceDialog extends DialogGui {
 
     private final static Image newBackground = new Image("images/ShowCase.jpg");
+    @Getter
+    private VBox texts;
     private final Choice choice;
     public ChoiceDialog( double width, double height, Choice choice ) {
         super("", width, height);
@@ -25,7 +25,7 @@ public abstract class ChoiceDialog extends DialogGui {
         headline.styleProperty().bind(Fonts.getFont(0.4,Fonts.DARK, Fonts.FontTyp.BOLD));
         headline.setAlignment(Pos.CENTER);
         headline.setTextAlignment(TextAlignment.CENTER);
-        VBox texts = new VBox(20,headline);
+         texts = new VBox(20,headline);
         if(choice.getInfo()!=null && !choice.getInfo().equals("")) {
             TextField info = new TextField(choice.getInfo());
             info.maxWidthProperty().bind(background.widthProperty().subtract(150));

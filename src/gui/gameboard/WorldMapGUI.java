@@ -1,28 +1,64 @@
 package gui.gameboard;
 
+import enums.FieldConnections;
 import gui.buttons.FieldButton;
+import javafx.scene.effect.Bloom;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.StrokeLineCap;
 import model.Field;
 import model.GameBoard;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class WorldMapGUI extends MapGUI {
     private final static Image backgroundImage = new Image("images/gameBoard/GameBoard.jpg");
     private final Rectangle background;
     private final List<FieldButton> fieldButtonList;
+    private final Map<FieldConnections,SVGPath> paths;
 
     public Rectangle getBack(){
         return background;
     }
     public WorldMapGUI(GameBoard gameBoard) {
+
+
+
         fieldButtonList = new ArrayList<>();
+        paths= new HashMap<>();
+
         background = new Rectangle(5804, 3594);
         background.setFill(new ImagePattern(backgroundImage));
         this.getChildren().add(background);
+
+        try {
+            File file = new File("./resources/svg/PathsWorldMap.svg");
+            Scanner scanner = new Scanner(file);
+
+        for(FieldConnections connections : FieldConnections.values()){
+            if(scanner.hasNext()) {
+                SVGPath path = new SVGPath();
+                path.setContent(scanner.nextLine());
+                path.setFill(Color.TRANSPARENT);
+                path.setStroke(Color.GREEN);
+                path.setVisible(true);
+                Bloom bloom = new Bloom(0.2);
+                path.setEffect(bloom);
+                path.setStrokeWidth(20);
+                path.setStrokeLineCap(StrokeLineCap.ROUND);
+                paths.put(connections, path);
+            }
+        }
+        }catch (FileNotFoundException e){
+
+        }
+
+        this.getChildren().addAll(paths.values());
         for (Field field : gameBoard.getFields()) {
             switch (field.getFieldID()) {
                 case FIELD_1:
@@ -138,6 +174,7 @@ public class WorldMapGUI extends MapGUI {
             }
 
         }
+
 
 
     }

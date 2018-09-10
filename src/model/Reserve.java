@@ -1,6 +1,5 @@
 package model;
 
-import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
 import expetions.ReserveException;
@@ -55,7 +54,7 @@ public class Reserve {
         List<Asset> bought = new ArrayList<>();
         int priceSum=choosen.stream().mapToInt(Asset::getPrice).sum();
         if(priceSum>success){
-            throw new ReserveException(ResourceUtil.get("${reserve_success_to_low}","exception"));
+            throw new ReserveException(ResourceUtil.get("${reserve_success_to_low}","exception",success+"",priceSum+""));
         }
         for( Asset asset : choosen ) {
             bought.add(asset);

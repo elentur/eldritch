@@ -8,8 +8,6 @@ import gamemechanics.choice.InformationChoice;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
-import model.Field;
-import model.Item.Investigator;
 import model.effects.NullEffect;
 import preparation.Preparation;
 import utils.ResourceUtil;
@@ -99,6 +97,8 @@ public class StandardEncounter extends Encounter {
                 effects.add(getEffect()[getEncounterPart()][FAIL]);
             }
             getGame().addChoice(new InformationChoice(header, text, effects));
+        }else{
+            getGame().addEffect(getEffect()[getEncounterPart()][START]);
         }
         setEncounterPart(3);
         return getEncounterPart();

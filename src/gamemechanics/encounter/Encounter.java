@@ -15,6 +15,7 @@ import model.Field;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
+import model.effects.NextInvestigator;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -135,6 +136,8 @@ public abstract class Encounter implements Item {
     @Override
     public void discard(){
         stack.discard(this);
+        getGame().addEffect(new NextInvestigator());
+
     }
     @Override
     public Encounter draw(){

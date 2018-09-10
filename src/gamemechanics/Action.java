@@ -1,15 +1,19 @@
 package gamemechanics;
 
 import Service.GameService;
-import enums.*;
+import enums.EncounterType;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.Encounter;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
 import model.Field;
 import model.Item.Investigator;
-import model.effects.*;
+import model.effects.NextInvestigator;
+import model.effects.NullEffect;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -18,12 +22,17 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"encounterID"}, callSuper = false)
 public class Action extends Encounter {
 
     private final String encounterID;
     private final Field field;
     private Preparation preparation;
 
+
+    public Action(Investigator inv, String encounterID, Effect startEffect) {
+      this(inv,encounterID,startEffect,new NullEffect(),new NullEffect(),TestType.NONE,0);
+    }
     public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
         super(EncounterType.ACTION);
         setInvestigator(inv);
@@ -93,13 +102,32 @@ public class Action extends Encounter {
 
 
     public int completeEncounterPart() {
-        if (result.isSuccess()) {
-            getGame().addEffect(getEffect()[getEncounterPart()][PASS]);
-        } else {
-            getGame().addEffect(getEffect()[getEncounterPart()][FAIL]);
+        String header;
+        String text;
+        List<Effect> effects = new ArrayList<>();
+        if(getEffect()[getEncounterPart()][START]instanceof NullEffect) {
+            if (result.isSuccess()) {
+                header = ResourceUtil.get("${success}", "ui");
+                text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
+                effects.add(getEffect()[getEncounterPart()][PASS]);
+            } else {
+                header = ResourceUtil.get("${fail}", "ui");
+                text = getEncounterFailText() + "\n" + getEffect()[getEncounterPart()][FAIL].getText();
+                effects.add(getEffect()[getEncounterPart()][FAIL]);
+            }
+            getGame().addChoice(new InformationChoice(header, text, effects));
+        }else{
+            getGame().addEffect(getEffect()[getEncounterPart()][START]);
         }
-
         setEncounterPart(3);
         return getEncounterPart();
+    }
+    @Override
+    public void discard(){
+        getInvestigator().addDoneAction(this);
+        if(getInvestigator().getDoneActions().size()>=getInvestigator().getMaxActions()) {
+            getInvestigator().getDoneActions().clear();
+            GameService.getInstance().addEffect(new NextInvestigator());
+        }
     }
 }

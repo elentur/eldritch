@@ -36,7 +36,7 @@ public class GameBoardFactory {
             for (FieldID neighbourID : field.getFieldID().getNeigbours()) {
                 FieldConnections connections = FieldConnections.getConnection(field.getFieldID(), neighbourID);
                 if (connections == null) {
-                    log.warning("FieldID: " + field.getFieldID() + "   Neighbour: " + neighbourID);
+                    log.warning("FieldID: " + field.getFieldID() + "   Neighbour: " + neighbourID + " are not neighbours.");
                 } else {
                     Field neighbourField = fields.stream().filter(f -> f.getFieldID().equals(neighbourID)).findFirst().orElse(null);
                     if (neighbourField != null) {
