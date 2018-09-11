@@ -7,6 +7,7 @@ import gamemechanics.choice.MonsterChoice;
 import gui.Animations;
 import gui.Effects;
 import gui.Fonts;
+import gui.InterfaceLinking;
 import gui.interfaceelements.ContextWheel;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,8 +22,11 @@ import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import lombok.Setter;
 import model.Field;
+import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.Monster;
+
+import java.util.List;
 
 public class FieldButton extends Group {
 
@@ -43,7 +47,7 @@ public class FieldButton extends Group {
     private final FlowPane monsters;
     private final FlowPane gateExpedition;
     @Setter
-    private  ContextWheel wheel;
+    private ContextWheel wheel;
     private boolean mouseOver;
     private final ImageView gate;
     private final ImageView expedition;
@@ -157,17 +161,20 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-                if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)){
-                  //  GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
-                  //  GameService.getInstance().setActiveInvestigator();
-                   // GameService.getInstance().addEffect(new SwitchPhase());
-                    if( GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)&&
-                            wheel==null){
-                       this.wheel = new ContextWheel(field.getFieldAction());
+                if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+                    //  GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
+                    //  GameService.getInstance().setActiveInvestigator();
+                    // GameService.getInstance().addEffect(new SwitchPhase());
+
+                    if (GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field) &&
+                            wheel == null) {
+                        this.wheel = new ContextWheel(field.getFieldAction());
                         this.getChildren().add(wheel);
+                    } else {
+                        showPath();
                     }
-                }else if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER)&&
-                        GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)){
+                } else if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER) &&
+                        GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
                     if (!field.getMonster().isEmpty()) {
                         GameService.getInstance().addChoice(new MonsterChoice(field));
                     } else {
@@ -182,16 +189,35 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
             mouseOver = true;
+            if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+                if (!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
+                    showPath();
+                }
+            }
             update();
         });
 
         button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> {
             mouseOver = false;
+            clearPath();
             update();
         });
         update();
 
 
+    }
+
+    private void showPath() {
+        List<Field> path = GameService.getInstance().getGameBoard().getPath(GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getEncounteringInvestigator()), field);
+        if (path != null) {
+            if(path.size()<=3) {
+                InterfaceLinking.gameBoardGUI.getMap().showPath(path);
+            }
+        }
+    }
+
+    private void clearPath() {
+        InterfaceLinking.gameBoardGUI.getMap().clearPath();
     }
 
     private void update() {

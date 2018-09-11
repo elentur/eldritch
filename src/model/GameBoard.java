@@ -5,18 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Item.Investigator;
 import model.Item.Monster;
+import utils.DijkstraUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class GameBoard {
 
+    private final DijkstraUtil dijkstra;
     private final List<Field> fields;
 
     public GameBoard(List<Field> fields) {
         this.fields = fields;
-    }
+        dijkstra= new DijkstraUtil(this);
+         }
 
     public Field getField(FieldID id){
         return fields.stream().filter(f -> f.getFieldID().equals(id)).findFirst().orElse(null);
@@ -50,5 +54,10 @@ public class GameBoard {
     public void addMonster(Monster monster,FieldID fieldID) {
         Field field =  getField(fieldID);
         field.addMonster(monster);
+    }
+
+    public List<Field> getPath(Field source, Field destination){
+        dijkstra.execute(source.getFieldID());
+        return dijkstra.getPath(destination.getFieldID()).stream().map(this::getField).collect(Collectors.toList());
     }
 }

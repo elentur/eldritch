@@ -10,6 +10,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.java.Log;
 import model.Item.Investigator;
 import model.Item.Monster;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString( of = {"fieldID"})
 @Log
 public class Field {
     private final FieldType type;
@@ -226,4 +228,5 @@ public class Field {
     public FieldActions getFieldAction() {
         return new FieldActions(this);
     }
+
 }

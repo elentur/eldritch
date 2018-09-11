@@ -1,8 +1,13 @@
 package gui.gameboard;
 
+import Service.GameService;
 import enums.FieldConnections;
+import enums.PathType;
+import gui.Fonts;
 import gui.buttons.FieldButton;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -20,17 +25,17 @@ public class WorldMapGUI extends MapGUI {
     private final static Image backgroundImage = new Image("images/gameBoard/GameBoard.jpg");
     private final Rectangle background;
     private final List<FieldButton> fieldButtonList;
-    private final Map<FieldConnections,SVGPath> paths;
+    private final Map<FieldConnections, SVGPath> paths;
 
-    public Rectangle getBack(){
+    public Rectangle getBack() {
         return background;
     }
+
     public WorldMapGUI(GameBoard gameBoard) {
 
 
-
         fieldButtonList = new ArrayList<>();
-        paths= new HashMap<>();
+        paths = new HashMap<>();
 
         background = new Rectangle(5804, 3594);
         background.setFill(new ImagePattern(backgroundImage));
@@ -40,21 +45,22 @@ public class WorldMapGUI extends MapGUI {
             File file = new File("./resources/svg/PathsWorldMap.svg");
             Scanner scanner = new Scanner(file);
 
-        for(FieldConnections connections : FieldConnections.values()){
-            if(scanner.hasNext()) {
-                SVGPath path = new SVGPath();
-                path.setContent(scanner.nextLine());
-                path.setFill(Color.TRANSPARENT);
-                path.setStroke(Color.GREEN);
-                path.setVisible(true);
-                Bloom bloom = new Bloom(0.2);
-                path.setEffect(bloom);
-                path.setStrokeWidth(20);
-                path.setStrokeLineCap(StrokeLineCap.ROUND);
-                paths.put(connections, path);
+            for (FieldConnections connections : FieldConnections.values()) {
+                if (scanner.hasNext()) {
+
+                    SVGPath path = new SVGPath();
+                    path.setContent(scanner.nextLine());
+                    path.setFill(Color.TRANSPARENT);
+                    path.setVisible(false);
+                    Bloom bloom = new Bloom(0.5);
+                    path.setEffect(bloom);
+                    path.setStrokeWidth(20);
+                    path.setStrokeLineCap(StrokeLineCap.ROUND);
+                    paths.put(connections, path);
+
+                }
             }
-        }
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
 
         }
 
@@ -176,7 +182,6 @@ public class WorldMapGUI extends MapGUI {
         }
 
 
-
     }
 
     private void addFieldButton(Field field, double x, double y) {
@@ -204,5 +209,32 @@ public class WorldMapGUI extends MapGUI {
             }
         }
         return null;
+    }
+
+    @Override
+    public void clearPath() {
+        for (SVGPath path : paths.values()) {
+            path.setVisible(false);
+        }
+    }
+
+    @Override
+    public void showPath(List<Field> path) {
+        for (int i = 0; i < path.size() - 1; i++) {
+            FieldConnections connection = FieldConnections.getConnection(path.get(i), path.get(i + 1));
+            SVGPath svgPath = paths.get(connection);
+            if (i == 0) {
+                svgPath.setStroke(Fonts.GREEN);
+            } else {
+                if ((connection.getPathType().equals(PathType.SHIP) && GameService.getInstance().getEncounteringInvestigator().getShipTicket() > 0) ||
+                        (connection.getPathType().equals(PathType.TRAIN) && GameService.getInstance().getEncounteringInvestigator().getTrainTicket() > 0)) {
+                    svgPath.setStroke(Fonts.BLUE);
+                }else{
+                    svgPath.setStroke(Fonts.RED);
+                }
+            }
+
+            svgPath.setVisible(true);
+        }
     }
 }

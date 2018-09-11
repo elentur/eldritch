@@ -12,6 +12,7 @@ import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.*;
 import gui.InterfaceLinking;
+import gui.buttons.FieldButton;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -317,4 +318,10 @@ public class GameService {
     }
 
 
+    public void clearPath() {
+
+    }
+
+    public void showPath(Field field) {
+    }
 }

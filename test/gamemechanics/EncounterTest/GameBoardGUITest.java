@@ -87,7 +87,7 @@ public class GameBoardGUITest extends Application {
         inv.getInventory().add(new BullWhip());
         inv.getInventory().add(new CultistJournal());
         inv.getInventory().add(new ProfaneTome());
-
+        System.out.println(gameBoard.getPath(gameBoard.getField(FieldID.ARKHAM),gameBoard.getField(FieldID.SHANGHAI)));
 
 
        // gameboardGUI.getChildren().add(new ImproveEffectOverlay(new Improve(TestType.LORE,2,GameService.getInstance().getActiveInvestigator())));
