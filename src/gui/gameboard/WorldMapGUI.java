@@ -11,9 +11,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.*;
 import model.Field;
 import model.GameBoard;
 
@@ -236,5 +234,16 @@ public class WorldMapGUI extends MapGUI {
 
             svgPath.setVisible(true);
         }
+    }
+
+    @Override
+    public Map<SVGPath,Boolean> getSvgPaths(List<Field> path) {
+        Map<SVGPath,Boolean> svgPaths = new LinkedHashMap<>();
+        for (int i = 0; i < path.size() - 1; i++) {
+            FieldConnections connection = FieldConnections.getConnection(path.get(i), path.get(i + 1));
+            SVGPath svgPath = paths.get(connection);
+            svgPaths.put(svgPath,connection.getId1().equals(path.get(i).getFieldID()));
+        }
+        return svgPaths;
     }
 }

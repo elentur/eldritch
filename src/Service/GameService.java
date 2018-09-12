@@ -324,4 +324,8 @@ public class GameService {
 
     public void showPath(Field field) {
     }
+
+    public void removeInvestigator(Investigator investigator) {
+        gameBoard.removeInvestigator(investigator);
+    }
 }

@@ -1,7 +1,10 @@
 package gui.buttons;
 
 import Service.GameService;
+import enums.FieldConnections;
+import enums.PathType;
 import enums.PhaseTypes;
+import gamemechanics.Action;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
 import gui.Animations;
@@ -18,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +29,8 @@ import model.Field;
 import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.Monster;
+import model.effects.Move;
+import model.effects.NullEffect;
 
 import java.util.List;
 
@@ -60,6 +66,7 @@ public class FieldButton extends Group {
 
 
     private boolean isDragging;
+    private boolean pathIsLegal;
 
     public FieldButton(Field field, double x, double y) {
         Button button = new Button(getBackgroundImage(field));
@@ -162,16 +169,19 @@ public class FieldButton extends Group {
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
                 if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
-                    //  GameService.getInstance().moveTo(GameService.getInstance().getActiveInvestigator(), field);
-                    //  GameService.getInstance().setActiveInvestigator();
-                    // GameService.getInstance().addEffect(new SwitchPhase());
-
+                    if(wheel!=null){
+                        wheel.remove();
+                        return;
+                    }
                     if (GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field) &&
                             wheel == null) {
                         this.wheel = new ContextWheel(field.getFieldAction());
                         this.getChildren().add(wheel);
-                    } else {
-                        showPath();
+                    } else if(!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
+                       if(pathIsLegal){
+                           Action move = new Action(GameService.getInstance().getEncounteringInvestigator(),"move",new Move(field,GameService.getInstance().getEncounteringInvestigator()));
+                           GameService.getInstance().addEncounter(move);
+                       }
                     }
                 } else if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER) &&
                         GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
@@ -190,7 +200,8 @@ public class FieldButton extends Group {
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
             mouseOver = true;
             if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
-                if (!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
+                Field fieldOfInv =GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator());
+                if (fieldOfInv!=null &&!field.equals(fieldOfInv)) {
                     showPath();
                 }
             }
@@ -208,10 +219,28 @@ public class FieldButton extends Group {
     }
 
     private void showPath() {
-        List<Field> path = GameService.getInstance().getGameBoard().getPath(GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getEncounteringInvestigator()), field);
+        this.pathIsLegal=false;
+
+        Investigator inv = GameService.getInstance().getEncounteringInvestigator();
+        if(inv.getDoneActions().contains(new Action(inv,"move", null))){
+            return;
+        }
+        List<Field> path = GameService.getInstance().getGameBoard().getPath(
+                GameService.getInstance().getFieldOfInvestigator(inv),
+                field,
+                inv);
         if (path != null) {
             if(path.size()<=3) {
                 InterfaceLinking.gameBoardGUI.getMap().showPath(path);
+                if(path.size()==2){
+                    pathIsLegal =true;
+                } else{ FieldConnections connection = FieldConnections.getConnection(path.get(1), path.get(2));
+                    if ((connection.getPathType().equals(PathType.SHIP) && GameService.getInstance().getEncounteringInvestigator().getShipTicket() > 0) ||
+                            (connection.getPathType().equals(PathType.TRAIN) && GameService.getInstance().getEncounteringInvestigator().getTrainTicket() > 0)) {
+                       pathIsLegal=true;
+                    }
+                }
+
             }
         }
     }

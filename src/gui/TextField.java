@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 public class TextField extends TextArea {
 
     public TextField( String text){
-        super(text);
+        super(text.trim());
         setWrapText(true);
         styleProperty().bind(Fonts.getFont(0.25, Fonts.DARK, Fonts.FontTyp.NORMAL));
         getStyleClass().add("eldritch-text-field");
@@ -18,4 +18,6 @@ public class TextField extends TextArea {
 
 
     }
+
+
 }

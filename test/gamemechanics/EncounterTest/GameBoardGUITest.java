@@ -78,7 +78,7 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().addExpedition();
         GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
         Investigator inv = GameService.getInstance().getActiveInvestigator();
-        inv.getInventory().clear();
+     /*   inv.getInventory().clear();
         inv.getInventory().add(new CultesDesGoules());
         inv.getInventory().add(new AighteenthDerringer());
         inv.getInventory().add(new Wither());
@@ -86,9 +86,7 @@ public class GameBoardGUITest extends Application {
         inv.getInventory().add(new ArcaneManuscript());
         inv.getInventory().add(new BullWhip());
         inv.getInventory().add(new CultistJournal());
-        inv.getInventory().add(new ProfaneTome());
-        System.out.println(gameBoard.getPath(gameBoard.getField(FieldID.ARKHAM),gameBoard.getField(FieldID.SHANGHAI)));
-
+        inv.getInventory().add(new ProfaneTome());*/
 
        // gameboardGUI.getChildren().add(new ImproveEffectOverlay(new Improve(TestType.LORE,2,GameService.getInstance().getActiveInvestigator())));
     }

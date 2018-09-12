@@ -4,25 +4,41 @@ import enums.FieldConnections;
 import enums.FieldID;
 import enums.PathType;
 import lombok.Getter;
+import lombok.Setter;
 import model.Field;
 import model.GameBoard;
+import model.Item.Investigator;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class DijkstraUtil {
+
+
     @Getter
     public class Edge {
         private final FieldID id1;
         private final FieldID id2;
         private final int weight;
+        private final PathType pathType;
 
         public Edge(FieldID id1, FieldID id2, PathType pathType) {
             this.id1 = id1;
             this.id2 = id2;
            weight = pathType.equals(PathType.UNCHARTED)?101:100;
+           this.pathType = pathType;
 
 
+        }
+        public int getWeight(){
+            if(pathType.equals(PathType.SHIP) && hasShipTicket){
+                return weight/2;
+
+            }
+            if(pathType.equals(PathType.TRAIN) && hasTrainTicket){
+                return weight/2;
+            }
+            return weight;
         }
     }
 
@@ -33,6 +49,10 @@ public class DijkstraUtil {
     private Map<FieldID, FieldID> predecessors;
     private Map<FieldID, Integer> distance;
 
+    @Setter
+    private boolean hasShipTicket;
+    @Setter
+    private boolean hasTrainTicket;
     public DijkstraUtil(GameBoard gameBoard) {
         // create a copy of the array so that we can operate on this array
         this.nodes = new ArrayList<>(gameBoard.getFields().stream().map(Field::getFieldID).collect(Collectors.toList()));
@@ -44,13 +64,17 @@ public class DijkstraUtil {
 
     }
 
-    public void execute(FieldID source) {
+    public void execute(FieldID source, Investigator inv) {
         settledNodes = new HashSet<>();
         unSettledNodes = new HashSet<>();
         distance = new HashMap<>();
         predecessors = new HashMap<>();
         distance.put(source, 0);
         unSettledNodes.add(source);
+        if(inv != null) {
+            hasShipTicket = inv.getShipTicket() > 0;
+            hasTrainTicket = inv.getTrainTicket() > 0;
+        }
         while (unSettledNodes.size() > 0) {
             FieldID node = getMinimum(unSettledNodes);
             settledNodes.add(node);
@@ -141,4 +165,26 @@ public class DijkstraUtil {
         Collections.reverse(path);
         return path;
     }
+
+    public FieldID getNearestField(){
+        List<FieldID> ids = new ArrayList<>(distance.keySet());
+        Collections.shuffle(ids);
+       for(FieldID id : ids){
+           if(distance.get(id)<=101 && distance.get(id) >0){
+               return id;
+           }
+       }
+       return null;
+    }
+    public FieldID getFieldWithDistance(int value) {
+        List<FieldID> ids = new ArrayList<>(distance.keySet());
+        Collections.shuffle(ids);
+        for(FieldID id : ids){
+            if(distance.get(id)<=101*value && distance.get(id) >101*(value-1)){
+                return id;
+            }
+        }
+        return null;
+    }
+
 }

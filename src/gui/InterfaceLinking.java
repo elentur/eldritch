@@ -1,11 +1,13 @@
 package gui;
 
 import Service.GameService;
+import gamemechanics.Action;
 import gamemechanics.choice.*;
 import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import gui.choice.*;
 import gui.effectoverlays.*;
+import gui.encounters.ActionGui;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
 import gui.gameboard.GameBoardGUI;
@@ -124,6 +126,13 @@ public class InterfaceLinking {
                 effect.execute();
                 GameService.getInstance().getInsertions().remove(effect);
                 break;
+            case MOVE:
+                Animations.effectOverlayMove(new MoveOverlay((Move) effect), primaryStage, (Move)effect);
+                break;
+            case TRADE:
+                GameService.getInstance().getInsertions().remove(effect);
+                effect.execute();
+                break;
             default:
                 Platform.runLater(() -> {
                     GameService.getInstance().getInsertions().remove(effect);
@@ -133,7 +142,7 @@ public class InterfaceLinking {
         }
     }
 
-    private void startChoiceDialog(Choice choice) {
+    public void startChoiceDialog(Choice choice) {
         if (choice == null) {
             return;
         }
@@ -147,6 +156,12 @@ public class InterfaceLinking {
                 break;
             case COMBAT_ENCOUNTER:
                 dlg = new MonsterChoiceGUI((MonsterChoice) choice);
+                break;
+            case INVESTIGATOR_CHOICE:
+                dlg = new InvestigatorChoiceGUI((InvestigatorChoice) choice);
+                break;
+            case TRADE:
+                dlg = new TradeChoiceGUI((TradeChoice) choice);
                 break;
             case RESERVE_CHOICE:
                 dlg = new ReserveChoiceGUI((ReserveChoice) choice);
@@ -174,6 +189,9 @@ public class InterfaceLinking {
         switch (encounter.getEncounterType()) {
             case COMBAT_ENCOUNTER:
                 dlg = new CombatEncounterGui((CombatEncounter) encounter);
+                break;
+            case ACTION:
+                dlg = new ActionGui((Action) encounter);
                 break;
             default:
                 dlg = new EncounterGui(encounter);

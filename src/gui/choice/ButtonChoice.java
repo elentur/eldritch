@@ -18,7 +18,6 @@ public class ButtonChoice extends StackPane {
     final ImageView imageView;
 
     protected Node actualNode;
-    private boolean inNestedEventLoop;
 
 
     public ButtonChoice(Image image) {

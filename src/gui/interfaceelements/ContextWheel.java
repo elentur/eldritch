@@ -105,7 +105,7 @@ public class ContextWheel extends Group {
 
     }
 
-    private void remove() {
+    public void remove() {
         ((FieldButton) this.getParent()).setWheel(null);
         ((FieldButton) this.getParent()).getChildren().remove(this);
 

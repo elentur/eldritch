@@ -59,7 +59,7 @@ public class FieldActions {
         );
         trade = new Action(inv,
                 "trade",
-                null
+                new Trade(inv)
         );
 
 

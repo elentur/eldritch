@@ -31,15 +31,20 @@ public class GameBoard {
        field.addInvestigator(inv);
     }
 
-    public void moveTo(Investigator inv, Field newField){
+    public void removeInvestigator(Investigator inv){
         Field oldField= fieldOfInvestigator(inv);
         oldField.removeInvestigator(inv);
+    }
+    public void removeMonster(Monster monster){
+        Field oldField= fieldOfMonster(monster);
+        oldField.removeMonster(monster);
+    }
+    public void moveTo(Investigator inv, Field newField){
+
         newField.addInvestigator(inv);
     }
 
     public void moveTo(Monster monster, Field newField){
-        Field oldField= fieldOfMonster(monster);
-        oldField.removeMonster(monster);
         newField.addMonster(monster);
     }
 
@@ -56,8 +61,25 @@ public class GameBoard {
         field.addMonster(monster);
     }
 
-    public List<Field> getPath(Field source, Field destination){
-        dijkstra.execute(source.getFieldID());
+    public List<Field> getPath(Field source, Field destination, Investigator inv){
+        dijkstra.execute(source.getFieldID(),inv);
         return dijkstra.getPath(destination.getFieldID()).stream().map(this::getField).collect(Collectors.toList());
+    }
+    public Field getNearestField(Field field){
+        dijkstra.execute(field.getFieldID(),null);
+        FieldID id =  dijkstra.getNearestField();
+        if(id!=null){
+            return getField(id);
+        }
+        return null;
+    }
+
+    public Field getFieldWithDistance(Field field, int value) {
+        dijkstra.execute(field.getFieldID(),null);
+        FieldID id =  dijkstra.getFieldWithDistance(value);
+        if(id!=null){
+            return getField(id);
+        }
+        return null;
     }
 }

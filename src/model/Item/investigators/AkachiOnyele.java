@@ -28,8 +28,8 @@ public class AkachiOnyele extends Investigator {
                 5,
                 7,
                 FieldID.FIELD_15,
-               GameService.getInstance().getAssets().get("&profaneTome"),
-                GameService.getInstance().getSpells().get("&stormOfSpirits")
+               GameService.getInstance().getAssets().get("&bullWhip"),
+                GameService.getInstance().getAssets().get("&spiritDagger")
         );
 
 
