@@ -1,5 +1,6 @@
 package gamemechanics.EncounterTest;
 
+import Service.DiceRollerService;
 import Service.GameService;
 import container.Inventory;
 import container.InvestigatorContainer;
@@ -77,7 +78,9 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
         GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
+       GameService.getInstance().addEffect(new SpawnGate());
         Investigator inv = GameService.getInstance().getActiveInvestigator();
+        DiceRollerService.debug=true;
      /*   inv.getInventory().clear();
         inv.getInventory().add(new CultesDesGoules());
         inv.getInventory().add(new AighteenthDerringer());

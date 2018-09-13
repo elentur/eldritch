@@ -1,22 +1,15 @@
 package gamemechanics.encounter;
 
 import enums.EncounterType;
-import enums.FieldID;
-import gamemechanics.choice.InformationChoice;
+import enums.OtherWorldID;
 import lombok.Getter;
 import lombok.Setter;
-import model.Effect;
-import model.Item.Investigator;
-import utils.ResourceUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 public class OtherWorldEncounter extends ExpeditionEncounter {
 
-    private FieldID fieldID;
+    private OtherWorldID otherWorldID;
 
     public OtherWorldEncounter( String encounterID) {
         super( encounterID, EncounterType.OTHER_WORLD_ENCOUNTER);

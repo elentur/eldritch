@@ -8,12 +8,17 @@ import java.util.Random;
 
 public class DiceRollerService {
    private static Random rnd = new Random();
+   public static boolean debug= false;
 
     public Result rollDice(int number, ConditionType typ){
         Result result = new Result(typ,1);
         for(int i = 0; i < number;i++){
-            Die die = new Die(rnd.nextInt(6)+1);
-            result.add(die);
+            if(debug){
+                result.add(new Die(6));
+            }else {
+                Die die = new Die(rnd.nextInt(6) + 1);
+                result.add(die);
+            }
         }
         return result;
     }

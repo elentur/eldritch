@@ -16,7 +16,9 @@ import java.util.List;
 public class TradeChoice extends Choice {
     @Getter
     private final boolean singleSelect;
+    @Getter
     private final Investigator inv2;
+    @Getter
     private final Investigator inv1;
 
 

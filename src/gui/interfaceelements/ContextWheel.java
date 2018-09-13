@@ -5,6 +5,8 @@ import gui.buttons.FieldButton;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import model.FieldActions;
 
 import java.util.ArrayList;
@@ -18,11 +20,12 @@ public class ContextWheel extends Group {
     private final static Image trade = new Image("images/interface/Trade.png", 100, 100, true, true);
     private final static Image restAction = new Image("images/interface/restAction.png", 100, 100, true, true);
     private final FieldActions field;
+    private boolean isRemoved;
 
 
     public ContextWheel(FieldActions field) {
     this.field = field;
-
+isRemoved=false;
         buildWheel();
         this.setTranslateX(10);
         this.setTranslateY(10);
@@ -102,12 +105,23 @@ public class ContextWheel extends Group {
             buttons.get(i).setTranslateX(x);
             buttons.get(i).setTranslateY(y);
         }
+        Circle c = new Circle(240, Color.TRANSPARENT);
+        c.setTranslateX(60);
+        c.setTranslateY(60);
+        this.getChildren().add(0,c);
+
+
+        this.setOnMouseExited(e->remove());
 
     }
 
     public void remove() {
-        ((FieldButton) this.getParent()).setWheel(null);
-        ((FieldButton) this.getParent()).getChildren().remove(this);
+        if(!isRemoved) {
+            isRemoved=true;
+            ((FieldButton) this.getParent()).setWheel(null);
+            ((FieldButton) this.getParent()).getChildren().remove(this);
+
+        }
 
 
     }

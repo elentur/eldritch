@@ -11,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Glow;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
@@ -182,41 +183,40 @@ public class Animations {
         Map<SVGPath, Boolean> cords = InterfaceLinking.gameBoardGUI.getMap().getSvgPaths(path);
 
 
-
         overlay.setEffect(Effects.dropShadow);
         InterfaceLinking.gameBoardGUI.getMap().getChildren().add(overlay);
-        List<SVGPath> svgPaths =new ArrayList<>(cords.keySet());
+        List<SVGPath> svgPaths = new ArrayList<>(cords.keySet());
 
         PauseTransition p0 = new PauseTransition(Duration.millis(100));
-        p0.setOnFinished(e0->{
+        p0.setOnFinished(e0 -> {
             effect.execute();
             effectOverlayIsRunning = false;
             InterfaceLinking.gameBoardGUI.getMap().getChildren().remove(overlay);
             GameService.getInstance().getInsertions().remove(effect);
         });
-            PathTransition p1 = new PathTransition(Duration.millis(1000), svgPaths.get(0));
-            p1.setNode(overlay);
-            if(cords.size()>1){
-                p1.setOnFinished(e->{
-                    PathTransition p2 = new PathTransition(Duration.millis(1000), svgPaths.get(1));
-                    p2.setNode(overlay);
-                    p2.setOnFinished(e1->p0.play());
-                    if (cords.get(svgPaths.get(1))) {
-                        p2.setRate(-1);
-                        p2.playFrom(Duration.millis(1000));
-                    } else {
-                        p2.play();
-                    }
-                });
-            }else{
-                p1.setOnFinished(e1->p0.play());
-            }
-            if (cords.get(svgPaths.get(0))) {
-                p1.setRate(-1);
-                p1.playFrom(Duration.millis(1000));
-            } else {
-                p1.play();
-            }
+        PathTransition p1 = new PathTransition(Duration.millis(1000), svgPaths.get(0));
+        p1.setNode(overlay);
+        if (cords.size() > 1) {
+            p1.setOnFinished(e -> {
+                PathTransition p2 = new PathTransition(Duration.millis(1000), svgPaths.get(1));
+                p2.setNode(overlay);
+                p2.setOnFinished(e1 -> p0.play());
+                if (cords.get(svgPaths.get(1))) {
+                    p2.setRate(-1);
+                    p2.playFrom(Duration.millis(1000));
+                } else {
+                    p2.play();
+                }
+            });
+        } else {
+            p1.setOnFinished(e1 -> p0.play());
+        }
+        if (cords.get(svgPaths.get(0))) {
+            p1.setRate(-1);
+            p1.playFrom(Duration.millis(1000));
+        } else {
+            p1.play();
+        }
 
 
     }
@@ -412,5 +412,13 @@ public class Animations {
         ParallelTransition t = new ParallelTransition(tt, st1);
         t.setOnFinished(e -> r.run());
         t.playFromStart();
+    }
+
+    public static void removeEffect(Node node, Runnable remove) {
+        FadeTransition t = new FadeTransition(Duration.millis(500), node);
+        t.setFromValue(1);
+        t.setToValue(0);
+        t.setOnFinished(e -> remove.run());
+        t.play();
     }
 }

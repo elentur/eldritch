@@ -89,6 +89,9 @@ public class InterfaceLinking {
             case SPAWN_GATE:
                 Animations.effectOverlayAnimations(new SpawnGateEffectOverlay((SpawnGate) effect), primaryStage, effect);
                 break;
+            case CLOSE_GATE:
+                Animations.effectOverlayAnimations(new CloseGateEffectOverlay((CloseGate) effect), primaryStage, effect);
+                break;
             case GAIN_CLUE:
                 Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
                 break;

@@ -21,16 +21,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.shape.SVGPath;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import lombok.Setter;
 import model.Field;
-import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.Monster;
 import model.effects.Move;
-import model.effects.NullEffect;
 
 import java.util.List;
 
@@ -260,7 +257,9 @@ public class FieldButton extends Group {
 
     private void createTokens() {
         if (field.getNumberOfClues() <= 0) {
-            this.getChildren().remove(clue);
+            if(this.getChildren().contains(clue)) {
+                Animations.removeEffect(clue, () -> this.getChildren().remove(clue));
+            }
 
         } else if (field.getNumberOfClues() > 0 && !this.getChildren().contains(clue)) {
             this.getChildren().add(clue);
@@ -272,7 +271,9 @@ public class FieldButton extends Group {
             this.getChildren().add(clueLabel);
         }
         if (field.getNumberOfEldritchTokens() <= 0) {
-            this.getChildren().remove(eldritch);
+            if(this.getChildren().contains(eldritch)) {
+                Animations.removeEffect(eldritch, () -> this.getChildren().remove(eldritch));
+            }
         } else if (field.getNumberOfEldritchTokens() > 0 && !this.getChildren().contains(eldritch)) {
             this.getChildren().add(eldritch);
 
@@ -285,13 +286,17 @@ public class FieldButton extends Group {
             this.getChildren().add(eldritchLabel);
         }
         if (!field.hasRumor()) {
-            this.getChildren().remove(rumor);
+            if(this.getChildren().contains(rumor)) {
+                Animations.removeEffect(rumor, () -> this.getChildren().remove(rumor));
+            }
         } else if (field.hasRumor() && !this.getChildren().contains(rumor)) {
             this.getChildren().add(rumor);
             Animations.spawnEffect(rumor);
         }
         if (!field.hasMystery()) {
-            this.getChildren().remove(mystery);
+            if(this.getChildren().contains(mystery)) {
+                Animations.removeEffect(mystery, () -> this.getChildren().remove(mystery));
+            }
         } else if (field.hasMystery() && !this.getChildren().contains(mystery)) {
             this.getChildren().add(mystery);
             Animations.spawnEffect(mystery);
@@ -300,13 +305,17 @@ public class FieldButton extends Group {
 
     private void createGateExpedition() {
         if (!field.hasGate()) {
-            gateExpedition.getChildren().remove(gate);
+            if(gateExpedition.getChildren().contains(gate)) {
+                Animations.removeEffect(gate,()-> gateExpedition.getChildren().remove(gate));
+            }
         } else if (field.hasGate() && !gateExpedition.getChildren().contains(gate)) {
             gateExpedition.getChildren().add(gate);
             Animations.spawnEffect(gate);
         }
         if (!field.hasExpedition()) {
-            gateExpedition.getChildren().remove(expedition);
+            if(gateExpedition.getChildren().contains(expedition)) {
+                Animations.removeEffect(expedition, () -> gateExpedition.getChildren().remove(expedition));
+            }
         } else if (field.hasExpedition() && !gateExpedition.getChildren().contains(expedition)) {
             gateExpedition.getChildren().add(expedition);
             Animations.spawnEffect(expedition);
