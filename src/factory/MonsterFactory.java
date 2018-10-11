@@ -3,12 +3,11 @@ package factory;
 
 import container.ItemContainer;
 import container.ItemStack;
+import container.RandomItemStack;
 import lombok.extern.java.Log;
 import model.Item.Monster;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Log
@@ -38,6 +37,6 @@ public class MonsterFactory {
             }
         }
 
-        return new ItemStack<>(monster);
+        return new RandomItemStack<>(monster);
     }
 }

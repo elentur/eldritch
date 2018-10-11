@@ -3,27 +3,26 @@ package Service;
 import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
-import enums.*;
+import enums.FieldID;
+import enums.OldOnes;
+import enums.OmenStates;
+import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
-import gamemechanics.choice.EncounterChoice;
-import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.*;
-import gui.InterfaceLinking;
-import gui.buttons.FieldButton;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
+import lombok.Setter;
 import model.*;
 import model.Item.*;
 import model.Item.ancientOnes.Azathoth;
 import model.Item.token.*;
-import model.effects.*;
+import model.effects.SwitchPhase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +78,14 @@ public class GameService {
     @Getter
     private ItemStack<AmericaEncounter> americaEncounter;
 
+    @Getter
+    private List<Spell> usedSpells;
+
+
+
+    @Getter
+    @Setter
+    private Monster lastChosenMonster;
 
     @Getter
     private DoomTrack doomTrack;
@@ -174,6 +181,7 @@ public class GameService {
         phases = new Phases();
         monsterPool = MonsterFactory.getMonster();
         ancientOne = new Azathoth();
+        usedSpells = new ArrayList<>();
 
 
     }
@@ -304,6 +312,12 @@ public class GameService {
     public void addEldritchToken(FieldID fieldID, EldritchToken eldritchToken) {
         Field field = gameBoard.getField(fieldID);
         field.addEldritchToken(eldritchToken);
+    }
+
+    public void addUsedSpell(Spell spell) {
+        if(!usedSpells.contains(spell)){
+            usedSpells.add(spell);
+        }
     }
 
 

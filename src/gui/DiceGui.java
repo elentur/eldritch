@@ -7,6 +7,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 
 import java.util.Random;
@@ -100,9 +102,17 @@ class DiceGui extends Group {
         meshView.setMaterial(redMaterial);
         label = new Label();
         label.setMouseTransparent(true);
+        label.setPrefWidth(50);
+        label.setPrefHeight(50);
+        label.setMaxWidth(50);
+        label.setMaxHeight(50);
+        label.setAlignment(Pos.CENTER);
+      //  label.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+
+        label.setTextAlignment(TextAlignment.CENTER);
         label.setTranslateZ(-100);
         label.setTranslateY(-25);
-        label.setTranslateX(-8);
+        label.setTranslateX(-25);
         label.getStyleClass().add("text-stroke-black");
         this.getChildren().addAll(meshView, label,rerollButton,shiftButton);
 
@@ -121,7 +131,7 @@ class DiceGui extends Group {
 
         label.setText(die.getValue() + "");
         Color color = Fonts.WHITE;
-        double size = 0.4;
+        double size = 0.30;
         label.styleProperty().bind(Fonts.getFont(size,color, Fonts.FontTyp.BOLD));
 
         switch (die.getValue()) {

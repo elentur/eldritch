@@ -6,7 +6,6 @@ import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
 import model.Field;
-import model.GameBoard;
 import model.Item.Investigator;
 import utils.ResourceUtil;
 
@@ -47,7 +46,7 @@ public class Move extends Effect {
     public String getText() {
 
         if(field!=null) {
-            return ResourceUtil.get("${move}", "effect", field.getName());
+            return ResourceUtil.get("${move}", "effect", investigator.getName(),field.getName());
         }
         return "";
     }

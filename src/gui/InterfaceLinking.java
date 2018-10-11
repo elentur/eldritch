@@ -1,10 +1,10 @@
 package gui;
 
 import Service.GameService;
+import enums.EffectTyps;
 import gamemechanics.Action;
 import gamemechanics.choice.*;
 import gamemechanics.encounter.CombatEncounter;
-import gamemechanics.encounter.Encounter;
 import gui.choice.*;
 import gui.effectoverlays.*;
 import gui.encounters.ActionGui;
@@ -14,6 +14,8 @@ import gui.gameboard.GameBoardGUI;
 import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -33,6 +35,8 @@ public class InterfaceLinking {
     public static Interface interfaceGui;
     public static GameBoardGUI gameBoardGUI;
     private static Stage primaryStage;
+    @Getter
+    private static BooleanProperty lockGameBoard;
 
 
     public static void init(Stage stage) {
@@ -45,20 +49,34 @@ public class InterfaceLinking {
                 gameBoardGUI = (GameBoardGUI) n;
             }
         }
+        gameBoardGUI.mouseTransparentProperty().bind(lockGameBoard);
     }
 
     private InterfaceLinking() {
         GameService game = GameService.getInstance();
         game.getChoiceProperty().addListener(e -> startChoiceDialog(game.getChoiceProperty().getValue()));
         game.getEncounterProperty().addListener(e -> startEncounterDialog(game.getEncounterProperty().getValue()));
+        lockGameBoard = new SimpleBooleanProperty(false);
         game.getInsertions().addListener((ListChangeListener<? super Effect>) e -> {
+            lockGameBoard.setValue(false);
+            System.out.println( game.getInsertions());
             if (!e.getList().isEmpty()) {
-                if (!e.getList().get(0).isExecuted()) {
-                    createEffectOverlay(e.getList().get(0));
+                Effect effect = e.getList().get(0);
+                if (!effect.isExecuted()) {
+                    //lockGameBoard.setValue(effect.getEffectType().equals(EffectTyps.NEXT_INVESTIGATOR)
+                  //  || effect.getEffectType().equals(EffectTyps.SWITCH_PHASE));
+                    Effect found = game.getInsertions().stream().filter(effect1 -> effect1.getEffectType().equals(EffectTyps.NEXT_INVESTIGATOR)
+                              || effect1.getEffectType().equals(EffectTyps.SWITCH_PHASE)
+                            || effect1.getEffectType().equals(EffectTyps.MOVE)).findAny().orElse(null);
+                    lockGameBoard.setValue(found!=null);
+                    System.out.println(lockGameBoard.getValue() + " " + gameBoardGUI.mouseTransparentProperty().getValue() );
+                    createEffectOverlay(effect);
                 }
             }
         });
+
         game.getActiveInvestigatorProperty().addListener(e -> updateInvestigatorInterface());
+
 
 
     }
@@ -76,7 +94,7 @@ public class InterfaceLinking {
         if (effect == null) {
             return;
         }
-        switch (effect.getEffectTyp()) {
+        switch (effect.getEffectType()) {
             case LOOSE_OR_GAIN_HEALTH_SANITY:
                 Animations.effectOverlayAnimations(new LooseOrGainHealthSanityEffectOverlay((LooseOrGainHealthSanity) effect), primaryStage, effect);
                 break;
@@ -129,6 +147,10 @@ public class InterfaceLinking {
                 effect.execute();
                 GameService.getInstance().getInsertions().remove(effect);
                 break;
+            case AND:
+                effect.execute();
+                GameService.getInstance().getInsertions().remove(effect);
+                break;
             case MOVE:
                 Animations.effectOverlayMove(new MoveOverlay((Move) effect), primaryStage, (Move)effect);
                 break;
@@ -160,6 +182,9 @@ public class InterfaceLinking {
             case COMBAT_ENCOUNTER:
                 dlg = new MonsterChoiceGUI((MonsterChoice) choice);
                 break;
+            case MONSTER_CHOICE:
+                dlg = new MonsterChoiceGUI((MonsterChoice) choice);
+                break;
             case INVESTIGATOR_CHOICE:
                 dlg = new InvestigatorChoiceGUI((InvestigatorChoice) choice);
                 break;
@@ -184,7 +209,7 @@ public class InterfaceLinking {
         dlg.showAndWait();
     }
 
-    private void startEncounterDialog(Encounter encounter) {
+    private void startEncounterDialog(gamemechanics.encounter.Encounter encounter) {
         if (encounter == null) {
             return;
         }

@@ -5,20 +5,14 @@ import enums.YesNo;
 import expetions.ReserveException;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.choice.InvestigatorChoice;
-import gamemechanics.choice.ReserveChoice;
-import gui.Fonts;
 import gui.ItemScrollPane;
 import gui.buttons.InventoryItemButton;
 import gui.buttons.YesNoButton;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.TextAlignment;
-import model.Item.Asset;
 import model.Item.Investigator;
-import model.effects.GainAsset;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +38,6 @@ public class InvestigatorChoiceGUI extends ChoiceDialog {
 
                     if(choice.isSingleSelect()) {
                         choice.addSelection(investigator);
-                        close();
                     }else{
                         button.switchSelected();
                     }
@@ -61,7 +54,7 @@ public class InvestigatorChoiceGUI extends ChoiceDialog {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     try {
                        //TODO
-                        close();
+                       choice.getChoiceTakenProperty().setValue(true);
                     }catch (ReserveException ex){
                         GameService.getInstance().addChoice(new InformationChoice("",ex.getMessage(),new ArrayList<>()));
                     }

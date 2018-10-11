@@ -32,6 +32,7 @@ public class ItemBonus_GainDice extends ItemBonus {
         if(!isExecutable()){
             return;
         }
+        super.execute(encounter);
     }
     @Override
     public String getText() {

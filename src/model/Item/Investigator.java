@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.java.Log;
+import model.Effect;
 import model.Item.token.ClueToken;
 import model.SkillSet;
 import utils.MathUtils;
@@ -58,7 +59,7 @@ public abstract class Investigator implements Item {
     private ItemStack stack;
     private List<Action> doneActions;
 
-    public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID satrtField, Item... startItems) {
+    public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID startField, Item... startItems) {
         this.setId(id);
         update = new SimpleBooleanProperty(false);
         String n = id.replace("&", "");
@@ -72,7 +73,7 @@ public abstract class Investigator implements Item {
         this.setSanity(sanity);
         this.setActualHealth(getHealth());
         this.setActualSanity(getSanity());
-        this.setStartingSpace(satrtField);
+        this.setStartingSpace(startField);
         this.setBonus(createBonus());
         this.clues = new ItemContainer<>();
         this.inventory = new Inventory();
@@ -182,7 +183,9 @@ public abstract class Investigator implements Item {
 
     public void improve(TestType testType, int value) {
         getSkillSet().improve(testType, value);
+        update.setValue(true);
     }
+
 
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
@@ -248,5 +251,14 @@ public abstract class Investigator implements Item {
     public List<Action> getDoneActions(){
         return doneActions;
     }
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
 
+
+    @Override
+    public Action getEncounter() {
+        return null;
+    }
 }

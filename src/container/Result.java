@@ -3,7 +3,6 @@ package container;
 import enums.ConditionType;
 import lombok.Getter;
 import lombok.Setter;
-import model.Item.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,11 @@ public class Result extends ArrayList<Die> {
     @Override
     public boolean add(Die value) {
         return value != null && super.add(value);
+    }
+
+
+    public boolean contains(int i) {
+        return this.stream().filter(die->die.getValue()==i).findAny().orElse(null)!= null;
     }
 
     @Override

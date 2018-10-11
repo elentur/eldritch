@@ -7,7 +7,6 @@ import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
 import model.Field;
-import model.Item.token.ClueToken;
 import model.Item.token.GateToken;
 import utils.ResourceUtil;
 
@@ -30,7 +29,7 @@ public class SpawnGate extends Effect {
         if(token!=null){
             Field field=   GameService.getInstance().getGameBoard().getField(token.getFieldID());
             field.addGate(token);
-           // GameService.getInstance().addEffectAfter(new SpawnMonster(field));
+            GameService.getInstance().addEffectAfter(new SpawnMonster(field));
         }else{
             GameService.getInstance().addEffectAfter(new AdvanceOmen(EffectSelector.THIS,1));
         }

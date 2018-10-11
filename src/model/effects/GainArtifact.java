@@ -40,9 +40,9 @@ public class GainArtifact extends Effect {
     @Override
     public String getText() {
         if(itemType==null){
-            return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${nothing}","effect"  ));
+            return ResourceUtil.get("${gain}","effect" ,investigator.getName(), ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${gain}","effect"  ,ResourceUtil.get("${random_artifact}","effect" ,itemType.getText()  ) ) ;
+        return ResourceUtil.get("${gain}","effect"  ,investigator.getName(), ResourceUtil.get("${random_artifact}","effect" ,itemType.getText()  ) ) ;
 
     }
 }

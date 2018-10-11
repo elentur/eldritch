@@ -2,6 +2,8 @@ package factory;
 
 import container.ItemContainer;
 import container.ItemStack;
+import container.LoopedItemStack;
+import container.RandomItemStack;
 import enums.FieldID;
 import enums.OldOnes;
 import gamemechanics.encounter.*;
@@ -50,7 +52,7 @@ public class ItemFactory {
                }
            }
         }
-        return new ItemStack<>(assets);
+        return new LoopedItemStack<>(assets);
     }
     public static ItemStack<Artifact> getArtifacts() {
 
@@ -66,7 +68,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(artifacts);
+        return new LoopedItemStack<>(artifacts);
     }
 
     public static ItemStack<Spell> getSpells() {
@@ -75,15 +77,17 @@ public class ItemFactory {
             spells = new ItemContainer<>();
             for (String name: f.list()){
                 try {
-                    Spell spell = (Spell) Class.forName("model.Item.spells."+name.replace(".java","")).newInstance();
-                    spells.add(spell);
+                    for(int i = 0; i <Spell.NUMBER_OF_DIFFERENT_SPELLS;i++){
+                        Spell spell = (Spell) Class.forName("model.Item.spells."+name.replace(".java","")).newInstance();
+                        spells.add(spell);
+                    }
                 } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        return new ItemStack<>(spells);
+        return new RandomItemStack<>(spells);
     }
     public static ItemStack<Condition> getConditions() {
         if (conditions == null) {
@@ -99,7 +103,7 @@ public class ItemFactory {
             }
         }
 
-        return new ItemStack<>(conditions);
+        return new RandomItemStack<>(conditions);
     }
     public static ItemStack<StandardEncounter> getStandardEncounters() {
 
@@ -115,7 +119,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(standardEncounters);
+        return new RandomItemStack<>(standardEncounters);
     }
     public static ItemStack<SpecialEncounter> getSpecialEncounters(OldOnes oldOnes) {
 
@@ -131,7 +135,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(specialEncounters);
+        return new RandomItemStack<>(specialEncounters);
     }
 
     public static ItemStack<ResearchEncounter> getResearchEncounters(OldOnes oldOnes) {
@@ -148,7 +152,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(researchEncounters);
+        return new RandomItemStack<>(researchEncounters);
     }
 
     public static ItemStack<OtherWorldEncounter> getOtherWorldEncounter() {
@@ -165,7 +169,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(otherWorldEncounters);
+        return new RandomItemStack<>(otherWorldEncounters);
     }
 
     public static ItemStack<ExpeditionEncounter> getExpeditionEncounter() {
@@ -182,7 +186,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(expeditionEncounters);
+        return new LoopedItemStack<>(expeditionEncounters);
     }
 
     public static ItemStack<EuropeEncounter> getEuropeEncounter() {
@@ -199,7 +203,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(europeEncounters);
+        return new RandomItemStack<>(europeEncounters);
     }
 
     public static ItemStack<AmericaEncounter> getAmericaEncounter() {
@@ -216,7 +220,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(americaEncounters);
+        return new RandomItemStack<>(americaEncounters);
     }
     public static ItemStack<AsiaEncounter> getAsiaEncounter() {
 
@@ -232,7 +236,7 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(asiaEncounters);
+        return new RandomItemStack<>(asiaEncounters);
     }
 
     public static ItemStack<ClueToken> getClueTokens() {
@@ -242,7 +246,7 @@ public class ItemFactory {
                clueTokens.add(new ClueToken(fieldID));
            }
         }
-        return new ItemStack<>(clueTokens);
+        return new RandomItemStack<>(clueTokens);
     }
 
     public static ItemStack<GateToken> getGateTokens() {
@@ -258,6 +262,6 @@ public class ItemFactory {
                 }
             }
         }
-        return new ItemStack<>(gateTokens);
+        return new LoopedItemStack<>(gateTokens);
     }
 }

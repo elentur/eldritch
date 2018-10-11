@@ -1,21 +1,17 @@
 package container;
 
 import enums.ItemType;
-import factory.ItemFactory;
-import gui.buttons.ItemButton;
+import lombok.extern.java.Log;
 import model.Item.Item;
-import model.Item.ItemBonus;
-import model.Item.Spell;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.function.Function;
 
-public class ItemStack<T extends Item> {
+@Log
+public abstract class ItemStack<T extends Item> {
 
-    private final ItemContainer<T> drawStack;
-    private final ItemContainer<T> traystack;
+    protected final ItemContainer<T> drawStack;
+    protected final ItemContainer<T> traystack;
+
     public ItemStack(ItemContainer<T> init){
         drawStack=init;
         for(Item item : drawStack){
@@ -42,7 +38,7 @@ public class ItemStack<T extends Item> {
         return drawStack.get(0);
     }
 
-    private void unempty() {
+    protected void unempty() {
         if(drawStack.isEmpty()){
             drawStack.addAll(traystack);
             traystack.clear();
@@ -51,7 +47,7 @@ public class ItemStack<T extends Item> {
         shuffle();
     }
 
-    private void shuffle() {
+    protected void shuffle() {
         Collections.shuffle(drawStack);
     }
 

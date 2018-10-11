@@ -3,6 +3,7 @@ package model.Item;
 import Service.GameService;
 import enums.*;
 import gamemechanics.choice.Choice;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,5 +54,11 @@ public abstract class ItemBonus implements Bonus {
         return true;
     }
 
+    @Override
+    public void execute(Encounter encounter) {
+        if(parentItem.getItemType().equals(ItemType.SPELL)){
+            GameService.getInstance().addUsedSpell((Spell)parentItem);
+        }
 
+    }
 }

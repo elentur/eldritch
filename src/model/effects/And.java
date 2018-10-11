@@ -23,7 +23,9 @@ public class And extends Effect {
     @Override
     public void execute() {
         super.execute();
-        GameService.getInstance().addAllEffect(effects);
+        for(Effect effect : effects) {
+            GameService.getInstance().addEffectAfter( effect);
+        }
 
     }
 

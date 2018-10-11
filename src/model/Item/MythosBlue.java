@@ -1,22 +1,13 @@
 package model.Item;
 
-import Service.GameService;
-import container.ItemStack;
 import enums.Dificulty;
-import enums.ItemType;
 import enums.MythosType;
 import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.RumorEncounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import model.Effect;
-import model.effects.*;
-import utils.ResourceUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import model.effects.SpawnClue;
 
 @Getter
 @Setter
@@ -26,10 +17,10 @@ public abstract class MythosBlue extends Mythos {
     public MythosBlue(RumorEncounter encounter,Dificulty dificulty){
            super(MythosType.BLUE,dificulty);
            this.encounter=encounter;
-                getEffects().add(new SpawnClue(1));
+                this.getEffects().add(new SpawnClue(1));
     }
 
-    public RumorEncounter getEncounter(){
+    public Encounter getEncounter(){
         return encounter;
     }
 }

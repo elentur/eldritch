@@ -1,13 +1,9 @@
 package gamemechanics.EncounterTest;
 
 import Service.GameService;
-import container.ItemContainer;
 import enums.ConditionType;
-import enums.FieldID;
 import enums.TestType;
-import factory.ItemFactory;
 import gamemechanics.Action;
-import gamemechanics.choice.EncounterChoice;
 import gui.Fonts;
 import gui.InterfaceLinking;
 import javafx.application.Application;
@@ -15,9 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Effect;
-import model.Field;
-import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.investigators.AgnesBaker;
 import model.effects.GainCondition;

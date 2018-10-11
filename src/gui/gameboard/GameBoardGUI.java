@@ -39,6 +39,7 @@ public class GameBoardGUI extends StackPane {
         this.getChildren().add(scrollPane);
 
 
+
     }
 
     public FieldButton getFieldButton(Field field) {

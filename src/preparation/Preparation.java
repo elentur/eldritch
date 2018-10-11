@@ -30,6 +30,7 @@ public class Preparation {
     private int modification;
 
     BonusContainer<Bonus> boni;
+    BonusContainer<Bonus> usedBoni;
 
     private GameService game;
 
@@ -41,6 +42,7 @@ public class Preparation {
         this.investigator = investigator;
         game = GameService.getInstance();
         this.encounter =encounter;
+        usedBoni = new BonusContainer<>();
         setModification(encounter.getMod()[encounter.getEncounterPart()]);
         calculateBoni();
 
@@ -95,7 +97,13 @@ public class Preparation {
                 &&! bonus.isPassive();
         ItemContainer<Item> bonusItems = game.getBonusItemsforInvestigator(investigator);
         boni =  bonusItems.getBoniWithFilter(filter);
+        boni.removeAll(usedBoni);
         additionalDiceBoni = boni.getAdditionalDiceBoni(filter);
         gainDiceBonus = boni.getStrongestGainDiceBonus(filter);
+    }
+
+    public void markBoniAsUsed(Bonus bonus){
+    boni.remove(bonus);
+    usedBoni.add(bonus);
     }
 }

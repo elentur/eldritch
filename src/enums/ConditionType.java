@@ -9,7 +9,7 @@ public enum ConditionType {
     DEPT("${dept}"),
     NONE(""),
     AMNESIA("${amnesia}"),
-    INTERNAL_INJURY("${internal_injury}");
+    INTERNAL_INJURY("${internal_injury}"), INJURY("${injury}");
 
     private String key;
 

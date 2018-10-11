@@ -4,21 +4,20 @@ import Service.GameService;
 import enums.OmenStates;
 import gui.Animations;
 import gui.Effects;
-import gui.buttons.Button;
 import gui.buttons.OmenButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class OmenTrackGUI extends Group {
     private final static Image greenCometImage = new Image("images/interface/Green_Comet.png", 100, 100, true, true, true);
     private final static Image blueStarsImage = new Image("images/interface/Blue_Stars.png", 100, 100, true, true, true);
     private final static Image redEclipseImage = new Image("images/interface/Red_Eclipse.png", 100, 100, true, true, true);
+    private final static Image omenRing = new Image("images/interface/OmenRing.png", 280, 280, true, true, false);
 
     private final UpdateListener listener;
     private final OmenButton greenComet;
@@ -73,7 +72,9 @@ public class OmenTrackGUI extends Group {
                 deactivate(OmenStates.BULE_STARS_2);
             }
         });
-        Circle background = new Circle(125, Color.TRANSPARENT);
+        Circle background = new Circle(140, new ImagePattern(omenRing));
+        background.setTranslateX(10);
+        background.setTranslateY(10);
         circle.getChildren().addAll(background,greenComet,blueStars1,redEclipse,blueStars2);
         this.getChildren().addAll(circle);
         this.setEffect(Effects.dropShadow);

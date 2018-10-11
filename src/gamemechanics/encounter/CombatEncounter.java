@@ -16,6 +16,7 @@ import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.Monster;
 import model.effects.LooseOrGainHealthSanity;
+import model.effects.NextInvestigator;
 import preparation.CombatPreparation;
 import preparation.Preparation;
 
@@ -48,10 +49,7 @@ public class CombatEncounter extends Encounter {
         super.init();
         setEncounterPart(1);
     }
-    @Override
-    public void discard(){
-       //TODO
-    }
+
 
     @Override
     public Encounter draw() {
@@ -89,17 +87,20 @@ public class CombatEncounter extends Encounter {
 
         int dmg =  activeMonster.getHorror() - result.getNumberOfSuccess();
         dmg = dmg<0?0:dmg;
+        if(dmg==0)return;
         GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY,-dmg,investigator));
     }
 
     private void healthLoss() {
        int dmg =  activeMonster.getDamage() - result.getNumberOfSuccess();
        dmg = dmg<0?0:dmg;
+        if(dmg==0)return;
         GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-dmg,investigator));
 
     }
 
     private void monsterDamage() {
+        if(result.getNumberOfSuccess()==0)return;
         GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-result.getNumberOfSuccess(),original));
     }
 
@@ -119,6 +120,7 @@ public class CombatEncounter extends Encounter {
         if (attackPreparation == null) {
             result = null;
             attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster, this);
+            setPreparation(attackPreparation);
         }
         return attackPreparation;
     }
@@ -130,6 +132,7 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation prepareForHorrorCheck() {
         if (horrorPreparation == null) {
             horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster, this);
+            setPreparation(horrorPreparation);
         }
         return horrorPreparation;
     }
@@ -177,6 +180,8 @@ public class CombatEncounter extends Encounter {
         } else {
             sanityLoss();
         }
+        encounterPart++;
+        checkForSpellConsequences();
         return super.completeEncounterPart();
     }
 
@@ -189,6 +194,14 @@ public class CombatEncounter extends Encounter {
     @Override
     public String getId() {
         return "&combat_encounter";
+    }
+
+    @Override
+    public void discard(){
+            GameService.getInstance().addEffect(
+                    new NextInvestigator(()->!GameService.getInstance().getFieldOfInvestigator(getInvestigator()).getMonster().isEmpty()));
+
+
     }
 
 }

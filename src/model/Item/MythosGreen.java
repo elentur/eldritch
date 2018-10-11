@@ -13,9 +13,9 @@ import model.effects.*;
 public abstract class MythosGreen extends Mythos {
     public MythosGreen( Dificulty dificulty) {
         super(MythosType.GREEN,dificulty);
-        getEffects().add(new AdvanceOmen(1));
-        getEffects().add(new MonsterSurge());
-        getEffects().add(new SpawnClue(1));
+        this.getEffects().add(new AdvanceOmen(1));
+        this.getEffects().add(new MonsterSurge());
+        this.getEffects().add(new SpawnClue(1));
 
     }
 

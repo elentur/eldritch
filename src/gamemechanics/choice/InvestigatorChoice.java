@@ -6,7 +6,6 @@ import lombok.Getter;
 import model.Effect;
 import model.Field;
 import model.Item.Investigator;
-import model.Item.Monster;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -51,6 +50,9 @@ private final boolean singleSelect;
 
     public void addSelection(Investigator investigator) {
         this.selectedInvs.add(investigator);
+       if(singleSelect) {
+           getChoiceTakenProperty().setValue(true);
+       }
     }
 
 }

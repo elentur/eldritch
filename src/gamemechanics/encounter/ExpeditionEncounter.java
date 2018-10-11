@@ -6,7 +6,7 @@ import gamemechanics.choice.InformationChoice;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
-import model.Item.Investigator;
+import model.effects.NullEffect;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -15,16 +15,17 @@ import java.util.List;
 @Getter
 @Setter
 public class ExpeditionEncounter extends StandardEncounter {
-protected static final String[] STEP = {"start","pass","fail"};
+    protected static final String[] STEP = {"start", "pass", "fail"};
 
     private FieldID fieldID;
 
-    public ExpeditionEncounter( String encounterID) {
+    public ExpeditionEncounter(String encounterID) {
         this(encounterID, EncounterType.EXPEDITION_ENCOUNTER);
         setEncounterPart(0);
     }
-    public ExpeditionEncounter( String encounterID, EncounterType type) {
-        super( encounterID,type);
+
+    public ExpeditionEncounter(String encounterID, EncounterType type) {
+        super(encounterID, type);
     }
 
 
@@ -36,7 +37,7 @@ protected static final String[] STEP = {"start","pass","fail"};
 
     @Override
     public String getId() {
-        return "&expedition_encounter_"+getFieldID().getKey().replaceAll("[{}\\$]", "");
+        return "&expedition_encounter_" + getFieldID().getKey().replaceAll("[{}\\$]", "");
     }
 
     @Override
@@ -69,6 +70,9 @@ protected static final String[] STEP = {"start","pass","fail"};
         String header = "";
         String text = "";
         List<Effect> effects = new ArrayList<>();
+        if (!(getEffect()[getEncounterPart()][START] instanceof NullEffect)) {
+            getGame().addEffect(getEffect()[getEncounterPart()][START]);
+        }
         if (result.isSuccess()) {
             header = ResourceUtil.get("${success}", "ui");
             text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
@@ -80,9 +84,12 @@ protected static final String[] STEP = {"start","pass","fail"};
             effects.add(getEffect()[getEncounterPart()][FAIL]);
             setEncounterPart(getEncounterPart() == 0 ? 2 : 3);
         }
-        if(getEncounterPart()==3) {
+
+        if (getEncounterPart() == 3) {
             getGame().addChoice(new InformationChoice(header, text, effects));
         }
-        return getEncounterPart();
+        checkForSpellConsequences();
+
+        return super.getEncounterPart();
     }
 }

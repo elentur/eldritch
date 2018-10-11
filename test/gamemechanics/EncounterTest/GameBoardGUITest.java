@@ -2,7 +2,6 @@ package gamemechanics.EncounterTest;
 
 import Service.DiceRollerService;
 import Service.GameService;
-import container.Inventory;
 import container.InvestigatorContainer;
 import enums.FieldID;
 import factory.GameBoardFactory;
@@ -19,23 +18,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameBoard;
 import model.Item.Investigator;
-import model.Item.Mythos;
-import model.Item.artifacts.CultesDesGoules;
-import model.Item.assets.*;
-import model.Item.conditions.AmnesiaCondition0;
-import model.Item.conditions.BlessedCondition1;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
 import model.Item.monsters.Shan;
-import model.Item.monsters.Vampire;
-import model.Item.mythos.Mythos0;
 import model.Item.mythos.MythosTestRumor;
-import model.Item.spells.Wither;
 import model.Item.token.EldritchToken;
 import model.Item.token.RumorToken;
-import model.effects.SpawnGate;
 
 import java.util.Arrays;
 
@@ -78,7 +68,7 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
         GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
-       GameService.getInstance().addEffect(new SpawnGate());
+     //  GameService.getInstance().addEffect(new SpawnGate());
         Investigator inv = GameService.getInstance().getActiveInvestigator();
         DiceRollerService.debug=true;
      /*   inv.getInventory().clear();

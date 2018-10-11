@@ -30,11 +30,17 @@ public class Action extends Encounter {
     private Preparation preparation;
 
 
+
+
     public Action(Investigator inv, String encounterID, Effect startEffect) {
       this(inv,encounterID,startEffect,new NullEffect(),new NullEffect(),TestType.NONE,0);
     }
     public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
-        super(EncounterType.ACTION);
+        this(EncounterType.ACTION,inv, encounterID, startEffect, passEffect, failEffect, testType, minNumberOfSuccesses);
+
+    }
+    protected Action(EncounterType encounterType,Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
+        super(encounterType);
         setInvestigator(inv);
         this.encounterID = encounterID;
         setTestType(new TestType[1]);
@@ -53,8 +59,6 @@ public class Action extends Encounter {
         getTestType()[getEncounterPart()] = testType;
         getMinNumberOfSuccesses()[getEncounterPart()]=minNumberOfSuccesses;
     }
-
-
 
     @Override
     public String getNameId() {
@@ -120,11 +124,13 @@ public class Action extends Encounter {
             getGame().addEffect(getEffect()[getEncounterPart()][START]);
         }
         setEncounterPart(3);
-        return getEncounterPart();
+        checkForSpellConsequences();
+        return super.getEncounterPart();
     }
     @Override
     public void discard(){
-        getInvestigator().addDoneAction(this);
+
+      getInvestigator().addDoneAction(this);
         if(getInvestigator().getDoneActions().size()>=getInvestigator().getMaxActions()) {
             getInvestigator().getDoneActions().clear();
             GameService.getInstance().addEffect(new NextInvestigator());

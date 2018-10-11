@@ -1,19 +1,14 @@
 package model.Item.investigators;
 
 import Service.GameService;
-import container.ItemContainer;
 import enums.*;
-import factory.ItemFactory;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.YesNoChoice;
-import model.Effect;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_AdditionalDice;
 import model.SkillSet;
-import model.StartingPossession;
 import model.effects.Spend;
-import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,9 +26,11 @@ public class AgnesBaker extends Investigator {
                         2),
                 7,
                 5,
-                FieldID.LONDON,
+                FieldID.ARKHAM,
                 GameService.getInstance().getAssets().get("&profaneTome"),
-                GameService.getInstance().getSpells().get("&stormOfSpirits")
+                GameService.getInstance().getSpells().get("&stormOfSpirits"),
+                GameService.getInstance().getSpells().get("&shriveling"),
+                GameService.getInstance().getSpells().get("&wither")
         );
 
 

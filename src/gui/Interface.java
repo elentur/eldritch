@@ -7,9 +7,6 @@ import gui.interfaceelements.OmenTrackGUI;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.QuadCurve;
 import javafx.stage.Screen;
 import lombok.Getter;
 
@@ -42,7 +39,7 @@ public class Interface extends Group {
 
        this.setTranslateX(-10);
        this.setTranslateY(-10);
-        this.getChildren().addAll(activeInvestigatorGUI,ancientOneGUI,inactiveInvestigatorsGUI,omenTrack);
+        this.getChildren().addAll(ancientOneGUI,inactiveInvestigatorsGUI,omenTrack,activeInvestigatorGUI);
    }
 
 

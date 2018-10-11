@@ -55,11 +55,11 @@ public class GainAsset extends Effect {
     @Override
     public String getText() {
         if(itemType==null && asset==null){
-            return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${nothing}","effect"  ));
+            return ResourceUtil.get("${gain}","effect" , investigator.getName(),ResourceUtil.get("${nothing}","effect"  ));
         }else if(asset==null) {
-            return ResourceUtil.get("${gain}", "effect", ResourceUtil.get("${random_asset}", "effect", itemType.getText()));
+            return ResourceUtil.get("${gain}", "effect",investigator.getName(), ResourceUtil.get("${random_asset}", "effect", itemType.getText()));
         }else{
-            return ResourceUtil.get("${gain}", "effect", ResourceUtil.get("${random_asset}", "effect", asset.getName()));
+            return ResourceUtil.get("${gain}", "effect",investigator.getName(), ResourceUtil.get("${random_asset}", "effect", asset.getName()));
         }
     }
 }

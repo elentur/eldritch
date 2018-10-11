@@ -11,7 +11,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.Glow;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
@@ -244,11 +243,11 @@ public class Animations {
         ft0.setFromValue(0);
         ft0.setToValue(1);
 
-        TranslateTransition tt = new TranslateTransition(Duration.millis(3000), overlay);
+        TranslateTransition tt = new TranslateTransition(Duration.millis(2000), overlay);
         tt.setFromX(0);
         tt.setToX(-100);
 
-        FadeTransition st1 = new FadeTransition(Duration.millis(3000), overlay);
+        FadeTransition st1 = new FadeTransition(Duration.millis(2000), overlay);
         st1.setDelay(Duration.millis(500));
         st1.setFromValue(1);
         st1.setToValue(0);

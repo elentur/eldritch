@@ -5,21 +5,35 @@ import Service.GameService;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
-import model.Item.Investigator;
 import utils.ResourceUtil;
+
+import java.util.concurrent.Callable;
 
 @Getter
 public class NextInvestigator extends Effect {
 
+    private final Callable<Boolean> callableCondition;
 
     public NextInvestigator() {
-      super(EffectTyps.NEXT_INVESTIGATOR);
+        this(null);
+    }
+
+    public NextInvestigator(Callable<Boolean> callableCondition) {
+        super(EffectTyps.NEXT_INVESTIGATOR);
+        this.callableCondition = callableCondition;
     }
 
     @Override
     public void execute() {
         super.execute();
-        GameService.getInstance().setActiveInvestigator();
+        try {
+
+            if (callableCondition == null || callableCondition.call()) {
+                GameService.getInstance().setActiveInvestigator();
+            }
+        } catch (Exception e) {
+
+        }
 
     }
 
@@ -27,7 +41,7 @@ public class NextInvestigator extends Effect {
     public String getText() {
 
 
-            return ResourceUtil.get("${next_Investigator}","effect"  ) ;
+        return ResourceUtil.get("${next_Investigator}", "effect");
 
 
     }

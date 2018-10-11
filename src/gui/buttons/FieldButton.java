@@ -165,7 +165,9 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-                if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+             //  GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,GameService.getInstance().getActiveInvestigator()));
+                       if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+
                     if(wheel!=null){
                         wheel.remove();
                         return;
@@ -231,7 +233,8 @@ public class FieldButton extends Group {
                 InterfaceLinking.gameBoardGUI.getMap().showPath(path);
                 if(path.size()==2){
                     pathIsLegal =true;
-                } else{ FieldConnections connection = FieldConnections.getConnection(path.get(1), path.get(2));
+                } else{
+                    FieldConnections connection = FieldConnections.getConnection(path.get(1), path.get(2));
                     if ((connection.getPathType().equals(PathType.SHIP) && GameService.getInstance().getEncounteringInvestigator().getShipTicket() > 0) ||
                             (connection.getPathType().equals(PathType.TRAIN) && GameService.getInstance().getEncounteringInvestigator().getTrainTicket() > 0)) {
                        pathIsLegal=true;

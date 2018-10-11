@@ -1,5 +1,6 @@
 package gui.interfaceelements;
 
+import Service.GameService;
 import gui.buttons.Button;
 import gui.buttons.FieldButton;
 import javafx.scene.Group;
@@ -8,11 +9,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import model.FieldActions;
+import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContextWheel extends Group {
+    private final static Image skipAction = new Image("images/interface/SkipAction.png", 100, 100, true, true);
     private final static Image gainFocus = new Image("images/interface/GainFocus.png", 100, 100, true, true);
     private final static Image buyShipTicket = new Image("images/interface/BuyShipTicket.png", 100, 100, true, true);
     private final static Image buyTrainTicket = new Image("images/interface/BuyTrainTicket.png", 100, 100, true, true);
@@ -25,7 +28,7 @@ public class ContextWheel extends Group {
 
     public ContextWheel(FieldActions field) {
     this.field = field;
-isRemoved=false;
+        isRemoved=false;
         buildWheel();
         this.setTranslateX(10);
         this.setTranslateY(10);
@@ -33,6 +36,16 @@ isRemoved=false;
 
     private void buildWheel() {
         List<Button> buttons = new ArrayList<>();
+
+        Button skipActionBtn = new Button(skipAction);
+        skipActionBtn.setOnMouseClicked(e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
+                remove();
+                GameService.getInstance().setActiveInvestigator();
+            }
+        });
+        skipActionBtn.setTooltipText(ResourceUtil.get("${skip_action}","ui"));
+        buttons.add(skipActionBtn);
 
         if (field.isHasFocus()) {
             Button focusBtn = new Button(gainFocus);
@@ -42,6 +55,7 @@ isRemoved=false;
                     field.gainFocus();
                 }
             });
+            focusBtn.setTooltipText(ResourceUtil.get("${gain_focus}","ui"));
             buttons.add(focusBtn);
         }
         if (field.isHasRestAction()) {
@@ -52,6 +66,7 @@ isRemoved=false;
                     field.rest();
                 }
             });
+            restBtn.setTooltipText(ResourceUtil.get("${rest}","ui"));
             buttons.add(restBtn);
         }
         if (field.isHasAcquireAsset()) {
@@ -62,6 +77,7 @@ isRemoved=false;
                     field.acquireAsset();
                 }
             });
+            acquireAssetBtn.setTooltipText(ResourceUtil.get("${acquire_asset}","ui"));
             buttons.add(acquireAssetBtn);
         }
         if (field.isHasShipTicket()) {
@@ -72,6 +88,7 @@ isRemoved=false;
                     field.buyShipTicket();
                 }
             });
+            shipTicketBtn.setTooltipText(ResourceUtil.get("${buy_ship_ticket}","ui"));
             buttons.add(shipTicketBtn);
         }
         if (field.isHasTrainTicket()) {
@@ -82,6 +99,7 @@ isRemoved=false;
                     field.buyTrainTicket();
                 }
             });
+             trainTicketBtn.setTooltipText(ResourceUtil.get("${buy_train_ticket}","ui"));
             buttons.add(trainTicketBtn);
         }
         if (field.isHasTradeAction()) {
@@ -92,6 +110,7 @@ isRemoved=false;
                     field.trade();
                 }
             });
+            tradeBtn.setTooltipText(ResourceUtil.get("${trade}","ui"));
             buttons.add(tradeBtn);
         }
         this.getChildren().addAll(buttons);

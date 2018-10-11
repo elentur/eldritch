@@ -2,17 +2,21 @@ package gamemechanics;
 
 import Service.GameService;
 import enums.PhaseTypes;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import model.Item.mythos.Mythos0;
-import model.effects.SwitchPhase;
 
 public class Phases {
 
     @Getter
     private PhaseTypes actualPhase;
+    @Getter
+    private BooleanProperty update;
 
     public Phases() {
         actualPhase = PhaseTypes.ACTION;
+        update = new SimpleBooleanProperty(false);
     }
 
     public PhaseTypes getNextPhase() {
@@ -26,7 +30,10 @@ public class Phases {
          //  GameService.getInstance().setStartInvestigator();
           //  GameService.getInstance().addEffect(new SwitchPhase());
 
+        }else if(actualPhase.equals(PhaseTypes.ACTION)){
+            GameService.getInstance().setStartInvestigator();
         }
+        update.setValue(true);
         return actualPhase;
     }
 

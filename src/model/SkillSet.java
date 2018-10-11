@@ -31,15 +31,15 @@ public class SkillSet {
     public int getSkill(TestType typ) {
         switch (typ) {
             case LORE:
-                return lore + loreMod < 1 ? 1 : lore + loreMod;
+                return Math.max(lore + loreMod ,1);
             case INFLUENCE:
-                return influence + influenceMod < 1 ? 1 : influence + influenceMod;
+                return Math.max(influence + influenceMod , 1);
             case OBSERVATION:
-                return observation + observationMod < 1 ? 1 : observation + observationMod;
+                return Math.max(observation + observationMod , 1);
             case STRENGTH:
-                return strength + strengthMod < 1 ? 1 : strength + strengthMod;
+                return Math.max(strength + strengthMod , 1);
             case WILL:
-                return will + willMod < 1 ? 1 : will + willMod;
+                return Math.max( will + willMod ,1);
             default:
                 return 1;
         }

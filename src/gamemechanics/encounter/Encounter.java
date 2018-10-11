@@ -7,6 +7,7 @@ import enums.EncounterType;
 import enums.ItemType;
 import enums.SituationType;
 import enums.TestType;
+import gamemechanics.Action;
 import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import model.Field;
 import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
+import model.Item.Spell;
 import model.effects.NextInvestigator;
 import preparation.Preparation;
 import utils.ResourceUtil;
@@ -69,7 +71,8 @@ public abstract class Encounter implements Item {
     }
 
     public int completeEncounterPart() {
-        return ++encounterPart;
+        preparation.getUsedBoni().clear();
+        return encounterPart;
     }
 
 
@@ -145,4 +148,21 @@ public abstract class Encounter implements Item {
     }
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
+
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Action getEncounter() {
+        return null;
+    }
+
+    protected void checkForSpellConsequences(){
+        for (Spell spell : GameService.getInstance().getUsedSpells()){
+            spell.executeConsequences(result);
+        }
+        GameService.getInstance().getUsedSpells().clear();
+    }
 }

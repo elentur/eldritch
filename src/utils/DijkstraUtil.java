@@ -32,11 +32,11 @@ public class DijkstraUtil {
         }
         public int getWeight(){
             if(pathType.equals(PathType.SHIP) && hasShipTicket){
-                return weight/2;
+                return (int) (weight*0.8);
 
             }
             if(pathType.equals(PathType.TRAIN) && hasTrainTicket){
-                return weight/2;
+                return  (int) (weight*0.8);
             }
             return weight;
         }

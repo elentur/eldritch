@@ -32,6 +32,6 @@ public class Improve extends Effect {
     @Override
     public String getText() {
 
-        return ResourceUtil.get("${improve}","effect" ,testType.getSymbol(), value+"" );
+        return ResourceUtil.get("${improve}","effect" , investigator.getName(), testType.getSymbol(), value+"" );
     }
 }

@@ -15,7 +15,6 @@ public class HoundOfTindalos extends Monster {
         this.setDamage(3);
         this.setToughness(3);
         this.setActualToughness(getToughness());
-        this.setEffects(null);
 
     }
 

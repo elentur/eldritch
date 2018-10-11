@@ -3,6 +3,9 @@ package model.effects;
 
 import enums.EffectTyps;
 import enums.SpendType;
+import gamemechanics.choice.Choice;
+import gamemechanics.choice.InvestigatorChoice;
+import gamemechanics.choice.MonsterChoice;
 import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
@@ -29,9 +32,16 @@ public class LooseOrGainHealthSanity extends Effect {
         this.monster = monster;
     }
 
+    public LooseOrGainHealthSanity(SpendType spendType, int value, Choice choice) {
+        super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
+        this.spendType = spendType;
+        this.value = value;
+        this.condition  = choice;
+    }
     @Override
     public void execute() {
         super.execute();
+
         switch (spendType) {
             case HEALTH:
                 if(investigator!= null) {
@@ -51,13 +61,30 @@ public class LooseOrGainHealthSanity extends Effect {
 
     @Override
     public String getText() {
+        init();
+        String name = investigator!=null?investigator.getName(): "The " + monster.getName();
         if(spendType==null ||value ==0){
-            return ResourceUtil.get("${loose}","effect" , ResourceUtil.get("${nothing}","effect"  ));
+            return ResourceUtil.get("${loose}","effect" , name, ResourceUtil.get("${nothing}","effect"  ));
         }
         if(value < 0) {
-            return ResourceUtil.get("${loose}", "effect", value + " " + spendType.getText());
+            return ResourceUtil.get("${loose}", "effect", name, Math.abs(value) + " " + spendType.getText());
         }else{
-            return ResourceUtil.get("${gain}", "effect", value + " " + spendType.getText());
+            return ResourceUtil.get("${gain}", "effect", name, value + " " + spendType.getText());
+        }
+    }
+
+    @Override
+    public void init() {
+        if(condition!= null && !condition.getChoiceTakenProperty().getValue()){
+            game.addChoice(condition);
+            switch (condition.getChoiceType()){
+                case INVESTIGATOR_CHOICE:
+                    investigator = ((InvestigatorChoice)condition).getSelectedInvs().get(0);
+                    break;
+                case MONSTER_CHOICE:
+                    monster = ((MonsterChoice)condition).getSelectedMonster().get(0);
+                    break;
+            }
         }
     }
 }

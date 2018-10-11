@@ -83,7 +83,7 @@ public class Button extends StackPane {
         tooltip.setMaxWidth(200);
 
     }
-    protected void setTooltipText(String text) {
+    public void setTooltipText(String text) {
         Tooltip.install(imageView, tooltip);
         tooltip.setText(text);
     }

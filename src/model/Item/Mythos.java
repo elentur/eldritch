@@ -6,10 +6,12 @@ import enums.Dificulty;
 import enums.ItemType;
 import enums.MythosType;
 import gamemechanics.choice.InformationChoice;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
+import model.effects.SwitchPhase;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -52,8 +54,11 @@ public abstract class Mythos implements Item {
         for (Effect effect:effects){
             text.append("\n"+effect.getText());
         }
+        effects.add(new SwitchPhase());
         InformationChoice info = new InformationChoice(getName(), text.toString() , effects);
+
         GameService.getInstance().addChoice(info);
+
     }
 
     @Override
@@ -89,5 +94,17 @@ public abstract class Mythos implements Item {
 
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
+    }
+
+
+
+    @Override
+    public Encounter getEncounter() {
+        return null;
+    }
+
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
     }
 }

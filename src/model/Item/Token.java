@@ -2,11 +2,12 @@ package model.Item;
 
 import container.ItemStack;
 import enums.ItemType;
-import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.Setter;
+import model.Effect;
 import utils.ResourceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,8 +49,6 @@ public abstract class Token implements Item {
         return ItemType.TOKEN;
     }
 
-    public abstract Encounter getEncounter();
-
     @Override
     public void setStack(ItemStack itemStack){
         stack=itemStack;
@@ -64,4 +63,12 @@ public abstract class Token implements Item {
     }
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
+
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
+
+
+
 }

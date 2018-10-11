@@ -6,7 +6,6 @@ import enums.EffectTyps;
 import enums.ItemType;
 import gamemechanics.Action;
 import gamemechanics.choice.ReserveChoice;
-import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
@@ -32,7 +31,7 @@ public class AssetFromReserve extends Effect {
     public void execute() {
         super.execute();
         if(itemType==null){
-            Encounter obj = GameService.getInstance().getEncounterProperty().get();
+            gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
             if(obj != null && obj instanceof Action) {
                 Action action = (Action) obj;
                 action.getResult().getNumberOfSuccess();

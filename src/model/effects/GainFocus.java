@@ -31,8 +31,8 @@ public class GainFocus extends Effect {
     @Override
     public String getText() {
         if (spendType == null || value == 0) {
-            return ResourceUtil.get("${gain}", "effect",ResourceUtil.get("${nothing}", "effect") );
+            return ResourceUtil.get("${gain}", "effect", investigator.getName(),ResourceUtil.get("${nothing}", "effect") );
         }
-            return ResourceUtil.get("${gain}", "effect", value + " " + spendType.getText() );
+            return ResourceUtil.get("${gain}", "effect",investigator.getName(), value + " " + spendType.getText() );
     }
 }

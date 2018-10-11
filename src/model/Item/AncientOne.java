@@ -2,10 +2,11 @@ package model.Item;
 
 import container.ItemStack;
 import enums.ItemType;
-import gamemechanics.encounter.Encounter;
 import lombok.Getter;
+import model.Effect;
 import utils.ResourceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +45,6 @@ public abstract class AncientOne implements Item {
         return ItemType.ANCIENT_ONE;
     }
 
-    public abstract Encounter getEncounter();
 
     @Override
     public void setStack(ItemStack itemStack){
@@ -59,4 +59,12 @@ public abstract class AncientOne implements Item {
     }
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail){}
+
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
+
+
+
 }

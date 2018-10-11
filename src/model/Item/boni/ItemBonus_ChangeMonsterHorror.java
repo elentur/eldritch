@@ -43,8 +43,9 @@ public class ItemBonus_ChangeMonsterHorror extends ItemBonus {
             Monster m = combatEncounter.getActiveMonster();
             m.setHorror(m.getHorror() - 1 < 1 ? 1 : m.getHorror() - 1);
 
-
+            super.execute(encounter);
         }
+
     }
 
     @Override

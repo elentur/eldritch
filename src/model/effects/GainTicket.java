@@ -39,10 +39,10 @@ public class GainTicket extends Effect {
     @Override
     public String getText() {
         if (ticketType == null || value == 0) {
-            return ResourceUtil.get("${gain}", "effect",ResourceUtil.get("${nothing}", "effect") );
+            return ResourceUtil.get("${gain}", "effect", investigator.getName(),ResourceUtil.get("${nothing}", "effect") );
         }
 
-            return ResourceUtil.get("${gain}", "effect", value + " " + ticketType.getText() );
+            return ResourceUtil.get("${gain}", "effect", investigator.getName(),value + " " + ticketType.getText() );
 
 
     }

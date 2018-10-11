@@ -63,15 +63,17 @@ public class FieldActions {
         );
 
 
-        if (inv.getShipTicket() + inv.getTrainTicket() < 2 && field.getFieldID().getType().equals(FieldType.CITY)) {
-            for (Neighbour neighbour : field.getNeighbours()) {
-                if (neighbour.getPath().equals(PathType.TRAIN)) {
-                    hasTrainTicket = true;
+        if ( field.getFieldID().getType().equals(FieldType.CITY)) {
+            if (inv.getShipTicket() + inv.getTrainTicket() < 2){
+                for (Neighbour neighbour : field.getNeighbours()) {
+                    if (neighbour.getPath().equals(PathType.TRAIN)) {
+                        hasTrainTicket = true;
+                    }
+                    if (neighbour.getPath().equals(PathType.SHIP)) {
+                        hasShipTicket = true;
+                    }
                 }
-                if (neighbour.getPath().equals(PathType.SHIP)) {
-                    hasShipTicket = true;
-                }
-            }
+        }
             hasAcquireAsset = field.getMonster().isEmpty();
 
         }

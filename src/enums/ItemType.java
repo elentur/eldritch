@@ -16,6 +16,7 @@ public enum ItemType {
     ITEM_TOME_MAGICAL("${itemTomeMagical}", Arrays.asList("Item","Tome","Magical")),
     ALLEY("${alley}", Collections.singletonList("Alley")),
     INCANTATION("${incantation}", Collections.singletonList("Incantation")),
+    RITUAL("${ritual}", Collections.singletonList("Ritual")),
     ENCOUNTER("${encounter}", Collections.singletonList("encounter")),
     ASSET("${asset}", Collections.singletonList("asset")),
     ARTIFACT("${artifact}", Collections.singletonList("artifacts")),

@@ -1,5 +1,6 @@
 package gui.effectoverlays;
 
+import enums.SpendType;
 import gui.Fonts;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -11,8 +12,17 @@ public class LooseOrGainHealthSanityEffectOverlay extends Overlay {
 
     public LooseOrGainHealthSanityEffectOverlay(LooseOrGainHealthSanity loose) {
         super(loose);
+
         if(loose.getValue()==0){
             return;
+        }
+        if(loose.getValue()>0){
+            if(loose.getSpendType() == SpendType.SANITY && loose.getInvestigator().getActualSanity()==loose.getInvestigator().getSanity()){
+                return;
+            }
+            if(loose.getSpendType() == SpendType.HEALTH && loose.getInvestigator().getActualHealth()==loose.getInvestigator().getHealth()){
+                return;
+            }
         }
         String sign ="";
         if(loose.getValue()>0){

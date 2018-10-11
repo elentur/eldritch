@@ -1,11 +1,15 @@
 package gui.buttons;
 
+import Service.GameService;
+import enums.PhaseTypes;
+import gamemechanics.encounter.Encounter;
 import gui.Effects;
 import gui.Fonts;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.text.TextAlignment;
 import model.Item.*;
 
@@ -44,6 +48,20 @@ public class InventoryItemButton extends ItemButton {
         backSideText.setWrapText(true);
         backSideText.setTextAlignment(TextAlignment.CENTER);
         backSideText.setAlignment(Pos.CENTER);
+
+        this.setOnMouseClicked(e->{
+            if(e.getButton().equals(MouseButton.PRIMARY)) {
+                Encounter encounter = item.getEncounter();
+                if ( GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+
+                    if (!GameService.getInstance().getEncounteringInvestigator().getDoneActions().contains(encounter)) {
+                        GameService.getInstance().addEncounter(encounter);
+                    }
+                }else if(GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER)){
+                    GameService.getInstance().addEncounter(encounter);
+                }
+            }
+        });
 
         oldNode.getChildren().addAll(backSideText);
         switch (item.getItemType()) {

@@ -1,20 +1,17 @@
 package model.Item.mythos;
 
-import enums.*;
-import model.Item.Item;
+import enums.Dificulty;
+import enums.ItemType;
 import model.Item.MythosGreen;
 import model.effects.Reckoning;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.function.Function;
 
 public class Mythos0 extends MythosGreen {
 
     public Mythos0() {
         super(Dificulty.EASY);
-        getEffects().add(new Reckoning(Collections.singletonList(ItemType.CONDITION), true));
+        this.getEffects().add(new Reckoning(Collections.singletonList(ItemType.CONDITION), true));
     }
 
     @Override
@@ -26,6 +23,8 @@ public class Mythos0 extends MythosGreen {
     public String getNameId() {
         return "${mythos_0}";
     }
+
+
 
 
 }

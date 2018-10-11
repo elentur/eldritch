@@ -42,6 +42,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
                 preparation.setTestTyp(to);
                 preparation.calculateBoni();
                // setActive(false);
+                super.execute(encounter);
             }
         }
     }

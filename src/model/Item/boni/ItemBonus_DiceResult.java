@@ -48,9 +48,11 @@ public class ItemBonus_DiceResult extends ItemBonus {
                     die.setShiftable(true);
                 }
             }
+            super.execute(encounter);
         }else{
             throw new NoFailsAvailableException();
         }
+
     }
     @Override
     public String getText() {

@@ -3,6 +3,8 @@ package model.Item;
 
 import container.ItemStack;
 import enums.ItemType;
+import gamemechanics.encounter.Encounter;
+import model.Effect;
 
 import java.util.List;
 
@@ -18,6 +20,10 @@ public interface Item {
     List<ItemBonus> createBonus();
 
     List<ItemBonus> getBonus();
+
+    List<Effect> getDrawEffects();
+
+    Encounter getEncounter();
 
     ItemType getSubType();
 

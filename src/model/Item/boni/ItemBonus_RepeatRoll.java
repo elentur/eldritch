@@ -37,6 +37,7 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
         Result result = encounter.getResult();
         if (!result.getFails().isEmpty()) {
             result.setReroll(value);
+            super.execute(encounter);
         }
     }
 

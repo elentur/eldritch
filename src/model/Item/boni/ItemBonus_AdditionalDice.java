@@ -36,11 +36,11 @@ public class ItemBonus_AdditionalDice extends ItemBonus {
         if(isPerRound()){
             setUsable(false);
         }
+        super.execute(encounter);
 
     }
     @Override
     public String getText() {
-        System.out.println(situation.getText());
         return ResourceUtil.get("${additionalDice}",Bonus.class,value+"",  situation.getText() );
     }
 

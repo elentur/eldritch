@@ -1,33 +1,45 @@
 package model.Item;
 
+import Service.GameService;
 import container.ItemStack;
+import container.Result;
 import enums.ItemType;
+import enums.PhaseTypes;
+import gamemechanics.Phases;
+import gamemechanics.choice.InformationChoice;
+import javafx.beans.value.ChangeListener;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import model.Effect;
 import utils.ResourceUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 public abstract class Spell implements Item {
+    public static final int NUMBER_OF_DIFFERENT_SPELLS = 4;
     private ItemStack stack;
     public String uniqueId = UUID.randomUUID().toString();
     private ItemType type;
+    private boolean used;
+    private ChangeListener<Boolean> listener;
+
+
+    public List<ItemBonus> getBonus() {
+        return bonus;
+    }
+
     private List<ItemBonus> bonus;
-    protected List<SpellConsequence> consequence = new ArrayList<>();
 
     public Spell(ItemType type ){
         this.type = type;
         this.bonus= createBonus();
-        this.consequence = createConsequences();
+
     }
 
-    protected abstract List<SpellConsequence> createConsequences();
 
     public String getName(){
         return  ResourceUtil.get(getNameId(),"spell");
@@ -53,6 +65,7 @@ public abstract class Spell implements Item {
     }
     @Override
     public void discard(){
+
         stack.discard(this);
     }
     @Override
@@ -67,6 +80,49 @@ public abstract class Spell implements Item {
         for(Bonus bonus: getBonus()){
             infoText.append("Bonus: ").append(bonus.getText()).append("\n");
         }
+
+        String key= getTextKey();
+        if(key != null){
+            if(key.equals("action")){
+                infoText.append("Action: ");
+            }
+            infoText.append(ResourceUtil.get(getNameId().replace("}","_start}"),key));
+        }
+
+
         return infoText.toString();
     }
+
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
+
+    protected abstract String getTextKey();
+
+
+    public abstract List<SpellConsequence> getConsequence(Result result);
+
+    public void executeConsequences(Result result) {
+        List<SpellConsequence> consequences = getConsequence(result);
+        int i = new Random().nextInt(consequences.size());
+        SpellConsequence consequence = consequences.get(i);
+        InformationChoice choice = new InformationChoice(ResourceUtil.get("${spell_consequence}","ui"),consequence.getText(result.getNumberOfSuccess()), Collections.singletonList(consequence.getEffect(result.getNumberOfSuccess())));
+       GameService.getInstance().addChoice(choice);
+    }
+
+    protected void setUsed(boolean val){
+        if(listener == null){
+            Phases p =GameService.getInstance().getPhases();
+            listener = (ob,o,n)->{
+                               if(p.getActualPhase().equals(PhaseTypes.MYTHOS) && p.getUpdate().getValue()){
+                    setUsed(false);
+                    p.getUpdate().setValue(false);
+                }
+            };
+            p.getUpdate().addListener(listener);
+        }
+         used = val;
+    }
+
 }

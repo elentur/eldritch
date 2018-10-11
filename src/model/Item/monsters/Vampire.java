@@ -15,7 +15,6 @@ public class Vampire extends Monster {
         this.setDamage(2);
         this.setToughness(3);
         this.setActualToughness(getToughness());
-        this.setEffects(null);
 
     }
 

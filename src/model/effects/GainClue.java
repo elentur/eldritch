@@ -46,12 +46,12 @@ public class GainClue extends Effect {
     @Override
     public String getText() {
         if (spendType == null || value == 0) {
-            return ResourceUtil.get("${gain}", "effect",ResourceUtil.get("${nothing}", "effect") );
+            return ResourceUtil.get("${gain}", "effect",investigator.getName(),ResourceUtil.get("${nothing}", "effect") );
         }
         if (selector.equals(EffectSelector.THIS)) {
-            return ResourceUtil.get("${gain}", "effect", selector.getText() + " " + spendType.getText());
+            return ResourceUtil.get("${gain}", "effect",investigator.getName(), selector.getText() + " " + spendType.getText());
         } else {
-            return ResourceUtil.get("${gain}", "effect", value + " " + selector.getText() + " " + spendType.getText() );
+            return ResourceUtil.get("${gain}", "effect", investigator.getName(),value + " " + selector.getText() + " " + spendType.getText() );
         }
 
     }

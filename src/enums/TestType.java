@@ -16,6 +16,7 @@ public enum TestType {
 
 
     private final String symbol;
+    @Getter
     private String key;
     @Getter
     @Setter

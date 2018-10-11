@@ -2,6 +2,7 @@ package gui.interfaceelements;
 
 import Service.GameService;
 import enums.SpendType;
+import enums.TestType;
 import gui.*;
 import gui.buttons.FieldButton;
 import javafx.beans.value.ChangeListener;
@@ -28,6 +29,12 @@ public class ActiveInvestigatorGUI extends Group {
     private final TokenImage focusImage;
     private final TokenImage trainImage;
     private final TokenImage shipImage;
+
+    private final SkillImage loreImage;
+    private final SkillImage influenceImage;
+    private final SkillImage observationImage;
+    private final SkillImage strengthImage;
+    private final SkillImage willImage;
 
     private final UpdateListener listener;
     private Investigator inv;
@@ -75,15 +82,37 @@ public class ActiveInvestigatorGUI extends Group {
         focusImage.setTranslateY(80);
 
         trainImage = new TokenImage(SpendType.TRAIN_TICKET, 50);
-        trainImage.setTranslateX(80);
-        trainImage.setTranslateY(-15);
+        trainImage.setTranslateX(180);
+        trainImage.setTranslateY(40);
 
         shipImage = new TokenImage(SpendType.SHIP_TICKET, 50);
-        shipImage.setTranslateX(130);
-        shipImage.setTranslateY(-15);
+        shipImage.setTranslateX(160);
+        shipImage.setTranslateY(10);
+
+        loreImage = new SkillImage(TestType.LORE,40);
+        loreImage.setTranslateX(0);
+        loreImage.setTranslateY(-40);
+
+        influenceImage = new SkillImage(TestType.INFLUENCE,40);
+        influenceImage.setTranslateX(45);
+        influenceImage.setTranslateY(-40);
+
+        observationImage = new SkillImage(TestType.OBSERVATION,40);
+        observationImage.setTranslateX(90);
+        observationImage.setTranslateY(-40);
+
+        strengthImage = new SkillImage(TestType.STRENGTH,40);
+        strengthImage.setTranslateX(135);
+        strengthImage.setTranslateY(-40);
+
+        willImage = new SkillImage(TestType.WILL,40);
+        willImage.setTranslateX(180);
+        willImage.setTranslateY(-40);
+
 
         listener = new UpdateListener();
-        this.getChildren().addAll(portrait, frame, name, healthImage, sanityImage, clueImage, focusImage, trainImage, shipImage);
+        this.getChildren().addAll(portrait, frame, name, healthImage, sanityImage, clueImage,
+                focusImage, trainImage, shipImage,loreImage,influenceImage,observationImage,strengthImage,willImage);
         this.setEffect(Effects.dropShadow);
     }
 
@@ -106,6 +135,11 @@ public class ActiveInvestigatorGUI extends Group {
             focusImage.setValue(inv.getFocus()+"");
             trainImage.setValue(inv.getTrainTicket()+"");
             shipImage.setValue(inv.getShipTicket()+"");
+            loreImage.setValue(inv.getSkillSet());
+            influenceImage.setValue(inv.getSkillSet());
+            observationImage.setValue(inv.getSkillSet());
+            strengthImage.setValue(inv.getSkillSet());
+            willImage.setValue(inv.getSkillSet());
         }
     }
 

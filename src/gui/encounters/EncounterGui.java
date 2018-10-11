@@ -4,7 +4,6 @@ import Service.GameService;
 import enums.EventTimeType;
 import enums.TestType;
 import gamemechanics.Action;
-import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.StandardEncounter;
 import gui.*;
 import gui.buttons.BonusButton;
@@ -18,14 +17,14 @@ import model.Item.Bonus;
 
 
 public class EncounterGui extends DialogGui {
-    final Encounter encounter;
+    final gamemechanics.encounter.Encounter encounter;
     private ItemScrollPane bonusPane;
     VBox encounterPane;
     DicePane dicePane;
     StackPane encounterMain;
 
 
-    public EncounterGui(Encounter encounter) {
+    public EncounterGui(gamemechanics.encounter.Encounter encounter) {
         super("", 0.7, 0.7);
         this.encounter = encounter;
         this.encounter.init();
@@ -83,6 +82,9 @@ public class EncounterGui extends DialogGui {
             case ACTION:
                 populateCenterForAction((Action) encounter);
                 break;
+            case ACTION_ENCOUNTER:
+                populateCenterForAction((Action) encounter);
+                break;
             default:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
@@ -113,7 +115,7 @@ public class EncounterGui extends DialogGui {
 
     }
 
-    private void populateBoni(EventTimeType timeType) {
+    protected void populateBoni(EventTimeType timeType) {
         bonusPane.getScrollableChildren().clear();
         for (Bonus bonus : encounter.getPreparation().getBoni(timeType)) {
             BonusButton button = new BonusButton(bonus);
@@ -121,6 +123,7 @@ public class EncounterGui extends DialogGui {
             button.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                     bonus.execute(encounter);
+                    encounter.getPreparation().markBoniAsUsed(bonus);
                     if (timeType.equals(EventTimeType.BEFORE)) {
                         populate();
                     } else {

@@ -1,13 +1,15 @@
 package model.Item;
 
 import container.ItemStack;
-import enums.ConditionType;
 import enums.ItemType;
+import gamemechanics.Action;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import model.Effect;
 import utils.ResourceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,5 +65,15 @@ public abstract class Condition implements Item {
             infoText.append("Bonus: ").append(bonus.getText()).append("\n");
         }
         return infoText.toString();
+    }
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
+
+
+    @Override
+    public Action getEncounter() {
+        return null;
     }
 }

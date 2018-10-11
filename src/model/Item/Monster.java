@@ -3,6 +3,7 @@ package model.Item;
 import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
+import gamemechanics.Action;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,7 +75,9 @@ public abstract class Monster implements Item, IMonster {
 
     public  void die(){
        Field field= GameService.getInstance().getFieldOfMonster(this);
-       field.removeMonster(this);
+       if(field!=null) {
+           field.removeMonster(this);
+       }
     }
 
     public Monster clone(){
@@ -113,5 +116,15 @@ public abstract class Monster implements Item, IMonster {
     @Override
     public Monster draw(){
         return (Monster) getStack().draw();
+    }
+
+    @Override
+    public List<Effect> getDrawEffects() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Action getEncounter() {
+        return null;
     }
 }

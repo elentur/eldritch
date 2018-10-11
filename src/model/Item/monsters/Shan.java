@@ -15,7 +15,6 @@ public class Shan extends Monster {
         this.setDamage(1);
         this.setToughness(2);
         this.setActualToughness(getToughness());
-        this.setEffects(null);
 
     }
 

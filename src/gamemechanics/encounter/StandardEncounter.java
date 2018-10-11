@@ -86,21 +86,27 @@ public class StandardEncounter extends Encounter {
         String header;
         String text;
         List<Effect> effects = new ArrayList<>();
-        if(getEffect()[getEncounterPart()][START]instanceof NullEffect) {
-            if (result.isSuccess()) {
-                header = ResourceUtil.get("${success}", "ui");
-                text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
-                effects.add(getEffect()[getEncounterPart()][PASS]);
-            } else {
-                header = ResourceUtil.get("${fail}", "ui");
-                text = getEncounterFailText() + "\n" + getEffect()[getEncounterPart()][FAIL].getText();
-                effects.add(getEffect()[getEncounterPart()][FAIL]);
-            }
-            getGame().addChoice(new InformationChoice(header, text, effects));
-        }else{
+        if(!(getEffect()[getEncounterPart()][START]instanceof NullEffect)) {
             getGame().addEffect(getEffect()[getEncounterPart()][START]);
         }
+            if (result.isSuccess()) {
+           // if(!(getEffect()[getEncounterPart()][PASS]instanceof NullEffect)) {
+                    header = ResourceUtil.get("${success}", "ui");
+                    text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
+                    effects.add(getEffect()[getEncounterPart()][PASS]);
+                getGame().addChoice(new InformationChoice(header, text, effects));
+           //     }
+            } else {
+           //     if(!(getEffect()[getEncounterPart()][FAIL]instanceof NullEffect)) {
+                    header = ResourceUtil.get("${fail}", "ui");
+                    text = getEncounterFailText() + "\n" + getEffect()[getEncounterPart()][FAIL].getText();
+                    effects.add(getEffect()[getEncounterPart()][FAIL]);
+                    getGame().addChoice(new InformationChoice(header, text, effects));
+            //   }
+            }
+
+        checkForSpellConsequences();
         setEncounterPart(3);
-        return getEncounterPart();
+        return super.getEncounterPart();
     }
 }
