@@ -114,6 +114,7 @@ public class ActiveInvestigatorGUI extends Group {
         this.getChildren().addAll(portrait, frame, name, healthImage, sanityImage, clueImage,
                 focusImage, trainImage, shipImage,loreImage,influenceImage,observationImage,strengthImage,willImage);
         this.setEffect(Effects.dropShadow);
+        update();
     }
 
     public void update() {

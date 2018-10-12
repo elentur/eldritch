@@ -9,8 +9,10 @@ import enums.OmenStates;
 import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
+import gamemechanics.Mystery;
 import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
+import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,6 +25,7 @@ import model.Item.*;
 import model.Item.ancientOnes.Azathoth;
 import model.Item.token.*;
 import model.effects.SwitchPhase;
+import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ import java.util.List;
 public class GameService {
     private static GameService ourInstance = new GameService();
 
-    private final ObservableList<Effect> insertions;
+    private  ObservableList<Effect> insertions;
 
     @Getter
     private ObjectProperty<Investigator> activeInvestigator;
@@ -77,6 +80,9 @@ public class GameService {
     private ItemStack<AsiaEncounter> asiaEncounter;
     @Getter
     private ItemStack<AmericaEncounter> americaEncounter;
+    @Getter
+    private ItemStack<Mystery> mysteries;
+
 
     @Getter
     private List<Spell> usedSpells;
@@ -88,21 +94,29 @@ public class GameService {
     private Monster lastChosenMonster;
 
     @Getter
+    private Mystery activeMystery;
+
+    @Getter
     private DoomTrack doomTrack;
     @Getter
     private OmenTrack omenTrack;
     private Reserve reserve;
 
     @Getter
-    private final Phases phases;
+    private  Phases phases;
 
     public static GameService getInstance() {
         return ourInstance;
     }
 
-    public void startGame(InvestigatorContainer investigators, GameBoard gameBoard) {
-
+    public void setGameBoardAndAncientOne(AncientOne ancientOne, GameBoard gameBoard) {
+        this.ancientOne = ancientOne;
         setGameBoard(gameBoard);
+        init();
+
+
+    }
+    public void addInvestigators(InvestigatorContainer investigators) {
         this.investigators = investigators;
         for (Investigator inv : investigators) {
             gameBoard.addInvestigator(inv);
@@ -110,10 +124,7 @@ public class GameService {
         count = 1;
         activeInvestigator.setValue(investigators.get(0));
         encounteringInvestigator = activeInvestigator.getValue();
-        reserve.init();
-
     }
-
     public void setActiveInvestigator() {
         if (count >= investigators.size()) {
             count = 0;
@@ -158,7 +169,7 @@ public class GameService {
     private SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
 
-    private GameService() {
+    private void init(){
         insertions = FXCollections.observableArrayList();
         activeInvestigator = new SimpleObjectProperty<>(null);
         assets = ItemFactory.getAssets();
@@ -167,25 +178,50 @@ public class GameService {
         conditions = ItemFactory.getConditions();
         reserve = new Reserve(assets);
         standardEncounters = ItemFactory.getStandardEncounters();
-        specialEncounter = ItemFactory.getSpecialEncounters(OldOnes.SHUB_NIGGURATH);
-        reseaarchEncounter = ItemFactory.getResearchEncounters(OldOnes.AZATHOTH);
+        specialEncounter = ItemFactory.getSpecialEncounters(ancientOne.getOldOne());
+        reseaarchEncounter = ItemFactory.getResearchEncounters(ancientOne.getOldOne());
         otherWorldEncounter = ItemFactory.getOtherWorldEncounter();
         expeditionEncounter = ItemFactory.getExpeditionEncounter();
         europeEncounter = ItemFactory.getEuropeEncounter();
         asiaEncounter = ItemFactory.getAsiaEncounter();
         americaEncounter = ItemFactory.getAmericaEncounter();
+        mysteries = ItemFactory.getMysteries(ancientOne.getOldOne());
         clueTokens = ItemFactory.getClueTokens();
         gateTokens = ItemFactory.getGateTokens();
         doomTrack = new DoomTrack(15);
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
         phases = new Phases();
         monsterPool = MonsterFactory.getMonster();
-        ancientOne = new Azathoth();
+
         usedSpells = new ArrayList<>();
 
+        reserve.init();
 
     }
-
+    public void startGame() {
+        addActiveMystery();
+    }
+    private void addActiveMystery(){
+        activeMystery =mysteries.draw();
+        InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
+                activeMystery.getName() +"\n" +activeMystery.getText(),null);
+        addChoice(choice);
+        activeMystery.init();
+    }
+    public void handleMystery() {
+        if(activeMystery.isFinished()){
+            activeMystery.discard();
+            if(mysteries.getTraystack().size()>=ancientOne.getminNumberOfSolvedMysteries()){
+                //TODO
+                InformationChoice choice = new InformationChoice("Gewonnen",
+                        "Du hast gewonnen",null);
+                addChoice(choice);
+                System.exit(1);
+            }else{
+                addActiveMystery();
+            }
+        }
+    }
     public Field getFieldOfInvestigator(Investigator inv) {
         return gameBoard.fieldOfInvestigator(inv);
     }
@@ -342,4 +378,7 @@ public class GameService {
     public void removeInvestigator(Investigator investigator) {
         gameBoard.removeInvestigator(investigator);
     }
+
+
+
 }

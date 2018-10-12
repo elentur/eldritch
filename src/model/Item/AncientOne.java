@@ -2,6 +2,7 @@ package model.Item;
 
 import container.ItemStack;
 import enums.ItemType;
+import enums.OldOnes;
 import lombok.Getter;
 import model.Effect;
 import utils.ResourceUtil;
@@ -14,10 +15,12 @@ public abstract class AncientOne implements Item {
 
     @Getter
     public final String uniqueId = UUID.randomUUID().toString();
+    @Getter
+    public final OldOnes oldOne;
+    protected int minNumberOfSolvedMysteries;
 
-
-    protected AncientOne() {
-
+    protected AncientOne(OldOnes oldOne) {
+        this.oldOne = oldOne;
     }
 
     @Override
@@ -66,5 +69,7 @@ public abstract class AncientOne implements Item {
     }
 
 
-
+    public int getminNumberOfSolvedMysteries() {
+        return minNumberOfSolvedMysteries;
+    }
 }

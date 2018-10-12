@@ -39,17 +39,13 @@ public class InterfaceLinking {
     private static BooleanProperty lockGameBoard;
 
 
-    public static void init(Stage stage) {
+    public static void init(Stage stage,StackPane root, Interface interfaceGui, GameBoardGUI gameBoardGUI) {
         primaryStage = stage;
-        root = (StackPane) primaryStage.getScene().getRoot();
-        for (Node n : root.getChildren()) {
-            if (n instanceof Interface) {
-                interfaceGui = (Interface) n;
-            } else if (n instanceof GameBoardGUI) {
-                gameBoardGUI = (GameBoardGUI) n;
-            }
-        }
+        InterfaceLinking.root = root;
+        InterfaceLinking.interfaceGui = interfaceGui;
+        InterfaceLinking.gameBoardGUI=gameBoardGUI;
         gameBoardGUI.mouseTransparentProperty().bind(lockGameBoard);
+
     }
 
     private InterfaceLinking() {

@@ -13,8 +13,9 @@ public class Phases {
     private PhaseTypes actualPhase;
     @Getter
     private BooleanProperty update;
-
+    GameService game;
     public Phases() {
+         game =  GameService.getInstance();
         actualPhase = PhaseTypes.ACTION;
         update = new SimpleBooleanProperty(false);
     }
@@ -24,6 +25,7 @@ public class Phases {
     }
 
     public PhaseTypes switchPhase() {
+
         actualPhase = getNextPhase();
         if(actualPhase.equals(PhaseTypes.MYTHOS)){
             new Mythos0().execute();
@@ -31,10 +33,13 @@ public class Phases {
           //  GameService.getInstance().addEffect(new SwitchPhase());
 
         }else if(actualPhase.equals(PhaseTypes.ACTION)){
-            GameService.getInstance().setStartInvestigator();
+            game.handleMystery();
+            game.setStartInvestigator();
         }
         update.setValue(true);
         return actualPhase;
     }
+
+
 
 }

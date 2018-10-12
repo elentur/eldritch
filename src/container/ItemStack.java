@@ -1,6 +1,7 @@
 package container;
 
 import enums.ItemType;
+import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Item.Item;
 
@@ -9,7 +10,9 @@ import java.util.Collections;
 @Log
 public abstract class ItemStack<T extends Item> {
 
+    @Getter
     protected final ItemContainer<T> drawStack;
+    @Getter
     protected final ItemContainer<T> traystack;
 
     public ItemStack(ItemContainer<T> init){

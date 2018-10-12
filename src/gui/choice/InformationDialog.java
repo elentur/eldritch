@@ -10,7 +10,7 @@ public class InformationDialog extends ChoiceDialog {
 
 
     public InformationDialog(InformationChoice choice) {
-        super(0.3, 0.3,choice);
+        super(0.5, 0.5,choice);
         YesNoButton yesButton = new YesNoButton(YesNo.YES);
         yesButton.setOnMouseClicked(e->choice.setValue(true));
         StackPane.setAlignment(yesButton, Pos.BOTTOM_RIGHT);

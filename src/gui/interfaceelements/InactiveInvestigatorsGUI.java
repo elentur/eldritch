@@ -28,7 +28,7 @@ public class InactiveInvestigatorsGUI extends FlowPane {
         this.setPadding(new Insets(0, 0, 0, 20));
         this.setClip(clipshape);
         this.setMaxWidth(50);
-
+update();
 
     }
 

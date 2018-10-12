@@ -47,7 +47,7 @@ public class StartScreen {
 		
 		
 		
-		btnStartGame = new Button(names.get("startGame"));
+		btnStartGame = new Button(names.get("setGameBoardAndAncientOne"));
 		btnStartGame.translateXProperty().bind(btnStartGame.widthProperty().divide(2));
 		btnStartGame.translateYProperty().bind(btnStartGame.heightProperty());
 		btnStartGame.setOnMouseClicked(a->{

@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameBoard;
 import model.Item.Investigator;
+import model.Item.ancientOnes.Azathoth;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
@@ -41,28 +42,8 @@ public class GameBoardGUITest extends Application {
         Fonts.init(primaryStage);
         GameBoard gameBoard = GameBoardFactory.getGameBoard();
         GameBoardGUI gameboardGUI = new GameBoardGUI(gameBoard);
-        StackPane root = new StackPane();
-        Interface inter = new Interface(root);
-
-        root.getChildren().addAll(gameboardGUI,inter,new EffectLayer());
-        Scene scene = new Scene(root);
-        scene.setFill(Color.RED);
-        primaryStage.setScene(scene);
-        scene.setOnKeyPressed(e -> {
-            primaryStage.close();
-            System.exit(0);
-        });
-        scene.getStylesheets().add("css/rootStyle.css");
-        primaryStage.setOnCloseRequest(e -> System.exit(0));
-        InterfaceLinking.init(primaryStage);
-        primaryStage.show();
-        primaryStage.setMaximized(true);
-
-
-
-
-        GameService.getInstance().startGame(new InvestigatorContainer(Arrays.asList(new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley())), gameBoard);
-
+        GameService.getInstance().setGameBoardAndAncientOne( new Azathoth(), gameBoard);
+        GameService.getInstance().addInvestigators(new InvestigatorContainer(Arrays.asList(new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley())));
         GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS,new MythosTestRumor()));
         GameService.getInstance().addMystery(FieldID.PYRAMIDS);
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
@@ -82,6 +63,27 @@ public class GameBoardGUITest extends Application {
         inv.getInventory().add(new ProfaneTome());*/
 
        // gameboardGUI.getChildren().add(new ImproveEffectOverlay(new Improve(TestType.LORE,2,GameService.getInstance().getActiveInvestigator())));
+
+
+        StackPane root = new StackPane();
+        Interface inter = new Interface();
+        InterfaceLinking.init(primaryStage,root,inter,gameboardGUI);
+       inter.init(root);
+
+        root.getChildren().addAll(gameboardGUI,inter,new EffectLayer());
+        Scene scene = new Scene(root);
+        scene.setFill(Color.RED);
+        primaryStage.setScene(scene);
+        scene.setOnKeyPressed(e -> {
+            primaryStage.close();
+            System.exit(0);
+        });
+        scene.getStylesheets().add("css/rootStyle.css");
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
+
+        primaryStage.show();
+        primaryStage.setMaximized(true);
+        GameService.getInstance().startGame();
     }
 
 

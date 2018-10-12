@@ -30,7 +30,7 @@ public class YesNoDialogTest extends Application {
         scene.setFill(Color.RED);
         primaryStage.setScene(scene);
         scene.setOnKeyPressed(e -> primaryStage.close());
-        InterfaceLinking.init(primaryStage);
+       // InterfaceLinking.init(primaryStage);
         primaryStage.show();
         YesNoChoice choice = new YesNoChoice("Test", "test text", null, null);
         game.addChoice(choice);

@@ -1,4 +1,4 @@
-package gamemechanics.encounter.specialencounter.shubniggurath;
+package gamemechanics.encounter.specialencounter.shub_niggurath;
 
 import enums.*;
 import gamemechanics.encounter.SpecialEncounter;

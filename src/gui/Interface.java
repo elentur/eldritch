@@ -13,14 +13,14 @@ import lombok.Getter;
 public class Interface extends Group {
 
     @Getter
-    private final ActiveInvestigatorGUI activeInvestigatorGUI;
+    private  ActiveInvestigatorGUI activeInvestigatorGUI;
     @Getter
-    private final InactiveInvestigatorsGUI inactiveInvestigatorsGUI;
+    private  InactiveInvestigatorsGUI inactiveInvestigatorsGUI;
     @Getter
-    private final AncientOneGUI ancientOneGUI;
+    private  AncientOneGUI ancientOneGUI;
     @Getter
-    private final OmenTrackGUI omenTrack;
-   public Interface(StackPane parent){
+    private  OmenTrackGUI omenTrack;
+   public void init(StackPane parent){
 
        StackPane.setAlignment(this,Pos.TOP_LEFT);
        activeInvestigatorGUI = new ActiveInvestigatorGUI();

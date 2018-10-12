@@ -37,7 +37,7 @@ public class ActionGUITest extends Application {
         });
         scene.getStylesheets().add("css/rootStyle.css");
         primaryStage.setOnCloseRequest(e -> System.exit(0));
-        InterfaceLinking.init(primaryStage);
+        //InterfaceLinking.init(primaryStage);
         primaryStage.show();
         primaryStage.setMaximized(true);
         Action a = new Action(inv,

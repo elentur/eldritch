@@ -1,11 +1,9 @@
 package factory;
 
-import container.ItemContainer;
-import container.ItemStack;
-import container.LoopedItemStack;
-import container.RandomItemStack;
+import container.*;
 import enums.FieldID;
 import enums.OldOnes;
+import gamemechanics.Mystery;
 import gamemechanics.encounter.*;
 import lombok.extern.java.Log;
 import model.Item.Artifact;
@@ -34,9 +32,11 @@ public class ItemFactory {
     private static ItemContainer<AmericaEncounter> americaEncounters;
     private static ItemContainer<AsiaEncounter> asiaEncounters;
     private static ItemContainer<EuropeEncounter> europeEncounters;
+    private static ItemContainer<Mystery> mysteries;
 
     private static ItemContainer<ClueToken> clueTokens;
     private static ItemContainer<GateToken> gateTokens;
+
 
     public static ItemStack<Asset> getAssets() {
 
@@ -124,24 +124,43 @@ public class ItemFactory {
     public static ItemStack<SpecialEncounter> getSpecialEncounters(OldOnes oldOnes) {
 
         if (specialEncounters == null) {
-            File f = new File("./src/gamemechanics/encounter/specialencounter/"+ oldOnes.getText().toLowerCase().replace(" ",""));
+            File f = new File("./src/gamemechanics/encounter/specialencounter/"+ oldOnes.getText().toLowerCase().replace(" ","_"));
             specialEncounters = new ItemContainer<>();
-            for (String name: f.list()){
-                try {
-                    SpecialEncounter specialEncounter = (SpecialEncounter) Class.forName("gamemechanics.encounter.specialencounter."+ oldOnes.getText().toLowerCase().replace(" ","")+"."+name.replace(".java","")).newInstance();
-                    specialEncounters.add(specialEncounter);
-                } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-                    e.printStackTrace();
+            if(f.list()!=null) {
+                for (String name : f.list()) {
+                    try {
+                        SpecialEncounter specialEncounter = (SpecialEncounter) Class.forName("gamemechanics.encounter.specialencounter." + oldOnes.getText().toLowerCase().replace(" ", "") + "." + name.replace(".java", "")).newInstance();
+                        specialEncounters.add(specialEncounter);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
         return new RandomItemStack<>(specialEncounters);
     }
+    public static ItemStack<Mystery> getMysteries(OldOnes oldOnes) {
 
+        if (mysteries == null) {
+            File f = new File("./src/gamemechanics/mystery/"+ oldOnes.getText().toLowerCase().replace(" ","_"));
+            mysteries = new ItemContainer<>();
+            if(f.list()!=null) {
+                for (String name : f.list()) {
+                    try {
+                        Mystery mystery = (Mystery) Class.forName("gamemechanics.mystery." + oldOnes.getText().toLowerCase().replace(" ", "") + "." + name.replace(".java", "")).newInstance();
+                        mysteries.add(mystery);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return new FiniteItemStack<>(mysteries);
+    }
     public static ItemStack<ResearchEncounter> getResearchEncounters(OldOnes oldOnes) {
 
         if (researchEncounters == null) {
-            File f = new File("./src/gamemechanics/encounter/researchencounter/"+ oldOnes.getText().toLowerCase().replace(" ",""));
+            File f = new File("./src/gamemechanics/encounter/researchencounter/"+ oldOnes.getText().toLowerCase().replace(" ","_"));
             researchEncounters = new ItemContainer<>();
             for (String name: f.list()){
                 try {
