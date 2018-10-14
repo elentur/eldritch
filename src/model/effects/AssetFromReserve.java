@@ -30,6 +30,7 @@ public class AssetFromReserve extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         if(itemType==null){
             gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
             if(obj != null && obj instanceof Action) {

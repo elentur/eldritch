@@ -22,7 +22,7 @@ public class RetreatDoom extends Effect {
     @Override
     public void execute() {
         super.execute();
-
+        if(!isAccepted()) return;
         GameService.getInstance().getDoomTrack().retreatDoom(value);
     }
 

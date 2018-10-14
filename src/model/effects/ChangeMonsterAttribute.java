@@ -24,6 +24,7 @@ public class ChangeMonsterAttribute extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         switch (type){
             case DAMAGE:
                 monster.setDamage(Math.max(monster.getDamage()+value,1));

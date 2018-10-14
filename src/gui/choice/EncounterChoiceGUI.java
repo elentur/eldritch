@@ -1,5 +1,6 @@
 package gui.choice;
 
+import Service.GameService;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.encounter.Encounter;
 import gui.ItemScrollPane;
@@ -22,6 +23,7 @@ public class EncounterChoiceGUI extends ChoiceDialog {
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                    close();
+                    GameService.getInstance().addEncounter(encounter);
                 }
             });
             scrollPane.getScrollableChildren().addAll(button);

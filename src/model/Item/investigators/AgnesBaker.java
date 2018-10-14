@@ -26,11 +26,13 @@ public class AgnesBaker extends Investigator {
                         2),
                 7,
                 5,
-                FieldID.ARKHAM,
+                FieldID.TUNGUSKA,
                 GameService.getInstance().getAssets().get("&profaneTome"),
                 GameService.getInstance().getSpells().get("&stormOfSpirits"),
                 GameService.getInstance().getSpells().get("&shriveling"),
-                GameService.getInstance().getSpells().get("&wither")
+                GameService.getInstance().getSpells().get("&wither"),
+                GameService.getInstance().getClueTokens().draw(),
+                GameService.getInstance().getClueTokens().draw()
         );
 
 

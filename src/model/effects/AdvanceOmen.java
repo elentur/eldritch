@@ -5,7 +5,6 @@ import enums.EffectSelector;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
-import model.Item.Investigator;
 import utils.ResourceUtil;
 @Getter
 public class AdvanceOmen extends Effect {
@@ -23,7 +22,7 @@ public class AdvanceOmen extends Effect {
     @Override
     public void execute() {
         super.execute();
-
+        if(!isAccepted()) return;
             if (selector.equals(EffectSelector.ANY)) {
                 GameService.getInstance().getOmenTrack().setEditable(true);
             } else {

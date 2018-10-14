@@ -17,7 +17,6 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ListChangeListener;
-import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -126,6 +125,9 @@ public class InterfaceLinking {
                 break;
             case ADVANCE_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((AdvanceOmen) effect), primaryStage, effect);
+                break;
+            case ADD_ELDRITCH_TO_MYSTERY:
+                Animations.effectOverlayAnimations(new AddEldritchToMysteryOverlay((AddEldritchToMystery) effect), primaryStage, effect);
                 break;
             case SPAWN_MONSTER:
                 Animations.effectOverlayAnimations(new SpawnMonsterEffectOverlay((SpawnMonster) effect), primaryStage, effect);

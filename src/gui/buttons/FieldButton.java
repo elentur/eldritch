@@ -60,6 +60,8 @@ public class FieldButton extends Group {
     private final Label eldritchLabel;
     private final ImageView mystery;
     private final ImageView rumor;
+    private final Group gateGroup;
+    private final OmenButton omen;
 
 
     private boolean isDragging;
@@ -101,6 +103,11 @@ public class FieldButton extends Group {
         gate.setFitHeight(200);
         gate.setFitWidth(200);
         gate.setEffect(Effects.dropShadow);
+        omen = new OmenButton(new Image("images/interface/Blue_Stars.png", 100, 100, false, true, true));
+        omen.setTranslateX(50);
+        omen.setTranslateY(50);
+        gateGroup = new Group(gate, omen);
+
 
         expedition = new ImageView(expeditionImage);
         expedition.setFitHeight(200);
@@ -165,10 +172,10 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-             //  GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,GameService.getInstance().getActiveInvestigator()));
-                       if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+                // GameService.getInstance().addEffect(new AddEldritchToMystery(2));
+                if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
 
-                    if(wheel!=null){
+                    if (wheel != null) {
                         wheel.remove();
                         return;
                     }
@@ -176,11 +183,11 @@ public class FieldButton extends Group {
                             wheel == null) {
                         this.wheel = new ContextWheel(field.getFieldAction());
                         this.getChildren().add(wheel);
-                    } else if(!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
-                       if(pathIsLegal){
-                           Action move = new Action(GameService.getInstance().getEncounteringInvestigator(),"move",new Move(field,GameService.getInstance().getEncounteringInvestigator()));
-                           GameService.getInstance().addEncounter(move);
-                       }
+                    } else if (!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
+                        if (pathIsLegal) {
+                            Action move = new Action(GameService.getInstance().getEncounteringInvestigator(), "move", new Move(field, GameService.getInstance().getEncounteringInvestigator()));
+                            GameService.getInstance().addEncounter(move);
+                        }
                     }
                 } else if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER) &&
                         GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
@@ -199,8 +206,8 @@ public class FieldButton extends Group {
         button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> {
             mouseOver = true;
             if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
-                Field fieldOfInv =GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator());
-                if (fieldOfInv!=null &&!field.equals(fieldOfInv)) {
+                Field fieldOfInv = GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator());
+                if (fieldOfInv != null && !field.equals(fieldOfInv)) {
                     showPath();
                 }
             }
@@ -218,10 +225,10 @@ public class FieldButton extends Group {
     }
 
     private void showPath() {
-        this.pathIsLegal=false;
+        this.pathIsLegal = false;
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        if(inv.getDoneActions().contains(new Action(inv,"move", null))){
+        if (inv.getDoneActions().contains(new Action(inv, "move", null))) {
             return;
         }
         List<Field> path = GameService.getInstance().getGameBoard().getPath(
@@ -229,15 +236,15 @@ public class FieldButton extends Group {
                 field,
                 inv);
         if (path != null) {
-            if(path.size()<=3) {
+            if (path.size() <= 3) {
                 InterfaceLinking.gameBoardGUI.getMap().showPath(path);
-                if(path.size()==2){
-                    pathIsLegal =true;
-                } else{
+                if (path.size() == 2) {
+                    pathIsLegal = true;
+                } else {
                     FieldConnections connection = FieldConnections.getConnection(path.get(1), path.get(2));
                     if ((connection.getPathType().equals(PathType.SHIP) && GameService.getInstance().getEncounteringInvestigator().getShipTicket() > 0) ||
                             (connection.getPathType().equals(PathType.TRAIN) && GameService.getInstance().getEncounteringInvestigator().getTrainTicket() > 0)) {
-                       pathIsLegal=true;
+                        pathIsLegal = true;
                     }
                 }
 
@@ -260,7 +267,7 @@ public class FieldButton extends Group {
 
     private void createTokens() {
         if (field.getNumberOfClues() <= 0) {
-            if(this.getChildren().contains(clue)) {
+            if (this.getChildren().contains(clue)) {
                 Animations.removeEffect(clue, () -> this.getChildren().remove(clue));
             }
 
@@ -274,7 +281,7 @@ public class FieldButton extends Group {
             this.getChildren().add(clueLabel);
         }
         if (field.getNumberOfEldritchTokens() <= 0) {
-            if(this.getChildren().contains(eldritch)) {
+            if (this.getChildren().contains(eldritch)) {
                 Animations.removeEffect(eldritch, () -> this.getChildren().remove(eldritch));
             }
         } else if (field.getNumberOfEldritchTokens() > 0 && !this.getChildren().contains(eldritch)) {
@@ -289,7 +296,7 @@ public class FieldButton extends Group {
             this.getChildren().add(eldritchLabel);
         }
         if (!field.hasRumor()) {
-            if(this.getChildren().contains(rumor)) {
+            if (this.getChildren().contains(rumor)) {
                 Animations.removeEffect(rumor, () -> this.getChildren().remove(rumor));
             }
         } else if (field.hasRumor() && !this.getChildren().contains(rumor)) {
@@ -297,7 +304,7 @@ public class FieldButton extends Group {
             Animations.spawnEffect(rumor);
         }
         if (!field.hasMystery()) {
-            if(this.getChildren().contains(mystery)) {
+            if (this.getChildren().contains(mystery)) {
                 Animations.removeEffect(mystery, () -> this.getChildren().remove(mystery));
             }
         } else if (field.hasMystery() && !this.getChildren().contains(mystery)) {
@@ -308,15 +315,16 @@ public class FieldButton extends Group {
 
     private void createGateExpedition() {
         if (!field.hasGate()) {
-            if(gateExpedition.getChildren().contains(gate)) {
-                Animations.removeEffect(gate,()-> gateExpedition.getChildren().remove(gate));
+            if (gateExpedition.getChildren().contains(gateGroup)) {
+                Animations.removeEffect(gateGroup, () -> gateExpedition.getChildren().remove(gateGroup));
             }
-        } else if (field.hasGate() && !gateExpedition.getChildren().contains(gate)) {
-            gateExpedition.getChildren().add(gate);
-            Animations.spawnEffect(gate);
+        } else if (field.hasGate() && !gateExpedition.getChildren().contains(gateGroup)) {
+            omen.imageView.setImage(new Image("images/interface/" + field.getTokens().getGate().getOmenState().name() + ".png", 100, 100, false, true, true));
+            gateExpedition.getChildren().add(gateGroup);
+            Animations.spawnEffect(gateGroup);
         }
         if (!field.hasExpedition()) {
-            if(gateExpedition.getChildren().contains(expedition)) {
+            if (gateExpedition.getChildren().contains(expedition)) {
                 Animations.removeEffect(expedition, () -> gateExpedition.getChildren().remove(expedition));
             }
         } else if (field.hasExpedition() && !gateExpedition.getChildren().contains(expedition)) {

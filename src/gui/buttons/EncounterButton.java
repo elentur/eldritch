@@ -1,18 +1,15 @@
 package gui.buttons;
 
-import Service.GameService;
 import gamemechanics.encounter.Encounter;
 import gui.Effects;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 
 public class EncounterButton extends ItemButton{
     private final Encounter encounter;
     public EncounterButton(Encounter encounter){
         super(encounter);
         this.encounter =encounter;
-        setClickEvent();
 
 
         setTooltipText(encounter.getName());
@@ -21,13 +18,7 @@ public class EncounterButton extends ItemButton{
 
 
 
-    private void setClickEvent() {
-        addEventHandler(MouseEvent.MOUSE_CLICKED,e->{
-            if (e.getButton().equals(MouseButton.PRIMARY)) {
-                GameService.getInstance().addEncounter(encounter.draw());
-            }
-        });
-    }
+
 
     @Override
     protected void setEventsForButton(Node node) {

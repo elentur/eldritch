@@ -29,6 +29,7 @@ public class GainClue extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         switch (selector) {
             case THIS:
                 investigator.addClue((ClueToken) GameService.getInstance().getFieldOfInvestigator(investigator).removeClue(null));

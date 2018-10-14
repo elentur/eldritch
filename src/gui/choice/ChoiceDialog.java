@@ -19,17 +19,24 @@ public abstract class ChoiceDialog extends DialogGui {
     @Getter
     private VBox texts;
     private final Choice choice;
-    public ChoiceDialog( double width, double height, Choice choice ) {
+
+
+    public ChoiceDialog(double width, double height, Choice choice) {
         super("", width, height);
-        Label headline =new Label(choice.getHeadline()) ;
-        headline.styleProperty().bind(Fonts.getFont(0.4,Fonts.DARK, Fonts.FontTyp.BOLD));
+        this.choice = choice;
+        if (!choice.checkConditions()) {
+            this.close();
+            return;
+        }
+        Label headline = new Label(choice.getHeadline());
+        headline.styleProperty().bind(Fonts.getFont(0.4, Fonts.DARK, Fonts.FontTyp.BOLD));
         headline.setAlignment(Pos.CENTER);
         headline.setTextAlignment(TextAlignment.CENTER);
-         texts = new VBox(20,headline);
-        if(choice.getInfo()!=null && !choice.getInfo().equals("")) {
+        texts = new VBox(20, headline);
+        if (choice.getInfo() != null && !choice.getInfo().equals("")) {
             TextField info = new TextField(choice.getInfo());
             info.maxWidthProperty().bind(background.widthProperty().subtract(150));
-            info.maxHeightProperty().bind(main.heightProperty().subtract(  headline.heightProperty().multiply(2)));
+            info.maxHeightProperty().bind(main.heightProperty().subtract(headline.heightProperty().multiply(2)));
             texts.getChildren().add(info);
         }
 
@@ -42,10 +49,8 @@ public abstract class ChoiceDialog extends DialogGui {
         main.maxHeightProperty().bind(background.heightProperty().multiply(0.9));
 
         background.setFill(new ImagePattern(newBackground));
-        this.choice=choice;
-        choice.getChoiceTakenProperty().addListener(e->{
-            this.close();
-        });
+
+        choice.getChoiceTakenProperty().addListener(e -> this.close());
 
     }
 

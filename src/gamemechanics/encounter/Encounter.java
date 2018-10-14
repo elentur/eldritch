@@ -46,7 +46,10 @@ public abstract class Encounter implements Item {
     private ItemStack stack;
     private Preparation preparation;
 
+    private List<Runnable> discardEffects;
+
     public Encounter(EncounterType type) {
+        discardEffects = new ArrayList<>();
         encounterType = type;
     }
 
@@ -138,7 +141,12 @@ public abstract class Encounter implements Item {
     }
     @Override
     public void discard(){
-        stack.discard(this);
+        if(stack!= null) {
+            stack.discard(this);
+        }
+        for(Runnable r : discardEffects){
+            r.run();
+        }
         getGame().addEffect(new NextInvestigator());
 
     }

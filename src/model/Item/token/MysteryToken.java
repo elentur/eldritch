@@ -8,9 +8,14 @@ import model.Item.Token;
 
 public class MysteryToken extends Token {
     private ItemStack stack;
-
+    private Encounter encounter;
     public MysteryToken() {
+       this(null);
+    }
+
+    public MysteryToken(Encounter encounter) {
         super(ItemType.MYSTERY_TOKEN);
+        this.encounter = encounter;
     }
 
     @Override
@@ -25,6 +30,9 @@ public class MysteryToken extends Token {
 
     @Override
     public Encounter getEncounter() {
+        if(encounter!= null){
+            return encounter;
+        }
         return GameService.getInstance().getSpecialEncounter().showFirst();
     }
     @Override

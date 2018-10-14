@@ -25,6 +25,7 @@ public class GainCondition extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         switch (conditionType) {
             case DETAINED:
 

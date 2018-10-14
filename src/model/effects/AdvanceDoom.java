@@ -22,6 +22,7 @@ public class AdvanceDoom extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         GameService.getInstance().getDoomTrack().advanceDoom(value);
 
     }

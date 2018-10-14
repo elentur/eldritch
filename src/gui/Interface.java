@@ -1,9 +1,6 @@
 package gui;
 
-import gui.interfaceelements.ActiveInvestigatorGUI;
-import gui.interfaceelements.AncientOneGUI;
-import gui.interfaceelements.InactiveInvestigatorsGUI;
-import gui.interfaceelements.OmenTrackGUI;
+import gui.interfaceelements.*;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
@@ -20,6 +17,8 @@ public class Interface extends Group {
     private  AncientOneGUI ancientOneGUI;
     @Getter
     private  OmenTrackGUI omenTrack;
+    @Getter
+    private MysteryGUI mysteryGUI;
    public void init(StackPane parent){
 
        StackPane.setAlignment(this,Pos.TOP_LEFT);
@@ -32,6 +31,8 @@ public class Interface extends Group {
        omenTrack= new OmenTrackGUI();
        omenTrack.setTranslateX(Screen.getPrimary().getBounds().getWidth()-150);
        omenTrack.setTranslateY(150);
+       mysteryGUI = new MysteryGUI();
+       mysteryGUI.setTranslateX(Screen.getPrimary().getBounds().getWidth()/10);
 
 
 
@@ -39,7 +40,7 @@ public class Interface extends Group {
 
        this.setTranslateX(-10);
        this.setTranslateY(-10);
-        this.getChildren().addAll(ancientOneGUI,inactiveInvestigatorsGUI,omenTrack,activeInvestigatorGUI);
+        this.getChildren().addAll(mysteryGUI,ancientOneGUI,inactiveInvestigatorsGUI,omenTrack,activeInvestigatorGUI);
    }
 
 

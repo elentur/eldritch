@@ -35,6 +35,7 @@ public class GainAsset extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         if(asset==null) {
             switch (itemType) {
                 case ANY:

@@ -5,7 +5,6 @@ import enums.FieldID;
 import enums.OldOnes;
 import lombok.Getter;
 import lombok.Setter;
-import model.Item.Investigator;
 
 @Getter
 @Setter
@@ -14,7 +13,7 @@ public class SpecialEncounter extends ExpeditionEncounter {
     private FieldID fieldID;
     private final OldOnes oldOne;
 
-    public SpecialEncounter( String encounterID, OldOnes oldOne) {
+    public SpecialEncounter(String encounterID, OldOnes oldOne) {
         super( encounterID, EncounterType.SPECIAL_ENCOUNTER);
         setEncounterPart(0);
         this.oldOne=oldOne;

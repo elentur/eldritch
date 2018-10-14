@@ -22,12 +22,14 @@ public class CloseGate extends Effect {
 
 
     public void init() {
+        super.init();
         token = GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getEncounteringInvestigator()).getGate();
     }
 
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         if(token!=null){
             Field field=   GameService.getInstance().getGameBoard().getField(token.getFieldID());
             field.removeGate();

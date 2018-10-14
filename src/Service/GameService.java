@@ -4,7 +4,6 @@ import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
 import enums.FieldID;
-import enums.OldOnes;
 import enums.OmenStates;
 import enums.SituationType;
 import factory.ItemFactory;
@@ -14,6 +13,7 @@ import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
+import gui.InterfaceLinking;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -22,7 +22,6 @@ import lombok.Getter;
 import lombok.Setter;
 import model.*;
 import model.Item.*;
-import model.Item.ancientOnes.Azathoth;
 import model.Item.token.*;
 import model.effects.SwitchPhase;
 import utils.ResourceUtil;
@@ -34,6 +33,8 @@ public class GameService {
     private static GameService ourInstance = new GameService();
 
     private  ObservableList<Effect> insertions;
+    private SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
 
     @Getter
     private ObjectProperty<Investigator> activeInvestigator;
@@ -166,8 +167,6 @@ public class GameService {
         return invs;
     }
 
-    private SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
 
     private void init(){
         insertions = FXCollections.observableArrayList();
@@ -195,21 +194,25 @@ public class GameService {
 
         usedSpells = new ArrayList<>();
 
-        reserve.init();
+
 
     }
     public void startGame() {
         addActiveMystery();
+        reserve.init();
     }
     private void addActiveMystery(){
         activeMystery =mysteries.draw();
+       activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
                 activeMystery.getName() +"\n" +activeMystery.getText(),null);
         addChoice(choice);
         activeMystery.init();
+        InterfaceLinking.interfaceGui.getMysteryGUI().update();
     }
     public void handleMystery() {
         if(activeMystery.isFinished()){
+            activeMystery.getUpdate().removeListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
             activeMystery.discard();
             if(mysteries.getTraystack().size()>=ancientOne.getminNumberOfSolvedMysteries()){
                 //TODO

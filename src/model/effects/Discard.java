@@ -22,7 +22,9 @@ public class Discard extends Effect {
 
     @Override
     public void execute() {
+        init();
         super.execute();
+        if(!isAccepted()) return;
         item.discard();
 
     }

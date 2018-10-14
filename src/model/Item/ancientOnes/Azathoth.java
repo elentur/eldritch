@@ -8,7 +8,7 @@ public class Azathoth extends AncientOne {
 
     public Azathoth() {
         super(OldOnes.AZATHOTH);
-        minNumberOfSolvedMysteries=2;
+        minNumberOfSolvedMysteries=3;
     }
 
     @Override
@@ -18,11 +18,11 @@ public class Azathoth extends AncientOne {
 
     @Override
     public String getNameId() {
-        return null;
+        return "${azathoth}" ;
     }
 
     @Override
     public String getId() {
-        return null;
+        return "&azathoth";
     }
 }

@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.Field;
-import model.Item.Investigator;
 import model.Item.token.ClueToken;
 import utils.ResourceUtil;
 
@@ -30,6 +29,7 @@ public class SpawnClue extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         if(token!=null){
           Field field=   GameService.getInstance().getGameBoard().getField(token.getFieldID());
             field.addClue(token);

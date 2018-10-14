@@ -25,6 +25,7 @@ public class Improve extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         investigator.improve(testType,value);
 
     }

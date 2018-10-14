@@ -3,7 +3,10 @@ package gamemechanics.choice;
 import enums.ChoiceType;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
-import model.Effect;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public abstract class Choice {
     @Getter
@@ -12,7 +15,7 @@ public abstract class Choice {
     private final String headline;
     private final String info;
     protected boolean accepted=false;
-
+    private List<Function<Void, Boolean>> conditions;
 
     public SimpleBooleanProperty getChoiceTakenProperty( ){
         return choiceTaken;
@@ -22,6 +25,7 @@ public abstract class Choice {
         this.headline =headline;
         this.info =info;
         this.choiceType = choiceType;
+        conditions = new ArrayList<>();
     }
 
 
@@ -35,5 +39,18 @@ public abstract class Choice {
 
     public boolean isAccepted() {
         return accepted;
+    }
+
+    public boolean checkConditions() {
+        boolean isAllowed = true;
+        for (Function<Void, Boolean> f : conditions) {
+            isAllowed &= f.apply(null);
+        }
+        return isAllowed;
+
+    }
+
+    public void addCondition(Function<Void, Boolean> condition) {
+        conditions.add(condition);
     }
 }

@@ -12,7 +12,6 @@ import model.Item.Item;
 import model.Item.Monster;
 import utils.ResourceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -46,6 +45,7 @@ public class Reckoning extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         for(Field field: GameService.getInstance().getGameBoard().getFields()){
             for(Monster m : field.getMonster()){
                 m.executeReckoning(GameService.getInstance().getStartInvestigator(), autoFail);

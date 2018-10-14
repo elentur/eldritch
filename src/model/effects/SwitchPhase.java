@@ -18,6 +18,7 @@ public class SwitchPhase extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         GameService.getInstance().getPhases().switchPhase();
 
 

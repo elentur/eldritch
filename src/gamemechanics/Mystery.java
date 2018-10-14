@@ -4,7 +4,8 @@ import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
 import enums.OldOnes;
-import gamemechanics.encounter.Encounter;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
@@ -29,18 +30,20 @@ public abstract class Mystery implements Item {
     private final OldOnes oldOne;
     private final List<Token> tokens;
 
+    private BooleanProperty update;
     public Mystery(int number, OldOnes oldOne) {
         this.number = number;
         this.oldOne = oldOne;
         this.tokens=new ArrayList<>();
+        update=new SimpleBooleanProperty(false);
     }
-
     public abstract void init();
 
     public abstract boolean isFinished();
 
     public void addToken(Token token){
         tokens.add(token);
+        update.setValue(true);
     }
     public List<Token> getTokens(){
         return tokens;

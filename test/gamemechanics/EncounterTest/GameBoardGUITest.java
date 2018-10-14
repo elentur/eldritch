@@ -27,6 +27,7 @@ import model.Item.monsters.Shan;
 import model.Item.mythos.MythosTestRumor;
 import model.Item.token.EldritchToken;
 import model.Item.token.RumorToken;
+import model.effects.SpawnGate;
 
 import java.util.Arrays;
 
@@ -49,7 +50,7 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
         GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
-     //  GameService.getInstance().addEffect(new SpawnGate());
+     //
         Investigator inv = GameService.getInstance().getActiveInvestigator();
         DiceRollerService.debug=true;
      /*   inv.getInventory().clear();
@@ -84,6 +85,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
+        GameService.getInstance().addEffect(new SpawnGate());
     }
 
 

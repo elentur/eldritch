@@ -16,8 +16,8 @@ import utils.ResourceUtil;
 public class LooseOrGainHealthSanity extends Effect {
     private final SpendType spendType;
     private final int value;
-    private  Investigator investigator;
-    private  Monster monster;
+    private Investigator investigator;
+    private Monster monster;
 
     public LooseOrGainHealthSanity(SpendType spendType, int value, Investigator investigator) {
         super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
@@ -25,6 +25,7 @@ public class LooseOrGainHealthSanity extends Effect {
         this.value = value;
         this.investigator = investigator;
     }
+
     public LooseOrGainHealthSanity(SpendType spendType, int value, Monster monster) {
         super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
         this.spendType = spendType;
@@ -36,17 +37,18 @@ public class LooseOrGainHealthSanity extends Effect {
         super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
         this.spendType = spendType;
         this.value = value;
-        this.condition  = choice;
+        this.condition = choice;
     }
+
     @Override
     public void execute() {
         super.execute();
 
         switch (spendType) {
             case HEALTH:
-                if(investigator!= null) {
+                if (investigator != null) {
                     investigator.addHealth(value);
-                }else if(monster!=null){
+                } else if (monster != null) {
                     monster.addDamage(value);
                 }
                 break;
@@ -62,29 +64,30 @@ public class LooseOrGainHealthSanity extends Effect {
     @Override
     public String getText() {
         init();
-        String name = investigator!=null?investigator.getName(): "The " + monster.getName();
-        if(spendType==null ||value ==0){
-            return ResourceUtil.get("${loose}","effect" , name, ResourceUtil.get("${nothing}","effect"  ));
+        String name = investigator != null ? investigator.getName() : "The " + monster.getName();
+        if (spendType == null || value == 0) {
+            return ResourceUtil.get("${loose}", "effect", name, ResourceUtil.get("${nothing}", "effect"));
         }
-        if(value < 0) {
+        if (value < 0) {
             return ResourceUtil.get("${loose}", "effect", name, Math.abs(value) + " " + spendType.getText());
-        }else{
+        } else {
             return ResourceUtil.get("${gain}", "effect", name, value + " " + spendType.getText());
         }
     }
 
     @Override
     public void init() {
-        if(condition!= null && !condition.getChoiceTakenProperty().getValue()){
-            game.addChoice(condition);
-            switch (condition.getChoiceType()){
+        super.init();
+        if (condition != null) {
+            switch (condition.getChoiceType()) {
                 case INVESTIGATOR_CHOICE:
-                    investigator = ((InvestigatorChoice)condition).getSelectedInvs().get(0);
+                    investigator = ((InvestigatorChoice) condition).getSelectedInvs().get(0);
                     break;
                 case MONSTER_CHOICE:
-                    monster = ((MonsterChoice)condition).getSelectedMonster().get(0);
+                    monster = ((MonsterChoice) condition).getSelectedMonster().get(0);
                     break;
             }
         }
     }
+
 }

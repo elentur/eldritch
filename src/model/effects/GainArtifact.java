@@ -26,6 +26,7 @@ public class GainArtifact extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         switch (itemType) {
             case ANY :
                 investigator.getInventory().add(GameService.getInstance().getArtifacts().draw());

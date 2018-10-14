@@ -31,12 +31,14 @@ public class Move extends Effect {
 
     @Override
     public void init(){
+        super.init();
         GameService.getInstance().removeInvestigator(investigator);
     }
 
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         if(field!=null) {
             GameService.getInstance().moveTo(investigator, field);
         }

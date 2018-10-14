@@ -26,6 +26,7 @@ public class SpawnGate extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         if(token!=null){
             Field field=   GameService.getInstance().getGameBoard().getField(token.getFieldID());
             field.addGate(token);

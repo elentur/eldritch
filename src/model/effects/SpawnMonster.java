@@ -7,7 +7,6 @@ import lombok.Getter;
 import model.Effect;
 import model.Field;
 import model.Item.Monster;
-import model.Item.token.GateToken;
 import utils.ResourceUtil;
 
 @Getter
@@ -21,11 +20,13 @@ public class SpawnMonster extends Effect {
 
 
     public void init() {
+        super.init();
         monster = GameService.getInstance().getMonsterPool().draw();
     }
 
     @Override
     public void execute() {
+        if(!isAccepted()) return;
         super.execute();
         if(monster!=null){
             field.addMonster(monster);

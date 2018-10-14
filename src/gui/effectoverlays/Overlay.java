@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
 import model.Item.Investigator;
-import model.effects.SpawnClue;
 
 
 public class Overlay extends Group{
@@ -41,6 +40,9 @@ public class Overlay extends Group{
 
     public int init() {
         effect.init();
+        if(!effect.isAccepted()){
+            return -1;
+        }
         return 0;
     }
 }

@@ -5,9 +5,6 @@ import Service.GameService;
 import enums.EffectTyps;
 import gamemechanics.choice.InvestigatorChoice;
 import gamemechanics.choice.TradeChoice;
-import gui.InterfaceLinking;
-import gui.buttons.Button;
-import gui.choice.ButtonChoice;
 import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
@@ -28,6 +25,7 @@ public class Trade extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         List<Investigator> investigators =new ArrayList<>(GameService.getInstance().getFieldOfInvestigator(investigator).getInvestigators());
         investigators.remove(investigator);
        if(investigators.size()==1){
@@ -48,8 +46,6 @@ public class Trade extends Effect {
 
     @Override
     public String getText() {
-
-
             return ResourceUtil.get("${trade}","effect"   ) ;
 
 

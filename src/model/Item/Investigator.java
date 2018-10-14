@@ -78,10 +78,18 @@ public abstract class Investigator implements Item {
         this.clues = new ItemContainer<>();
         this.inventory = new Inventory();
         for (Item p : startItems) {
-            this.getInventory().add(p);
+            switch (p.getSubType()) {
+                case CLUE_TOKEN:
+                    addClue((ClueToken) p);
+                    break;
+                default:
+                    this.getInventory().add(p);
+                    break;
+            }
+
         }
         doneActions = new ArrayList<>();
-        maxActions=2;
+        maxActions = 2;
     }
 
     public String getOccupation() {
@@ -204,14 +212,16 @@ public abstract class Investigator implements Item {
         this.shipTicket = shipTicket;
         update.setValue(true);
     }
+
     public void addShipTicket(int shipTicket) {
         this.shipTicket += shipTicket;
-        MathUtils.clamp(shipTicket,0,2-trainTicket);
+        MathUtils.clamp(shipTicket, 0, 2 - trainTicket);
         update.setValue(true);
     }
+
     public void removeShipTicket(int shipTicket) {
         this.shipTicket -= shipTicket;
-        MathUtils.clamp(shipTicket,0,2-trainTicket);
+        MathUtils.clamp(shipTicket, 0, 2 - trainTicket);
         update.setValue(true);
     }
 
@@ -223,16 +233,19 @@ public abstract class Investigator implements Item {
         this.trainTicket = trainTicket;
         update.setValue(true);
     }
+
     public void addTrainTicket(int trainTicket) {
         this.trainTicket += trainTicket;
-        MathUtils.clamp(trainTicket,0,2-shipTicket);
+        MathUtils.clamp(trainTicket, 0, 2 - shipTicket);
         update.setValue(true);
     }
+
     public void removerainTicket(int trainTicket) {
         this.trainTicket -= trainTicket;
-        MathUtils.clamp(trainTicket,0,2-shipTicket);
+        MathUtils.clamp(trainTicket, 0, 2 - shipTicket);
         update.setValue(true);
     }
+
     public void addFocus(int value) {
         this.focus += value;
         MathUtils.clamp(value, 0, 2);
@@ -248,9 +261,11 @@ public abstract class Investigator implements Item {
     public void addDoneAction(Action action) {
         this.doneActions.add(action);
     }
-    public List<Action> getDoneActions(){
+
+    public List<Action> getDoneActions() {
         return doneActions;
     }
+
     @Override
     public List<Effect> getDrawEffects() {
         return new ArrayList<>();

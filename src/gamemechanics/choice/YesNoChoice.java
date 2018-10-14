@@ -1,6 +1,7 @@
 package gamemechanics.choice;
 
 
+import Service.GameService;
 import enums.ChoiceType;
 import enums.YesNo;
 import model.Effect;
@@ -39,7 +40,7 @@ public class YesNoChoice extends Choice{
             return;
         }
         for(Effect effect:effects){
-            effect.execute();
+            GameService.getInstance().getInsertions().add(effect);
         }
     }
 

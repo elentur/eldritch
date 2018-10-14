@@ -26,6 +26,7 @@ public class NextInvestigator extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         try {
 
             if (callableCondition == null || callableCondition.call()) {

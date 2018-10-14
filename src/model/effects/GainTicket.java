@@ -24,6 +24,7 @@ public class GainTicket extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         switch (ticketType) {
             case SHIP:
                 investigator.addShipTicket(value);

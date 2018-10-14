@@ -1,9 +1,12 @@
 package gamemechanics.mystery.azathoth;
 
 import Service.GameService;
+import enums.FieldID;
 import enums.OldOnes;
 import gamemechanics.Mystery;
-import model.Item.token.EldritchToken;
+import gamemechanics.encounter.mysterieencounter.azathoth.MysteryEncounter0;
+import model.Field;
+import model.Item.token.MysteryToken;
 
 public class mystery1 extends Mystery {
 
@@ -14,8 +17,9 @@ public class mystery1 extends Mystery {
 
     @Override
     public void init() {
-        addToken(new EldritchToken(null));
-        addToken(new EldritchToken(null));
+      Field field = GameService.getInstance().getGameBoard().getField(FieldID.TUNGUSKA);
+        MysteryToken mysteryToken = new MysteryToken(new MysteryEncounter0());
+      field.addMystery(mysteryToken);
     }
 
     @Override

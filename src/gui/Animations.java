@@ -123,6 +123,12 @@ public class Animations {
 
         effectOverlayIsRunning = true;
         int delay = overlay.init();
+        if (delay < 0) {
+            effectOverlayIsRunning = false;
+            Platform.runLater(() ->
+                    GameService.getInstance().getInsertions().remove(effect));
+            return;
+        }
 
 
         StackPane root = (StackPane) activeStage.getScene().getRoot();

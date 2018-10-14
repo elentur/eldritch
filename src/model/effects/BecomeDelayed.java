@@ -22,7 +22,7 @@ public class BecomeDelayed extends Effect {
     @Override
     public void execute() {
         super.execute();
-
+        if(!isAccepted()) return;
         log.info("Delayed" );
     }
 

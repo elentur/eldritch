@@ -20,6 +20,7 @@ public class MonsterSurge extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         boolean spawnedAMonster = false;
         GameService game = GameService.getInstance();
         for(Field field: game.getGameBoard().getFields()){

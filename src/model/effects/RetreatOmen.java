@@ -22,6 +22,7 @@ public class RetreatOmen extends Effect {
     @Override
     public void execute() {
         super.execute();
+        if(!isAccepted()) return;
         GameService.getInstance().getOmenTrack().retreatOmen(value);
 
     }

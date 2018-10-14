@@ -20,9 +20,11 @@ private boolean executed =false;
 
 protected Choice condition=null;
 protected GameService game = GameService.getInstance();
+protected boolean accepted;
 
 public Effect(EffectTyps effectType){
    this.effectType =effectType;
+   this.accepted=true;
 }
 
 
@@ -35,7 +37,10 @@ public Effect(EffectTyps effectType){
    public abstract String getText();
 
     public void init() {
-
+        if(condition!= null && !condition.getChoiceTakenProperty().getValue()) {
+            game.addChoice(condition);
+            accepted=condition.isAccepted();
+        }
     }
 
 
