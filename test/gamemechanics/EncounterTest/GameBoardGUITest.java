@@ -27,6 +27,7 @@ import model.Item.monsters.Shan;
 import model.Item.mythos.MythosTestRumor;
 import model.Item.token.EldritchToken;
 import model.Item.token.RumorToken;
+import model.effects.SpawnClue;
 import model.effects.SpawnGate;
 
 import java.util.Arrays;
@@ -85,7 +86,8 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
-        GameService.getInstance().addEffect(new SpawnGate());
+       GameService.getInstance().addEffect(new SpawnGate());
+        //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }
 
 

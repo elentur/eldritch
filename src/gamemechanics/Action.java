@@ -12,6 +12,7 @@ import lombok.Setter;
 import model.Effect;
 import model.Field;
 import model.Item.Investigator;
+import model.effects.ExecuteEndEvents;
 import model.effects.NextInvestigator;
 import model.effects.NullEffect;
 import preparation.Preparation;
@@ -19,6 +20,7 @@ import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 @Getter
 @Setter
@@ -27,19 +29,18 @@ public class Action extends Encounter {
 
     private final String encounterID;
     private final Field field;
-    private Preparation preparation;
-
-
 
 
     public Action(Investigator inv, String encounterID, Effect startEffect) {
-      this(inv,encounterID,startEffect,new NullEffect(),new NullEffect(),TestType.NONE,0);
+        this(inv, encounterID, startEffect, new NullEffect(), new NullEffect(), TestType.NONE, 0);
     }
+
     public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
-        this(EncounterType.ACTION,inv, encounterID, startEffect, passEffect, failEffect, testType, minNumberOfSuccesses);
+        this(EncounterType.ACTION, inv, encounterID, startEffect, passEffect, failEffect, testType, minNumberOfSuccesses);
 
     }
-    protected Action(EncounterType encounterType,Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
+
+    protected Action(EncounterType encounterType, Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
         super(encounterType);
         setInvestigator(inv);
         this.encounterID = encounterID;
@@ -52,19 +53,18 @@ public class Action extends Encounter {
         this.field = getGame().getFieldOfInvestigator(inv);
 
         setEncounterPart(0);
-        getEffect()[getEncounterPart()][START]=startEffect;
-        getEffect()[getEncounterPart()][PASS]=passEffect;
-        getEffect()[getEncounterPart()][FAIL]=failEffect;
+        getEffect()[getEncounterPart()][START] = startEffect;
+        getEffect()[getEncounterPart()][PASS] = passEffect;
+        getEffect()[getEncounterPart()][FAIL] = failEffect;
 
         getTestType()[getEncounterPart()] = testType;
-        getMinNumberOfSuccesses()[getEncounterPart()]=minNumberOfSuccesses;
+        getMinNumberOfSuccesses()[getEncounterPart()] = minNumberOfSuccesses;
     }
 
     @Override
     public String getNameId() {
-        return  "${action}";
+        return "${action}";
     }
-
 
 
     @Override
@@ -72,16 +72,18 @@ public class Action extends Encounter {
         return "&action";
     }
 
+    @Override
     public Preparation getPreparation() {
-        if(preparation ==null){
-            preparation = new Preparation(getTestType()[getEncounterPart()], getInvestigator(), getSituationType(), this);
+        if (super.getPreparation() == null) {
+            setPreparation(new Preparation(getTestType()[getEncounterPart()], getInvestigator(), getSituationType(), this));
         }
-        return preparation;
+        return super.getPreparation();
     }
 
     public String getEncounterStartText() {
         return ResourceUtil.get("${" + encounterID + "_start}", getNameId().replaceAll("[{}\\$]", ""));
     }
+
     public String getEncounterEffectText() {
         return getEffect()[getEncounterPart()][START].getText();
     }
@@ -96,7 +98,7 @@ public class Action extends Encounter {
     }
 
     public String getEncounterSuccessText() {
-        String key = "${" + encounterID +"_success}";
+        String key = "${" + encounterID + "_success}";
         String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
         if (value.equals(key)) {
             return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));
@@ -109,7 +111,7 @@ public class Action extends Encounter {
         String header;
         String text;
         List<Effect> effects = new ArrayList<>();
-        if(getEffect()[getEncounterPart()][START]instanceof NullEffect) {
+        if (getEffect()[getEncounterPart()][START] instanceof NullEffect) {
             if (result.isSuccess()) {
                 header = ResourceUtil.get("${success}", "ui");
                 text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
@@ -120,20 +122,30 @@ public class Action extends Encounter {
                 effects.add(getEffect()[getEncounterPart()][FAIL]);
             }
             getGame().addChoice(new InformationChoice(header, text, effects));
-        }else{
+        } else {
             getGame().addEffect(getEffect()[getEncounterPart()][START]);
         }
         setEncounterPart(3);
-        checkForSpellConsequences();
-        return super.getEncounterPart();
+         checkForSpellConsequences();
+        return super.completeEncounterPart();
     }
-    @Override
-    public void discard(){
 
-      getInvestigator().addDoneAction(this);
-        if(getInvestigator().getDoneActions().size()>=getInvestigator().getMaxActions()) {
+    @Override
+    public void discard() {
+        getInvestigator().addDoneAction(this);
+        getGame().addEffect(new ExecuteEndEvents(this::executeEndEvents));
+        if (getInvestigator().getDoneActions().size() >= getInvestigator().getMaxActions()) {
             getInvestigator().getDoneActions().clear();
-            GameService.getInstance().addEffect(new NextInvestigator());
+        }
+    }
+
+    @Override
+    protected void executeEndEvents() {
+        for (Function<Encounter, Void> event : getEndEvents()) {
+            event.apply(this);
+        }
+        if (getInvestigator().getDoneActions().size() >= getInvestigator().getMaxActions()) {
+            getGame().addEffect(new NextInvestigator());
         }
     }
 }

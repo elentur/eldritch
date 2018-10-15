@@ -43,7 +43,7 @@ public class LooseOrGainHealthSanity extends Effect {
     @Override
     public void execute() {
         super.execute();
-
+        if(!isAccepted()) return;
         switch (spendType) {
             case HEALTH:
                 if (investigator != null) {

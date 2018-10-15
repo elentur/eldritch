@@ -49,8 +49,8 @@ public class InterfaceLinking {
 
     private InterfaceLinking() {
         GameService game = GameService.getInstance();
-        game.getChoiceProperty().addListener(e -> startChoiceDialog(game.getChoiceProperty().getValue()));
-        game.getEncounterProperty().addListener(e -> startEncounterDialog(game.getEncounterProperty().getValue()));
+        game.getChoiceProperty().addListener((a,b,c) -> startChoiceDialog(game.getChoiceProperty().getValue()));
+        game.getEncounterProperty().addListener((a,b,c) -> startEncounterDialog(game.getEncounterProperty().getValue()));
         lockGameBoard = new SimpleBooleanProperty(false);
         game.getInsertions().addListener((ListChangeListener<? super Effect>) e -> {
             lockGameBoard.setValue(false);
@@ -156,6 +156,7 @@ public class InterfaceLinking {
                 GameService.getInstance().getInsertions().remove(effect);
                 effect.execute();
                 break;
+
             default:
                 Platform.runLater(() -> {
                     GameService.getInstance().getInsertions().remove(effect);

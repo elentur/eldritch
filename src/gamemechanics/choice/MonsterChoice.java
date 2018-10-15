@@ -56,6 +56,7 @@ public class MonsterChoice extends Choice{
         GameService.getInstance().setLastChosenMonster(monster);
         if(singleSelect) {
             getChoiceTakenProperty().setValue(true);
+            accepted=true;
         }
     }
 

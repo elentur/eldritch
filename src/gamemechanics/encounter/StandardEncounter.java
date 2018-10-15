@@ -8,6 +8,7 @@ import gamemechanics.choice.InformationChoice;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
+import model.effects.ExecuteEndEvents;
 import model.effects.NullEffect;
 import preparation.Preparation;
 import utils.ResourceUtil;
@@ -107,6 +108,7 @@ public class StandardEncounter extends Encounter {
 
         checkForSpellConsequences();
         setEncounterPart(3);
-        return super.getEncounterPart();
+
+        return super.completeEncounterPart();
     }
 }

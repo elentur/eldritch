@@ -16,7 +16,7 @@ public class LooseOrGainHealthSanityEffectOverlay extends Overlay {
         if(loose.getValue()==0){
             return;
         }
-        if(loose.getValue()>0){
+        if(loose.getValue()>0 && loose.getInvestigator()!=null){
             if(loose.getSpendType() == SpendType.SANITY && loose.getInvestigator().getActualSanity()==loose.getInvestigator().getSanity()){
                 return;
             }

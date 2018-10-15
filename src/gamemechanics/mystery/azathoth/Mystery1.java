@@ -8,10 +8,10 @@ import gamemechanics.encounter.mysterieencounter.azathoth.MysteryEncounter0;
 import model.Field;
 import model.Item.token.MysteryToken;
 
-public class mystery1 extends Mystery {
+public class Mystery1 extends Mystery {
 
 
-    public mystery1() {
+    public Mystery1() {
         super(1, OldOnes.AZATHOTH);
     }
 
