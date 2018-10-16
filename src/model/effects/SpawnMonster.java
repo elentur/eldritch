@@ -17,11 +17,17 @@ public class SpawnMonster extends Effect {
         super(EffectTyps.SPAWN_MONSTER);
         this.field = field;
     }
-
+    public SpawnMonster(Monster monster, Field field) {
+        super(EffectTyps.SPAWN_MONSTER);
+        this.field = field;
+        this.monster=monster;
+    }
 
     public void init() {
         super.init();
-        monster = GameService.getInstance().getMonsterPool().draw();
+        if(monster==null) {
+            monster = GameService.getInstance().getMonsterPool().draw();
+        }
     }
 
     @Override

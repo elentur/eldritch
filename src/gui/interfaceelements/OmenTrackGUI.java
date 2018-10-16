@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import model.OmenTrack;
 
 public class OmenTrackGUI extends Group {
     private final static Image greenCometImage = new Image("images/interface/Green_Comet.png", 100, 100, true, true, true);
@@ -100,10 +101,12 @@ public class OmenTrackGUI extends Group {
             Animations.setOmenEditable(this, ()->activateButtons());
 
         }
-        switch (GameService.getInstance().getOmenTrack().getOmen()){
+        OmenTrack omen = GameService.getInstance().getOmenTrack();
+        switch (omen.getOmen()){
             case GREEN_COMET:
                 Animations.rotateOmen(circle,bigOne,greenComet,0);
                 bigOne=greenComet;
+                greenComet.setLabel(omen.getToken(omen.getOmen()));
                 break;
             case BLUE_STARS_1:
                 Animations.rotateOmen(circle,bigOne,blueStars1,90);

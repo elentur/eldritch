@@ -25,7 +25,6 @@ public class Mystery3 extends Mystery {
     public void init() {
       int num = (int)Math.ceil(GameService.getInstance().getInvestigators().size()/2);
       HashSet<Field> fields = new HashSet<>();
-      fields.add(GameService.getInstance().getGameBoard().getField(FieldID.LONDON));
       while (fields.size()<num){
           fields.add(GameService.getInstance().getRandomField());
       }

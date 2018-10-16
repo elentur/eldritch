@@ -13,13 +13,10 @@ import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
-import gamemechanics.mystery.azathoth.Mystery0;
-import gamemechanics.mystery.azathoth.Mystery2;
-import gamemechanics.mystery.azathoth.Mystery3;
+import gamemechanics.mystery.azathoth.Mystery5;
 import gui.InterfaceLinking;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
@@ -210,7 +207,7 @@ public class GameService {
         reserve.init();
     }
     private void addActiveMystery(){
-        activeMystery =new Mystery3();//mysteries.draw();
+        activeMystery =new Mystery5();//mysteries.draw();
        activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
                 activeMystery.getName() +"\n" +activeMystery.getText(),null);
