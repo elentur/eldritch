@@ -47,24 +47,16 @@ public class MassaDiRequiemPerShuggay extends Artifact {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect effect1 = new LooseOrGainHealthSanity(SpendType.SANITY, -1, inv);
         Effect effect2 = new LooseOrGainHealthSanity(SpendType.SANITY, -1, inv);
-        YesNoChoice
+
         Action encounter = new Action(inv,
                 "massaDiRequiemPerShuggay",
                 new NullEffect(),
-                effect,
+                effect1,
                 new NullEffect(),
                 TestType.LORE,
                 -1,
                 1
         );
-        if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
-
-            if (!GameService.getInstance().getEncounteringInvestigator().getDoneActions().contains(encounter)) {
-                GameService.getInstance().addUsedSpell(this);
-                return encounter;
-
-            }
-        }
         return null;
     }
 

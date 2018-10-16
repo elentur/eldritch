@@ -16,8 +16,8 @@ public class ActionEncounter extends Action {
         super(inv, encounterID, startEffect);
     }
 
-    public ActionEncounter(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
-        super(EncounterType.ACTION_ENCOUNTER,inv, encounterID, startEffect, passEffect, failEffect, testType, minNumberOfSuccesses);
+    public ActionEncounter(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int mod,int minNumberOfSuccesses) {
+        super(EncounterType.ACTION_ENCOUNTER,inv, encounterID, startEffect, passEffect, failEffect, testType,mod, minNumberOfSuccesses);
     }
 
 
