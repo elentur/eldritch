@@ -11,11 +11,9 @@ import utils.ResourceUtil;
 @Getter
 public class AdvanceDoom extends Effect {
     private final int value;
-    private  Investigator investigator;
 
-    public AdvanceDoom(  int value,Investigator investigator) {
+    public AdvanceDoom(  int value) {
         super(EffectTyps.ADVANCE_DOOM);
-        this.investigator = investigator;
         this.value=value;
     }
 

@@ -32,21 +32,22 @@ public class Action extends Encounter {
 
 
     public Action(Investigator inv, String encounterID, Effect startEffect) {
-        this(inv, encounterID, startEffect, new NullEffect(), new NullEffect(), TestType.NONE, 0);
+        this(inv, encounterID, startEffect, new NullEffect(), new NullEffect(), TestType.NONE, 0,0);
     }
 
-    public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
-        this(EncounterType.ACTION, inv, encounterID, startEffect, passEffect, failEffect, testType, minNumberOfSuccesses);
+    public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int mod, int minNumberOfSuccesses) {
+        this(EncounterType.ACTION, inv, encounterID, startEffect, passEffect, failEffect, testType,mod, minNumberOfSuccesses);
 
     }
 
-    protected Action(EncounterType encounterType, Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int minNumberOfSuccesses) {
+    protected Action(EncounterType encounterType, Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType,int mod, int minNumberOfSuccesses) {
         super(encounterType);
         setInvestigator(inv);
         this.encounterID = encounterID;
         setTestType(new TestType[1]);
         setMinNumberOfSuccesses(new int[]{1});
         setMod(new int[]{0});
+        getMod()[0]=mod;
         setEffect(new Effect[1][3]);
         setSituationType(SituationType.ACTION);
         setGame(GameService.getInstance());

@@ -3,6 +3,7 @@ package model.Item;
 import container.ItemStack;
 import enums.ItemType;
 import gamemechanics.Action;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -76,7 +77,7 @@ public abstract class Artifact implements Item {
 
 
     @Override
-    public Action getEncounter() {
+    public Encounter getEncounter() {
         return null;
     }
 }
