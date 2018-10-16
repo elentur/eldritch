@@ -15,6 +15,7 @@ import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
 import gamemechanics.mystery.azathoth.Mystery0;
 import gamemechanics.mystery.azathoth.Mystery2;
+import gamemechanics.mystery.azathoth.Mystery3;
 import gui.InterfaceLinking;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -31,6 +32,7 @@ import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Function;
 
 public class GameService {
@@ -208,7 +210,7 @@ public class GameService {
         reserve.init();
     }
     private void addActiveMystery(){
-        activeMystery =new Mystery0();//mysteries.draw();
+        activeMystery =new Mystery3();//mysteries.draw();
        activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
                 activeMystery.getName() +"\n" +activeMystery.getText(),null);
@@ -401,5 +403,11 @@ public class GameService {
     public void removeEncounterListener(Function<Encounter,Void> listener) {
         encounterListener.remove(listener);
 
+    }
+
+    public Field getRandomField(){
+        int i = FieldID.values().length;
+        Random r = new Random();
+        return gameBoard.getField(FieldID.values()[r.nextInt(i)]);
     }
 }

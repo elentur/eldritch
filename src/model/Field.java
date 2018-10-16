@@ -84,6 +84,14 @@ public class Field {
         if(hasMystery()){
             encounters.add(tokens.getMystery().getEncounter());
         }
+        if(getNumberOfEldritchTokens()>0){
+            for(EldritchToken token: tokens.getEldritchTokens()){
+                if(token.getEncounter()!=null){
+                    encounters.add(token.getEncounter());
+                }
+            }
+
+        }
         return encounters;
     }
 

@@ -99,11 +99,17 @@ public class InterfaceLinking {
             case SPAWN_CLUE:
                 Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
                 break;
+            case SPAWN_ELDRITCH_TOKEN:
+                Animations.effectOverlayAnimations(new SpawnEldritchTokenEffectOverlay((SpawnEldritchToken) effect), primaryStage, effect);
+                break;
             case SPAWN_GATE:
                 Animations.effectOverlayAnimations(new SpawnGateEffectOverlay((SpawnGate) effect), primaryStage, effect);
                 break;
             case CLOSE_GATE:
                 Animations.effectOverlayAnimations(new CloseGateEffectOverlay((CloseGate) effect), primaryStage, effect);
+                break;
+            case REMOVE_ELDRITCH_TOKEN:
+                Animations.effectOverlayAnimations(new RemoveEldritchTokenEffectOverlay((RemoveEldritchToken) effect), primaryStage, effect);
                 break;
             case GAIN_CLUE:
                 Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
