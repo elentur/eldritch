@@ -215,14 +215,13 @@ public class GameService {
         reserve.init();
     }
     private void addActiveMystery(){
-        activeMystery =new Mystery4();//mysteries.draw();
+        activeMystery = mysteries.draw();
        activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
                 activeMystery.getName() +"\n" +activeMystery.getText(),null);
         addChoice(choice);
         activeMystery.init();
         InterfaceLinking.interfaceGui.getMysteryGUI().update();
-        addEffect(new GainArtifact(getArtifacts().draw(),encounteringInvestigator));
 
     }
     public void handleMystery() {
