@@ -1,8 +1,8 @@
-package model.Item.mythos;
+package gamemechanics.mythos.green;
 
 import enums.Dificulty;
 import enums.ItemType;
-import model.Item.MythosGreen;
+import gamemechanics.MythosGreen;
 import model.effects.Reckoning;
 
 import java.util.Collections;

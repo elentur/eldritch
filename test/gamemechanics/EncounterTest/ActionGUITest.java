@@ -46,6 +46,7 @@ public class ActionGUITest extends Application {
                 new NullEffect(),
                 new NullEffect(),
                 TestType.NONE,
+                0,
                 0
         );
         GameService.getInstance().addEncounter(a);
@@ -55,6 +56,7 @@ public class ActionGUITest extends Application {
                 new GainCondition(ConditionType.DETAINED, inv),
                 new NullEffect(),
                 TestType.WILL,
+                0,
                 0
         );
         GameService.getInstance().addEncounter(b);

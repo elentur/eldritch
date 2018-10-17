@@ -5,7 +5,7 @@ import enums.PhaseTypes;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
-import model.Item.mythos.Mythos0;
+import gamemechanics.mythos.green.Mythos0;
 
 public class Phases {
 
@@ -28,7 +28,8 @@ public class Phases {
 
         actualPhase = getNextPhase();
         if(actualPhase.equals(PhaseTypes.MYTHOS)){
-            new Mythos0().execute();
+          Mythos mythos = (Mythos) GameService.getInstance().getMythos().draw();
+          mythos.execute();
          //  GameService.getInstance().setStartInvestigator();
           //  GameService.getInstance().addEffect(new SwitchPhase());
 

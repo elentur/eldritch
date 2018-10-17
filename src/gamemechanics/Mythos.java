@@ -1,4 +1,4 @@
-package model.Item;
+package gamemechanics;
 
 import Service.GameService;
 import container.ItemStack;
@@ -11,6 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
+import model.Item.Investigator;
+import model.Item.Item;
+import model.Item.ItemBonus;
 import model.effects.SwitchPhase;
 import utils.ResourceUtil;
 

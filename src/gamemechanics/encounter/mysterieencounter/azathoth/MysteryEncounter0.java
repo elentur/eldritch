@@ -15,7 +15,6 @@ public class MysteryEncounter0 extends MysteryEncounter {
 
     public MysteryEncounter0() {
         super( "mye_0", OldOnes.AZATHOTH);
-        setFieldID(FieldID.TUNGUSKA);
 
      
 

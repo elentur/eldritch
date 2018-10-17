@@ -1,8 +1,13 @@
 package model.Item;
 
+import Service.GameService;
+import container.FiniteItemStack;
+import container.ItemContainer;
 import container.ItemStack;
 import enums.ItemType;
 import enums.OldOnes;
+import factory.ItemFactory;
+import gamemechanics.Mythos;
 import lombok.Getter;
 import model.Effect;
 import utils.ResourceUtil;
@@ -17,11 +22,42 @@ public abstract class AncientOne implements Item {
     public final String uniqueId = UUID.randomUUID().toString();
     @Getter
     public final OldOnes oldOne;
-    protected int minNumberOfSolvedMysteries;
 
-    protected AncientOne(OldOnes oldOne) {
+    @Getter
+    protected int minNumberOfSolvedMysteries;
+    @Getter
+    protected int doom;
+    @Getter
+    private final ItemStack<Mythos> green ;
+    @Getter
+    private final ItemStack<Mythos> blue ;
+    @Getter
+    private final ItemStack<Mythos> yellow ;
+    @Getter
+    private final List<Mythos> first;
+    @Getter
+    private final List<Mythos> second;
+    @Getter
+    private final List<Mythos> third;
+
+
+    protected AncientOne(OldOnes oldOne, int minNumberOfSolvedMysteries,int doom) {
         this.oldOne = oldOne;
+        this.minNumberOfSolvedMysteries=minNumberOfSolvedMysteries;
+        this.doom=doom;
+
+        green = ItemFactory.getMythosGreen();
+        blue = ItemFactory.getMythosBlue();
+        yellow = ItemFactory.getMythosYellow();
+        first=new ArrayList<>();
+        second=new ArrayList<>();
+        third = new ArrayList<>();
+
+
+
     }
+
+
 
     @Override
     public String getName() {
@@ -69,7 +105,7 @@ public abstract class AncientOne implements Item {
     }
 
 
-    public int getminNumberOfSolvedMysteries() {
-        return minNumberOfSolvedMysteries;
-    }
+    public abstract void init();
+
+    protected abstract void startEndGame();
 }

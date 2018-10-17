@@ -54,6 +54,7 @@ public class FieldActions {
                 new AssetFromReserve(inv),
                 new NullEffect(),
                 TestType.INFLUENCE,
+                0,
                 1
 
         );

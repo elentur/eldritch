@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.ToString;
 import model.Effect;
 import model.Field;
+import model.effects.DiscardMonster;
+import model.effects.NullEffect;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -22,9 +24,6 @@ import java.util.UUID;
 @ToString(exclude = {"id", "effects",})
 public abstract class Monster implements Item, IMonster {
     private final int count;
-    public Monster(int count){
-        this.count=count;
-    }
     public String uniqueId = UUID.randomUUID().toString();
     public String id;
     private String name;
@@ -34,10 +33,18 @@ public abstract class Monster implements Item, IMonster {
     private int damage;
     private int toughness;
     private int actualToughness;
-    private List<Effect> effects;
+    private Effect willTestEffect;
+    private Effect strengthTestEffect;
+    private Effect dieEffect;
     private ItemStack stack;
 
 
+    public Monster(int count){
+        this.count=count;
+        willTestEffect=new NullEffect();
+        strengthTestEffect=new NullEffect();
+        dieEffect=new NullEffect();
+    }
     @Override
     public String getNameId() {
         return name;
@@ -74,10 +81,8 @@ public abstract class Monster implements Item, IMonster {
     }
 
     public  void die(){
-       Field field= GameService.getInstance().getFieldOfMonster(this);
-       if(field!=null) {
-           field.removeMonster(this);
-       }
+        GameService.getInstance().addEffect(new DiscardMonster(this));
+
     }
 
     public Monster clone(){
@@ -92,7 +97,9 @@ public abstract class Monster implements Item, IMonster {
         m.setDamage(this.damage);
         m.setToughness(this.toughness);
         m.setActualToughness(this.actualToughness);
-        m.setEffects(this.effects);
+        m.setWillTestEffect(this.willTestEffect);
+        m.setStrengthTestEffect(this.strengthTestEffect);
+        m.setDieEffect(this.dieEffect);
         return m;
     }
 
@@ -107,6 +114,7 @@ public abstract class Monster implements Item, IMonster {
     }
     @Override
     public void discard(){
+        GameService.getInstance().getFieldOfMonster(this).removeMonster(this);
         stack.discard(this);
     }
     @Override

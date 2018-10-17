@@ -17,6 +17,7 @@ import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
 import model.Item.Spell;
+import model.effects.ExecuteEndEvents;
 import model.effects.NextInvestigator;
 import preparation.Preparation;
 import utils.ResourceUtil;
@@ -24,6 +25,7 @@ import utils.ResourceUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Getter
 @Setter
@@ -45,12 +47,12 @@ public abstract class Encounter implements Item {
     private Field field;
     private ItemStack stack;
     private Preparation preparation;
+    private List<Function<Encounter,Void>> endEvents;
 
-    private List<Runnable> discardEffects;
 
     public Encounter(EncounterType type) {
-        discardEffects = new ArrayList<>();
         encounterType = type;
+        endEvents=new ArrayList<>();
     }
 
 
@@ -78,6 +80,12 @@ public abstract class Encounter implements Item {
         return encounterPart;
     }
 
+    protected void executeEndEvents(){
+        for(Function<Encounter,Void> event : endEvents){
+            event.apply(this);
+        }
+        getGame().addEffect(new NextInvestigator());
+    }
 
     @Override
     public List<ItemBonus> createBonus() {
@@ -141,13 +149,11 @@ public abstract class Encounter implements Item {
     }
     @Override
     public void discard(){
+       getGame().addEffect(new ExecuteEndEvents(this::executeEndEvents));
         if(stack!= null) {
             stack.discard(this);
         }
-        for(Runnable r : discardEffects){
-            r.run();
-        }
-        getGame().addEffect(new NextInvestigator());
+
 
     }
     @Override
@@ -172,5 +178,9 @@ public abstract class Encounter implements Item {
             spell.executeConsequences(result);
         }
         GameService.getInstance().getUsedSpells().clear();
+    }
+
+    public void addEndEvent(Function<Encounter,Void> event){
+        endEvents.add(event);
     }
 }

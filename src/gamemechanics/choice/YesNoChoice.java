@@ -28,10 +28,7 @@ public class YesNoChoice extends Choice{
             }else {
                 executeEffects(effectsOnNo);
             }
-
             choiceTaken.setValue(true);
-
-
         }
     }
 
@@ -40,7 +37,7 @@ public class YesNoChoice extends Choice{
             return;
         }
         for(Effect effect:effects){
-            GameService.getInstance().getInsertions().add(effect);
+            GameService.getInstance().addEffectAfter(effect);
         }
     }
 

@@ -49,8 +49,8 @@ public class InterfaceLinking {
 
     private InterfaceLinking() {
         GameService game = GameService.getInstance();
-        game.getChoiceProperty().addListener(e -> startChoiceDialog(game.getChoiceProperty().getValue()));
-        game.getEncounterProperty().addListener(e -> startEncounterDialog(game.getEncounterProperty().getValue()));
+        game.getChoiceProperty().addListener((a,b,c) -> startChoiceDialog(game.getChoiceProperty().getValue()));
+        game.getEncounterProperty().addListener((a,b,c) -> startEncounterDialog(game.getEncounterProperty().getValue()));
         lockGameBoard = new SimpleBooleanProperty(false);
         game.getInsertions().addListener((ListChangeListener<? super Effect>) e -> {
             lockGameBoard.setValue(false);
@@ -99,11 +99,20 @@ public class InterfaceLinking {
             case SPAWN_CLUE:
                 Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
                 break;
+            case SPAWN_ELDRITCH_TOKEN:
+                Animations.effectOverlayAnimations(new SpawnEldritchTokenEffectOverlay((SpawnEldritchToken) effect), primaryStage, effect);
+                break;
             case SPAWN_GATE:
                 Animations.effectOverlayAnimations(new SpawnGateEffectOverlay((SpawnGate) effect), primaryStage, effect);
                 break;
             case CLOSE_GATE:
                 Animations.effectOverlayAnimations(new CloseGateEffectOverlay((CloseGate) effect), primaryStage, effect);
+                break;
+            case REMOVE_ELDRITCH_TOKEN:
+                Animations.effectOverlayAnimations(new RemoveEldritchTokenEffectOverlay((RemoveEldritchToken) effect), primaryStage, effect);
+                break;
+            case DISCARD_MONSTER:
+                Animations.effectOverlayAnimations(new DiscardMonsterOverlay((DiscardMonster) effect), primaryStage, effect);
                 break;
             case GAIN_CLUE:
                 Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
@@ -135,8 +144,11 @@ public class InterfaceLinking {
             case RETREAT_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
                 break;
-            case RANDOM_ASSET:
+            case GAIN_ASSET:
                 Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
+                break;
+            case GAIN_ARTIFACT:
+                Animations.effectOverlayAnimations(new ArtifactOverlay((GainArtifact) effect), primaryStage, effect);
                 break;
             case SWITCH_PHASE:
                 Animations.effectOverlayPhaseSwitch(new SwitchPhaseOverlay((SwitchPhase) effect), primaryStage, effect);
@@ -156,6 +168,7 @@ public class InterfaceLinking {
                 GameService.getInstance().getInsertions().remove(effect);
                 effect.execute();
                 break;
+
             default:
                 Platform.runLater(() -> {
                     GameService.getInstance().getInsertions().remove(effect);

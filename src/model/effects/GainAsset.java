@@ -19,14 +19,14 @@ public class GainAsset extends Effect {
     private final Asset asset;
 
     public GainAsset(ItemType itemType, Investigator investigator) {
-        super(EffectTyps.RANDOM_ASSET);
+        super(EffectTyps.GAIN_ASSET);
         this.itemType = itemType;
         this.investigator = investigator;
         this.asset=null;
     }
 
     public GainAsset(Asset asset, Investigator investigator) {
-        super(EffectTyps.RANDOM_ASSET);
+        super(EffectTyps.GAIN_ASSET);
         this.itemType = null;
         this.investigator = investigator;
         this.asset=asset;

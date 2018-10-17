@@ -5,7 +5,6 @@ import Service.GameService;
 import container.InvestigatorContainer;
 import enums.FieldID;
 import factory.GameBoardFactory;
-import gamemechanics.encounter.rumorencounter.RumorEncounter0;
 import gui.EffectLayer;
 import gui.Fonts;
 import gui.Interface;
@@ -24,8 +23,7 @@ import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
 import model.Item.monsters.Shan;
-import model.Item.mythos.MythosTestRumor;
-import model.Item.token.EldritchToken;
+import gamemechanics.mythos.blue.MythosTestRumor;
 import model.Item.token.RumorToken;
 import model.effects.SpawnGate;
 
@@ -47,7 +45,6 @@ public class GameBoardGUITest extends Application {
         GameService.getInstance().addInvestigators(new InvestigatorContainer(Arrays.asList(new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley())));
         GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS,new MythosTestRumor()));
         GameService.getInstance().addMystery(FieldID.PYRAMIDS);
-        GameService.getInstance().addEldritchToken(FieldID.PYRAMIDS, new EldritchToken(new RumorEncounter0()));
         GameService.getInstance().addExpedition();
         GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
      //
@@ -85,7 +82,8 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
-        GameService.getInstance().addEffect(new SpawnGate());
+      GameService.getInstance().addEffect(new SpawnGate());
+        //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }
 
 

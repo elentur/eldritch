@@ -152,8 +152,8 @@ public class Animations {
         tt.setFromY(0);
         tt.setToY(overlay.getY());
 
-        FadeTransition st1 = new FadeTransition(Duration.millis(1000), overlay);
-        st1.setDelay(Duration.millis(500));
+        FadeTransition st1 = new FadeTransition(Duration.millis(400), overlay);
+        st1.setDelay(Duration.millis(100));
         st1.setFromValue(1);
         st1.setToValue(0);
 

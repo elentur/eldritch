@@ -1,14 +1,8 @@
-package model.Item.mythos;
+package gamemechanics.mythos.blue;
 
 import enums.Dificulty;
-import enums.ItemType;
 import gamemechanics.encounter.rumorencounter.RumorEncounter0;
-import model.Item.Item;
-import model.Item.MythosBlue;
-import model.Item.MythosGreen;
-import model.effects.Reckoning;
-
-import java.util.function.Function;
+import gamemechanics.MythosBlue;
 
 public class MythosTestRumor extends MythosBlue {
 

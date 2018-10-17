@@ -54,6 +54,7 @@ public class Shriveling extends Spell {
                 effect,
                 new NullEffect(),
                 TestType.LORE,
+                0,
                 1
         );
         if ( GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {

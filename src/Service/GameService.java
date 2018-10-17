@@ -1,5 +1,6 @@
 package Service;
 
+import container.FiniteItemStack;
 import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
@@ -9,10 +10,12 @@ import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.Mystery;
+import gamemechanics.Mythos;
 import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
+import gamemechanics.mystery.azathoth.Mystery4;
 import gui.InterfaceLinking;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,11 +26,14 @@ import lombok.Setter;
 import model.*;
 import model.Item.*;
 import model.Item.token.*;
+import model.effects.GainArtifact;
 import model.effects.SwitchPhase;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class GameService {
     private static GameService ourInstance = new GameService();
@@ -84,6 +90,9 @@ public class GameService {
     @Getter
     private ItemStack<Mystery> mysteries;
 
+    @Getter
+    private FiniteItemStack<Object> mythos;
+
 
     @Getter
     private List<Spell> usedSpells;
@@ -105,6 +114,7 @@ public class GameService {
 
     @Getter
     private  Phases phases;
+    private List<Function<Encounter,Void> > encounterListener;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -169,6 +179,7 @@ public class GameService {
 
 
     private void init(){
+        encounterListener = new ArrayList<>();
         insertions = FXCollections.observableArrayList();
         activeInvestigator = new SimpleObjectProperty<>(null);
         assets = ItemFactory.getAssets();
@@ -187,12 +198,14 @@ public class GameService {
         mysteries = ItemFactory.getMysteries(ancientOne.getOldOne());
         clueTokens = ItemFactory.getClueTokens();
         gateTokens = ItemFactory.getGateTokens();
-        doomTrack = new DoomTrack(15);
+        doomTrack = new DoomTrack(ancientOne.getDoom());
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
         phases = new Phases();
         monsterPool = MonsterFactory.getMonster();
+       mythos = new FiniteItemStack<>(new ItemContainer<>());
 
         usedSpells = new ArrayList<>();
+        ancientOne.init();
 
 
 
@@ -202,19 +215,20 @@ public class GameService {
         reserve.init();
     }
     private void addActiveMystery(){
-        activeMystery =mysteries.draw();
+        activeMystery = mysteries.draw();
        activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
                 activeMystery.getName() +"\n" +activeMystery.getText(),null);
         addChoice(choice);
         activeMystery.init();
         InterfaceLinking.interfaceGui.getMysteryGUI().update();
+
     }
     public void handleMystery() {
         if(activeMystery.isFinished()){
             activeMystery.getUpdate().removeListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
             activeMystery.discard();
-            if(mysteries.getTraystack().size()>=ancientOne.getminNumberOfSolvedMysteries()){
+            if(mysteries.getTraystack().size()>=ancientOne.getMinNumberOfSolvedMysteries()){
                 //TODO
                 InformationChoice choice = new InformationChoice("Gewonnen",
                         "Du hast gewonnen",null);
@@ -286,6 +300,11 @@ public class GameService {
     }
 
     public void addEncounter(Encounter encounter) {
+        if(encounter!=null) {
+            for (Function<Encounter, Void> listner : encounterListener) {
+                listner.apply(encounter);
+            }
+        }
         this.encounter.set(encounter);
     }
 
@@ -383,5 +402,18 @@ public class GameService {
     }
 
 
+    public void addEncounterListener(Function<Encounter,Void>  listener) {
+        encounterListener.add(listener);
 
+    }
+    public void removeEncounterListener(Function<Encounter,Void> listener) {
+        encounterListener.remove(listener);
+
+    }
+
+    public Field getRandomField(){
+        int i = FieldID.values().length;
+        Random r = new Random();
+        return gameBoard.getField(FieldID.values()[r.nextInt(i)]);
+    }
 }

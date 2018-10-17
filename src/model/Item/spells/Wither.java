@@ -61,6 +61,7 @@ public class Wither extends Spell {
                 effect,
                 new NullEffect(),
                 TestType.LORE,
+                0,
                 1
         );
         if(!isUsed() && GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER)){

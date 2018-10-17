@@ -89,7 +89,7 @@ public class GameTextures {
 		seaSpace= new Image("oldVersion/images/gameBoard/SeaSpace.png",61,61, true, false, backgroundLoading);
 		gate= new Image("oldVersion/images/gameBoard/Gate.png",100,100, true, false, backgroundLoading);
 
-		cultist= new Image("oldVersion/images/monster/Cultist.jpg",384,263, true, false, backgroundLoading);
+		cultist= new Image("oldVersion/images/monster/cultist.jpg",384,263, true, false, backgroundLoading);
 		byakee= new Image("oldVersion/images/monster/Byakee.jpg",384,263, true, false, backgroundLoading);
 		colorOfSpace= new Image("oldVersion/images/monster/ColorOfSpace.jpg",384,263, true, false, backgroundLoading);
 		cthonian= new Image("oldVersion/images/monster/Cthonian.jpg",384,263, true, false, backgroundLoading);

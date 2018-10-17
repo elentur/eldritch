@@ -25,7 +25,10 @@ public class MonsterChoice extends Choice{
         this.selectedMonster = new ArrayList<>();
     }
     public MonsterChoice(List<Monster> monsters){
-        super(ChoiceType.COMBAT_ENCOUNTER, ResourceUtil.get("${monster_choice}","ui"),"");
+        this(monsters,ChoiceType.COMBAT_ENCOUNTER);
+    }
+    public MonsterChoice(List<Monster> monsters, ChoiceType type){
+        super(type, ResourceUtil.get("${monster_choice}","ui"),"");
         this.monsters = monsters;
         this.singleSelect=true;
         this.selectedMonster = new ArrayList<>();
@@ -56,6 +59,7 @@ public class MonsterChoice extends Choice{
         GameService.getInstance().setLastChosenMonster(monster);
         if(singleSelect) {
             getChoiceTakenProperty().setValue(true);
+            accepted=true;
         }
     }
 

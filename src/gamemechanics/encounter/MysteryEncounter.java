@@ -5,15 +5,15 @@ import enums.FieldID;
 import enums.OldOnes;
 import lombok.Getter;
 import lombok.Setter;
+import model.Item.token.EldritchToken;
 import utils.ResourceUtil;
 
 @Getter
 @Setter
 public class MysteryEncounter extends StandardEncounter {
 
-    private FieldID fieldID;
     private final OldOnes oldOne;
-
+    private EldritchToken eldritchToken;
     public MysteryEncounter(String encounterID, OldOnes oldOne) {
         super( encounterID, EncounterType.MYSTERY_ENCOUNTER);
         setEncounterPart(0);

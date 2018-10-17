@@ -89,7 +89,7 @@ public class ExpeditionEncounter extends StandardEncounter {
             getGame().addChoice(new InformationChoice(header, text, effects));
         }
         checkForSpellConsequences();
-
-        return super.getEncounterPart();
+        getPreparation().getUsedBoni().clear();
+        return getEncounterPart();
     }
 }
