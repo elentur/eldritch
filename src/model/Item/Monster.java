@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 import model.Effect;
 import model.Field;
+import model.effects.DiscardMonster;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -74,10 +75,8 @@ public abstract class Monster implements Item, IMonster {
     }
 
     public  void die(){
-       Field field= GameService.getInstance().getFieldOfMonster(this);
-       if(field!=null) {
-           field.removeMonster(this);
-       }
+        GameService.getInstance().addEffect(new DiscardMonster(this));
+
     }
 
     public Monster clone(){
@@ -107,6 +106,7 @@ public abstract class Monster implements Item, IMonster {
     }
     @Override
     public void discard(){
+        GameService.getInstance().getFieldOfMonster(this).removeMonster(this);
         stack.discard(this);
     }
     @Override

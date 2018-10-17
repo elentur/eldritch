@@ -111,6 +111,9 @@ public class InterfaceLinking {
             case REMOVE_ELDRITCH_TOKEN:
                 Animations.effectOverlayAnimations(new RemoveEldritchTokenEffectOverlay((RemoveEldritchToken) effect), primaryStage, effect);
                 break;
+            case DISCARD_MONSTER:
+                Animations.effectOverlayAnimations(new DiscardMonsterOverlay((DiscardMonster) effect), primaryStage, effect);
+                break;
             case GAIN_CLUE:
                 Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
                 break;
@@ -141,8 +144,11 @@ public class InterfaceLinking {
             case RETREAT_OMEN:
                 Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
                 break;
-            case RANDOM_ASSET:
+            case GAIN_ASSET:
                 Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
+                break;
+            case GAIN_ARTIFACT:
+                Animations.effectOverlayAnimations(new ArtifactOverlay((GainArtifact) effect), primaryStage, effect);
                 break;
             case SWITCH_PHASE:
                 Animations.effectOverlayPhaseSwitch(new SwitchPhaseOverlay((SwitchPhase) effect), primaryStage, effect);

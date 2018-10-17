@@ -11,7 +11,6 @@ import utils.ResourceUtil;
 @Getter
 public class Discard extends Effect {
     private final Item item;
-    private GateToken token;
 
     public Discard(Item item) {
         super(EffectTyps.DISCARD);

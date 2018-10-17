@@ -13,6 +13,7 @@ import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
+import gamemechanics.mystery.azathoth.Mystery4;
 import gamemechanics.mystery.azathoth.Mystery5;
 import gui.InterfaceLinking;
 import javafx.beans.property.ObjectProperty;
@@ -24,6 +25,7 @@ import lombok.Setter;
 import model.*;
 import model.Item.*;
 import model.Item.token.*;
+import model.effects.GainArtifact;
 import model.effects.SwitchPhase;
 import utils.ResourceUtil;
 
@@ -207,13 +209,15 @@ public class GameService {
         reserve.init();
     }
     private void addActiveMystery(){
-        activeMystery =new Mystery5();//mysteries.draw();
+        activeMystery =new Mystery4();//mysteries.draw();
        activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
                 activeMystery.getName() +"\n" +activeMystery.getText(),null);
         addChoice(choice);
         activeMystery.init();
         InterfaceLinking.interfaceGui.getMysteryGUI().update();
+        addEffect(new GainArtifact(getArtifacts().draw(),encounteringInvestigator));
+
     }
     public void handleMystery() {
         if(activeMystery.isFinished()){

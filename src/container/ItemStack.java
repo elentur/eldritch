@@ -45,9 +45,8 @@ public abstract class ItemStack<T extends Item> {
         if(drawStack.isEmpty()){
             drawStack.addAll(traystack);
             traystack.clear();
+            shuffle();
         }
-
-        shuffle();
     }
 
     protected void shuffle() {
