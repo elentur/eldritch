@@ -49,7 +49,7 @@ public abstract class ItemStack<T extends Item> {
         }
     }
 
-    protected void shuffle() {
+    public void shuffle() {
         Collections.shuffle(drawStack);
     }
 

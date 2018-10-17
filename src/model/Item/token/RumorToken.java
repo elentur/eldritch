@@ -4,11 +4,9 @@ import container.ItemStack;
 import enums.FieldID;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
-import gamemechanics.encounter.ExpeditionEncounter;
-import gamemechanics.encounter.RumorEncounter;
 import lombok.Getter;
-import model.Item.Mythos;
-import model.Item.MythosBlue;
+import gamemechanics.Mythos;
+import gamemechanics.MythosBlue;
 import model.Item.Token;
 @Getter
 public class RumorToken extends Token {

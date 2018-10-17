@@ -1,4 +1,4 @@
-package model.Item;
+package gamemechanics;
 
 import enums.Dificulty;
 import enums.MythosType;

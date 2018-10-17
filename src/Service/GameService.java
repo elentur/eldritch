@@ -1,5 +1,6 @@
 package Service;
 
+import container.FiniteItemStack;
 import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
@@ -9,12 +10,12 @@ import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.Mystery;
+import gamemechanics.Mythos;
 import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
 import gamemechanics.mystery.azathoth.Mystery4;
-import gamemechanics.mystery.azathoth.Mystery5;
 import gui.InterfaceLinking;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -88,6 +89,9 @@ public class GameService {
     private ItemStack<AmericaEncounter> americaEncounter;
     @Getter
     private ItemStack<Mystery> mysteries;
+
+    @Getter
+    private FiniteItemStack<Object> mythos;
 
 
     @Getter
@@ -198,8 +202,10 @@ public class GameService {
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
         phases = new Phases();
         monsterPool = MonsterFactory.getMonster();
+       mythos = new FiniteItemStack<>(new ItemContainer<>());
 
         usedSpells = new ArrayList<>();
+        ancientOne.init();
 
 
 
@@ -223,7 +229,7 @@ public class GameService {
         if(activeMystery.isFinished()){
             activeMystery.getUpdate().removeListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
             activeMystery.discard();
-            if(mysteries.getTraystack().size()>=ancientOne.getminNumberOfSolvedMysteries()){
+            if(mysteries.getTraystack().size()>=ancientOne.getMinNumberOfSolvedMysteries()){
                 //TODO
                 InformationChoice choice = new InformationChoice("Gewonnen",
                         "Du hast gewonnen",null);

@@ -3,13 +3,10 @@ package factory;
 import container.*;
 import enums.FieldID;
 import enums.OldOnes;
-import gamemechanics.Mystery;
+import gamemechanics.*;
 import gamemechanics.encounter.*;
 import lombok.extern.java.Log;
-import model.Item.Artifact;
-import model.Item.Asset;
-import model.Item.Condition;
-import model.Item.Spell;
+import model.Item.*;
 import model.Item.token.ClueToken;
 import model.Item.token.GateToken;
 
@@ -33,6 +30,10 @@ public class ItemFactory {
     private static ItemContainer<AsiaEncounter> asiaEncounters;
     private static ItemContainer<EuropeEncounter> europeEncounters;
     private static ItemContainer<Mystery> mysteries;
+    private static ItemContainer<Mythos> mythosGreen;
+    private static ItemContainer<Mythos> mythosBlue;
+    private static ItemContainer<Mythos> mythosYellow;
+
 
     private static ItemContainer<ClueToken> clueTokens;
     private static ItemContainer<GateToken> gateTokens;
@@ -156,6 +157,61 @@ public class ItemFactory {
             }
         }
         return new FiniteItemStack<>(mysteries);
+    }
+
+    public static ItemStack<Mythos> getMythosGreen() {
+
+        if (mythosGreen == null) {
+            File f = new File("./src/gamemechanics/mythos/green");
+            mythosGreen = new ItemContainer<>();
+            if(f.list()!=null) {
+                for (String name : f.list()) {
+                    try {
+                        MythosGreen mythos = (MythosGreen) Class.forName("gamemechanics.mythos.green"  + "." + name.replace(".java", "")).newInstance();
+                        mythosGreen.add(mythos);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return new FiniteItemStack<>(mythosGreen);
+    }
+    public static ItemStack<Mythos> getMythosBlue() {
+
+        if (mythosBlue == null) {
+            File f = new File("./src/gamemechanics/mythos/blue");
+            mythosBlue = new ItemContainer<>();
+            if(f.list()!=null) {
+                for (String name : f.list()) {
+                    try {
+                        MythosBlue mythos = (MythosBlue) Class.forName("gamemechanics.mythos.blue"  + "." + name.replace(".java", "")).newInstance();
+                        mythosBlue.add(mythos);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return new FiniteItemStack<>(mythosBlue);
+    }
+    public static ItemStack<Mythos> getMythosYellow() {
+
+        if (mythosYellow == null) {
+            File f = new File("./src/gamemechanics/mythos/yellow");
+            mythosYellow = new ItemContainer<>();
+            if(f.list()!=null) {
+                for (String name : f.list()) {
+                    try {
+                        MythosYellow mythos = (MythosYellow) Class.forName("gamemechanics.mythos.yellow"  + "." + name.replace(".java", "")).newInstance();
+                        mythosYellow.add(mythos);
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return new FiniteItemStack<>(mythosYellow);
     }
     public static ItemStack<ResearchEncounter> getResearchEncounters(OldOnes oldOnes) {
 

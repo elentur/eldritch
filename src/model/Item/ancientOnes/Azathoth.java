@@ -1,14 +1,27 @@
 package model.Item.ancientOnes;
 
+import Service.GameService;
+import container.ItemStack;
 import enums.OldOnes;
+import enums.OmenStates;
+import gamemechanics.Mythos;
 import gamemechanics.encounter.Encounter;
 import model.Item.AncientOne;
+import model.Item.Monster;
+import model.effects.AdvanceDoom;
+import model.effects.AdvanceOmen;
+import model.effects.GainArtifact;
+import oldVersion.gui.GamesScreen;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Azathoth extends AncientOne {
 
     public Azathoth() {
-        super(OldOnes.AZATHOTH);
-        minNumberOfSolvedMysteries=3;
+        super(OldOnes.AZATHOTH, 3, 15);
+
     }
 
     @Override
@@ -18,11 +31,82 @@ public class Azathoth extends AncientOne {
 
     @Override
     public String getNameId() {
-        return "${azathoth}" ;
+        return "${azathoth}";
     }
 
     @Override
     public String getId() {
         return "&azathoth";
+    }
+
+    @Override
+    public void init() {
+        Cultist cultist = new Cultist();
+        for (int i = 1; i < cultist.getCount(); i++) {
+            GameService.getInstance().getMonsterPool().getDrawStack().add(new Cultist());
+        }
+        GameService.getInstance().getMonsterPool().getDrawStack().add(cultist);
+        GameService.getInstance().getMonsterPool().shuffle();
+        GameService.getInstance().getOmenTrack().addToken(OmenStates.GREEN_COMET);
+        GameService.getInstance().getOmenTrack().updateProperty().addListener(e -> {
+            for (int i = 0; i < GameService.getInstance().getOmenTrack().getToken(OmenStates.GREEN_COMET); i++) {
+                GameService.getInstance().addEffect(new AdvanceDoom(1));
+            }
+        });
+
+        getFirst().add(getBlue().draw());
+        getFirst().add(getYellow().draw());
+        getFirst().add(getYellow().draw());
+        getFirst().add(getGreen().draw());
+        Collections.shuffle(getFirst());
+
+        getSecond().add(getBlue().draw());
+        getSecond().add(getYellow().draw());
+        getSecond().add(getYellow().draw());
+        getSecond().add(getYellow().draw());
+        getSecond().add(getGreen().draw());
+        getSecond().add(getGreen().draw());
+        Collections.shuffle(getSecond());
+
+        getThird().add(getYellow().draw());
+        getThird().add(getYellow().draw());
+        getThird().add(getYellow().draw());
+        getThird().add(getYellow().draw());
+        getThird().add(getGreen().draw());
+        getThird().add(getGreen().draw());
+        Collections.shuffle(getThird());
+
+        GameService.getInstance().getMythos().getDrawStack().addAll(getFirst());
+        GameService.getInstance().getMythos().getDrawStack().addAll(getSecond());
+        GameService.getInstance().getMythos().getDrawStack().addAll(getThird());
+
+        GameService.getInstance().getDoomTrack().updateProperty().addListener(e->{
+            if(GameService.getInstance().getDoomTrack().getDoom()<=0){
+                startEndGame();
+            }
+        });
+
+    }
+
+    @Override
+    protected void startEndGame() {
+        //TODO SPIEL VERLOREN
+    }
+
+    private class Cultist extends Monster {
+
+
+        public Cultist() {
+            super(8);
+            this.setId("&cultist");
+            this.setName("${cultist}");
+            this.setWillTest(0);
+            this.setHorror(1);
+            this.setStrengthTest(0);
+            this.setDamage(0);
+            this.setToughness(1);
+            this.setActualToughness(getToughness());
+
+        }
     }
 }
