@@ -11,6 +11,7 @@ import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import model.Effect;
 import model.Item.Bonus;
 import model.Item.Investigator;
 import model.Item.Item;
@@ -46,10 +47,10 @@ public class CombatEncounter extends Encounter {
     @Override
     public void init() {
         super.init();
-        if (activeMonster.getDamage() > 0) {
+
             setEncounterPart(1);
-        } else {
-            setEncounterPart(2);
+        if (activeMonster.getStrengthTest() == 0) {
+            completeEncounterPart();
         }
     }
 
@@ -179,16 +180,19 @@ public class CombatEncounter extends Encounter {
         if (encounterPart == 2) {
             healthLoss();
             monsterDamage();
+            GameService.getInstance().addEffect(activeMonster.getStrengthTestEffect());
         } else {
             sanityLoss();
+           GameService.getInstance().addEffect(activeMonster.getWillTestEffect());
         }
 
 
         encounterPart++;
-        if (activeMonster.getHorror() <= 0) {
-            encounterPart = 3;
-        }
+
         checkForSpellConsequences();
+        if (activeMonster.getWillTest() == 0) {
+            completeEncounterPart();
+        }
         return super.completeEncounterPart();
     }
 

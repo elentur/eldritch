@@ -1,21 +1,17 @@
 package model.Item.ancientOnes;
 
 import Service.GameService;
-import container.ItemStack;
 import enums.OldOnes;
 import enums.OmenStates;
-import gamemechanics.Mythos;
+import enums.SpendType;
 import gamemechanics.encounter.Encounter;
+import model.Effect;
 import model.Item.AncientOne;
 import model.Item.Monster;
 import model.effects.AdvanceDoom;
-import model.effects.AdvanceOmen;
-import model.effects.GainArtifact;
-import oldVersion.gui.GamesScreen;
+import model.effects.LooseOrGainHealthSanity;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Azathoth extends AncientOne {
 
@@ -80,8 +76,8 @@ public class Azathoth extends AncientOne {
         GameService.getInstance().getMythos().addAllItem(getSecond());
         GameService.getInstance().getMythos().addAllItem(getThird());
 
-        GameService.getInstance().getDoomTrack().updateProperty().addListener(e->{
-            if(GameService.getInstance().getDoomTrack().getDoom()<=0){
+        GameService.getInstance().getDoomTrack().updateProperty().addListener(e -> {
+            if (GameService.getInstance().getDoomTrack().getDoom() <= 0) {
                 startEndGame();
             }
         });
@@ -107,6 +103,11 @@ public class Azathoth extends AncientOne {
             this.setToughness(1);
             this.setActualToughness(getToughness());
 
+        }
+
+        @Override
+        public Effect getStrengthTestEffect() {
+           return new LooseOrGainHealthSanity(SpendType.HEALTH,1, GameService.getInstance().getEncounteringInvestigator());
         }
     }
 }
