@@ -4,16 +4,9 @@ import Service.GameService;
 import enums.FieldID;
 import enums.OldOnes;
 import gamemechanics.Mystery;
-import gamemechanics.encounter.mysterieencounter.azathoth.MysteryEncounter1;
 import model.Effect;
-import model.Field;
 import model.Item.epicmonster.Tulzscha;
-import model.Item.token.EldritchToken;
-import model.effects.SpawnEldritchToken;
 import model.effects.SpawnMonster;
-import oldVersion.gameBuild.Game;
-
-import java.util.HashSet;
 
 public class Mystery5 extends Mystery {
 

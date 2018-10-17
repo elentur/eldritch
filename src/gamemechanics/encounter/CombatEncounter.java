@@ -11,7 +11,6 @@ import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import model.Effect;
 import model.Item.Bonus;
 import model.Item.Investigator;
 import model.Item.Item;
@@ -21,7 +20,7 @@ import model.effects.NextInvestigator;
 import preparation.CombatPreparation;
 import preparation.Preparation;
 
-import java.util.*;
+import java.util.List;
 import java.util.function.Function;
 
 @Getter
@@ -48,7 +47,7 @@ public class CombatEncounter extends Encounter {
     public void init() {
         super.init();
 
-            setEncounterPart(1);
+        setEncounterPart(1);
         if (activeMonster.getStrengthTest() == 0) {
             completeEncounterPart();
         }
@@ -88,24 +87,29 @@ public class CombatEncounter extends Encounter {
     }
 
     private void sanityLoss() {
-
-        int dmg = activeMonster.getHorror() - result.getNumberOfSuccess();
-        dmg = dmg < 0 ? 0 : dmg;
-        if (dmg == 0) return;
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY, -dmg, investigator));
+        if (result != null) {
+            int dmg = activeMonster.getHorror() - result.getNumberOfSuccess();
+            dmg = dmg < 0 ? 0 : dmg;
+            if (dmg == 0) return;
+            GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY, -dmg, investigator));
+        }
     }
 
     private void healthLoss() {
-        int dmg = activeMonster.getDamage() - result.getNumberOfSuccess();
-        dmg = dmg < 0 ? 0 : dmg;
-        if (dmg == 0) return;
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH, -dmg, investigator));
+        if (result != null) {
+            int dmg = activeMonster.getDamage() - result.getNumberOfSuccess();
+            dmg = dmg < 0 ? 0 : dmg;
+            if (dmg == 0) return;
+            GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH, -dmg, investigator));
+        }
 
     }
 
     private void monsterDamage() {
-        if (result.getNumberOfSuccess() == 0) return;
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH, -result.getNumberOfSuccess(), original));
+        if (result != null) {
+            if (result.getNumberOfSuccess() == 0) return;
+            GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH, -result.getNumberOfSuccess(), original));
+        }
     }
 
     @Override
@@ -183,7 +187,7 @@ public class CombatEncounter extends Encounter {
             GameService.getInstance().addEffect(activeMonster.getStrengthTestEffect());
         } else {
             sanityLoss();
-           GameService.getInstance().addEffect(activeMonster.getWillTestEffect());
+            GameService.getInstance().addEffect(activeMonster.getWillTestEffect());
         }
 
 

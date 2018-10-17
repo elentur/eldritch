@@ -3,27 +3,18 @@ package gamemechanics.mystery.azathoth;
 import Service.GameService;
 import enums.OldOnes;
 import enums.SpendType;
-import enums.YesNo;
 import gamemechanics.Mystery;
 import gamemechanics.choice.YesNoChoice;
-import gamemechanics.encounter.mysterieencounter.azathoth.MysteryEncounter1;
 import model.Effect;
-import model.Field;
 import model.Item.Artifact;
 import model.Item.Investigator;
 import model.Item.Item;
-import model.Item.token.EldritchToken;
 import model.effects.And;
 import model.effects.Discard;
-import model.effects.SpawnEldritchToken;
 import model.effects.Spend;
-import oldVersion.gameBuild.Game;
-import oldVersion.gui.GamesScreen;
 import utils.ResourceUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 
 public class Mystery4 extends Mystery {
 
