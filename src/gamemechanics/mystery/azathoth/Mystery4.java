@@ -36,7 +36,7 @@ public class Mystery4 extends Mystery {
     public void init() {
     Artifact artifact = (Artifact) GameService.getInstance().getArtifacts().get("&massaDiRequiemPerShuggay");
         if(artifact!=null){
-            GameService.getInstance().getArtifacts().getDrawStack().add(0,artifact);
+            GameService.getInstance().getArtifacts().addItem(0,artifact);
         }
     }
 

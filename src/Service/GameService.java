@@ -198,7 +198,7 @@ public class GameService {
         mysteries = ItemFactory.getMysteries(ancientOne.getOldOne());
         clueTokens = ItemFactory.getClueTokens();
         gateTokens = ItemFactory.getGateTokens();
-        doomTrack = new DoomTrack(15);
+        doomTrack = new DoomTrack(ancientOne.getDoom());
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
         phases = new Phases();
         monsterPool = MonsterFactory.getMonster();

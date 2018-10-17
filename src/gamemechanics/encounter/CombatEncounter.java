@@ -34,7 +34,6 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation horrorPreparation;
 
 
-
     public CombatEncounter(Monster monster, List<Monster> monsters, Investigator investigator) {
         super(EncounterType.COMBAT_ENCOUNTER);
         this.investigator = investigator;
@@ -45,9 +44,13 @@ public class CombatEncounter extends Encounter {
     }
 
     @Override
-    public void init(){
+    public void init() {
         super.init();
-        setEncounterPart(1);
+        if (activeMonster.getDamage() > 0) {
+            setEncounterPart(1);
+        } else {
+            setEncounterPart(2);
+        }
     }
 
 
@@ -85,23 +88,23 @@ public class CombatEncounter extends Encounter {
 
     private void sanityLoss() {
 
-        int dmg =  activeMonster.getHorror() - result.getNumberOfSuccess();
-        dmg = dmg<0?0:dmg;
-        if(dmg==0)return;
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY,-dmg,investigator));
+        int dmg = activeMonster.getHorror() - result.getNumberOfSuccess();
+        dmg = dmg < 0 ? 0 : dmg;
+        if (dmg == 0) return;
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY, -dmg, investigator));
     }
 
     private void healthLoss() {
-       int dmg =  activeMonster.getDamage() - result.getNumberOfSuccess();
-       dmg = dmg<0?0:dmg;
-        if(dmg==0)return;
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-dmg,investigator));
+        int dmg = activeMonster.getDamage() - result.getNumberOfSuccess();
+        dmg = dmg < 0 ? 0 : dmg;
+        if (dmg == 0) return;
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH, -dmg, investigator));
 
     }
 
     private void monsterDamage() {
-        if(result.getNumberOfSuccess()==0)return;
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-result.getNumberOfSuccess(),original));
+        if (result.getNumberOfSuccess() == 0) return;
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH, -result.getNumberOfSuccess(), original));
     }
 
     @Override
@@ -136,7 +139,6 @@ public class CombatEncounter extends Encounter {
         }
         return horrorPreparation;
     }
-
 
 
     @Override
@@ -180,7 +182,12 @@ public class CombatEncounter extends Encounter {
         } else {
             sanityLoss();
         }
+
+
         encounterPart++;
+        if (activeMonster.getHorror() <= 0) {
+            encounterPart = 3;
+        }
         checkForSpellConsequences();
         return super.completeEncounterPart();
     }
@@ -197,9 +204,9 @@ public class CombatEncounter extends Encounter {
     }
 
     @Override
-    public void discard(){
-            GameService.getInstance().addEffect(
-                    new NextInvestigator(()->!GameService.getInstance().getFieldOfInvestigator(getInvestigator()).getMonster().isEmpty()));
+    public void discard() {
+        GameService.getInstance().addEffect(
+                new NextInvestigator(() -> !GameService.getInstance().getFieldOfInvestigator(getInvestigator()).getMonster().isEmpty()));
 
 
     }

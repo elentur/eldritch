@@ -43,9 +43,9 @@ public class Azathoth extends AncientOne {
     public void init() {
         Cultist cultist = new Cultist();
         for (int i = 1; i < cultist.getCount(); i++) {
-            GameService.getInstance().getMonsterPool().getDrawStack().add(new Cultist());
+            GameService.getInstance().getMonsterPool().addItem(new Cultist());
         }
-        GameService.getInstance().getMonsterPool().getDrawStack().add(cultist);
+        GameService.getInstance().getMonsterPool().addItem(cultist);
         GameService.getInstance().getMonsterPool().shuffle();
         GameService.getInstance().getOmenTrack().addToken(OmenStates.GREEN_COMET);
         GameService.getInstance().getOmenTrack().updateProperty().addListener(e -> {
@@ -76,9 +76,9 @@ public class Azathoth extends AncientOne {
         getThird().add(getGreen().draw());
         Collections.shuffle(getThird());
 
-        GameService.getInstance().getMythos().getDrawStack().addAll(getFirst());
-        GameService.getInstance().getMythos().getDrawStack().addAll(getSecond());
-        GameService.getInstance().getMythos().getDrawStack().addAll(getThird());
+        GameService.getInstance().getMythos().addAllItem(getFirst());
+        GameService.getInstance().getMythos().addAllItem(getSecond());
+        GameService.getInstance().getMythos().addAllItem(getThird());
 
         GameService.getInstance().getDoomTrack().updateProperty().addListener(e->{
             if(GameService.getInstance().getDoomTrack().getDoom()<=0){
