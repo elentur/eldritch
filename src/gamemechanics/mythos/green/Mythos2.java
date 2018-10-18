@@ -7,9 +7,9 @@ import model.effects.Reckoning;
 
 import java.util.Collections;
 
-public class Mythos0 extends MythosGreen {
+public class Mythos2 extends MythosGreen {
 
-    public Mythos0() {
+    public Mythos2() {
         super(Dificulty.HARD);
         this.getEffects().add(new Reckoning(Collections.singletonList(ItemType.CONDITION), true));
     }

@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 import model.Field;
 import model.Item.Investigator;
+import oldVersion.gameBuild.Game;
 
 public class ActiveInvestigatorGUI extends Group {
     private final static Image frameImage = new Image("images/interface/InvestigatorFrame.png", 250, 242, true, true, true);
@@ -49,7 +50,7 @@ public class ActiveInvestigatorGUI extends Group {
         portrait.setClip(clip);
         portrait.setOnMouseClicked(e->{
             if(e.getButton().equals(MouseButton.PRIMARY)){
-                zoomTo(inv);
+                GameService.getInstance().zoomTo(inv);
             }else{
                 InventoryDialog inventoryDialog= new InventoryDialog(inv.getInventory());
                 InterfaceLinking.root.getChildren().add( InterfaceLinking.root.getChildren().size() - 1, inventoryDialog);
@@ -127,7 +128,7 @@ public class ActiveInvestigatorGUI extends Group {
             inv.getUpdate().addListener(listener);
             portrait.setImage(new Image("images/investigator/" + inv.getId() + ".jpg", 250, 242, true, true, true));
             name.setText(inv.getName());
-            zoomTo(inv);
+            GameService.getInstance().zoomTo(inv);
         }
         if (inv != null) {
 
@@ -155,12 +156,5 @@ public class ActiveInvestigatorGUI extends Group {
         }
     }
 
-    private void zoomTo(Investigator inv) {
-        Field field = GameService.getInstance().getFieldOfInvestigator(inv);
-        FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
-        if (fieldButton != null) {
-            Animations.zoomTo(fieldButton);
-        }
 
-    }
 }

@@ -11,6 +11,8 @@ public class FiniteItemStack<T>  extends ItemStack{
 
     @Override
     protected void unempty() {
-       log.info("Stack is empty");
+        if(drawStack.isEmpty()) {
+            log.info("Stack is empty");
+        }
     }
 }

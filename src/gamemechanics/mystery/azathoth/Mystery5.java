@@ -19,7 +19,7 @@ public class Mystery5 extends Mystery {
     @Override
     public void init() {
     tulzscha = new Tulzscha();
-        Effect effect = new SpawnMonster(tulzscha,GameService.getInstance().getGameBoard().getField(FieldID.LONDON)); //GameService.getInstance().getRandomField());
+        Effect effect = new SpawnMonster(tulzscha,GameService.getInstance().getRandomField());
         GameService.getInstance().addEffect(effect);
     }
 
