@@ -102,12 +102,9 @@ public class Azathoth extends AncientOne {
             this.setDamage(0);
             this.setToughness(1);
             this.setActualToughness(getToughness());
-
+            this.setStrengthTestEffect( new LooseOrGainHealthSanity(SpendType.HEALTH,-1);
         }
 
-        @Override
-        public Effect getStrengthTestEffect() {
-           return new LooseOrGainHealthSanity(SpendType.HEALTH,1, GameService.getInstance().getEncounteringInvestigator());
-        }
+
     }
 }

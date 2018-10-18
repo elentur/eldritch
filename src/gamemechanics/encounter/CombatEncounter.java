@@ -48,9 +48,7 @@ public class CombatEncounter extends Encounter {
         super.init();
 
         setEncounterPart(1);
-        if (activeMonster.getStrengthTest() == 0) {
-            completeEncounterPart();
-        }
+
     }
 
 
@@ -127,7 +125,11 @@ public class CombatEncounter extends Encounter {
     private CombatPreparation prepareForAttack() {
         if (attackPreparation == null) {
             result = null;
-            attackPreparation = new CombatPreparation(TestType.STRENGTH, investigator, activeMonster, this);
+            TestType testType = TestType.STRENGTH;
+            if(activeMonster.getDamage()==0){
+                testType=TestType.NONE;
+            }
+            attackPreparation = new CombatPreparation(testType, investigator, activeMonster, this);
             setPreparation(attackPreparation);
         }
         return attackPreparation;
@@ -139,7 +141,11 @@ public class CombatEncounter extends Encounter {
 
     private CombatPreparation prepareForHorrorCheck() {
         if (horrorPreparation == null) {
-            horrorPreparation = new CombatPreparation(TestType.WILL, investigator, activeMonster, this);
+            TestType testType = TestType.WILL;
+            if(activeMonster.getHorror()==0){
+                testType=TestType.NONE;
+            }
+            horrorPreparation = new CombatPreparation(testType, investigator, activeMonster, this);
             setPreparation(horrorPreparation);
         }
         return horrorPreparation;
@@ -194,9 +200,6 @@ public class CombatEncounter extends Encounter {
         encounterPart++;
 
         checkForSpellConsequences();
-        if (activeMonster.getWillTest() == 0) {
-            completeEncounterPart();
-        }
         return super.completeEncounterPart();
     }
 

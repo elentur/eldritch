@@ -3,8 +3,10 @@ package gui.interfaceelements;
 import Service.GameService;
 import enums.SpendType;
 import enums.TestType;
-import gui.*;
-import gui.buttons.FieldButton;
+import gui.Effects;
+import gui.Fonts;
+import gui.InterfaceLinking;
+import gui.InventoryDialog;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -15,9 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
-import model.Field;
 import model.Item.Investigator;
-import oldVersion.gameBuild.Game;
 
 public class ActiveInvestigatorGUI extends Group {
     private final static Image frameImage = new Image("images/interface/InvestigatorFrame.png", 250, 242, true, true, true);
