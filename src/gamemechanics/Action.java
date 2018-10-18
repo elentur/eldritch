@@ -135,10 +135,7 @@ public class Action extends Encounter {
     public void discard() {
         getInvestigator().addDoneAction(this);
         getGame().addEffect(new ExecuteEndEvents(this::executeEndEvents));
-        if (getInvestigator().getDoneActions().size() >= getInvestigator().getMaxActions()) {
-            getInvestigator().getDoneActions().clear();
-        }
-    }
+           }
 
     @Override
     protected void executeEndEvents() {
@@ -147,6 +144,7 @@ public class Action extends Encounter {
         }
         if (getInvestigator().getDoneActions().size() >= getInvestigator().getMaxActions()) {
             getGame().addEffect(new NextInvestigator());
+            getInvestigator().getDoneActions().clear();
         }
     }
 }

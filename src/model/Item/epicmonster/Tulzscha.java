@@ -9,7 +9,7 @@ import model.Item.Monster;
 public class Tulzscha extends Monster {
 
     public Tulzscha(){
-        super(2);
+        super(1);
         this.setId("&tulzscha");
         this.setName("${Tulzscha}");
         this.setWillTest(-1);

@@ -16,7 +16,9 @@ import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
 import gamemechanics.mystery.azathoth.Mystery4;
+import gui.Animations;
 import gui.InterfaceLinking;
+import gui.buttons.FieldButton;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -26,8 +28,7 @@ import lombok.Setter;
 import model.*;
 import model.Item.*;
 import model.Item.token.*;
-import model.effects.GainArtifact;
-import model.effects.SwitchPhase;
+import model.effects.*;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -135,6 +136,7 @@ public class GameService {
         count = 1;
         activeInvestigator.setValue(investigators.get(0));
         encounteringInvestigator = activeInvestigator.getValue();
+
     }
     public void setActiveInvestigator() {
         if (count >= investigators.size()) {
@@ -206,13 +208,23 @@ public class GameService {
 
         usedSpells = new ArrayList<>();
         ancientOne.init();
-
-
-
+        addExpedition();
     }
     public void startGame() {
         addActiveMystery();
+        addEffect(new SpawnGate());
+        addEffect(new SpawnClue(1));
         reserve.init();
+       addEffect(new ZoomTo(getActiveInvestigator()));
+    }
+
+    public void zoomTo(Investigator inv) {
+        Field field = GameService.getInstance().getFieldOfInvestigator(inv);
+        FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
+        if (fieldButton != null) {
+            Animations.zoomTo(fieldButton);
+        }
+
     }
     private void addActiveMystery(){
         activeMystery = mysteries.draw();

@@ -40,18 +40,12 @@ public abstract class Mythos implements Item {
         effects = new ArrayList<>();
     }
 
-    public String getName() {
-        return ResourceUtil.get(getNameId(), "mythos");
-    }
-
-    public String getText() {
-        return ResourceUtil.get(getNameId().replace("}", "_text}"), "mythos");
-    }
 
     public String toString() {
         return getName();
     }
 
+    public abstract String getText();
     public void execute() {
         StringBuilder text = new StringBuilder(getText());
         for (Effect effect:effects){

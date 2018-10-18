@@ -3,6 +3,7 @@ package gamemechanics.EncounterTest;
 import Service.DiceRollerService;
 import Service.GameService;
 import container.InvestigatorContainer;
+import enums.EffectSelector;
 import enums.FieldID;
 import factory.GameBoardFactory;
 import gui.EffectLayer;
@@ -23,8 +24,9 @@ import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
 import model.Item.monsters.Shan;
-import gamemechanics.mythos.blue.MythosTestRumor;
+import gamemechanics.mythos.blue.Mythos0;
 import model.Item.token.RumorToken;
+import model.effects.SpawnClue;
 import model.effects.SpawnGate;
 
 import java.util.Arrays;
@@ -43,10 +45,10 @@ public class GameBoardGUITest extends Application {
         GameBoardGUI gameboardGUI = new GameBoardGUI(gameBoard);
         GameService.getInstance().setGameBoardAndAncientOne( new Azathoth(), gameBoard);
         GameService.getInstance().addInvestigators(new InvestigatorContainer(Arrays.asList(new AgnesBaker(), new AkachiOnyele(), new CharlieKane(), new DianaStanley())));
-        GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS,new MythosTestRumor()));
-        GameService.getInstance().addMystery(FieldID.PYRAMIDS);
-        GameService.getInstance().addExpedition();
-        GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
+      //  GameService.getInstance().addRumor(new RumorToken(FieldID.PYRAMIDS,new Mythos0()));
+
+
+     //   GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
      //
         Investigator inv = GameService.getInstance().getActiveInvestigator();
         DiceRollerService.debug=true;
@@ -82,7 +84,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
-      GameService.getInstance().addEffect(new SpawnGate());
+
         //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }
 
