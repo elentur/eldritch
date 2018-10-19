@@ -43,9 +43,11 @@ public class Azathoth extends AncientOne {
         GameService.getInstance().getMonsterPool().addItem(cultist);
         GameService.getInstance().getMonsterPool().shuffle();
         GameService.getInstance().getOmenTrack().addToken(OmenStates.GREEN_COMET);
-        GameService.getInstance().getOmenTrack().updateProperty().addListener(e -> {
-            for (int i = 0; i < GameService.getInstance().getOmenTrack().getToken(OmenStates.GREEN_COMET); i++) {
-                GameService.getInstance().addEffect(new AdvanceDoom(1));
+        GameService.getInstance().getOmenTrack().updateProperty().addListener((a,b,newValue) -> {
+            if(newValue && GameService.getInstance().getOmenTrack().getOmen().equals(OmenStates.GREEN_COMET)) {
+                for (int i = 0; i < GameService.getInstance().getOmenTrack().getToken(OmenStates.GREEN_COMET); i++) {
+                    GameService.getInstance().addEffect(new AdvanceDoom(1));
+                }
             }
         });
 

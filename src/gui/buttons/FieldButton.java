@@ -27,6 +27,7 @@ import lombok.Setter;
 import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
+import model.effects.AdvanceOmen;
 import model.effects.Move;
 
 import java.util.List;
@@ -172,7 +173,7 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-                // GameService.getInstance().addEffect(new AddEldritchToMystery(2));
+              //   GameService.getInstance().addEffect(new AdvanceOmen(1));
                 if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
 
                     if (wheel != null) {

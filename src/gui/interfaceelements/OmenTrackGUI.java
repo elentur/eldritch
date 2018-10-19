@@ -121,7 +121,7 @@ public class OmenTrackGUI extends Group {
                 bigOne=blueStars2;
                 break;
         }
-
+        GameService.getInstance().getOmenTrack().updateProperty().setValue(false);
     }
 
     private void activateButtons() {
@@ -129,6 +129,7 @@ public class OmenTrackGUI extends Group {
         blueStars1.setEnabled(true);
         redEclipse.setEnabled(true);
         blueStars2.setEnabled(true);
+
     }
 
     private class UpdateListener implements ChangeListener<Boolean> {
@@ -136,7 +137,7 @@ public class OmenTrackGUI extends Group {
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (newValue) {
                 update();
-                GameService.getInstance().getOmenTrack().updateProperty().setValue(false);
+
             }
         }
     }
