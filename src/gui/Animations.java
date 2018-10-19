@@ -297,6 +297,9 @@ public class Animations {
     }
 
     public static void zoomTo(Node node) {
+        if(node==null){
+            return;
+        }
         AnimationTimer timer = new AnimationTimer() {
 
             private long lastUpdate = 0;

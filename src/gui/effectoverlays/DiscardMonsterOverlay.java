@@ -21,6 +21,7 @@ public class DiscardMonsterOverlay extends Overlay {
     @Override
     public int init() {
         super.init();
+        discardMonster.init();
         Field field= GameService.getInstance().getFieldOfMonster(discardMonster.getMonster());
         FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
         Animations.zoomTo(fieldButton);

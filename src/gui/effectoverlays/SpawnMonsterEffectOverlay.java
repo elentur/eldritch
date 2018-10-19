@@ -22,6 +22,7 @@ public class SpawnMonsterEffectOverlay extends Overlay {
     @Override
     public int init() {
         super.init();
+        spawnMonster.init();
         if (spawnMonster.getMonster() == null) {
             return 0;
         }

@@ -20,6 +20,7 @@ public class SpawnEldritchTokenEffectOverlay extends Overlay {
     @Override
     public int init() {
         super.init();
+        spawnEldritchToken.init();
         Field field= spawnEldritchToken.getField();
         FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
         Animations.zoomTo(fieldButton);

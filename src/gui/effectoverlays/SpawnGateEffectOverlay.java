@@ -21,6 +21,7 @@ public class SpawnGateEffectOverlay extends Overlay {
 
     @Override
     public int init() {
+        spawnGate.init();
         super.init();
         if(spawnGate.getToken()== null){
             return 0;

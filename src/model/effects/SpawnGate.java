@@ -20,6 +20,7 @@ public class SpawnGate extends Effect {
 
 
     public void init() {
+
         token = GameService.getInstance().getGateTokens().draw();
     }
 

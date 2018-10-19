@@ -8,8 +8,7 @@ import gamemechanics.encounter.Encounter;
 import model.Effect;
 import model.Item.AncientOne;
 import model.Item.Monster;
-import model.effects.AdvanceDoom;
-import model.effects.LooseOrGainHealthSanity;
+import model.effects.*;
 
 import java.util.Collections;
 
@@ -102,7 +101,10 @@ public class Azathoth extends AncientOne {
             this.setDamage(0);
             this.setToughness(1);
             this.setActualToughness(getToughness());
-            this.setStrengthTestEffect( new LooseOrGainHealthSanity(SpendType.HEALTH,-1);
+            this.setStrengthTestEffect(
+                    new And(
+                            new LooseOrGainHealthSanity(SpendType.HEALTH,-1,LooseOrGainHealthSanity.ENCOUNTERING_INVESTIGATOR),
+                            new DiscardMonster(this)));
         }
 
 

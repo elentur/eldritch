@@ -23,6 +23,7 @@ public class SpawnClueEffectOverlay extends Overlay {
     @Override
     public int init() {
         super.init();
+        spawnClue.init();
         Field field= GameService.getInstance().getGameBoard().getField(spawnClue.getToken().getFieldID());
         FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
         Animations.zoomTo(fieldButton);

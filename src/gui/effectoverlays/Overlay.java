@@ -18,7 +18,8 @@ public class Overlay extends Group{
     private double y;
 
     public Overlay(Effect effect) {
-    this.effect=effect;
+         this.effect=effect;
+
     }
 
     protected void setCord(Investigator inv){
@@ -39,7 +40,7 @@ public class Overlay extends Group{
     }
 
     public int init() {
-        effect.init();
+
         if(!effect.isAccepted()){
             return -1;
         }

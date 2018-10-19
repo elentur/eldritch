@@ -1,6 +1,7 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
 import enums.SpendType;
 import gamemechanics.choice.Choice;
@@ -14,10 +15,22 @@ import utils.ResourceUtil;
 
 @Getter
 public class LooseOrGainHealthSanity extends Effect {
+    public final static int START_INVESTIGATOR = 1;
+    public final static int ACTIVE_INVESTIGATOR = 2;
+    public final static int ENCOUNTERING_INVESTIGATOR = 3;
+
     private final SpendType spendType;
     private final int value;
     private Investigator investigator;
     private Monster monster;
+    private int invType;
+
+    public LooseOrGainHealthSanity(SpendType spendType, int value, int invType) {
+        super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
+        this.spendType = spendType;
+        this.value = value;
+        this.invType = invType;
+    }
 
     public LooseOrGainHealthSanity(SpendType spendType, int value, Investigator investigator) {
         super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
@@ -49,7 +62,9 @@ public class LooseOrGainHealthSanity extends Effect {
                 if (investigator != null) {
                     investigator.addHealth(value);
                 } else if (monster != null) {
-                    monster.addDamage(value);
+                    if(monster.getActualToughness()>0) {
+                        monster.addDamage(value);
+                    }
                 }
                 break;
             case SANITY:
@@ -86,6 +101,20 @@ public class LooseOrGainHealthSanity extends Effect {
                 case MONSTER_CHOICE:
                     monster = ((MonsterChoice) condition).getSelectedMonster().get(0);
                     break;
+            }
+        }
+        if(invType!=0){
+            switch (invType){
+                case START_INVESTIGATOR:
+                    investigator = GameService.getInstance().getStartInvestigator();
+                    break;
+                case ACTIVE_INVESTIGATOR:
+                    investigator = GameService.getInstance().getActiveInvestigator();
+                    break;
+                case ENCOUNTERING_INVESTIGATOR:
+                    investigator = GameService.getInstance().getEncounteringInvestigator();
+                    break;
+
             }
         }
     }

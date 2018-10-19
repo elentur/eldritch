@@ -21,6 +21,7 @@ public class CloseGateEffectOverlay extends Overlay {
     @Override
     public int init() {
         super.init();
+        closeGate.init();
         if(closeGate.getToken()== null){
             return 0;
         }
