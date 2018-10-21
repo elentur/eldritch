@@ -59,9 +59,14 @@ public abstract class ItemStack<T extends Item> {
     public Item get(String id) {
         Item item = drawStack.get(id);
         if (item != null) {
+            drawStack.remove(item);
             return item;
         }
-        return traystack.get(id);
+        item = traystack.get(id);
+        if (item != null) {
+            drawStack.remove(item);
+        }
+        return item;
     }
 
     public T draw() {
@@ -93,4 +98,11 @@ public abstract class ItemStack<T extends Item> {
     public T getByItemType(ItemType itemType) {
         return drawStack.stream().filter(item -> item.getItemType().equals(itemType)).findFirst().orElse(null);
     }
+
+    public  void removeItem(T item){
+
+            drawStack.remove(item);
+
+    }
+
 }

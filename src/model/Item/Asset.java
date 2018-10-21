@@ -1,8 +1,9 @@
 package model.Item;
 
+import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
-import gamemechanics.Action;
+import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -55,6 +56,11 @@ public abstract class Asset implements Item {
     }
     @Override
     public void discard(){
+        for(Investigator inv : GameService.getInstance().getInvestigators()){
+            if(inv.getInventory().contains(this)){
+                inv.removeFromInventory(this);
+            }
+        }
         stack.discard(this);
     }
     @Override
@@ -78,7 +84,7 @@ public abstract class Asset implements Item {
 
 
     @Override
-    public Action getEncounter() {
+    public Encounter getEncounter() {
         return null;
     }
 }

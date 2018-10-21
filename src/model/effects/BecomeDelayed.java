@@ -21,6 +21,9 @@ public class BecomeDelayed extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         log.info("Delayed" );

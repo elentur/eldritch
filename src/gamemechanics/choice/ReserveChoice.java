@@ -15,7 +15,7 @@ public class ReserveChoice extends Choice {
     @Getter
     private final boolean singleSelect;
 
-    private final ItemType itemType;
+    private final List<ItemType> itemType;
     @Getter
     private int success;
 
@@ -24,7 +24,7 @@ public class ReserveChoice extends Choice {
         this.success =success;
     }
 
-    public ReserveChoice(boolean singleSelect,ItemType itemType) {
+    public ReserveChoice(boolean singleSelect,List<ItemType> itemType) {
         super(ChoiceType.RESERVE_CHOICE, ResourceUtil.get("${reserve_choice}", "ui"), "");
         this.singleSelect = singleSelect;
         this.itemType=itemType;

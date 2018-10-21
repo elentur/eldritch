@@ -19,6 +19,9 @@ public class AddEldritchToMystery extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
             for (int i = 0; i < value; i++) {

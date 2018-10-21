@@ -10,12 +10,10 @@ import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.Mystery;
-import gamemechanics.Mythos;
 import gamemechanics.Phases;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
-import gamemechanics.mystery.azathoth.Mystery4;
 import gui.Animations;
 import gui.InterfaceLinking;
 import gui.buttons.FieldButton;
@@ -28,7 +26,10 @@ import lombok.Setter;
 import model.*;
 import model.Item.*;
 import model.Item.token.*;
-import model.effects.*;
+import model.effects.SpawnClue;
+import model.effects.SpawnGate;
+import model.effects.SwitchPhase;
+import model.effects.ZoomTo;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -277,6 +278,7 @@ public class GameService {
             items.addAll(inv.getInventory().getItemsWidthSituationTyp(SituationType.ALL));
         }
         items.add(investigator);
+        items.addAll(investigator.getFocus());
         return items;
     }
 

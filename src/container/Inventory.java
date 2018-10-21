@@ -5,7 +5,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import model.Item.Item;
-import model.Item.ItemBonus;
 
 import java.util.function.Function;
 
@@ -38,6 +37,34 @@ public class Inventory extends ItemContainer<Item> {
             return containing;
         };
         return getItemsWidthTypeFilter(filter);
+    }
+
+    @Override
+    public boolean add(Item value) {
+        boolean add = super.add(value);
+        update.setValue(true);
+        return add;
+
+    }
+
+    @Override
+    public void add(int index, Item value) {
+        super.add(index, value);
+        update.setValue(true);
+    }
+
+    @Override
+    public Item remove(int index) {
+        Item item = super.remove(index);
+        update.setValue(true);
+        return item;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        boolean remove= super.remove(o);
+        update.setValue(true);
+        return remove;
     }
 
     public void setShowAsset() {

@@ -19,6 +19,9 @@ public class MonsterSurge extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         boolean spawnedAMonster = false;

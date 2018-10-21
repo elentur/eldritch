@@ -1,5 +1,6 @@
 package model.Item;
 
+import container.FiniteItemStack;
 import container.Inventory;
 import container.ItemContainer;
 import container.ItemStack;
@@ -16,6 +17,7 @@ import lombok.ToString;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.Item.token.ClueToken;
+import model.Item.token.FocusToken;
 import model.SkillSet;
 import utils.MathUtils;
 import utils.ResourceUtil;
@@ -49,7 +51,7 @@ public abstract class Investigator implements Item {
 
     private Inventory inventory;
     private ItemContainer<ClueToken> clues;
-    private int focus;
+    private FiniteItemStack<FocusToken> focusStack;
     private int shipTicket;
     private int trainTicket;
 
@@ -76,6 +78,7 @@ public abstract class Investigator implements Item {
         this.setStartingSpace(startField);
         this.setBonus(createBonus());
         this.clues = new ItemContainer<>();
+        this.focusStack = new FiniteItemStack<>(new ItemContainer<FocusToken>());
         this.inventory = new Inventory();
         for (Item p : startItems) {
             switch (p.getSubType()) {
@@ -90,7 +93,10 @@ public abstract class Investigator implements Item {
         }
         doneActions = new ArrayList<>();
         maxActions = 2;
+
     }
+
+
 
     public String getOccupation() {
         return ResourceUtil.get(occupation, this.getClass());
@@ -199,8 +205,8 @@ public abstract class Investigator implements Item {
     public void executeReckoning(Investigator inv, boolean autoFail) {
     }
 
-    public int getFocus() {
-        return focus;
+    public ItemContainer<FocusToken>  getFocus() {
+        return focusStack.getDrawStack();
     }
 
 
@@ -246,15 +252,18 @@ public abstract class Investigator implements Item {
         update.setValue(true);
     }
 
-    public void addFocus(int value) {
-        this.focus += value;
-        MathUtils.clamp(value, 0, 2);
-        update.setValue(true);
+    public void addFocus() {
+        if(focusStack.getDrawStack().size()>=2){
+            return;
+        }
+        FocusToken f = new FocusToken(this);
+        f.setStack(focusStack);
+      focusStack.addItem(f);
+      update.setValue(true);
     }
 
-    public void removeFocus(int value) {
-        this.focus -= value;
-        MathUtils.clamp(value, 0, 2);
+    public void removeFocus(FocusToken focusToken) {
+       focusStack.removeItem(focusToken);
         update.setValue(true);
     }
 
@@ -275,5 +284,15 @@ public abstract class Investigator implements Item {
     @Override
     public Action getEncounter() {
         return null;
+    }
+
+    public void removeFromInventory(Item item) {
+        inventory.remove(item);
+       // update.setValue(true);
+    }
+
+    public void addToInventory(Item item) {
+        inventory.add(item);
+      //  update.setValue(true);
     }
 }

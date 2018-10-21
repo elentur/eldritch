@@ -25,8 +25,10 @@ public class InventoryItemButton extends ItemButton {
 
     private final Label name;
     private final Label backSideText;
-    public InventoryItemButton(Item item) {
+    private final boolean  deactivateActions;
+    public InventoryItemButton(Item item,boolean deactivateActions) {
         super(item);
+        this.deactivateActions=deactivateActions;
         ImageView nameImage = new ImageView(labelImage);
         nameImage.setTranslateY(-48);
         name = new Label(item.getName());
@@ -50,7 +52,7 @@ public class InventoryItemButton extends ItemButton {
         backSideText.setAlignment(Pos.CENTER);
 
         this.setOnMouseClicked(e->{
-            if(e.getButton().equals(MouseButton.PRIMARY)) {
+            if(e.getButton().equals(MouseButton.PRIMARY) && ! deactivateActions) {
                 Encounter encounter = item.getEncounter();
                 if ( GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
 

@@ -5,7 +5,6 @@ import Service.GameService;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
-import model.Item.Investigator;
 import utils.ResourceUtil;
 
 @Getter
@@ -19,6 +18,9 @@ public class AdvanceDoom extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         GameService.getInstance().getDoomTrack().advanceDoom(value);

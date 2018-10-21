@@ -12,29 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PersonalAssistant extends Asset {
+public class ArcaneScholar extends Asset {
 
-    public PersonalAssistant() {
+    public ArcaneScholar() {
         super(ItemType.ALLEY, 2);
     }
 
     @Override
     public String getId() {
-        return "&personalAssistant";
+        return "&arcaneScholar";
     }
 
     @Override
     public String getNameId() {
-        return "${personal_assistant}";
+        return "${arcane_scholar}";
     }
 
     @Override
     public List<ItemBonus> createBonus() {
         List<ItemBonus> boni = new ArrayList<>();
-        ItemBonus_GainDice bonus1 = new ItemBonus_GainDice(1,TestType.INFLUENCE,SituationType.ALL,this);
+        ItemBonus_GainDice bonus1 = new ItemBonus_GainDice(1,TestType.LORE,SituationType.ALL,this);
         boni.add(bonus1);
 
-        ItemBonus_RepeatRoll bonus2 = new ItemBonus_RepeatRoll(1,TestType.INFLUENCE,SituationType.ALL,this);
+        ItemBonus_RepeatRoll bonus2 = new ItemBonus_RepeatRoll(1,TestType.LORE,SituationType.ALL,this);
         boni.add(bonus2);
         return boni;
     }

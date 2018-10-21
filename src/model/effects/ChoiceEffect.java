@@ -1,17 +1,21 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
+import gamemechanics.choice.Choice;
 import lombok.Getter;
 import model.Effect;
 
 @Getter
-public class ExecuteEndEvents extends Effect {
-    private final Runnable r;
+public class ChoiceEffect extends Effect {
 
-    public ExecuteEndEvents(Runnable r) {
-        super(EffectTyps.EXECUTE_END_EVENTS);
-        this.r =r;
+
+    private final Choice choice;
+
+    public ChoiceEffect(Choice choice) {
+        super(EffectTyps.CHOICE_EFFECT);
+        this.choice = choice;
     }
 
 
@@ -22,13 +26,14 @@ public class ExecuteEndEvents extends Effect {
         }
         init();
         if(!isAccepted()) return;
-         r.run();
+        GameService.getInstance().addChoice(choice);
 
 
     }
 
     @Override
     public String getText() {
+
         return "";
     }
 }

@@ -58,6 +58,8 @@ public abstract class ItemBonus implements Bonus {
     public void execute(Encounter encounter) {
         if(parentItem.getItemType().equals(ItemType.SPELL)){
             GameService.getInstance().addUsedSpell((Spell)parentItem);
+        } if(parentItem.getSubType().equals(ItemType.FOCUS_TOKEN)){
+           parentItem.discard();
         }
 
     }

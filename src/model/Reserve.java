@@ -29,11 +29,13 @@ public class Reserve {
     public List<Asset> getReserve(){
         return reserve;
     }
-    public  List<Asset> getReserve(ItemType itemType){
+    public  List<Asset> getReserve(List<ItemType> itemTypes){
         List<Asset> filteredReserve = new ArrayList<>();
         for(Asset asset : reserve){
-            if(asset.getSubType().equalsWithParts(itemType)){
-                filteredReserve.add(asset);
+            for(ItemType itemType:itemTypes) {
+                if (asset.getSubType().equalsWithParts(itemType)) {
+                    filteredReserve.add(asset);
+                }
             }
         }
         return filteredReserve;

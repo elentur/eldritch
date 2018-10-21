@@ -84,8 +84,9 @@ public class InventoryDialog extends DialogGui {
     private void update() {
         items.getScrollableChildren().clear();
         for(Item item : inventory.getItems()){
-            items.getScrollableChildren().add(new InventoryItemButton(item));
+            items.getScrollableChildren().add(new InventoryItemButton(item,false));
         }
+        inventory.getUpdate().setValue(false);
     }
 
 
@@ -99,7 +100,7 @@ public class InventoryDialog extends DialogGui {
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (newValue) {
                 update();
-                inventory.getUpdate().setValue(false);
+
             }
         }
     }

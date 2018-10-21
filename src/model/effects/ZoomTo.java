@@ -6,10 +6,6 @@ import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
 import model.Item.Investigator;
-import utils.ResourceUtil;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Getter
 public class ZoomTo extends Effect {
@@ -23,9 +19,12 @@ public class ZoomTo extends Effect {
 
     @Override
     public void execute() {
+        if (isExecuted()) {
+            return;
+        }
         init();
-        if(!isAccepted()) return;
-      GameService.getInstance().zoomTo(investigator);
+        if (!isAccepted()) return;
+        GameService.getInstance().zoomTo(investigator);
 
 
     }

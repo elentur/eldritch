@@ -37,6 +37,9 @@ public class Move extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         if(field!=null) {

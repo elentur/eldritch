@@ -12,23 +12,31 @@ import model.Effect;
 import model.Item.Investigator;
 import utils.ResourceUtil;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @Log
 public class AssetFromReserve extends Effect {
-    private final ItemType itemType;
+    private final List<ItemType> itemType;
     private final Investigator investigator;
 
-    public AssetFromReserve(ItemType itemType, Investigator investigator) {
+    public AssetFromReserve( Investigator investigator,ItemType... itemType) {
         super(EffectTyps.ASSET_FROM_RESERVE);
-        this.itemType = itemType;
+        this.itemType = Arrays.asList(itemType);
         this.investigator = investigator;
     }
     public AssetFromReserve( Investigator investigator) {
-      this(null,investigator);
+        super(EffectTyps.ASSET_FROM_RESERVE);
+        this.itemType = null;
+        this.investigator = investigator;
     }
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         if(itemType==null){
@@ -50,6 +58,14 @@ public class AssetFromReserve extends Effect {
         if(itemType==null){
             return"";
         }
-       return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${reserve}","effect", itemType.getText()  )) ;
+        StringBuilder s = new StringBuilder("");
+        itemType.stream().map(e->e.getText()).forEach(e->{
+            if(s.toString().equals("")){
+                s.append(e);
+            }else{
+                s.append(", "+e);
+            }
+        });
+       return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${reserve}","effect", s.toString() )) ;
     }
 }

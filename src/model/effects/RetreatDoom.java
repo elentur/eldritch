@@ -21,6 +21,9 @@ public class RetreatDoom extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         GameService.getInstance().getDoomTrack().retreatDoom(value);

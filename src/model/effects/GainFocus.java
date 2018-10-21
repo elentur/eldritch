@@ -23,9 +23,12 @@ public class GainFocus extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
-        investigator.addFocus(value);
+        investigator.addFocus();
 
     }
 

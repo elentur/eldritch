@@ -8,11 +8,13 @@ import java.util.List;
 
 public enum ItemType {
     NONE("", Collections.singletonList("")),
+    TRINKET("${trinket}", Collections.singletonList("Trinket")),
     TRINKET_WEAPON("${trinketWeapon}", Arrays.asList("Trinket","Weapon")),
     ITEM("${item}", Collections.singletonList("Item")),
     ITEM_WEAPON("${itemWeapon}", Arrays.asList("Item","Weapon")),
     ITEM_WEAPON_MAGICAL("${itemWeaponMagical}", Arrays.asList("Item","Weapon","Magical")),
     ITEM_TOME("${itemTome}", Arrays.asList("Item","Tome")),
+    ITEM_MAGICAL("${itemMagical}", Arrays.asList("Item","Magical") ),
     ITEM_TOME_MAGICAL("${itemTomeMagical}", Arrays.asList("Item","Tome","Magical")),
     ALLEY("${alley}", Collections.singletonList("Alley")),
     INCANTATION("${incantation}", Collections.singletonList("Incantation")),
@@ -36,7 +38,10 @@ public enum ItemType {
     MYTHOS("${mythos}", Collections.singletonList("Mythos")  ),
     ANCIENT_ONE("${ancient_one}", Collections.singletonList("Ancient One") ),
     AMNESIA_CONDITION("${amnesia_condition}", Collections.singletonList("Amnesia Condition")  ),
-    MYSTERY("${mystery}", Collections.singletonList("mystery")  );
+    MYSTERY("${mystery}", Collections.singletonList("Mystery")  ),
+    FOCUS_TOKEN("${focus}", Collections.singletonList("Focus")   ),
+    SERVICE("${service}", Collections.singletonList("Service")  );
+
     private String key;
     private List<String> parts;
 
@@ -65,4 +70,6 @@ public enum ItemType {
      return this.parts.containsAll(o.parts);
 
     }
+
+
 }

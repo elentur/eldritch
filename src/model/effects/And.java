@@ -22,6 +22,9 @@ public class And extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         init();
         if(!isAccepted()) return;
         for (Effect effect : effects) {

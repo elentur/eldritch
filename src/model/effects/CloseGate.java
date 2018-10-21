@@ -22,6 +22,9 @@ public class CloseGate extends Effect {
 
 
     public void init() {
+        if(isExecuted()){
+            return;
+        }
         super.init();
         token = GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getEncounteringInvestigator()).getGate();
     }

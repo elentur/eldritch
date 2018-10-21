@@ -31,7 +31,7 @@ public class ReserveChoiceGUI extends ChoiceDialog {
 
         ItemScrollPane scrollPane = new ItemScrollPane();
         for(Asset asset : assets) {
-            InventoryItemButton button= new InventoryItemButton(asset);
+            InventoryItemButton button= new InventoryItemButton(asset,true);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     if(choosen.contains(asset)){

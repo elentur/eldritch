@@ -81,7 +81,7 @@ public class FieldActions {
         hasTrainTicket = hasTrainTicket && !inv.getDoneActions().contains(buyTrain);
         hasShipTicket = hasShipTicket&& !inv.getDoneActions().contains(buyShip);
         hasAcquireAsset = hasAcquireAsset&& !inv.getDoneActions().contains(acquireAsset);
-        hasFocus = inv.getFocus() < 2 && !inv.getDoneActions().contains(gainFocus);
+        hasFocus = inv.getFocus().size() < 2 && !inv.getDoneActions().contains(gainFocus);
         hasRestAction = field.getMonster().isEmpty() &&(inv.getActualHealth()<inv.getHealth()|| inv.getActualSanity() < inv.getSanity()) && !inv.getDoneActions().contains(rest);
         hasTradeAction = field.getInvestigators().size() > 1 && !inv.getDoneActions().contains(trade);
 

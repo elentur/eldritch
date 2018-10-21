@@ -330,6 +330,8 @@ public class Animations {
                     InterfaceLinking.gameBoardGUI.getScrollPane().setVvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getVvalue() + speedY);
                     InterfaceLinking.gameBoardGUI.getScrollPane().setHvalue(InterfaceLinking.gameBoardGUI.getScrollPane().getHvalue() + speedX);
                     if (count >= speed) {
+                        InterfaceLinking.gameBoardGUI.getScrollPane().setVvalue(y);
+                        InterfaceLinking.gameBoardGUI.getScrollPane().setHvalue(x);
                         stop();
                     }
                     count++;
@@ -337,7 +339,6 @@ public class Animations {
                 lastUpdate = time;
             }
         };
-
         timer.start();
     }
 

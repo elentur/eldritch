@@ -23,6 +23,9 @@ public class Or extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         GameService.getInstance().addChoice(new EffectChoice(effects));

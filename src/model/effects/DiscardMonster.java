@@ -4,16 +4,12 @@ package model.effects;
 import enums.ChoiceType;
 import enums.EffectSelector;
 import enums.EffectTyps;
-import enums.SpendType;
 import gamemechanics.choice.Choice;
-import gamemechanics.choice.InvestigatorChoice;
 import gamemechanics.choice.MonsterChoice;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
-import model.Field;
 import model.Item.Monster;
-import model.Item.token.EldritchToken;
 import utils.ResourceUtil;
 
 @Getter
@@ -36,6 +32,9 @@ public class DiscardMonster extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if (!isAccepted()) return;
         if (monster != null) {

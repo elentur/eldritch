@@ -16,7 +16,7 @@ import utils.ResourceUtil;
 public class GainAsset extends Effect {
     private final ItemType itemType;
     private final Investigator investigator;
-    private final Asset asset;
+    private  Asset asset;
 
     public GainAsset(ItemType itemType, Investigator investigator) {
         super(EffectTyps.GAIN_ASSET);
@@ -34,22 +34,28 @@ public class GainAsset extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         if(asset==null) {
             switch (itemType) {
                 case ANY:
-                    investigator.getInventory().add(GameService.getInstance().getAssets().draw());
+                    asset=GameService.getInstance().getAssets().draw();
                     break;
                 default:
-                    investigator.getInventory().add(GameService.getInstance().getAssets().getByItemType(itemType));
+                   asset = GameService.getInstance().getAssets().getByItemType(itemType);
                     break;
             }
             log.info(itemType.toString() );
-        }else{
-            investigator.getInventory().add(asset);
-            log.info(asset.getName() );
         }
+            for(Effect effect : asset.getDrawEffects()){
+            GameService.getInstance().addEffect(effect);
+            }
+            investigator.addToInventory(asset);
+            log.info(asset.getName() );
+
 
     }
 

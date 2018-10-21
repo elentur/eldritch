@@ -16,7 +16,7 @@ import utils.ResourceUtil;
 public class GainArtifact extends Effect {
     private final ItemType itemType;
     private final Investigator investigator;
-    private final Artifact artifact;
+    private  Artifact artifact;
 
     public GainArtifact(ItemType itemType, Investigator investigator) {
         super(EffectTyps.GAIN_ARTIFACT);
@@ -35,20 +35,26 @@ public class GainArtifact extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if (!isAccepted()) return;
         if (artifact == null) {
             switch (itemType) {
                 case ANY:
-                    investigator.getInventory().add(GameService.getInstance().getArtifacts().draw());
+                    artifact = GameService.getInstance().getArtifacts().draw();
                     break;
                 default:
-                    investigator.getInventory().add(GameService.getInstance().getArtifacts().getByItemType(itemType));
+                    artifact = GameService.getInstance().getArtifacts().getByItemType(itemType);
                     break;
             }
-        } else {
-            investigator.getInventory().add(artifact);
         }
+        for(Effect effect : artifact.getDrawEffects()){
+            GameService.getInstance().addEffect(effect);
+        }
+            investigator.addToInventory(artifact);
+
 
         log.info(itemType.toString());
     }

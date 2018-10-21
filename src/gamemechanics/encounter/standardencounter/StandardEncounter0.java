@@ -22,7 +22,7 @@ public class StandardEncounter0 extends StandardEncounter {
         switch (getField().getType()) {
             case CITY:
                 getEffect()[0][START] = new NullEffect();
-                getEffect()[0][PASS] = new Or(new GainAsset(ItemType.ANY,  getInvestigator()), new AssetFromReserve(ItemType.ANY,  getInvestigator()));
+                getEffect()[0][PASS] = new Or(new GainAsset(ItemType.ANY,  getInvestigator()), new AssetFromReserve(  getInvestigator(),ItemType.ANY));
                 getEffect()[0][FAIL] = new GainCondition(ConditionType.DETAINED, getInvestigator());
                 setEncounterPart(0);
                 break;

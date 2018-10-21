@@ -44,6 +44,9 @@ public class Reckoning extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         for(Field field: GameService.getInstance().getGameBoard().getFields()){

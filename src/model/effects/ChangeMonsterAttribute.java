@@ -23,6 +23,9 @@ public class ChangeMonsterAttribute extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         super.execute();
         if(!isAccepted()) return;
         switch (type){

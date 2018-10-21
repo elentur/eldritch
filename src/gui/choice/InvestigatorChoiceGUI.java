@@ -27,7 +27,7 @@ public class InvestigatorChoiceGUI extends ChoiceDialog {
 
         ItemScrollPane scrollPane = new ItemScrollPane();
         for(Investigator investigator : investigators) {
-            InventoryItemButton button= new InventoryItemButton(investigator);
+            InventoryItemButton button= new InventoryItemButton(investigator,true);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     if(choosen.contains(investigator)){

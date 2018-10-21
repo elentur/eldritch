@@ -24,6 +24,7 @@ public class SpawnMonster extends Effect {
     }
 
     public void init() {
+
         super.init();
         if(monster==null) {
             monster = GameService.getInstance().getMonsterPool().draw();
@@ -32,6 +33,9 @@ public class SpawnMonster extends Effect {
 
     @Override
     public void execute() {
+        if(isExecuted()){
+            return;
+        }
         if(!isAccepted()) return;
         super.execute();
         if(monster!=null){

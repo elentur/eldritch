@@ -1,10 +1,7 @@
 package gui.choice;
 
-import Service.GameService;
 import container.Inventory;
 import enums.YesNo;
-import expetions.ReserveException;
-import gamemechanics.choice.InformationChoice;
 import gamemechanics.choice.TradeChoice;
 import gui.ItemScrollPane;
 import gui.buttons.InventoryItemButton;
@@ -70,7 +67,7 @@ public class TradeChoiceGUI extends ChoiceDialog {
     private void updateScrollPanes(TradeChoice choice, Inventory left, Inventory right) {
        scrollPaneLeft.getScrollableChildren().clear();
         for(Item item : left) {
-            InventoryItemButton button= new InventoryItemButton(item);
+            InventoryItemButton button= new InventoryItemButton(item,true);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     left.remove(item);
@@ -86,7 +83,7 @@ public class TradeChoiceGUI extends ChoiceDialog {
         }
         scrollPaneRight.getScrollableChildren().clear();
         for(Item item : right) {
-            InventoryItemButton button= new InventoryItemButton(item);
+            InventoryItemButton button= new InventoryItemButton(item,true);
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     right.remove(item);
