@@ -63,7 +63,8 @@ public class HolyWater extends Asset {
                 new NullEffect(),
                 TestType.NONE,
                 0,
-                0
+                0,
+                SituationType.ACTION
         );
 
         return encounter;

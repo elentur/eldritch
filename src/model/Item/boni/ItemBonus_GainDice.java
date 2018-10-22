@@ -1,6 +1,7 @@
 package model.Item.boni;
 
 import enums.BonusType;
+import enums.EffectSelector;
 import enums.SituationType;
 import enums.TestType;
 import gamemechanics.encounter.Encounter;
@@ -31,6 +32,9 @@ public class ItemBonus_GainDice extends ItemBonus {
     public void execute(Encounter encounter) {
         if(!isExecutable()){
             return;
+        }
+        if(isPerRound()){
+            setUsable(false);
         }
         super.execute(encounter);
     }

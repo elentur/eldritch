@@ -7,6 +7,7 @@ import model.Effect;
 import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
+import model.effects.Discard;
 import model.effects.LooseOrGainHealthSanity;
 
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ public class PrivateCare extends Asset {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect effect1  = new LooseOrGainHealthSanity(SpendType.HEALTH,inv.getHealth()-inv.getActualHealth(),inv);
         Effect effect2  = new LooseOrGainHealthSanity(SpendType.SANITY,inv.getSanity()-inv.getActualSanity(),inv);
-        return Arrays.asList(effect1,effect2);
+        Effect effect3  = new Discard(this);
+
+        return Arrays.asList(effect1,effect2,effect3);
     }
 
     @Override

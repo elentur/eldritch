@@ -3,14 +3,12 @@ package gamemechanics.encounter;
 import Service.GameService;
 import container.ItemContainer;
 import container.Result;
-import enums.EncounterType;
-import enums.SituationType;
-import enums.SpendType;
-import enums.TestType;
+import enums.*;
 import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import model.Field;
 import model.Item.Bonus;
 import model.Item.Investigator;
 import model.Item.Item;
@@ -40,7 +38,8 @@ public class CombatEncounter extends Encounter {
         setGame(GameService.getInstance());
         this.monsters = monsters;
         this.setActiveMonster(monster);
-        activatePassiveBoni();
+        setSituationType(SituationType.COMBAT_ENCOUNTER);
+
     }
 
     @Override
@@ -48,6 +47,7 @@ public class CombatEncounter extends Encounter {
         super.init();
 
         setEncounterPart(1);
+
 
     }
 
@@ -57,18 +57,7 @@ public class CombatEncounter extends Encounter {
         return this;
     }
 
-    private void activatePassiveBoni() {
-        Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
-                && bonus.getField().equalsWithAll(getGame().getFieldOfInvestigator(investigator).getType())
-                && bonus.isActivated()
-                && bonus.isUsable()
-                && bonus.isPassive();
-        ItemContainer<Item> bonusItems = getGame().getBonusItemsforInvestigator(investigator);
 
-        for (Bonus b : bonusItems.getBoniWithFilter(filter)) {
-            b.execute(this);
-        }
-    }
 
 
     public void setActiveMonster(Monster monster) {
@@ -166,6 +155,7 @@ public class CombatEncounter extends Encounter {
         SkillTest skillTest = new SkillTest(horrorPreparation.getTestTyp(), horrorPreparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
         result.setMinNumberOfSuccesses(getActiveMonster().getHorror());
+        activatePassiveBoni(EventTimeType.AFTER);
         return result;
     }
 
@@ -174,6 +164,7 @@ public class CombatEncounter extends Encounter {
         SkillTest skillTest = new SkillTest(attackPreparation.getTestTyp(), attackPreparation.getModificationForSkillTest());
         result = skillTest.execute(investigator);
         result.setMinNumberOfSuccesses(getActiveMonster().getDamage());
+        activatePassiveBoni(EventTimeType.AFTER);
         return result;
     }
 
@@ -216,8 +207,9 @@ public class CombatEncounter extends Encounter {
 
     @Override
     public void discard() {
+        Field field =GameService.getInstance().getFieldOfInvestigator(getInvestigator());
         GameService.getInstance().addEffect(
-                new NextInvestigator(() -> !GameService.getInstance().getFieldOfInvestigator(getInvestigator()).getMonster().isEmpty()));
+                new NextInvestigator(() -> monsters.isEmpty() && !field.getMonster().isEmpty()));
 
 
     }

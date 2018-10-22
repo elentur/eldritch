@@ -4,6 +4,7 @@ import Service.GameService;
 import enums.FieldConnections;
 import enums.PathType;
 import enums.PhaseTypes;
+import enums.SituationType;
 import gamemechanics.Action;
 import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.MonsterChoice;
@@ -186,7 +187,7 @@ public class FieldButton extends Group {
                         this.getChildren().add(wheel);
                     } else if (!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
                         if (pathIsLegal) {
-                            Action move = new Action(GameService.getInstance().getEncounteringInvestigator(), "move", new Move(field, GameService.getInstance().getEncounteringInvestigator()));
+                            Action move = new Action(GameService.getInstance().getEncounteringInvestigator(), "move", new Move(field, GameService.getInstance().getEncounteringInvestigator()), SituationType.MOVE);
                             GameService.getInstance().addEncounter(move);
                         }
                     }
@@ -229,7 +230,7 @@ public class FieldButton extends Group {
         this.pathIsLegal = false;
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        if (inv.getDoneActions().contains(new Action(inv, "move", null))) {
+        if (inv.getDoneActions().contains(new Action(inv, "move", null, SituationType.MOVE))) {
             return;
         }
         List<Field> path = GameService.getInstance().getGameBoard().getPath(

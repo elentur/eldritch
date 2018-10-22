@@ -2,10 +2,7 @@ package model.Item.spells;
 
 import Service.GameService;
 import container.Result;
-import enums.ItemType;
-import enums.PhaseTypes;
-import enums.SpendType;
-import enums.TestType;
+import enums.*;
 import gamemechanics.Action;
 import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.Encounter;
@@ -55,7 +52,8 @@ public class Shriveling extends Spell {
                 new NullEffect(),
                 TestType.LORE,
                 0,
-                1
+                1,
+                SituationType.SPELL_EFFECT
         );
         if ( GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
 

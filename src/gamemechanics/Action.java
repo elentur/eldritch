@@ -31,16 +31,16 @@ public class Action extends Encounter {
     private final Field field;
 
 
-    public Action(Investigator inv, String encounterID, Effect startEffect) {
-        this(inv, encounterID, startEffect, new NullEffect(), new NullEffect(), TestType.NONE, 0,0);
+    public Action(Investigator inv, String encounterID, Effect startEffect, SituationType situationType) {
+        this(inv, encounterID, startEffect, new NullEffect(), new NullEffect(), TestType.NONE, 0,0,situationType);
     }
 
-    public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int mod, int minNumberOfSuccesses) {
-        this(EncounterType.ACTION, inv, encounterID, startEffect, passEffect, failEffect, testType,mod, minNumberOfSuccesses);
+    public Action(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int mod, int minNumberOfSuccesses,SituationType situationType) {
+        this(EncounterType.ACTION, inv, encounterID, startEffect, passEffect, failEffect, testType,mod, minNumberOfSuccesses, situationType);
 
     }
 
-    protected Action(EncounterType encounterType, Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType,int mod, int minNumberOfSuccesses) {
+    protected Action(EncounterType encounterType, Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType,int mod, int minNumberOfSuccesses,SituationType situationType) {
         super(encounterType);
         setInvestigator(inv);
         this.encounterID = encounterID;
@@ -49,7 +49,7 @@ public class Action extends Encounter {
         setMod(new int[]{0});
         getMod()[0]=mod;
         setEffect(new Effect[1][3]);
-        setSituationType(SituationType.ACTION);
+        setSituationType(situationType);
         setGame(GameService.getInstance());
         this.field = getGame().getFieldOfInvestigator(inv);
 

@@ -1,10 +1,7 @@
 package model.Item.boni;
 
 import container.Result;
-import enums.BonusType;
-import enums.EventTimeType;
-import enums.SituationType;
-import enums.TestType;
+import enums.*;
 import gamemechanics.encounter.Encounter;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +13,7 @@ import utils.ResourceUtil;
 @Getter
 @Setter
 public class ItemBonus_RepeatRoll extends ItemBonus {
+    private  EffectSelector selector;
     private int value;
     private BonusType bonusType = BonusType.REPEAT_ROLL;
 
@@ -27,12 +25,23 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
         this.situation = situation;
         this.eventTime = EventTimeType.AFTER;
     }
+    public ItemBonus_RepeatRoll(EffectSelector selector, TestType test, SituationType situation, Item parentItem) {
+        super(parentItem);
+        this.value = 0;
+        this.test = test;
+        this.situation = situation;
+        this.eventTime = EventTimeType.AFTER;
+        this.selector =selector;
+    }
 
 
     @Override
     public void execute(Encounter encounter) {
         if (!isExecutable()) {
             return;
+        }
+        if(selector!=null && selector.equals(EffectSelector.ALL)){
+          value=  encounter.getResult().size();
         }
         Result result = encounter.getResult();
         if (!result.getFails().isEmpty()) {

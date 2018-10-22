@@ -26,10 +26,7 @@ import lombok.Setter;
 import model.*;
 import model.Item.*;
 import model.Item.token.*;
-import model.effects.SpawnClue;
-import model.effects.SpawnGate;
-import model.effects.SwitchPhase;
-import model.effects.ZoomTo;
+import model.effects.*;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -213,8 +210,9 @@ public class GameService {
     }
     public void startGame() {
         addActiveMystery();
-        addEffect(new SpawnGate());
+       addEffect(new SpawnGate());
         addEffect(new SpawnClue(1));
+        addEffect(new SpawnMonster(getGameBoard().getField(FieldID.LONDON)));
         reserve.init();
        addEffect(new ZoomTo(getActiveInvestigator()));
     }

@@ -28,6 +28,7 @@ class DiceGui extends Group {
     private final static Image rerollImage = new Image("images/flip.png",20,20,true,true,true);
     private final static Image shiftImage = new Image("images/shift.png",20,20,true,true,true);
     private final Label label;
+    private final Label multiplier;
 
     private IntegerProperty animationDone=new SimpleIntegerProperty(0);
     static double cubeWidth = 50;
@@ -114,7 +115,21 @@ class DiceGui extends Group {
         label.setTranslateY(-25);
         label.setTranslateX(-25);
         label.getStyleClass().add("text-stroke-black");
-        this.getChildren().addAll(meshView, label,rerollButton,shiftButton);
+        multiplier = new Label();
+        multiplier.setMouseTransparent(true);
+        multiplier.setPrefWidth(50);
+        multiplier.setPrefHeight(50);
+        multiplier.setMaxWidth(50);
+        multiplier.setMaxHeight(50);
+        multiplier.setAlignment(Pos.CENTER);
+        //  label.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+
+        multiplier.setTextAlignment(TextAlignment.CENTER);
+        multiplier.setTranslateZ(-100);
+        multiplier.setTranslateY(-10);
+        multiplier.setTranslateX(-10);
+        multiplier.getStyleClass().add("text-stroke-black");
+        this.getChildren().addAll(meshView, label,multiplier,rerollButton,shiftButton);
 
 
     }
@@ -130,9 +145,11 @@ class DiceGui extends Group {
         // 270 0 0 6
 
         label.setText(die.getValue() + "");
+        multiplier.setText("x"+die.getMultiplier());
         Color color = Fonts.WHITE;
         double size = 0.30;
         label.styleProperty().bind(Fonts.getFont(size,color, Fonts.FontTyp.BOLD));
+        multiplier.styleProperty().bind(Fonts.getFont(size*0.7,color, Fonts.FontTyp.BOLD));
 
         switch (die.getValue()) {
             case 1:
@@ -155,6 +172,7 @@ class DiceGui extends Group {
         Point2D p = setDie(die);
         animationDone.setValue(0);
         label.setVisible(false);
+        multiplier.setVisible(false);
         Rotate rX = new Rotate(0, Rotate.X_AXIS);
         Rotate rY = new Rotate(0, Rotate.Y_AXIS);
         Rotate rZ = new Rotate(0, Rotate.Z_AXIS);
@@ -166,6 +184,7 @@ class DiceGui extends Group {
         animationDone.addListener(e->{
             if(animationDone.getValue()==3){
                label.setVisible(true);
+              multiplier.setVisible(die.getMultiplier()>1);
             }
         });
     }
@@ -173,6 +192,7 @@ class DiceGui extends Group {
         Point2D p = setDie(die);
         animationDone.setValue(0);
         label.setVisible(false);
+        multiplier.setVisible(false);
         Rotate rX = new Rotate(0, Rotate.X_AXIS);
         Rotate rY = new Rotate(0, Rotate.Y_AXIS);
         Rotate rZ = new Rotate(0, Rotate.Z_AXIS);
@@ -184,6 +204,7 @@ class DiceGui extends Group {
         animationDone.addListener(e->{
             if(animationDone.getValue()==3){
                 label.setVisible(true);
+                multiplier.setVisible(die.getMultiplier()>1);
             }
         });
     }

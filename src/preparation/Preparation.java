@@ -100,6 +100,7 @@ public class Preparation {
         boni.removeAll(usedBoni);
         additionalDiceBoni = boni.getAdditionalDiceBoni(filter);
         gainDiceBonus = boni.getStrongestGainDiceBonus(filter);
+        gainDiceBonus.execute(encounter);
     }
 
     public void markBoniAsUsed(Bonus bonus){

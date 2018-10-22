@@ -2,6 +2,7 @@ package model.Item.assets;
 
 import Service.GameService;
 import enums.ItemType;
+import enums.SituationType;
 import gamemechanics.Action;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.Encounter;
@@ -47,18 +48,21 @@ public class CatBurglar extends Asset {
             effect.setCondition(new InformationChoice( this.getName(),effect.getText(),null));
            return new Action(inv,
                     "cat_burglar",
-                  effect
+                  effect,
+                   SituationType.ACTION
             );
         }else if(i >=4) {
 
             return new Action(inv,
                     "cat_burglar",
-                    new AssetFromReserve(GameService.getInstance().getEncounteringInvestigator(),ItemType.ITEM,ItemType.TRINKET)
+                    new AssetFromReserve(GameService.getInstance().getEncounteringInvestigator(),ItemType.ITEM,ItemType.TRINKET),
+                    SituationType.ACTION
             );
         }
         return new Action(inv,
                 "cat_burglar",
-                new ChoiceEffect(new InformationChoice(getName(),ResourceUtil.get(getNameId().replace("}","_fail}"),"asset"),null))
+                new ChoiceEffect(new InformationChoice(getName(),ResourceUtil.get(getNameId().replace("}","_fail}"),"asset"),null)),
+                SituationType.ACTION
         );
     }
     @Override

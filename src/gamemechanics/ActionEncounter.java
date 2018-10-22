@@ -1,6 +1,7 @@
 package gamemechanics;
 
 import enums.EncounterType;
+import enums.SituationType;
 import enums.TestType;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +13,12 @@ import model.Item.Investigator;
 public class ActionEncounter extends Action {
 
 
-    public ActionEncounter(Investigator inv, String encounterID, Effect startEffect) {
-        super(inv, encounterID, startEffect);
+    public ActionEncounter(Investigator inv, String encounterID, Effect startEffect, SituationType situationType) {
+        super(inv, encounterID, startEffect,situationType);
     }
 
-    public ActionEncounter(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int mod,int minNumberOfSuccesses) {
-        super(EncounterType.ACTION_ENCOUNTER,inv, encounterID, startEffect, passEffect, failEffect, testType,mod, minNumberOfSuccesses);
+    public ActionEncounter(Investigator inv, String encounterID, Effect startEffect, Effect passEffect, Effect failEffect, TestType testType, int mod,int minNumberOfSuccesses, SituationType situationType) {
+        super(EncounterType.ACTION_ENCOUNTER,inv, encounterID, startEffect, passEffect, failEffect, testType,mod, minNumberOfSuccesses,situationType);
     }
 
 

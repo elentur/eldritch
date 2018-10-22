@@ -2,6 +2,7 @@ package gamemechanics.EncounterTest;
 
 import Service.GameService;
 import enums.ConditionType;
+import enums.SituationType;
 import enums.TestType;
 import gamemechanics.Action;
 import gui.Fonts;
@@ -47,7 +48,8 @@ public class ActionGUITest extends Application {
                 new NullEffect(),
                 TestType.NONE,
                 0,
-                0
+                0,
+                SituationType.ACTION
         );
         GameService.getInstance().addEncounter(a);
         Action b = new Action(inv,
@@ -57,7 +59,8 @@ public class ActionGUITest extends Application {
                 new NullEffect(),
                 TestType.WILL,
                 0,
-                0
+                0,
+                SituationType.ACTION
         );
         GameService.getInstance().addEncounter(b);
     }

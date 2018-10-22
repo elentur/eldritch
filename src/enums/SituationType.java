@@ -8,7 +8,14 @@ public enum SituationType {
     SPELL_EFFECT("${spell_effect}"),
     ALL("${all}"),
     STANDARD_ENCOUNTER("${standard_encounter}"),
-    ACTION("${action}");
+    ACTION("${action}"),
+    ACQUIRE_ASSETS("${acquire_assets}"),
+    BUY_TRAIN_TICKET("${buy_train_ticket}"),
+    BUY_SHIP_TICKET("${buy_ship_ticket}"),
+    REST("${rest}"),
+    GAIN_FOCUS("${gain_focus}"),
+    TRADE("${trade}"),
+    MOVE("${move}");
 
     private String key;
 

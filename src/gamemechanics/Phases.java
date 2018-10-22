@@ -6,6 +6,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import gamemechanics.mythos.green.Mythos0;
+import model.Item.Bonus;
+import model.Item.Investigator;
+import model.Item.Item;
+import model.Item.ItemBonus;
 
 public class Phases {
 
@@ -30,6 +34,7 @@ public class Phases {
         if(actualPhase.equals(PhaseTypes.MYTHOS)){
           Mythos mythos = (Mythos) GameService.getInstance().getMythos().draw();
           mythos.execute();
+          reactivateBoni();
          //  GameService.getInstance().setStartInvestigator();
           //  GameService.getInstance().addEffect(new SwitchPhase());
 
@@ -42,5 +47,14 @@ public class Phases {
     }
 
 
+    private void reactivateBoni(){
+        for(Investigator inv:GameService.getInstance().getInvestigators()){
+            for(Item item : inv.getInventory()){
+                for(ItemBonus bonus:item.getBonus()){
+                    bonus.setUsable(true);
+                }
+            }
+        }
+    }
 
 }

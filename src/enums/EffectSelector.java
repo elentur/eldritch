@@ -5,7 +5,9 @@ import utils.ResourceUtil;
 public enum EffectSelector {
     THIS("${this}"),
     ADDITIONAL("${additional}"),
-    RANDOM("${random}"), ANY("${any}");
+    RANDOM("${random}"),
+    ALL("${all}"),
+    ANY("${any}");
 
     private String key;
 

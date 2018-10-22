@@ -1,22 +1,17 @@
 package gamemechanics.encounter;
 
 import Service.GameService;
+import container.ItemContainer;
 import container.ItemStack;
 import container.Result;
-import enums.EncounterType;
-import enums.ItemType;
-import enums.SituationType;
-import enums.TestType;
+import enums.*;
 import gamemechanics.Action;
 import gamemechanics.SkillTest;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
 import model.Field;
-import model.Item.Investigator;
-import model.Item.Item;
-import model.Item.ItemBonus;
-import model.Item.Spell;
+import model.Item.*;
 import model.effects.ExecuteEndEvents;
 import model.effects.NextInvestigator;
 import preparation.Preparation;
@@ -53,6 +48,7 @@ public abstract class Encounter implements Item {
     public Encounter(EncounterType type) {
         encounterType = type;
         endEvents=new ArrayList<>();
+        situationType = SituationType.STANDARD_ENCOUNTER;
     }
 
 
@@ -66,7 +62,7 @@ public abstract class Encounter implements Item {
         SkillTest skillTest = new SkillTest(getPreparation().getTestTyp(), getPreparation().getModificationForSkillTest());
         result = skillTest.execute(investigator);
         result.setMinNumberOfSuccesses(getMinNumberOfSuccesses()[getEncounterPart()]);
-
+        activatePassiveBoni(EventTimeType.AFTER);
         return result;
     }
 
@@ -142,7 +138,24 @@ public abstract class Encounter implements Item {
         game=GameService.getInstance();
         setInvestigator(game.getEncounteringInvestigator());
         this.field = game.getFieldOfInvestigator(getInvestigator());
+        activatePassiveBoni(EventTimeType.BEFORE);
     }
+    protected void activatePassiveBoni(EventTimeType timeType) {
+        Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
+                && bonus.getField().equalsWithAll(getGame().getFieldOfInvestigator(investigator).getType())
+                && bonus.isActivated()
+                && bonus.isUsable()
+                && bonus.isPassive()
+                && bonus.getEventTime().equals(timeType)
+                && bonus.getTest().equals(testType[encounterPart])
+                && bonus.getSituation().equalsWithAll(situationType);
+        ItemContainer<Item> bonusItems = getGame().getBonusItemsforInvestigator(investigator);
+
+        for (Bonus b : bonusItems.getBoniWithFilter(filter)) {
+            b.execute(this);
+        }
+    }
+
     @Override
     public void setStack(ItemStack itemStack){
         stack=itemStack;

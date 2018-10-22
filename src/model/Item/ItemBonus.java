@@ -48,14 +48,14 @@ public abstract class ItemBonus implements Bonus {
                 return false;
             }
         }
-        if(!isActivated()){
-            return false;
-        }
-        return true;
+        return isActivated();
     }
 
     @Override
     public void execute(Encounter encounter) {
+        if(parentItem==null){
+            return;
+        }
         if(parentItem.getItemType().equals(ItemType.SPELL)){
             GameService.getInstance().addUsedSpell((Spell)parentItem);
         } if(parentItem.getSubType().equals(ItemType.FOCUS_TOKEN)){

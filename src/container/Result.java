@@ -42,7 +42,7 @@ public class Result extends ArrayList<Die> {
     }
 
     public int getNumberOfSuccess(){
-        return (int)this.stream().filter(die->die.isSuccess(typ)).count();
+        return this.stream().filter(die -> die.isSuccess(typ)).mapToInt(Die::getMultiplier).sum();
     }
 
     public boolean isSuccess(){

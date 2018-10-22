@@ -32,21 +32,25 @@ public class FieldActions {
         hasAcquireAsset = false;
         gainFocus = new Action(inv,
                 "gain_focus",
-                new GainFocus(1, inv)
+                new GainFocus(1, inv),
+                SituationType.GAIN_FOCUS
         );
 
         rest = new Action(inv,
                 "rest",
                 new And(new LooseOrGainHealthSanity(SpendType.HEALTH,1, inv),
-                        new LooseOrGainHealthSanity(SpendType.SANITY,1, inv))
+                        new LooseOrGainHealthSanity(SpendType.SANITY,1, inv)),
+                SituationType.REST
         );
         buyShip = new Action(inv,
                 "buy_ship",
-                new GainTicket(TicketType.SHIP,1,inv )
+                new GainTicket(TicketType.SHIP,1,inv ),
+                SituationType.BUY_SHIP_TICKET
         );
         buyTrain = new Action(inv,
                 "buy_train",
-                new GainTicket(TicketType.TRAIN,1,inv )
+                new GainTicket(TicketType.TRAIN,1,inv ),
+                SituationType.BUY_TRAIN_TICKET
         );
         acquireAsset = new Action(inv,
                 "acquire_asset",
@@ -55,12 +59,14 @@ public class FieldActions {
                 new NullEffect(),
                 TestType.INFLUENCE,
                 0,
-                1
-
+                1,
+                SituationType.ACQUIRE_ASSETS
         );
+
         trade = new Action(inv,
                 "trade",
-                new Trade(inv)
+                new Trade(inv),
+                SituationType.TRADE
         );
 
 

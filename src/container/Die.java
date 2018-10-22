@@ -10,9 +10,11 @@ import lombok.Setter;
 @Setter
 public class Die {
     private int value;
+    private int multiplier;
 
     public Die(int value) {
         this.value = value;
+        multiplier=1;
     }
 
     private boolean shiftable;
@@ -51,5 +53,9 @@ public class Die {
         if(getValue()>=6){
             setShiftable(false);
         }
+    }
+
+    public void setMultiplier(int multiplier) {
+        this.multiplier = multiplier;
     }
 }
