@@ -141,14 +141,13 @@ public abstract class Encounter implements Item {
         activatePassiveBoni(EventTimeType.BEFORE);
     }
     protected void activatePassiveBoni(EventTimeType timeType) {
-        Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(SituationType.COMBAT_ENCOUNTER)
+        Function<Bonus, Boolean> filter = bonus -> bonus.getSituation().equalsWithAll(situationType)
                 && bonus.getField().equalsWithAll(getGame().getFieldOfInvestigator(investigator).getType())
                 && bonus.isActivated()
                 && bonus.isUsable()
                 && bonus.isPassive()
                 && bonus.getEventTime().equals(timeType)
-                && bonus.getTest().equals(testType[encounterPart])
-                && bonus.getSituation().equalsWithAll(situationType);
+                && bonus.getTest().equals(testType[encounterPart]);
         ItemContainer<Item> bonusItems = getGame().getBonusItemsforInvestigator(investigator);
 
         for (Bonus b : bonusItems.getBoniWithFilter(filter)) {

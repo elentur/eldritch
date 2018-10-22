@@ -44,7 +44,7 @@ public class GameBoardGUITest extends Application {
      //   GameService.getInstance().getGameBoard().getField(FieldID.ARKHAM).getMonster().add(new Shan());
      //
         Investigator inv = GameService.getInstance().getActiveInvestigator();
-        //DiceRollerService.debug=true;
+        DiceRollerService.debug=true;
      /*   inv.getInventory().clear();
         inv.getInventory().add(new CultesDesGoules());
         inv.getInventory().add(new AighteenthDerringer());
