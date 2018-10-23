@@ -34,7 +34,7 @@ public class SpawnGate extends Effect {
         if(token!=null){
             Field field=   GameService.getInstance().getGameBoard().getField(token.getFieldID());
             field.addGate(token);
-            GameService.getInstance().addEffectAfter(new SpawnMonster(field));
+            GameService.getInstance().addEffectAfter(new SpawnMonster(token.getFieldID()));
         }else{
             GameService.getInstance().addEffectAfter(new AdvanceOmen(EffectSelector.THIS,1));
         }

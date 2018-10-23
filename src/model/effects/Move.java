@@ -3,6 +3,7 @@ package model.effects;
 
 import Service.GameService;
 import enums.EffectTyps;
+import enums.FieldID;
 import lombok.Getter;
 import model.Effect;
 import model.Field;
@@ -13,21 +14,20 @@ import utils.ResourceUtil;
 public class Move extends Effect {
     private final int value;
     private final Investigator investigator;
-    private final Field field;
+    private  FieldID fieldID;
 
     public Move(int value, Investigator investigator) {
         super(EffectTyps.MOVE);
         this.value = value;
-        this.field = GameService.getInstance().getGameBoard().getFieldWithDistance(
-                GameService.getInstance().getFieldOfInvestigator(investigator),value);
         this.investigator = investigator;
     }
-    public Move(Field field, Investigator investigator) {
+    public Move(FieldID fieldID, Investigator investigator) {
         super(EffectTyps.MOVE);
         this.value=0;
-        this.field = field;
+        this.fieldID = fieldID;
         this.investigator = investigator;
     }
+
 
     @Override
     public void init(){
@@ -42,6 +42,13 @@ public class Move extends Effect {
         }
         super.execute();
         if(!isAccepted()) return;
+        Field field;
+        if(fieldID ==null){
+            field = GameService.getInstance().getGameBoard().getFieldWithDistance(
+                    GameService.getInstance().getFieldOfInvestigator(investigator),value);
+        }else{
+            field = GameService.getInstance().getGameBoard().getField(fieldID);
+        }
         if(field!=null) {
             GameService.getInstance().moveTo(investigator, field);
         }
@@ -50,8 +57,8 @@ public class Move extends Effect {
     @Override
     public String getText() {
 
-        if(field!=null) {
-            return ResourceUtil.get("${move}", "effect", investigator.getName(),field.getName());
+        if(fieldID!=null) {
+            return ResourceUtil.get("${move}", "effect", investigator.getName(),fieldID.getText());
         }
         return "";
     }

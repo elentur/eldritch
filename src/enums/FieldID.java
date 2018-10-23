@@ -4,7 +4,7 @@ import lombok.Getter;
 import utils.ResourceUtil;
 
 public enum FieldID {
-
+    CHOSEN_FIELD("${chosen_field}",FieldType.NONE,SpaceType.OTHER),
     FIELD_1("${field_1}",FieldType.CITY,SpaceType.OTHER),
     FIELD_2("${field_2}",FieldType.SEA,SpaceType.OTHER),
     FIELD_3("${field_3}",FieldType.SEA,SpaceType.OTHER),

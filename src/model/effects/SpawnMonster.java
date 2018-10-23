@@ -3,6 +3,7 @@ package model.effects;
 
 import Service.GameService;
 import enums.EffectTyps;
+import enums.FieldID;
 import lombok.Getter;
 import model.Effect;
 import model.Field;
@@ -12,14 +13,14 @@ import utils.ResourceUtil;
 @Getter
 public class SpawnMonster extends Effect {
     private Monster monster;
-    private final Field field;
-    public SpawnMonster(Field field) {
+    private final FieldID fieldID;
+    public SpawnMonster(FieldID fieldID) {
         super(EffectTyps.SPAWN_MONSTER);
-        this.field = field;
+        this.fieldID = fieldID;
     }
-    public SpawnMonster(Monster monster, Field field) {
+    public SpawnMonster(Monster monster, FieldID fieldID) {
         super(EffectTyps.SPAWN_MONSTER);
-        this.field = field;
+        this.fieldID = fieldID;
         this.monster=monster;
     }
 
@@ -39,6 +40,7 @@ public class SpawnMonster extends Effect {
         if(!isAccepted()) return;
         super.execute();
         if(monster!=null){
+            Field field = GameService.getInstance().getGameBoard().getField(fieldID);
             field.addMonster(monster);
         }
     }

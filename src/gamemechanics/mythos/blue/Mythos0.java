@@ -31,7 +31,7 @@ public class Mythos0 extends MythosBlue {
   public void execute(){
         Effect effect1 = new SpawnMonster(
                 new WindWalker(this),
-                GameService.getInstance().getGameBoard().getField(FieldID.FIELD_4));
+                FieldID.FIELD_4);
         getEffects().add(effect1);
        super.execute();
     }

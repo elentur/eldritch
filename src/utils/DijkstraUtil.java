@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 public class DijkstraUtil {
 
 
+
+
     @Getter
     public class Edge {
         private final FieldID id1;
@@ -185,6 +187,17 @@ public class DijkstraUtil {
             }
         }
         return null;
+    }
+
+    public List<FieldID> getFieldsWithDistance(int value) {
+        List<FieldID> foundIds = new ArrayList<>();
+        List<FieldID> ids = new ArrayList<>(distance.keySet());
+        for(FieldID id : ids){
+            if(distance.get(id)<=101*value ){
+                foundIds.add(id);
+            }
+        }
+        return foundIds;
     }
 
 }

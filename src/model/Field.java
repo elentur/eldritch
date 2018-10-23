@@ -25,6 +25,7 @@ import java.util.List;
 @ToString( of = {"fieldID"})
 @Log
 public class Field {
+
     private final FieldType type;
     private final FieldID fieldID;
     private final SpaceType spaceType;
@@ -38,6 +39,8 @@ public class Field {
     private final List<Investigator> investigators;
     private final List<Monster> monster;
     private final TokenContainer tokens;
+
+    private boolean chooseAble;
 
     public BooleanProperty updateProperty() {
         return update;
@@ -237,4 +240,13 @@ public class Field {
         return new FieldActions(this);
     }
 
+
+
+    public boolean isChooseAble() {
+        return chooseAble;
+    }
+    public void setChooseAble(boolean chooseAble) {
+        this.chooseAble = chooseAble;
+        update.setValue(true);
+    }
 }

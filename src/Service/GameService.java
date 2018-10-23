@@ -44,6 +44,7 @@ public class GameService {
     @Getter
     private ObjectProperty<Investigator> activeInvestigator;
     private int count;
+    private boolean chooseMode;
 
     @Getter
     private Investigator encounteringInvestigator;
@@ -114,6 +115,12 @@ public class GameService {
     @Getter
     private  Phases phases;
     private List<Function<Encounter,Void> > encounterListener;
+    @Getter
+    @Setter
+    private Effect chooseFieldEffect;
+    @Getter
+    @Setter
+    private Field chosenField;
 
     public static GameService getInstance() {
         return ourInstance;
@@ -212,7 +219,7 @@ public class GameService {
         addActiveMystery();
        addEffect(new SpawnGate());
         addEffect(new SpawnClue(1));
-        addEffect(new SpawnMonster(getGameBoard().getField(FieldID.LONDON)));
+        addEffect(new SpawnMonster(FieldID.LONDON));
         reserve.init();
        addEffect(new ZoomTo(getActiveInvestigator()));
     }
@@ -423,9 +430,18 @@ public class GameService {
 
     }
 
-    public Field getRandomField(){
+    public FieldID getRandomField(){
         int i = FieldID.values().length;
         Random r = new Random();
-        return gameBoard.getField(FieldID.values()[r.nextInt(i)]);
+        return FieldID.values()[r.nextInt(i)];
     }
+    public boolean isChooseFieldMode() {
+        return chooseMode;
+    }
+
+    public void setChooseFieldMode(boolean chooseMode) {
+        this.chooseMode = chooseMode;
+    }
+
+
 }

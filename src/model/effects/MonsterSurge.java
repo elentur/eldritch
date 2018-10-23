@@ -29,7 +29,7 @@ public class MonsterSurge extends Effect {
         for(Field field: game.getGameBoard().getFields()){
             GateToken gate=  field.getGate();
             if(gate!= null && gate.getOmenState().equals(game.getOmenTrack().getOmen())){
-                game.addEffectAfter(new SpawnMonster(field));
+                game.addEffectAfter(new SpawnMonster(field.getFieldID()));
                 spawnedAMonster=true;
             }
         }

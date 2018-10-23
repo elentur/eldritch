@@ -17,18 +17,20 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
 import lombok.Setter;
 import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
-import model.effects.AdvanceOmen;
 import model.effects.Move;
 
 import java.util.List;
@@ -65,13 +67,24 @@ public class FieldButton extends Group {
     private final Group gateGroup;
     private final OmenButton omen;
 
+    private final Circle colorOverlay;
+
+
+    private final  Button button;
+
 
     private boolean isDragging;
     private boolean pathIsLegal;
 
     public FieldButton(Field field, double x, double y) {
-        Button button = new Button(getBackgroundImage(field));
-        this.getChildren().add(button);
+        button = new Button(getBackgroundImage(field));
+        colorOverlay = new Circle(60);
+        colorOverlay.setVisible(false);
+        colorOverlay.setTranslateX(72);
+        colorOverlay.setTranslateY(75);
+        colorOverlay.setMouseTransparent(true);
+        colorOverlay.setBlendMode(BlendMode.SCREEN);
+        this.getChildren().addAll(button, colorOverlay);
         this.field = field;
         this.setTranslateX(x);
         this.setTranslateY(y);
@@ -174,30 +187,16 @@ public class FieldButton extends Group {
 
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
-              //   GameService.getInstance().addEffect(new AdvanceOmen(1));
-                if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+              if(GameService.getInstance().isChooseFieldMode() && field.isChooseAble()){
+                  for(Field f: GameService.getInstance().getGameBoard().getFields()){
+                      f.setChooseAble(false);
+                  }
 
-                    if (wheel != null) {
-                        wheel.remove();
-                        return;
-                    }
-                    if (GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field) &&
-                            wheel == null) {
-                        this.wheel = new ContextWheel(field.getFieldAction());
-                        this.getChildren().add(wheel);
-                    } else if (!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
-                        if (pathIsLegal) {
-                            Action move = new Action(GameService.getInstance().getEncounteringInvestigator(), "move", new Move(field, GameService.getInstance().getEncounteringInvestigator()), SituationType.MOVE);
-                            GameService.getInstance().addEncounter(move);
-                        }
-                    }
-                } else if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER) &&
-                        GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
-                    if (!field.getMonster().isEmpty()) {
-                        GameService.getInstance().addChoice(new MonsterChoice(field));
-                    } else {
-                        GameService.getInstance().addChoice(new EncounterChoice(field));
-                    }
+                  GameService.getInstance().setChooseFieldMode(false);
+                  GameService.getInstance().setChosenField(field);
+                  GameService.getInstance().addEffect(GameService.getInstance().getChooseFieldEffect());
+              }else if(!GameService.getInstance().isChooseFieldMode()){
+                    standartClickEvents();
                 }
             }
             isDragging = false;
@@ -226,7 +225,37 @@ public class FieldButton extends Group {
 
     }
 
+    private void standartClickEvents(){
+        if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ACTION)) {
+
+            if (wheel != null) {
+                wheel.remove();
+                return;
+            }
+            if (GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field) &&
+                    wheel == null) {
+                this.wheel = new ContextWheel(field.getFieldAction());
+                this.getChildren().add(wheel);
+            } else if (!GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
+                if (pathIsLegal) {
+                    Action move = new Action(GameService.getInstance().getEncounteringInvestigator(), "move", new Move(field.getFieldID(), GameService.getInstance().getEncounteringInvestigator()), SituationType.MOVE);
+                    GameService.getInstance().addEncounter(move);
+                }
+            }
+        } else if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER) &&
+                GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
+            if (!field.getMonster().isEmpty()) {
+                GameService.getInstance().addChoice(new MonsterChoice(field));
+            } else {
+                GameService.getInstance().addChoice(new EncounterChoice(field));
+            }
+        }
+    }
+
     private void showPath() {
+        if(GameService.getInstance().isChooseFieldMode()) {
+            return;
+        }
         this.pathIsLegal = false;
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
@@ -255,7 +284,9 @@ public class FieldButton extends Group {
     }
 
     private void clearPath() {
-        InterfaceLinking.gameBoardGUI.getMap().clearPath();
+        if(!GameService.getInstance().isChooseFieldMode()) {
+            InterfaceLinking.gameBoardGUI.getMap().clearPath();
+        }
     }
 
     private void update() {
@@ -263,8 +294,20 @@ public class FieldButton extends Group {
         createTokens();
         createInvestigators();
         createMonster();
+        showFieldMode();
 
+    }
 
+    private void showFieldMode() {
+        if(GameService.getInstance().isChooseFieldMode() && field.isChooseAble()){
+          colorOverlay.setFill(Color.GREEN);
+          colorOverlay.setVisible(true);
+        }else if(GameService.getInstance().isChooseFieldMode() && !field.isChooseAble()){
+            colorOverlay.setFill(Color.RED);
+            colorOverlay.setVisible(true);
+        }else{
+            colorOverlay.setVisible(false);
+        }
     }
 
     private void createTokens() {

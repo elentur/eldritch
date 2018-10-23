@@ -180,7 +180,7 @@ public class Animations {
         effectOverlayIsRunning = true;
         List<Field> path = GameService.getInstance().getGameBoard().getPath(
                 GameService.getInstance().getFieldOfInvestigator(effect.getInvestigator()),
-                effect.getField(),
+                GameService.getInstance().getGameBoard().getField( effect.getFieldID()),
                 effect.getInvestigator());
         int delay = overlay.init();
 

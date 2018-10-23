@@ -24,7 +24,7 @@ public class RemoveEldritchTokenEffectOverlay extends Overlay {
         if(removeEldritchToken.getToken()== null){
             return 0;
         }
-        Field field= removeEldritchToken.getField();
+        Field field=  GameService.getInstance().getGameBoard().getField(removeEldritchToken.getFieldID());
         FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
         Animations.zoomTo(fieldButton);
         return 500;

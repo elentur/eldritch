@@ -1,5 +1,6 @@
 package model;
 
+import Service.GameService;
 import enums.FieldID;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,9 @@ public class GameBoard {
          }
 
     public Field getField(FieldID id){
+        if(id.equals(FieldID.CHOSEN_FIELD)){
+            return GameService.getInstance().getChosenField();
+        }
         return fields.stream().filter(f -> f.getFieldID().equals(id)).findFirst().orElse(null);
     }
 
@@ -81,5 +85,11 @@ public class GameBoard {
             return getField(id);
         }
         return null;
+    }
+
+    public List<Field> getFieldsWithDistance( Field field,int distance) {
+        dijkstra.execute(field.getFieldID(),null);
+        List<FieldID> fieldIds =  dijkstra.getFieldsWithDistance(distance);
+        return fieldIds.stream().map(this::getField).collect(Collectors.toList());
     }
 }

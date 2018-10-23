@@ -1,7 +1,9 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
+import enums.FieldID;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
@@ -13,12 +15,12 @@ import utils.ResourceUtil;
 @Log
 public class RemoveEldritchToken extends Effect {
     private final EldritchToken token;
-    private final Field field;
+    private final FieldID fieldID;
 
 
-    public RemoveEldritchToken(Field field, EldritchToken token) {
+    public RemoveEldritchToken(FieldID fieldID, EldritchToken token) {
         super(EffectTyps.REMOVE_ELDRITCH_TOKEN);
-        this.field=field;
+        this.fieldID=fieldID;
         this.token=token;
 
     }
@@ -34,6 +36,7 @@ public class RemoveEldritchToken extends Effect {
         super.execute();
         if(!isAccepted()) return;
         if(token!=null){
+            Field field = GameService.getInstance().getGameBoard().getField(fieldID);
             field.removeEldritchToken(token);
             log.info("Remove Eldritch token on Field " + field.getFieldID().getText());
         }

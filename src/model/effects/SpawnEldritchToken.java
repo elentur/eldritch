@@ -1,7 +1,9 @@
 package model.effects;
 
 
+import Service.GameService;
 import enums.EffectTyps;
+import enums.FieldID;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
@@ -13,12 +15,12 @@ import utils.ResourceUtil;
 @Log
 public class SpawnEldritchToken extends Effect {
     private final EldritchToken token;
-    private final Field field;
+    private final FieldID fieldID;
 
 
-    public SpawnEldritchToken(Field field, EldritchToken token) {
+    public SpawnEldritchToken(FieldID fieldID, EldritchToken token) {
         super(EffectTyps.SPAWN_ELDRITCH_TOKEN);
-        this.field=field;
+        this.fieldID=fieldID;
         this.token=token;
 
     }
@@ -34,6 +36,7 @@ public class SpawnEldritchToken extends Effect {
         super.execute();
         if(!isAccepted()) return;
         if(token!=null){
+            Field field = GameService.getInstance().getGameBoard().getField(fieldID);
             field.addEldritchToken(token);
             log.info("Spawn Eldritch token on Field " + field.getFieldID().getText());
         }

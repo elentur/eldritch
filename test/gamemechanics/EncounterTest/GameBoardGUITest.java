@@ -3,6 +3,7 @@ package gamemechanics.EncounterTest;
 import Service.DiceRollerService;
 import Service.GameService;
 import container.InvestigatorContainer;
+import enums.FieldID;
 import factory.GameBoardFactory;
 import gui.EffectLayer;
 import gui.Fonts;
@@ -21,6 +22,8 @@ import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
+import model.effects.ChooseSpace;
+import model.effects.Move;
 
 import java.util.Arrays;
 
@@ -77,6 +80,8 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
+
+        GameService.getInstance().addEffect(new ChooseSpace(2,new Move(FieldID.CHOSEN_FIELD,GameService.getInstance().getEncounteringInvestigator())));
 
         //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }

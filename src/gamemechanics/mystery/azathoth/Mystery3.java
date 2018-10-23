@@ -26,11 +26,13 @@ public class Mystery3 extends Mystery {
       int num = (int)Math.ceil(GameService.getInstance().getInvestigators().size()/2);
       HashSet<Field> fields = new HashSet<>();
       while (fields.size()<num){
-          fields.add(GameService.getInstance().getRandomField());
+          fields.add(
+                  GameService.getInstance().getGameBoard().getField(
+                          GameService.getInstance().getRandomField()));
       }
       for(Field f:fields){
           EldritchToken e = new EldritchToken(new MysteryEncounter1());
-          GameService.getInstance().addEffect(new SpawnEldritchToken(f,e));
+          GameService.getInstance().addEffect(new SpawnEldritchToken(f.getFieldID(),e));
       }
     }
 

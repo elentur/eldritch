@@ -24,7 +24,7 @@ public class MysteryEncounter1 extends MysteryEncounter {
         super.init();
         Effect effect1 = new Spend(SpendType.CLUE,2,GameService.getInstance().getEncounteringInvestigator());
         Effect effect2 = new AddEldritchToMystery(1);
-        Effect effect3 = new RemoveEldritchToken(getField(),getEldritchToken());
+        Effect effect3 = new RemoveEldritchToken(getField().getFieldID(),getEldritchToken());
         Effect effect = new And(effect1,effect2,effect3);
         YesNoChoice choice = new YesNoChoice(ResourceUtil.get("${do_you_want}","ui"),effect.getText(),null,null);
         choice.addCondition(e-> GameService.getInstance().getEncounteringInvestigator().getClues().size()>=2);
