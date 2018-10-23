@@ -56,6 +56,6 @@ public class ItemBonus_DiceResult extends ItemBonus {
     }
     @Override
     public String getText() {
-        return ResourceUtil.get("${diceResult}",Bonus.class,num+"",value+"", test.getSymbol(), situation.getText() );
+        return ResourceUtil.get("${dice_result}",Bonus.class,num+"",value+"", test.getSymbol(), situation.getText() );
     }
 }

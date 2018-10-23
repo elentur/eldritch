@@ -17,16 +17,16 @@ import utils.ResourceUtil;
 @Getter
 @Setter
 
-public class ItemBonus_ChangeMonsterHorror extends ItemBonus {
+public class ItemBonus_ChangeMonsterDamage extends ItemBonus {
     private int value;
-    private BonusType bonusType = BonusType.CHANGE_MONSTER_HORROR;
+    private BonusType bonusType = BonusType.CHANGE_MONSTER_DAMAGE;
 
-    public ItemBonus_ChangeMonsterHorror(int value, SituationType situation, Item parentItem) {
+    public ItemBonus_ChangeMonsterDamage(int value, SituationType situation, Item parentItem) {
         super(parentItem);
         this.situation = situation;
         this.eventTime = EventTimeType.BEFORE;
         this.value = value;
-        this.test = TestType.WILL;
+        this.test = TestType.STRENGTH;
         this.passive = true;
 
     }
@@ -41,7 +41,7 @@ public class ItemBonus_ChangeMonsterHorror extends ItemBonus {
         if (encounter instanceof CombatEncounter) {
             CombatEncounter combatEncounter = (CombatEncounter) encounter;
             Monster m = combatEncounter.getActiveMonster();
-            m.setHorror(m.getHorror() - 1 < 1 ? 1 : m.getHorror() - 1);
+            m.setDamage(m.getDamage() - 1 < 1 ? 1 : m.getDamage() - 1);
 
             super.execute(encounter);
         }
@@ -50,7 +50,7 @@ public class ItemBonus_ChangeMonsterHorror extends ItemBonus {
 
     @Override
     public String getText() {
-        return ResourceUtil.get("${change_monster_horror}", Bonus.class, value + "", situation.getText());
+        return ResourceUtil.get("${change_monster_damage}", Bonus.class, value + "", situation.getText());
     }
 
 }

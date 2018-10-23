@@ -41,7 +41,7 @@ public class ItemBonus_AdditionalDice extends ItemBonus {
     }
     @Override
     public String getText() {
-        return ResourceUtil.get("${additionalDice}",Bonus.class,value+"",  situation.getText() );
+        return ResourceUtil.get("${additional_dice}",Bonus.class,value+"",  situation.getText() );
     }
 
 }

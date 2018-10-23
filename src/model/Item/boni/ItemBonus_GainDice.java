@@ -40,7 +40,7 @@ public class ItemBonus_GainDice extends ItemBonus {
     }
     @Override
     public String getText() {
-        return ResourceUtil.get("${gainDice}",Bonus.class,value+"", test.getSymbol(), situation.getText() );
+        return ResourceUtil.get("${gain_dice}",Bonus.class,value+"", test.getSymbol(), situation.getText() );
     }
 
 }

@@ -52,6 +52,6 @@ public class ItemBonus_RepeatRoll extends ItemBonus {
 
     @Override
     public String getText() {
-        return ResourceUtil.get("${repeatRoll}", Bonus.class, value + "", test.getSymbol(), situation.getText());
+        return ResourceUtil.get("${repeat_roll}", Bonus.class, value + "", test.getSymbol(), situation.getText());
     }
 }

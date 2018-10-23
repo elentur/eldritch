@@ -49,7 +49,7 @@ public class ItemBonus_SwitchSkill extends ItemBonus {
 
     @Override
     public String getText() {
-        return ResourceUtil.get("${switchSkill}",Bonus.class,situation.getText(),to.getSymbol(), test.getSymbol() );
+        return ResourceUtil.get("${switch_skill}",Bonus.class,situation.getText(),to.getSymbol(), test.getSymbol() );
     }
 
 }
