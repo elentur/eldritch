@@ -188,11 +188,10 @@ public class FieldButton extends Group {
         button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
             if (!isDragging && e.getButton().equals(MouseButton.PRIMARY)) {
               if(GameService.getInstance().isChooseFieldMode() && field.isChooseAble()){
+                  GameService.getInstance().setChooseFieldMode(false);
                   for(Field f: GameService.getInstance().getGameBoard().getFields()){
                       f.setChooseAble(false);
                   }
-
-                  GameService.getInstance().setChooseFieldMode(false);
                   GameService.getInstance().setChosenField(field);
                   GameService.getInstance().addEffect(GameService.getInstance().getChooseFieldEffect());
               }else if(!GameService.getInstance().isChooseFieldMode()){
