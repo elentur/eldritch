@@ -81,7 +81,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
 
-        GameService.getInstance().addEffect(new ChooseSpace(2,new Move(FieldID.CHOSEN_FIELD,GameService.getInstance().getEncounteringInvestigator())));
+        //GameService.getInstance().addEffect(new ChooseSpace(2,new Move(FieldID.CHOSEN_FIELD,GameService.getInstance().getEncounteringInvestigator())));
 
         //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }

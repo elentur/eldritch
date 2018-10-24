@@ -18,4 +18,5 @@ public enum EffectSelector {
     public String getText() {
         return ResourceUtil.get(key,this.getClass());
     }
+
 }

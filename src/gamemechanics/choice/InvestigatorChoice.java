@@ -1,7 +1,9 @@
 package gamemechanics.choice;
 
 
+import Service.GameService;
 import enums.ChoiceType;
+import enums.FieldID;
 import lombok.Getter;
 import model.Effect;
 import model.Field;
@@ -16,8 +18,9 @@ public class InvestigatorChoice extends Choice{
     @Getter
     private final List<Investigator> selectedInvs;
 private final boolean singleSelect;
-    public InvestigatorChoice(Field field,boolean singleSelect){
+    public InvestigatorChoice(FieldID fieldID, boolean singleSelect){
         super(ChoiceType.INVESTIGATOR_CHOICE, ResourceUtil.get("${investigator_choice}","ui"),"");
+        Field field = GameService.getInstance().getGameBoard().getField(fieldID);
         this.investigators = field.getInvestigators();
         this.singleSelect = singleSelect;
         this.selectedInvs = new ArrayList<>();

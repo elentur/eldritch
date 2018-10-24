@@ -2,13 +2,13 @@ package model.effects;
 
 
 import Service.GameService;
-import enums.EffectTyps;
-import enums.SpendType;
+import enums.*;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InvestigatorChoice;
 import gamemechanics.choice.MonsterChoice;
 import lombok.Getter;
 import model.Effect;
+import model.Field;
 import model.Item.Investigator;
 import model.Item.Monster;
 import utils.ResourceUtil;
@@ -21,6 +21,9 @@ public class LooseOrGainHealthSanity extends Effect {
 
     private final SpendType spendType;
     private final int value;
+    private ItemType itemType;
+    private FieldID fieldID;
+    private EffectSelector selector;
     private Investigator investigator;
     private Monster monster;
     private int invType;
@@ -53,25 +56,51 @@ public class LooseOrGainHealthSanity extends Effect {
         this.condition = choice;
     }
 
+    public LooseOrGainHealthSanity(SpendType spendType, int value, EffectSelector selector, FieldID fieldID, ItemType itemType) {
+        super(EffectTyps.LOOSE_OR_GAIN_HEALTH_SANITY);
+        this.spendType = spendType;
+        this.value = value;
+        this.selector = selector;
+        this.fieldID = fieldID;
+        this.itemType = itemType;
+    }
+
     @Override
     public void execute() {
-        if(isExecuted()){
+        if (isExecuted()) {
             return;
         }
         super.execute();
-        if(!isAccepted()) return;
+        if (!isAccepted()) return;
         switch (spendType) {
             case HEALTH:
                 if (investigator != null) {
                     investigator.addHealth(value);
                 } else if (monster != null) {
-                    if(monster.getActualToughness()>0) {
+                    if (monster.getActualToughness() > 0) {
                         monster.addDamage(value);
+                    }
+                } else if (selector.equals(EffectSelector.ALL) && ItemType.MONSTER.equals(itemType)) {
+                    Field field = GameService.getInstance().getGameBoard().getField(fieldID);
+                    for (Monster m : field.getMonster()) {
+                        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(spendType, value, m));
+                    }
+                } else if (selector.equals(EffectSelector.ALL) && ItemType.INVESTIGATOR.equals(itemType)) {
+                    Field field = GameService.getInstance().getGameBoard().getField(fieldID);
+                    for (Investigator i : field.getInvestigators()) {
+                        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(spendType, value, i));
                     }
                 }
                 break;
             case SANITY:
-                investigator.addSanity(value);
+                if (investigator != null) {
+                    investigator.addSanity(value);
+                } else if (selector.equals(EffectSelector.ALL) && ItemType.INVESTIGATOR.equals(itemType)) {
+                    Field field = GameService.getInstance().getGameBoard().getField(fieldID);
+                    for (Investigator i : field.getInvestigators()) {
+                        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(spendType, value, i));
+                    }
+                }
                 break;
             default:
                 break;
@@ -82,7 +111,12 @@ public class LooseOrGainHealthSanity extends Effect {
     @Override
     public String getText() {
         init();
-        String name = investigator != null ? investigator.getName() : "The " + monster.getName();
+        String name = "";
+        if (selector == null) {
+            name = investigator != null ? investigator.getName() : "The " + monster.getName();
+        }else {
+            name = selector.getText() +" " +itemType.getText();
+        }
         if (spendType == null || value == 0) {
             return ResourceUtil.get("${loose}", "effect", name, ResourceUtil.get("${nothing}", "effect"));
         }
@@ -106,8 +140,8 @@ public class LooseOrGainHealthSanity extends Effect {
                     break;
             }
         }
-        if(invType!=0){
-            switch (invType){
+        if (invType != 0) {
+            switch (invType) {
                 case START_INVESTIGATOR:
                     investigator = GameService.getInstance().getStartInvestigator();
                     break;

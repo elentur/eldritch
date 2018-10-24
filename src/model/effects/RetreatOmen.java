@@ -12,9 +12,8 @@ public class RetreatOmen extends Effect {
     private  Investigator investigator;
     private EffectSelector selector;
     private int value;
-    public RetreatOmen(EffectSelector selector, int value, Investigator investigator) {
+    public RetreatOmen(EffectSelector selector, int value) {
         super(EffectTyps.RETREAT_OMEN);
-        this.investigator = investigator;
         this.selector = selector;
         this.value=value;
     }

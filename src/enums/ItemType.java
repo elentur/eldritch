@@ -9,13 +9,13 @@ import java.util.List;
 public enum ItemType {
     NONE("", Collections.singletonList("")),
     TRINKET("${trinket}", Collections.singletonList("Trinket")),
-    TRINKET_WEAPON("${trinketWeapon}", Arrays.asList("Trinket","Weapon")),
+    TRINKET_WEAPON("${trinket_weapon}", Arrays.asList("Trinket","Weapon")),
     ITEM("${item}", Collections.singletonList("Item")),
-    ITEM_WEAPON("${itemWeapon}", Arrays.asList("Item","Weapon")),
-    ITEM_WEAPON_MAGICAL("${itemWeaponMagical}", Arrays.asList("Item","Weapon","Magical")),
-    ITEM_TOME("${itemTome}", Arrays.asList("Item","Tome")),
-    ITEM_MAGICAL("${itemMagical}", Arrays.asList("Item","Magical") ),
-    ITEM_TOME_MAGICAL("${itemTomeMagical}", Arrays.asList("Item","Tome","Magical")),
+    ITEM_WEAPON("${item_weapon}", Arrays.asList("Item","Weapon")),
+    ITEM_WEAPON_MAGICAL("${item_weapon_magical}", Arrays.asList("Item","Weapon","Magical")),
+    ITEM_TOME("${item_tome}", Arrays.asList("Item","Tome")),
+    ITEM_MAGICAL("${item_magical}", Arrays.asList("Item","Magical") ),
+    ITEM_TOME_MAGICAL("${item_tome_magical}", Arrays.asList("Item","Tome","Magical")),
     ALLEY("${alley}", Collections.singletonList("Alley")),
     INCANTATION("${incantation}", Collections.singletonList("Incantation")),
     RITUAL("${ritual}", Collections.singletonList("Ritual")),
@@ -29,7 +29,7 @@ public enum ItemType {
     CLUE_TOKEN("${clue_token}", Collections.singletonList("Clue")  ),
     GATE_TOKEN("${gate_token}", Collections.singletonList("Gate")  ),
     RUMOR_TOKEN("${rumor_token}", Collections.singletonList("Rumor")  ),
-    MYSTERY_TOKEN("${mytsery_token}", Collections.singletonList("Mystery")  ),
+    MYSTERY_TOKEN("${mystery_token}", Collections.singletonList("Mystery")  ),
     ELDRITCH_TOKEN("${eldritch_token}", Collections.singletonList("Eldritch")  ),
     EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  ),
     ANY("${any}",null ),
@@ -40,7 +40,8 @@ public enum ItemType {
     AMNESIA_CONDITION("${amnesia_condition}", Collections.singletonList("Amnesia Condition")  ),
     MYSTERY("${mystery}", Collections.singletonList("Mystery")  ),
     FOCUS_TOKEN("${focus}", Collections.singletonList("Focus")   ),
-    SERVICE("${service}", Collections.singletonList("Service")  );
+    SERVICE("${service}", Collections.singletonList("Service")  ),
+    SERVICE_TEAMWORK("${service_teamwork}",Arrays.asList("Service","Teamwork")  );
 
     private String key;
     private List<String> parts;

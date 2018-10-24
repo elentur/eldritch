@@ -13,6 +13,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import model.Item.Item;
+import model.effects.Trade;
 
 
 public class TradeChoiceGUI extends ChoiceDialog {
@@ -69,7 +70,8 @@ public class TradeChoiceGUI extends ChoiceDialog {
         for(Item item : left) {
             InventoryItemButton button= new InventoryItemButton(item,true);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-                if (e.getButton().equals(MouseButton.PRIMARY)) {
+                if (e.getButton().equals(MouseButton.PRIMARY) && (choice.getTradeMode()== TradeChoice.BOTH
+                || choice.getTradeMode()== TradeChoice.LEFT_TO_RIGHT)) {
                     left.remove(item);
                     right.add(item);
                     if(choice.isSingleSelect()) {
@@ -85,7 +87,8 @@ public class TradeChoiceGUI extends ChoiceDialog {
         for(Item item : right) {
             InventoryItemButton button= new InventoryItemButton(item,true);
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
-                if (e.getButton().equals(MouseButton.PRIMARY)) {
+                if (e.getButton().equals(MouseButton.PRIMARY) && (choice.getTradeMode()== TradeChoice.BOTH
+                        || choice.getTradeMode()== TradeChoice.LEFT_TO_RIGHT)) {
                     right.remove(item);
                     left.add(item);
                     if(choice.isSingleSelect()) {

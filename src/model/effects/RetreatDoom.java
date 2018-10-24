@@ -11,11 +11,9 @@ import utils.ResourceUtil;
 @Getter
 public class RetreatDoom extends Effect {
     private final int value;
-    private  Investigator investigator;
 
-    public RetreatDoom(  int value,Investigator investigator) {
+    public RetreatDoom(  int value) {
         super(EffectTyps.RETREAT_DOOM);
-        this.investigator = investigator;
         this.value=value;
     }
 

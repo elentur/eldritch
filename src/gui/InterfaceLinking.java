@@ -205,6 +205,9 @@ public class InterfaceLinking {
             case RESERVE_CHOICE:
                 dlg = new ReserveChoiceGUI((ReserveChoice) choice);
                 break;
+            case ITEM_CHOICE:
+                dlg = new ItemChoiceGUI((ItemChoice) choice);
+                break;
             case INFORMATION:
                 dlg = new InformationDialog((InformationChoice) choice);
                 break;
