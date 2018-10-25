@@ -32,7 +32,7 @@ public class ItemButton extends Group {
         this.item = item;
          backside = new ImageView(backgroundImage);
         showBackSide=true;
-        Image itemImage = new Image("images/"+item.getItemType().toString().toLowerCase()+"/" + item.getId() + ".jpg", 200, 150, true, true, true);
+        Image itemImage = new Image("images/"+item.getItemType().toString().toLowerCase()+"/" + item.getId() + ".png", 200, 150, true, true, true);
          frontside = new ImageView(itemImage);
         ImageView shape = new ImageView(backgroundImage);
         frontside.setClip(shape);

@@ -180,7 +180,7 @@ public class FieldButton extends Group {
         field.getUpdate().addListener(e -> {
             if (field.getUpdate().getValue()) {
                 update();
-                field.getUpdate().setValue(false);
+
             }
         });
 
@@ -294,6 +294,7 @@ public class FieldButton extends Group {
         createInvestigators();
         createMonster();
         showFieldMode();
+        field.getUpdate().setValue(false);
 
     }
 
@@ -381,7 +382,7 @@ public class FieldButton extends Group {
         monsters.getChildren().clear();
 
         for (Monster monster : field.getMonster()) {
-            ImageView invImg = new ImageView("images/monster/" + monster.getId() + ".jpg");
+            ImageView invImg = new ImageView("images/monster/" + monster.getId() + ".png");
             invImg.setFitHeight(60);
             invImg.setFitWidth(60);
             monsters.getChildren().add(invImg);
@@ -397,7 +398,7 @@ public class FieldButton extends Group {
     private void createInvestigators() {
         investigators.getChildren().clear();
         for (Investigator inv : field.getInvestigators()) {
-            ImageView invImg = new ImageView("images/investigator/" + inv.getId() + ".jpg");
+            ImageView invImg = new ImageView("images/investigator/" + inv.getId() + ".png");
             invImg.setFitHeight(60);
             invImg.setFitWidth(60);
             investigators.getChildren().add(invImg);

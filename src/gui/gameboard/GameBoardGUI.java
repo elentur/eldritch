@@ -13,7 +13,7 @@ import model.GameBoard;
 
 
 public class GameBoardGUI extends StackPane {
-    private final static Image backgroundImage = new Image("images/gameBoard/BackgroundPattern.jpg",500,500,true,true,false);
+    private final static Image backgroundImage = new Image("images/gameBoard/BackgroundPattern.png",500,500,true,true,false);
 
     @Getter
     private final Group zoomGroup;

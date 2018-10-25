@@ -246,7 +246,7 @@ public abstract class Investigator implements Item {
         update.setValue(true);
     }
 
-    public void removerainTicket(int trainTicket) {
+    public void removeTrainTicket(int trainTicket) {
         this.trainTicket -= trainTicket;
         MathUtils.clamp(trainTicket, 0, 2 - shipTicket);
         update.setValue(true);

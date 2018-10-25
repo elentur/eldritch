@@ -37,7 +37,7 @@ public class MysteryGUI extends Group {
         random= new Random();
         mystery = new ImageView();
         String oldeOne = GameService.getInstance().getAncientOne().getNameId().replaceAll("[{}\\$]", "");
-        mystery.setImage(new Image("images/encounter/&mystery_" + oldeOne + ".jpg", 260, 165, false, true, true));
+        mystery.setImage(new Image("images/encounter/&mystery_" + oldeOne + ".png", 260, 165, false, true, true));
         mystery.setClip(new ImageView(clipShape));
 
         mystery.setOnMouseClicked(e -> {
@@ -79,6 +79,7 @@ public class MysteryGUI extends Group {
             tokens.getChildren().clear();
             numberOfTokens.setVisible(false);
         }
+        GameService.getInstance().getActiveMystery().getUpdate().setValue(false);
     }
 
     private class UpdateListener implements ChangeListener<Boolean> {
@@ -86,7 +87,7 @@ public class MysteryGUI extends Group {
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (newValue) {
                 update();
-                GameService.getInstance().getActiveMystery().getUpdate().setValue(false);
+
             }
         }
     }

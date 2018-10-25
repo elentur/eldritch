@@ -12,7 +12,7 @@ public class MoveOverlay extends Overlay {
     public MoveOverlay(Move effect) {
         super(effect);
         this.move = effect;
-        ImageView img = new ImageView(new Image("images/investigator/"+effect.getInvestigator().getId()+".jpg", 100, 100, true, true, false));
+        ImageView img = new ImageView(new Image("images/investigator/"+effect.getInvestigator().getId()+".png", 100, 100, true, true, false));
 
         this.getChildren().addAll(img);
         this.setMouseTransparent(true);

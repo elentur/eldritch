@@ -14,20 +14,20 @@
  -fx-background-image: url('../images/gameBoard/CityMark.png');
 }
 .show-case .viewport   {
-    -fx-background-image: url('../images/ShowCase.jpg');
+    -fx-background-image: url('../images/ShowCase.png');
     -fx-background-position:  center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;
 }
 
 .gameboard .viewport   {
-    -fx-background-image: url('../images/gameBoard/BackgroundPattern.jpg');
+    -fx-background-image: url('../images/gameBoard/BackgroundPattern.png');
     -fx-background-position:  center;
     -fx-background-repeat: repeat;
 }
 
 .small-show-case     {
-    -fx-background-image: url('../images/SmallShowCase.jpg');
+    -fx-background-image: url('../images/SmallShowCase.png');
     -fx-background-position:  center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: stretch;

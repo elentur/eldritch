@@ -4,7 +4,9 @@ import Service.DiceRollerService;
 import Service.GameService;
 import container.InvestigatorContainer;
 import enums.FieldID;
+import enums.ItemType;
 import factory.GameBoardFactory;
+import gamemechanics.choice.TradeChoice;
 import gui.EffectLayer;
 import gui.Fonts;
 import gui.Interface;
@@ -15,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Effect;
 import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.ancientOnes.Azathoth;
@@ -24,6 +27,7 @@ import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
 import model.effects.ChooseSpace;
 import model.effects.Move;
+import model.effects.Trade;
 
 import java.util.Arrays;
 
@@ -81,7 +85,6 @@ public class GameBoardGUITest extends Application {
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
 
-        //GameService.getInstance().addEffect(new ChooseSpace(2,new Move(FieldID.CHOSEN_FIELD,GameService.getInstance().getEncounteringInvestigator())));
 
         //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }

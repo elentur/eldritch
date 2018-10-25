@@ -49,6 +49,7 @@ public class InvestigatorButton extends ItemButton {
                         TestType.OBSERVATION.getSymbol() + inv.getSkill(TestType.OBSERVATION) + ", " +
                         TestType.STRENGTH.getSymbol() + inv.getSkill(TestType.STRENGTH) + ", " +
                         TestType.WILL.getSymbol() + inv.getSkill(TestType.WILL) );
+        inv.getUpdate().setValue(false);
     }
 
     private class UpdateListener implements ChangeListener<Boolean> {
@@ -56,7 +57,7 @@ public class InvestigatorButton extends ItemButton {
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (newValue) {
                 update();
-                inv.getUpdate().setValue(false);
+
             }
         }
     }

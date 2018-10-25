@@ -126,7 +126,7 @@ public class ActiveInvestigatorGUI extends Group {
             }
             inv = GameService.getInstance().getActiveInvestigator();
             inv.getUpdate().addListener(listener);
-            portrait.setImage(new Image("images/investigator/" + inv.getId() + ".jpg", 250, 242, true, true, true));
+            portrait.setImage(new Image("images/investigator/" + inv.getId() + ".png", 250, 242, true, true, true));
             name.setText(inv.getName());
             GameService.getInstance().zoomTo(inv);
         }
@@ -144,6 +144,7 @@ public class ActiveInvestigatorGUI extends Group {
             strengthImage.setValue(inv.getSkillSet());
             willImage.setValue(inv.getSkillSet());
         }
+        inv.getUpdate().setValue(false);
     }
 
     private class UpdateListener implements ChangeListener<Boolean> {
@@ -151,7 +152,7 @@ public class ActiveInvestigatorGUI extends Group {
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (newValue) {
                 update();
-                inv.getUpdate().setValue(false);
+
             }
         }
     }

@@ -28,7 +28,7 @@ public class AncientOneGUI extends Group {
         portrait.setTranslateY(5);
         portrait.setX(-80);
         portrait.setClip(new ImageView(clipShape));
-        portrait.setImage(new Image("images/ancientones/AzathothBig.jpg", 212, 104, true, true, true));
+        portrait.setImage(new Image("images/ancientones/AzathothBig.png", 212, 104, true, true, true));
 
         doom= new Label();
         doom.styleProperty().bind(Fonts.getFont(0.22, Fonts.WHITE, Fonts.FontTyp.BOLD));

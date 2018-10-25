@@ -5,6 +5,7 @@ import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
 import enums.FieldID;
+import enums.FieldType;
 import enums.OmenStates;
 import enums.SituationType;
 import factory.ItemFactory;
@@ -431,9 +432,20 @@ public class GameService {
     }
 
     public FieldID getRandomField(){
-        int i = FieldID.values().length;
-        Random r = new Random();
-        return FieldID.values()[r.nextInt(i)];
+        int safetyCount=0;
+        while (true) {
+            safetyCount++;
+            int i = FieldID.values().length;
+            Random r = new Random();
+            FieldID fieldID = FieldID.values()[r.nextInt(i)];
+            if (!fieldID.getType().equals(FieldType.NONE)) {
+                return fieldID;
+            }
+            if(safetyCount>1000){
+                break;
+            }
+        }
+        return FieldID.LONDON;
     }
     public boolean isChooseFieldMode() {
         return chooseMode;

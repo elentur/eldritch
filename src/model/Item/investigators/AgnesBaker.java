@@ -30,7 +30,9 @@ public class AgnesBaker extends Investigator {
                 GameService.getInstance().getAssets().get("&profaneTome"),
                 GameService.getInstance().getAssets().get("&doubleBarreledShotgun"),
                 GameService.getInstance().getSpells().get("&stormOfSpirits"),
-                GameService.getInstance().getSpells().get("&shriveling")
+                GameService.getInstance().getSpells().get("&shriveling"),
+                GameService.getInstance().getClueTokens().draw(),
+                GameService.getInstance().getClueTokens().draw()
         );
 
 

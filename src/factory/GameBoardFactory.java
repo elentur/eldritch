@@ -2,6 +2,7 @@ package factory;
 
 import enums.FieldConnections;
 import enums.FieldID;
+import enums.FieldType;
 import lombok.extern.java.Log;
 import model.Field;
 import model.GameBoard;
@@ -25,6 +26,9 @@ public class GameBoardFactory {
         List<Field> fields = new ArrayList<>();
 
         for (FieldID fieldID : FieldID.values()) {
+            if(fieldID.getType().equals(FieldType.NONE)){
+                continue;
+            }
             Field field = new Field(fieldID);
             fields.add(field);
         }
