@@ -15,7 +15,7 @@ import lombok.Getter;
 
 public abstract class ChoiceDialog extends DialogGui {
 
-    private final static Image newBackground = new Image("images/ShowCase.jpg");
+    private final static Image newBackground = new Image("images/ShowCase.png");
     @Getter
     private VBox texts;
     private final Choice choice;

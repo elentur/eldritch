@@ -12,7 +12,7 @@ public class LooseOrGainHealthSanityEffectOverlay extends Overlay {
 
     public LooseOrGainHealthSanityEffectOverlay(LooseOrGainHealthSanity loose) {
         super(loose);
-        loose.init();
+        //loose.init();
         if(loose.getValue()==0){
             return;
         }
@@ -32,9 +32,9 @@ public class LooseOrGainHealthSanityEffectOverlay extends Overlay {
         ImageView img = null;
         value.getStyleClass().add("text-stroke-white");
         if (loose.getMonster() != null) {
-            img = new ImageView(new Image("images/monster/" + loose.getMonster().getId() + ".jpg", 190, 130, true, true, false));
+            img = new ImageView(new Image("images/monster/" + loose.getMonster().getId() + ".png", 190, 130, true, true, false));
         } else if (loose.getInvestigator() != null) {
-            img = new ImageView(new Image("images/investigator/" + loose.getInvestigator().getId() + ".jpg", 200, 200, true, true, false));
+            img = new ImageView(new Image("images/investigator/" + loose.getInvestigator().getId() + ".png", 200, 200, true, true, false));
         }
         switch (loose.getSpendType()) {
             case HEALTH:

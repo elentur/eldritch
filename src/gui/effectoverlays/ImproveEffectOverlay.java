@@ -10,11 +10,11 @@ import model.effects.Improve;
 import java.nio.IntBuffer;
 
 public class ImproveEffectOverlay extends Overlay {
-    private final static Image loreImage = new Image("images/effect/Lore_Improvement.jpg",200,200,true,true,false);
-    private final static Image influenceImage = new Image("images/effect/Influence_Improvement.jpg",200,200,true,true,false);
-    private final static Image observationImage = new Image("images/effect/Observation_Improvement.jpg",200,200,true,true,false);
-    private final static Image strengthImage = new Image("images/effect/Strength_Improvement.jpg",200,200,true,true,false);
-    private final static Image willImage = new Image("images/effect/Will_Improvement.jpg",200,200,true,true,false);
+    private final static Image loreImage = new Image("images/effect/Lore_Improvement.png",200,200,true,true,false);
+    private final static Image influenceImage = new Image("images/effect/Influence_Improvement.png",200,200,true,true,false);
+    private final static Image observationImage = new Image("images/effect/Observation_Improvement.png",200,200,true,true,false);
+    private final static Image strengthImage = new Image("images/effect/Strength_Improvement.png",200,200,true,true,false);
+    private final static Image willImage = new Image("images/effect/Will_Improvement.png",200,200,true,true,false);
 
     public ImproveEffectOverlay(Improve effect) {
         super(effect);

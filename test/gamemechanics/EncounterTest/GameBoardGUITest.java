@@ -4,7 +4,10 @@ import Service.DiceRollerService;
 import Service.GameService;
 import container.InvestigatorContainer;
 import enums.FieldID;
+import enums.ItemType;
+import enums.SpendType;
 import factory.GameBoardFactory;
+import gamemechanics.choice.TradeChoice;
 import gui.EffectLayer;
 import gui.Fonts;
 import gui.Interface;
@@ -15,15 +18,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Effect;
 import model.GameBoard;
 import model.Item.Investigator;
+import model.Item.Spell;
 import model.Item.ancientOnes.Azathoth;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
-import model.effects.ChooseSpace;
-import model.effects.Move;
+import model.effects.*;
 
 import java.util.Arrays;
 
@@ -80,9 +84,10 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
-
-        //GameService.getInstance().addEffect(new ChooseSpace(2,new Move(FieldID.CHOSEN_FIELD,GameService.getInstance().getEncounteringInvestigator())));
-
+        GameService.getInstance().addEffect(new GainSpell(
+                (Spell)GameService.getInstance().getSpells().get("&fleshWard"),
+                GameService.getInstance().getEncounteringInvestigator()));
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,2,GameService.getInstance().getEncounteringInvestigator()));
         //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }
 

@@ -5,12 +5,14 @@ import container.InvestigatorContainer;
 import container.ItemContainer;
 import container.ItemStack;
 import enums.FieldID;
+import enums.FieldType;
 import enums.OmenStates;
 import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
 import gamemechanics.Mystery;
 import gamemechanics.Phases;
+import gamemechanics.Test;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.*;
@@ -40,6 +42,7 @@ public class GameService {
     private  ObservableList<Effect> insertions;
     private SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
+    private SimpleObjectProperty<Test> test = new SimpleObjectProperty<>();
 
     @Getter
     private ObjectProperty<Investigator> activeInvestigator;
@@ -317,6 +320,9 @@ public class GameService {
     public SimpleObjectProperty<Encounter> getEncounterProperty() {
         return encounter;
     }
+    public SimpleObjectProperty<Test> getTestProperty() {
+        return test;
+    }
 
     public void addEncounter(Encounter encounter) {
         if(encounter!=null) {
@@ -325,6 +331,12 @@ public class GameService {
             }
         }
         this.encounter.set(encounter);
+    }
+    public void addTest(Test test) {
+        if(test!=null) {
+
+        }
+        this.test.set(test);
     }
 
     public void setGameBoard(GameBoard gameBoard) {
@@ -431,9 +443,20 @@ public class GameService {
     }
 
     public FieldID getRandomField(){
-        int i = FieldID.values().length;
-        Random r = new Random();
-        return FieldID.values()[r.nextInt(i)];
+        int safetyCount=0;
+        while (true) {
+            safetyCount++;
+            int i = FieldID.values().length;
+            Random r = new Random();
+            FieldID fieldID = FieldID.values()[r.nextInt(i)];
+            if (!fieldID.getType().equals(FieldType.NONE)) {
+                return fieldID;
+            }
+            if(safetyCount>1000){
+                break;
+            }
+        }
+        return FieldID.LONDON;
     }
     public boolean isChooseFieldMode() {
         return chooseMode;

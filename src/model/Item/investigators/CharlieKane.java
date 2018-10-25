@@ -28,8 +28,7 @@ public class CharlieKane extends Investigator {
                 4,
                 8,
                 FieldID.SAN_FRANCISCO,
-                GameService.getInstance().getAssets().get("&personalAssistant"),
-                GameService.getInstance().getAssets().get("&fineClothes")
+                GameService.getInstance().getAssets().get("&personalAssistant")
         );
 
 

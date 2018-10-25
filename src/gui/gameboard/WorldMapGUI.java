@@ -20,7 +20,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class WorldMapGUI extends MapGUI {
-    private final static Image backgroundImage = new Image("images/gameBoard/GameBoard.jpg");
+    private final static Image backgroundImage = new Image("images/gameBoard/GameBoard.png");
     private final Rectangle background;
     private final List<FieldButton> fieldButtonList;
     private final Map<FieldConnections, SVGPath> paths;

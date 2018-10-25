@@ -15,7 +15,8 @@ public enum SituationType {
     REST("${rest}"),
     GAIN_FOCUS("${gain_focus}"),
     TRADE("${trade}"),
-    MOVE("${move}");
+    MOVE("${move}"),
+    TEST("${test}");
 
     private String key;
 

@@ -2,6 +2,7 @@ package factory;
 
 import container.*;
 import enums.FieldID;
+import enums.FieldType;
 import enums.OldOnes;
 import gamemechanics.*;
 import gamemechanics.encounter.*;
@@ -318,6 +319,9 @@ public class ItemFactory {
         if (clueTokens == null) {
             clueTokens = new ItemContainer<>();
            for(FieldID fieldID : FieldID.values()){
+               if(fieldID.getType().equals(FieldType.NONE)){
+                   continue;
+               }
                clueTokens.add(new ClueToken(fieldID));
            }
         }

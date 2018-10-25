@@ -4,11 +4,13 @@ package model.effects;
 import Service.GameService;
 import enums.EffectTyps;
 import enums.FieldID;
+import enums.ItemType;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InvestigatorChoice;
 import gamemechanics.choice.MonsterChoice;
 import gamemechanics.choice.TradeChoice;
 import lombok.Getter;
+import lombok.Setter;
 import model.Effect;
 import model.Item.Investigator;
 import utils.ResourceUtil;
@@ -21,6 +23,8 @@ public class Trade extends Effect {
     private final int tradeMode;
     private  FieldID fieldID;
     private Investigator investigator;
+    @Setter
+    private ItemType itemType = ItemType.ITEM;
 
 
     public Trade(Investigator investigator) {
@@ -51,13 +55,13 @@ public class Trade extends Effect {
         }
         investigators.remove(investigator);
         if (investigators.size() == 1) {
-            TradeChoice tradeChoice = new TradeChoice(investigator, investigators.get(0), false,tradeMode);
+            TradeChoice tradeChoice = new TradeChoice(investigator, investigators.get(0), false,tradeMode,itemType);
             GameService.getInstance().addChoice(tradeChoice);
         } else if (investigators.size() > 1) {
             InvestigatorChoice choice = new InvestigatorChoice(investigators, true);
             GameService.getInstance().addChoice(choice);
             if (!choice.getSelectedInvs().isEmpty()) {
-                TradeChoice tradeChoice = new TradeChoice(investigator, choice.getSelectedInvs().get(0), false,tradeMode);
+                TradeChoice tradeChoice = new TradeChoice(investigator, choice.getSelectedInvs().get(0), false,tradeMode,itemType);
                 GameService.getInstance().addChoice(tradeChoice);
             }
 

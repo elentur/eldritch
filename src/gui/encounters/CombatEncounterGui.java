@@ -47,7 +47,7 @@ public class CombatEncounterGui extends EncounterGui {
         Monster m = encounter.getActiveMonster();
         Rectangle shape = new Rectangle(200, 80, new ImagePattern(monsterShapeImage));
         Rectangle monsterImage = new Rectangle(200, 150,
-                new ImagePattern(new Image("images/monster/" + m.getId() + ".jpg")));
+                new ImagePattern(new Image("images/monster/" + m.getId() + ".png")));
         monsterImage.setClip(shape);
         monsterImage.setEffect(Effects.innerShadow);
 

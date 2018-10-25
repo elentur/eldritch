@@ -29,7 +29,7 @@ public class SpawnMonsterEffectOverlay extends Overlay {
         Field field = GameService.getInstance().getGameBoard().getField(spawnMonster.getFieldID());
         FieldButton fieldButton = InterfaceLinking.gameBoardGUI.getFieldButton(field);
         Animations.zoomTo(fieldButton);
-        ImageView img = new ImageView(new Image("images/monster/" + spawnMonster.getMonster().getId() + ".jpg", 190, 130, true, true, false));
+        ImageView img = new ImageView(new Image("images/monster/" + spawnMonster.getMonster().getId() + ".png", 190, 130, true, true, false));
        this.getChildren().add(img);
         return 500;
     }
