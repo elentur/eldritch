@@ -12,7 +12,7 @@ public class LooseOrGainHealthSanityEffectOverlay extends Overlay {
 
     public LooseOrGainHealthSanityEffectOverlay(LooseOrGainHealthSanity loose) {
         super(loose);
-        loose.init();
+        //loose.init();
         if(loose.getValue()==0){
             return;
         }

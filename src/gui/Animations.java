@@ -163,7 +163,7 @@ public class Animations {
         t.setOnFinished(a -> {
             effectOverlayIsRunning = false;
             pane.getChildren().remove(overlay);
-            GameService.getInstance().getInsertions().remove(effect);
+            Platform.runLater(() -> GameService.getInstance().getInsertions().remove(effect));
 
         });
         t.playFromStart();
@@ -180,7 +180,7 @@ public class Animations {
         effectOverlayIsRunning = true;
         List<Field> path = GameService.getInstance().getGameBoard().getPath(
                 GameService.getInstance().getFieldOfInvestigator(effect.getInvestigator()),
-                GameService.getInstance().getGameBoard().getField( effect.getFieldID()),
+                GameService.getInstance().getGameBoard().getField(effect.getFieldID()),
                 effect.getInvestigator());
         int delay = overlay.init();
 
@@ -297,7 +297,7 @@ public class Animations {
     }
 
     public static void zoomTo(Node node) {
-        if(node==null){
+        if (node == null) {
             return;
         }
         AnimationTimer timer = new AnimationTimer() {

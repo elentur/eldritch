@@ -3,6 +3,7 @@ package gui;
 import Service.GameService;
 import enums.EffectTyps;
 import gamemechanics.Action;
+import gamemechanics.Test;
 import gamemechanics.choice.*;
 import gamemechanics.encounter.CombatEncounter;
 import gui.choice.*;
@@ -10,6 +11,7 @@ import gui.effectoverlays.*;
 import gui.encounters.ActionGui;
 import gui.encounters.CombatEncounterGui;
 import gui.encounters.EncounterGui;
+import gui.encounters.TestGui;
 import gui.gameboard.GameBoardGUI;
 import gui.interfaceelements.ActiveInvestigatorGUI;
 import gui.interfaceelements.InactiveInvestigatorsGUI;
@@ -22,6 +24,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
+import model.Item.Spell;
 import model.effects.*;
 
 @Log
@@ -51,6 +54,7 @@ public class InterfaceLinking {
         GameService game = GameService.getInstance();
         game.getChoiceProperty().addListener((a,b,c) -> startChoiceDialog(game.getChoiceProperty().getValue()));
         game.getEncounterProperty().addListener((a,b,c) -> startEncounterDialog(game.getEncounterProperty().getValue()));
+        game.getTestProperty().addListener((a,b,c) -> startTestDialog(game.getTestProperty().getValue()));
         lockGameBoard = new SimpleBooleanProperty(false);
         game.getInsertions().addListener((ListChangeListener<? super Effect>) e -> {
             lockGameBoard.setValue(false);
@@ -76,6 +80,8 @@ public class InterfaceLinking {
 
     }
 
+
+
     private void updateInvestigatorInterface() {
         ActiveInvestigatorGUI activeInvestigatorGUI = interfaceGui.getActiveInvestigatorGUI();
         activeInvestigatorGUI.update();
@@ -91,6 +97,8 @@ public class InterfaceLinking {
         }
         switch (effect.getEffectType()) {
             case LOOSE_OR_GAIN_HEALTH_SANITY:
+                effect.init();
+                ((LooseOrGainHealthSanity) effect).prevent();
                 Animations.effectOverlayAnimations(new LooseOrGainHealthSanityEffectOverlay((LooseOrGainHealthSanity) effect), primaryStage, effect);
                 break;
             case SPEND:
@@ -146,6 +154,9 @@ public class InterfaceLinking {
                 break;
             case GAIN_ASSET:
                 Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
+                break;
+            case GAIN_SPELL:
+                Animations.effectOverlayAnimations(new SpellOverlay((GainSpell) effect), primaryStage, effect);
                 break;
             case GAIN_ARTIFACT:
                 Animations.effectOverlayAnimations(new ArtifactOverlay((GainArtifact) effect), primaryStage, effect);
@@ -222,7 +233,16 @@ public class InterfaceLinking {
         // Platform.runLater(dlg::showAndWait);
         dlg.showAndWait();
     }
+    private void startTestDialog(Test test) {
+        if (test == null) {
+            return;
+        }
+        DialogGui dlg = new TestGui(test);
 
+        root.getChildren().add(root.getChildren().size() - 1, dlg);
+        //Platform.runLater(dlg::showAndWait);
+        dlg.showAndWait();
+    }
     private void startEncounterDialog(gamemechanics.encounter.Encounter encounter) {
         if (encounter == null) {
             return;

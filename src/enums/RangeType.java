@@ -6,7 +6,8 @@ public enum RangeType {
 
     NONE(""),
     SELF("${self}"),
-    LOCAL("${local}");
+    LOCAL("${local}"),
+    ALL("${all}");
 
 
     private String key;

@@ -4,6 +4,7 @@ import Service.GameService;
 import enums.EventTimeType;
 import enums.TestType;
 import gamemechanics.Action;
+import gamemechanics.Test;
 import gamemechanics.encounter.StandardEncounter;
 import gui.*;
 import gui.buttons.BonusButton;
@@ -85,6 +86,9 @@ public class EncounterGui extends DialogGui {
             case ACTION_ENCOUNTER:
                 populateCenterForAction((Action) encounter);
                 break;
+            case TEST:
+                populateCenterForTest((Test) encounter);
+                break;
             default:
                 populateCenterForStandardEncounter((StandardEncounter) encounter);
                 break;
@@ -100,7 +104,14 @@ public class EncounterGui extends DialogGui {
         startText.getStyleClass().add("");
         encounterPane.getChildren().addAll(startText);
     }
-
+    private void populateCenterForTest(Test encounter) {
+        TextField startText = new TextField(encounter.getEncounterStartText() + "\n" + encounter.getEncounterEffectText());
+        startText.setWrapText(true);
+        startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
+        startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
+        startText.getStyleClass().add("");
+        encounterPane.getChildren().addAll(startText);
+    }
     private void populateCenterForStandardEncounter(StandardEncounter encounter) {
         TextField startText = new TextField(encounter.getEncounterStartText() + "\n" + encounter.getEncounterEffectText());
         startText.setWrapText(true);
