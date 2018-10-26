@@ -123,8 +123,10 @@ public class LooseOrGainHealthSanity extends Effect {
         }
         for (ItemBonus_PreventLossOfHealthOrSanity bonus : listener) {
             if (bonus.getSpendType().equalsWithAll(spendType)) {
+                bonus.setInvestigator(investigator);
+                bonus.setDamage(value);
                 bonus.execute(GameService.getInstance().getEncounterProperty().getValue());
-                value = Math.max(value + bonus.getPreventedValue(), 0);
+                value = Math.min(value + bonus.getPreventedValue(), 0);
                 bonus.setPreventedValue(0);
                 if(value==0){
                     return;

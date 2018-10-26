@@ -467,4 +467,12 @@ public class GameService {
     }
 
 
+    public Investigator getInvestigatorForItem(Item item) {
+        for(Investigator inv :  getInvestigators()){
+            if(inv.getInventory().contains(item)){
+                return inv;
+            }
+        }
+        return null;
+    }
 }

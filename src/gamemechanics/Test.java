@@ -33,13 +33,15 @@ public class Test extends Encounter {
     public Test(SituationType situationType) {
         this(  TestType.NONE, 0, 0, situationType);
     }
-
+    public Test(Effect effect,SituationType situationType) {
+        this( effect, EncounterType.TEST,TestType.NONE, 0, 0, situationType);
+    }
     public Test(TestType testType, int mod, int minNumberOfSuccesses, SituationType situationType) {
-        this(EncounterType.TEST, testType, mod, minNumberOfSuccesses, situationType);
+        this(null,EncounterType.TEST, testType, mod, minNumberOfSuccesses, situationType);
 
     }
 
-    protected Test(EncounterType encounterType, TestType testType, int mod, int minNumberOfSuccesses, SituationType situationType) {
+    protected Test(Effect effect,EncounterType encounterType, TestType testType, int mod, int minNumberOfSuccesses, SituationType situationType) {
         super(encounterType);
 
         this.encounterID = "test";
@@ -50,9 +52,10 @@ public class Test extends Encounter {
         setEffect(new Effect[1][3]);
         setSituationType(situationType);
         setGame(GameService.getInstance());
-
-
         setEncounterPart(0);
+        getEffect()[getEncounterPart()][START]=effect;
+
+
 
         getTestType()[getEncounterPart()] = testType;
         getMinNumberOfSuccesses()[getEncounterPart()] = minNumberOfSuccesses;
@@ -111,6 +114,9 @@ public class Test extends Encounter {
 
 
     public int completeEncounterPart() {
+        if(getEffect()[getEncounterPart()][START]!=null){
+            GameService.getInstance().addEffect(getEffect()[getEncounterPart()][START]);
+        }
         setEncounterPart(3);
         checkForSpellConsequences();
         return super.completeEncounterPart();

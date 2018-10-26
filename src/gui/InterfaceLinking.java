@@ -41,35 +41,39 @@ public class InterfaceLinking {
     private static BooleanProperty lockGameBoard;
 
 
-    public static void init(Stage stage,StackPane root, Interface interfaceGui, GameBoardGUI gameBoardGUI) {
+    public static void init(Stage stage, StackPane root, Interface interfaceGui, GameBoardGUI gameBoardGUI) {
         primaryStage = stage;
         InterfaceLinking.root = root;
         InterfaceLinking.interfaceGui = interfaceGui;
-        InterfaceLinking.gameBoardGUI=gameBoardGUI;
+        InterfaceLinking.gameBoardGUI = gameBoardGUI;
         gameBoardGUI.mouseTransparentProperty().bind(lockGameBoard);
 
     }
 
     private InterfaceLinking() {
         GameService game = GameService.getInstance();
-        game.getChoiceProperty().addListener((a,b,c) -> startChoiceDialog(game.getChoiceProperty().getValue()));
-        game.getEncounterProperty().addListener((a,b,c) -> startEncounterDialog(game.getEncounterProperty().getValue()));
-        game.getTestProperty().addListener((a,b,c) -> startTestDialog(game.getTestProperty().getValue()));
+        game.getChoiceProperty().addListener((a, b, c) -> startChoiceDialog(game.getChoiceProperty().getValue()));
+        game.getEncounterProperty().addListener((a, b, c) -> startEncounterDialog(game.getEncounterProperty().getValue()));
+        game.getTestProperty().addListener((a, b, c) -> startTestDialog(game.getTestProperty().getValue()));
         lockGameBoard = new SimpleBooleanProperty(false);
         game.getInsertions().addListener((ListChangeListener<? super Effect>) e -> {
             lockGameBoard.setValue(false);
-            System.out.println( game.getInsertions());
+            System.out.println(game.getInsertions());
+
             if (!e.getList().isEmpty()) {
-                Effect effect = e.getList().get(0);
-                if (!effect.isExecuted()) {
-                    //lockGameBoard.setValue(effect.getEffectType().equals(EffectTyps.NEXT_INVESTIGATOR)
-                  //  || effect.getEffectType().equals(EffectTyps.SWITCH_PHASE));
-                    Effect found = game.getInsertions().stream().filter(effect1 -> effect1.getEffectType().equals(EffectTyps.NEXT_INVESTIGATOR)
-                              || effect1.getEffectType().equals(EffectTyps.SWITCH_PHASE)
-                            || effect1.getEffectType().equals(EffectTyps.MOVE)).findAny().orElse(null);
-                    lockGameBoard.setValue(found!=null);
-                    System.out.println(lockGameBoard.getValue() + " " + gameBoardGUI.mouseTransparentProperty().getValue() );
-                    createEffectOverlay(effect);
+                e.next();
+                if ((e.wasAdded() && e.getList().size() == 1) || e.wasRemoved()) {
+                    Effect effect = e.getList().get(0);
+                    if (!effect.isExecuted()) {
+
+                        //lockGameBoard.setValue(effect.getEffectType().equals(EffectTyps.NEXT_INVESTIGATOR)
+                        //  || effect.getEffectType().equals(EffectTyps.SWITCH_PHASE));
+                        Effect found = game.getInsertions().stream().filter(effect1 -> effect1.getEffectType().equals(EffectTyps.NEXT_INVESTIGATOR)
+                                || effect1.getEffectType().equals(EffectTyps.SWITCH_PHASE)
+                                || effect1.getEffectType().equals(EffectTyps.MOVE)).findAny().orElse(null);
+                        lockGameBoard.setValue(found != null);
+                        createEffectOverlay(effect);
+                    }
                 }
             }
         });
@@ -77,9 +81,7 @@ public class InterfaceLinking {
         game.getActiveInvestigatorProperty().addListener(e -> updateInvestigatorInterface());
 
 
-
     }
-
 
 
     private void updateInvestigatorInterface() {
@@ -95,97 +97,101 @@ public class InterfaceLinking {
         if (effect == null) {
             return;
         }
-        switch (effect.getEffectType()) {
-            case LOOSE_OR_GAIN_HEALTH_SANITY:
-                effect.init();
-                ((LooseOrGainHealthSanity) effect).prevent();
-                Animations.effectOverlayAnimations(new LooseOrGainHealthSanityEffectOverlay((LooseOrGainHealthSanity) effect), primaryStage, effect);
-                break;
-            case SPEND:
-                Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
-                break;
-            case SPAWN_CLUE:
-                Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
-                break;
-            case SPAWN_ELDRITCH_TOKEN:
-                Animations.effectOverlayAnimations(new SpawnEldritchTokenEffectOverlay((SpawnEldritchToken) effect), primaryStage, effect);
-                break;
-            case SPAWN_GATE:
-                Animations.effectOverlayAnimations(new SpawnGateEffectOverlay((SpawnGate) effect), primaryStage, effect);
-                break;
-            case CLOSE_GATE:
-                Animations.effectOverlayAnimations(new CloseGateEffectOverlay((CloseGate) effect), primaryStage, effect);
-                break;
-            case REMOVE_ELDRITCH_TOKEN:
-                Animations.effectOverlayAnimations(new RemoveEldritchTokenEffectOverlay((RemoveEldritchToken) effect), primaryStage, effect);
-                break;
-            case DISCARD_MONSTER:
-                Animations.effectOverlayAnimations(new DiscardMonsterOverlay((DiscardMonster) effect), primaryStage, effect);
-                break;
-            case GAIN_CLUE:
-                Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
-                break;
-            case GAIN_FOCUS:
-                Animations.effectOverlayAnimations(new GainEffectOverlay((GainFocus) effect), primaryStage, effect);
-                break;
-            case GAIN_TICKET:
-                Animations.effectOverlayAnimations(new GainEffectOverlay((GainTicket) effect), primaryStage, effect);
-                break;
-            case IMPROVE:
-                Animations.effectOverlayAnimations(new ImproveEffectOverlay((Improve) effect), primaryStage, effect);
-                break;
-            case ADVANCE_DOOM:
-                Animations.effectOverlayAnimations(new DoomEffectOverlay((AdvanceDoom) effect), primaryStage, effect);
-                break;
-            case RETREAT_DOOM:
-                Animations.effectOverlayAnimations(new DoomEffectOverlay((RetreatDoom) effect), primaryStage, effect);
-                break;
-            case ADVANCE_OMEN:
-                Animations.effectOverlayAnimations(new OmenEffectOverlay((AdvanceOmen) effect), primaryStage, effect);
-                break;
-            case ADD_ELDRITCH_TO_MYSTERY:
-                Animations.effectOverlayAnimations(new AddEldritchToMysteryOverlay((AddEldritchToMystery) effect), primaryStage, effect);
-                break;
-            case SPAWN_MONSTER:
-                Animations.effectOverlayAnimations(new SpawnMonsterEffectOverlay((SpawnMonster) effect), primaryStage, effect);
-                break;
-            case RETREAT_OMEN:
-                Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
-                break;
-            case GAIN_ASSET:
-                Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
-                break;
-            case GAIN_SPELL:
-                Animations.effectOverlayAnimations(new SpellOverlay((GainSpell) effect), primaryStage, effect);
-                break;
-            case GAIN_ARTIFACT:
-                Animations.effectOverlayAnimations(new ArtifactOverlay((GainArtifact) effect), primaryStage, effect);
-                break;
-            case SWITCH_PHASE:
-                Animations.effectOverlayPhaseSwitch(new SwitchPhaseOverlay((SwitchPhase) effect), primaryStage, effect);
-                break;
-            case MONSTER_SURGE:
-                effect.execute();
-                GameService.getInstance().getInsertions().remove(effect);
-                break;
-            case AND:
-                effect.execute();
-                GameService.getInstance().getInsertions().remove(effect);
-                break;
-            case MOVE:
-                Animations.effectOverlayMove(new MoveOverlay((Move) effect), primaryStage, (Move)effect);
-                break;
-            case TRADE:
-                GameService.getInstance().getInsertions().remove(effect);
-                effect.execute();
-                break;
+        if (!effect.isPicked()) {
+            effect.setPicked(true);
 
-            default:
-                Platform.runLater(() -> {
+            switch (effect.getEffectType()) {
+                case LOOSE_OR_GAIN_HEALTH_SANITY:
+                    effect.init();
+                    ((LooseOrGainHealthSanity) effect).prevent();
+                    Animations.effectOverlayAnimations(new LooseOrGainHealthSanityEffectOverlay((LooseOrGainHealthSanity) effect), primaryStage, effect);
+                    break;
+                case SPEND:
+                    Animations.effectOverlayAnimations(new SpendEffectOverlay((Spend) effect), primaryStage, effect);
+                    break;
+                case SPAWN_CLUE:
+                    Animations.effectOverlayAnimations(new SpawnClueEffectOverlay((SpawnClue) effect), primaryStage, effect);
+                    break;
+                case SPAWN_ELDRITCH_TOKEN:
+                    Animations.effectOverlayAnimations(new SpawnEldritchTokenEffectOverlay((SpawnEldritchToken) effect), primaryStage, effect);
+                    break;
+                case SPAWN_GATE:
+                    Animations.effectOverlayAnimations(new SpawnGateEffectOverlay((SpawnGate) effect), primaryStage, effect);
+                    break;
+                case CLOSE_GATE:
+                    Animations.effectOverlayAnimations(new CloseGateEffectOverlay((CloseGate) effect), primaryStage, effect);
+                    break;
+                case REMOVE_ELDRITCH_TOKEN:
+                    Animations.effectOverlayAnimations(new RemoveEldritchTokenEffectOverlay((RemoveEldritchToken) effect), primaryStage, effect);
+                    break;
+                case DISCARD_MONSTER:
+                    Animations.effectOverlayAnimations(new DiscardMonsterOverlay((DiscardMonster) effect), primaryStage, effect);
+                    break;
+                case GAIN_CLUE:
+                    Animations.effectOverlayAnimations(new GainEffectOverlay((GainClue) effect), primaryStage, effect);
+                    break;
+                case GAIN_FOCUS:
+                    Animations.effectOverlayAnimations(new GainEffectOverlay((GainFocus) effect), primaryStage, effect);
+                    break;
+                case GAIN_TICKET:
+                    Animations.effectOverlayAnimations(new GainEffectOverlay((GainTicket) effect), primaryStage, effect);
+                    break;
+                case IMPROVE:
+                    Animations.effectOverlayAnimations(new ImproveEffectOverlay((Improve) effect), primaryStage, effect);
+                    break;
+                case ADVANCE_DOOM:
+                    Animations.effectOverlayAnimations(new DoomEffectOverlay((AdvanceDoom) effect), primaryStage, effect);
+                    break;
+                case RETREAT_DOOM:
+                    Animations.effectOverlayAnimations(new DoomEffectOverlay((RetreatDoom) effect), primaryStage, effect);
+                    break;
+                case ADVANCE_OMEN:
+                    Animations.effectOverlayAnimations(new OmenEffectOverlay((AdvanceOmen) effect), primaryStage, effect);
+                    break;
+                case ADD_ELDRITCH_TO_MYSTERY:
+                    Animations.effectOverlayAnimations(new AddEldritchToMysteryOverlay((AddEldritchToMystery) effect), primaryStage, effect);
+                    break;
+                case SPAWN_MONSTER:
+                    Animations.effectOverlayAnimations(new SpawnMonsterEffectOverlay((SpawnMonster) effect), primaryStage, effect);
+                    break;
+                case RETREAT_OMEN:
+                    Animations.effectOverlayAnimations(new OmenEffectOverlay((RetreatOmen) effect), primaryStage, effect);
+                    break;
+                case GAIN_ASSET:
+                    Animations.effectOverlayAnimations(new AssetOverlay((GainAsset) effect), primaryStage, effect);
+                    break;
+                case GAIN_SPELL:
+                    Animations.effectOverlayAnimations(new SpellOverlay((GainSpell) effect), primaryStage, effect);
+                    break;
+                case GAIN_ARTIFACT:
+                    Animations.effectOverlayAnimations(new ArtifactOverlay((GainArtifact) effect), primaryStage, effect);
+                    break;
+                case SWITCH_PHASE:
+                    Animations.effectOverlayPhaseSwitch(new SwitchPhaseOverlay((SwitchPhase) effect), primaryStage, effect);
+                    break;
+                case MONSTER_SURGE:
+                    effect.execute();
+                    GameService.getInstance().getInsertions().remove(effect);
+                    break;
+                case AND:
+                    effect.execute();
+                    GameService.getInstance().getInsertions().remove(effect);
+                    break;
+                case MOVE:
+                    Animations.effectOverlayMove(new MoveOverlay((Move) effect), primaryStage, (Move) effect);
+                    break;
+                case TRADE:
                     GameService.getInstance().getInsertions().remove(effect);
                     effect.execute();
-                });
-                break;
+                    break;
+
+                default:
+                    Platform.runLater(() -> {
+                        GameService.getInstance().getInsertions().remove(effect);
+                        effect.execute();
+                    });
+                    break;
+            }
         }
     }
 
@@ -233,6 +239,7 @@ public class InterfaceLinking {
         // Platform.runLater(dlg::showAndWait);
         dlg.showAndWait();
     }
+
     private void startTestDialog(Test test) {
         if (test == null) {
             return;
@@ -243,6 +250,7 @@ public class InterfaceLinking {
         //Platform.runLater(dlg::showAndWait);
         dlg.showAndWait();
     }
+
     private void startEncounterDialog(gamemechanics.encounter.Encounter encounter) {
         if (encounter == null) {
             return;

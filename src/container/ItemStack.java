@@ -7,6 +7,7 @@ import model.Item.Item;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Log
 public abstract class ItemStack<T extends Item> {
@@ -95,8 +96,8 @@ public abstract class ItemStack<T extends Item> {
         traystack.add(item);
     }
 
-    public T getByItemType(ItemType itemType) {
-        return drawStack.stream().filter(item -> item.getItemType().equals(itemType)).findFirst().orElse(null);
+    public T getByItemType(List<ItemType> itemType) {
+        return drawStack.stream().filter(item -> itemType.contains(item.getItemType())).findFirst().orElse(null);
     }
 
     public  void removeItem(T item){

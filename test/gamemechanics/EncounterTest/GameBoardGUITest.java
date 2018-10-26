@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Effect;
 import model.GameBoard;
+import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.Spell;
 import model.Item.ancientOnes.Azathoth;
@@ -84,10 +85,10 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
-        GameService.getInstance().addEffect(new GainSpell(
-                (Spell)GameService.getInstance().getSpells().get("&fleshWard"),
+        GameService.getInstance().addEffect(new GainAsset(
+                (Asset) GameService.getInstance().getAssets().get("&bandages"),
                 GameService.getInstance().getEncounteringInvestigator()));
-        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,2,GameService.getInstance().getEncounteringInvestigator()));
+        GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.HEALTH,-4,GameService.getInstance().getEncounteringInvestigator()));
         //GameService.getInstance().addEffect(new SpawnClue(1,FieldID.LONDON));
     }
 

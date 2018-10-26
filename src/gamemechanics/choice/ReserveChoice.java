@@ -46,4 +46,8 @@ public class ReserveChoice extends Choice {
             effect.execute();
         }
     }
+
+    public void setSuccess(int success) {
+        this.success = success;
+    }
 }

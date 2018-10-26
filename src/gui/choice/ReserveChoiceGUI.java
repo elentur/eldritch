@@ -41,9 +41,19 @@ public class ReserveChoiceGUI extends ChoiceDialog {
                     }
 
                     if(choice.isSingleSelect()) {
-                        GameService.getInstance().getReserve().remove(choosen.get(0));
-                        GameService.getInstance().addEffect(new GainAsset(choosen.get(0),GameService.getInstance().getEncounteringInvestigator()));
-                        close();
+                        if(choice.getSuccess()==0 ) {
+                            GameService.getInstance().getReserve().remove(choosen.get(0));
+                            GameService.getInstance().addEffect(new GainAsset(choosen.get(0), GameService.getInstance().getEncounteringInvestigator()));
+                            close();
+                        }else{
+                            try {
+                                List<Asset> bought = GameService.getInstance().getReserve().buy(choosen, choice.getSuccess());
+                                GameService.getInstance().addEffect(new GainAsset(bought.get(0),GameService.getInstance().getEncounteringInvestigator()));
+                                close();
+                            }catch (ReserveException ex){
+                                GameService.getInstance().addChoice(new InformationChoice("",ex.getMessage(),new ArrayList<>()));
+                            }
+                        }
                     }else{
                         button.switchSelected();
                     }
@@ -53,12 +63,15 @@ public class ReserveChoiceGUI extends ChoiceDialog {
         }
         scrollPane.disableBackground(true);
         main.getChildren().add(scrollPane);
-        if(!choice.isSingleSelect()) {
-            Label success =new Label( "Success: " +choice.getSuccess()) ;
-            success.styleProperty().bind(Fonts.getFont(0.4,Fonts.DARK, Fonts.FontTyp.BOLD));
+        if(choice.getSuccess()>0) {
+            Label success = new Label("Success: " + choice.getSuccess());
+            success.styleProperty().bind(Fonts.getFont(0.4, Fonts.DARK, Fonts.FontTyp.BOLD));
             success.setAlignment(Pos.CENTER);
             success.setTextAlignment(TextAlignment.CENTER);
             getTexts().getChildren().add(success);
+        }
+        if(!choice.isSingleSelect() ) {
+
             YesNoButton okButton = new YesNoButton(YesNo.YES);
             okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {

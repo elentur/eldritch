@@ -13,7 +13,7 @@ public class TestGui extends EncounterGui {
         super(test);
         this.test = test;
         //Wenn es keiner Interaktion erfordert öffne nicht die Gui sondern füre gleich den Effekt aus
-        if(!(test.getEffect()[0][0] instanceof NullEffect)){
+        if((test.getEffect()[0][0] !=null)){
             this.setVisible(false);
             test.completeEncounterPart();
             this.close();

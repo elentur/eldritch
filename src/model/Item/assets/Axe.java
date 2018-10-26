@@ -25,7 +25,7 @@ public class Axe extends Asset {
 
     @Override
     public String getId() {
-        return "&Axe";
+        return "&axe";
     }
 
     @Override

@@ -7,6 +7,7 @@ import enums.ItemType;
 import gamemechanics.Action;
 import gamemechanics.choice.ReserveChoice;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.java.Log;
 import model.Effect;
 import model.Item.Investigator;
@@ -20,6 +21,8 @@ import java.util.List;
 public class AssetFromReserve extends Effect {
     private final List<ItemType> itemType;
     private final Investigator investigator;
+    @Setter
+    private boolean useSuccess;
 
     public AssetFromReserve( Investigator investigator,ItemType... itemType) {
         super(EffectTyps.ASSET_FROM_RESERVE);
@@ -43,11 +46,19 @@ public class AssetFromReserve extends Effect {
             gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
             if(obj != null && obj instanceof Action) {
                 Action action = (Action) obj;
-                action.getResult().getNumberOfSuccess();
                 GameService.getInstance().addChoice(new ReserveChoice( action.getResult().getNumberOfSuccess()));
             }
         }else{
-            GameService.getInstance().addChoice(new ReserveChoice(true,itemType));
+           ReserveChoice choice=  new ReserveChoice(true,itemType);
+            if(useSuccess){
+                gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
+                if(obj != null && obj instanceof Action) {
+                    Action action = (Action) obj;
+                    choice.setSuccess(action.getResult().getNumberOfSuccess());
+                }
+            }
+            GameService.getInstance().addChoice(choice);
+
             log.info(itemType.toString() );
         }
 
