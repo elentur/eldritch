@@ -67,6 +67,7 @@ public class ExpeditionEncounter extends StandardEncounter {
 
     @Override
     public int completeEncounterPart() {
+        checkForSpellConsequences();
         String header = "";
         String text = "";
         List<Effect> effects = new ArrayList<>();
@@ -88,7 +89,7 @@ public class ExpeditionEncounter extends StandardEncounter {
         if (getEncounterPart() == 3) {
             getGame().addChoice(new InformationChoice(header, text, effects));
         }
-        checkForSpellConsequences();
+
         getPreparation().getUsedBoni().clear();
         return getEncounterPart();
     }

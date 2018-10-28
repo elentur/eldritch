@@ -24,7 +24,6 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
-import model.Item.Spell;
 import model.effects.*;
 
 @Log
@@ -221,6 +220,9 @@ public class InterfaceLinking {
                 break;
             case RESERVE_CHOICE:
                 dlg = new ReserveChoiceGUI((ReserveChoice) choice);
+                break;
+            case SKILL_CHOICE:
+                dlg = new SkillChoiceGUI((SkillChoice) choice);
                 break;
             case ITEM_CHOICE:
                 dlg = new ItemChoiceGUI((ItemChoice) choice);

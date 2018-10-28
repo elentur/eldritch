@@ -4,22 +4,15 @@ import Service.GameService;
 import enums.EncounterType;
 import enums.SituationType;
 import enums.TestType;
-import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
-import model.Field;
-import model.Item.Investigator;
 import model.effects.ExecuteEndEvents;
-import model.effects.NextInvestigator;
-import model.effects.NullEffect;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 @Getter
@@ -114,11 +107,12 @@ public class Test extends Encounter {
 
 
     public int completeEncounterPart() {
+        checkForSpellConsequences();
         if(getEffect()[getEncounterPart()][START]!=null){
             GameService.getInstance().addEffect(getEffect()[getEncounterPart()][START]);
         }
         setEncounterPart(3);
-        checkForSpellConsequences();
+
         return super.completeEncounterPart();
     }
 

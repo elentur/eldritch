@@ -41,7 +41,8 @@ public enum ItemType {
     MYSTERY("${mystery}", Collections.singletonList("Mystery")  ),
     FOCUS_TOKEN("${focus}", Collections.singletonList("Focus")   ),
     SERVICE("${service}", Collections.singletonList("Service")  ),
-    SERVICE_TEAMWORK("${service_teamwork}",Arrays.asList("Service","Teamwork")  );
+    SERVICE_TEAMWORK("${service_teamwork}",Arrays.asList("Service","Teamwork")  ),
+    CURSED_CONDITION("${cursed_condition}", Collections.singletonList("Cursed Condition") );
 
     private String key;
     private List<String> parts;

@@ -22,18 +22,20 @@ public class AssetFromReserve extends Effect {
     private final List<ItemType> itemType;
     private final Investigator investigator;
     @Setter
+    private  int num;
+    private final int success;
+    @Setter
     private boolean useSuccess;
 
-    public AssetFromReserve( Investigator investigator,ItemType... itemType) {
+    public AssetFromReserve( int num,Investigator investigator,ItemType... itemType) {
         super(EffectTyps.ASSET_FROM_RESERVE);
         this.itemType = Arrays.asList(itemType);
         this.investigator = investigator;
+        this.num=num;
+        this.success=0;
     }
-    public AssetFromReserve( Investigator investigator) {
-        super(EffectTyps.ASSET_FROM_RESERVE);
-        this.itemType = null;
-        this.investigator = investigator;
-    }
+
+
 
     @Override
     public void execute() {
@@ -44,17 +46,18 @@ public class AssetFromReserve extends Effect {
         if(!isAccepted()) return;
         if(itemType==null){
             gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
-            if(obj != null && obj instanceof Action) {
+            if(  obj instanceof Action) {
                 Action action = (Action) obj;
                 GameService.getInstance().addChoice(new ReserveChoice( action.getResult().getNumberOfSuccess()));
             }
         }else{
-           ReserveChoice choice=  new ReserveChoice(true,itemType);
+           ReserveChoice choice=  new ReserveChoice(num,itemType);
             if(useSuccess){
                 gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
-                if(obj != null && obj instanceof Action) {
+                if(  obj instanceof Action) {
                     Action action = (Action) obj;
                     choice.setSuccess(action.getResult().getNumberOfSuccess());
+                    choice.setNum(0);
                 }
             }
             GameService.getInstance().addChoice(choice);
@@ -74,9 +77,9 @@ public class AssetFromReserve extends Effect {
             if(s.toString().equals("")){
                 s.append(e);
             }else{
-                s.append(", "+e);
+                s.append(" or "+e);
             }
         });
-       return ResourceUtil.get("${gain}","effect" , ResourceUtil.get("${reserve}","effect", s.toString() )) ;
+       return ResourceUtil.get("${gain}","effect" , investigator.getName(), ResourceUtil.get("${reserve}","effect", s.toString() )) ;
     }
 }

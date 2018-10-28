@@ -109,8 +109,10 @@ public class Action extends Encounter {
 
 
     public int completeEncounterPart() {
+        checkForSpellConsequences();
         String header;
         String text;
+
         List<Effect> effects = new ArrayList<>();
         if (getEffect()[getEncounterPart()][START] instanceof NullEffect) {
             if (result.isSuccess()) {
@@ -127,7 +129,7 @@ public class Action extends Encounter {
             getGame().addEffect(getEffect()[getEncounterPart()][START]);
         }
         setEncounterPart(3);
-         checkForSpellConsequences();
+
         return super.completeEncounterPart();
     }
 

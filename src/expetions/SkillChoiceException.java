@@ -2,9 +2,9 @@ package expetions;
 
 import utils.ResourceUtil;
 
-public class ReserveException extends RuntimeException {
+public class SkillChoiceException extends RuntimeException {
     private String message;
-    public ReserveException(String val){
+    public SkillChoiceException(String val){
        message =  ResourceUtil.get(val, "exception");
     }
     @Override

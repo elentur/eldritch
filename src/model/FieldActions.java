@@ -55,7 +55,7 @@ public class FieldActions {
         acquireAsset = new Action(inv,
                 "acquire_asset",
                 new NullEffect(),
-                new AssetFromReserve(inv),
+                new AssetFromReserve(1,inv),
                 new NullEffect(),
                 TestType.INFLUENCE,
                 0,

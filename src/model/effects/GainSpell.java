@@ -7,19 +7,20 @@ import enums.ItemType;
 import lombok.Getter;
 import lombok.extern.java.Log;
 import model.Effect;
-import model.Item.Artifact;
 import model.Item.Investigator;
 import model.Item.Spell;
 import utils.ResourceUtil;
 
+import java.util.List;
+
 @Getter
 @Log
 public class GainSpell extends Effect {
-    private final ItemType itemType;
+    private final List<ItemType> itemType;
     private final Investigator investigator;
     private Spell spell;
 
-    public GainSpell(ItemType itemType, Investigator investigator) {
+    public GainSpell(List<ItemType> itemType, Investigator investigator) {
         super(EffectTyps.GAIN_SPELL);
         this.itemType = itemType;
         this.investigator = investigator;
@@ -28,7 +29,7 @@ public class GainSpell extends Effect {
 
     public GainSpell(Spell spell, Investigator investigator) {
         super(EffectTyps.GAIN_SPELL);
-        this.itemType = spell.getItemType();
+        this.itemType = null;
         this.spell = spell;
         this.investigator = investigator;
     }
@@ -42,13 +43,10 @@ public class GainSpell extends Effect {
         super.execute();
         if (!isAccepted()) return;
         if (spell == null) {
-            switch (itemType) {
-                case ANY:
-                    spell = GameService.getInstance().getSpells().draw();
-                    break;
-                default:
-                    spell = GameService.getInstance().getSpells().getByItemType(itemType);
-                    break;
+            if (itemType == null) {
+                spell = GameService.getInstance().getSpells().draw();
+            } else {
+                spell = GameService.getInstance().getSpells().getByItemType(itemType);
             }
         }
         for(Effect effect : spell.getDrawEffects()){
@@ -62,10 +60,18 @@ public class GainSpell extends Effect {
 
     @Override
     public String getText() {
-        if (itemType == null) {
+        if (itemType == null && spell == null) {
             return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${nothing}", "effect"));
-        }
-        return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${random_spell}", "effect", itemType.getText()));
+        } else if (spell == null) {
+            StringBuilder s = new StringBuilder(itemType.get(0).getText());
 
+            for(int i =1; i< itemType.size();i++){
+                s.append(" or " +itemType.get(i));
+            }
+
+            return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${random_spell}", "effect", s.toString() ));
+        } else {
+            return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${random_spell}", "effect", spell.getName()));
+        }
     }
 }

@@ -1,7 +1,6 @@
 package model.Item.boni;
 
 import Service.GameService;
-import container.Result;
 import enums.*;
 import gamemechanics.encounter.Encounter;
 import lombok.Getter;
@@ -20,17 +19,20 @@ public class ItemBonus_Rest extends ItemBonus {
     private List<Encounter> encounters;
     private Effect effects;
     private BonusType bonusType = BonusType.REST;
+    private final RangeType rangeType;
 
 
-    public ItemBonus_Rest(Effect effects, Item parentItem) {
+    public ItemBonus_Rest(Effect effects,RangeType rangeType, Item parentItem) {
         super(parentItem);
         this.effects = effects;
+        this.rangeType=rangeType;
         init();
     }
 
-    public ItemBonus_Rest(List<Encounter> encounters, Item parentItem) {
+    public ItemBonus_Rest(List<Encounter> encounters, RangeType rangeType, Item parentItem) {
         super(parentItem);
         this.encounters = encounters;
+        this.rangeType=rangeType;
         init();
     }
 

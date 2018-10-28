@@ -1,7 +1,6 @@
 package gamemechanics.encounter;
 
 import Service.GameService;
-import container.ItemContainer;
 import container.Result;
 import enums.*;
 import gamemechanics.SkillTest;
@@ -9,9 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Field;
-import model.Item.Bonus;
 import model.Item.Investigator;
-import model.Item.Item;
 import model.Item.Monster;
 import model.effects.LooseOrGainHealthSanity;
 import model.effects.NextInvestigator;
@@ -19,7 +16,6 @@ import preparation.CombatPreparation;
 import preparation.Preparation;
 
 import java.util.List;
-import java.util.function.Function;
 
 @Getter
 @Setter
@@ -178,6 +174,7 @@ public class CombatEncounter extends Encounter {
 
     @Override
     public int completeEncounterPart() {
+        checkForSpellConsequences();
         if (encounterPart == 2) {
             healthLoss();
             monsterDamage();
@@ -190,7 +187,7 @@ public class CombatEncounter extends Encounter {
 
         encounterPart++;
 
-        checkForSpellConsequences();
+
         return super.completeEncounterPart();
     }
 

@@ -6,6 +6,8 @@ import enums.ItemType;
 import gamemechanics.MythosYellow;
 import model.effects.GainAsset;
 
+import java.util.Collections;
+
 public class Mythos1 extends MythosYellow {
 
     public Mythos1() {
@@ -13,7 +15,7 @@ public class Mythos1 extends MythosYellow {
     }
     @Override
     public void execute() {
-        this.getEffects().add(new GainAsset(ItemType.ALLEY, GameService.getInstance().getStartInvestigator()));
+        this.getEffects().add(new GainAsset(Collections.singletonList(ItemType.ALLEY), GameService.getInstance().getStartInvestigator()));
         super.execute();
     }
 

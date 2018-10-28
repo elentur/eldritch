@@ -30,65 +30,49 @@ public class ReserveChoiceGUI extends ChoiceDialog {
         List<Asset> choosen = new ArrayList<>();
 
         ItemScrollPane scrollPane = new ItemScrollPane();
-        for(Asset asset : assets) {
-            InventoryItemButton button= new InventoryItemButton(asset,true);
-            button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
+        for (Asset asset : assets) {
+            InventoryItemButton button = new InventoryItemButton(asset, true);
+            button.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    if(choosen.contains(asset)){
+                    if (choosen.contains(asset)) {
                         choosen.remove(asset);
-                    }else{
+                    } else {
                         choosen.add(asset);
                     }
 
-                    if(choice.isSingleSelect()) {
-                        if(choice.getSuccess()==0 ) {
-                            GameService.getInstance().getReserve().remove(choosen.get(0));
-                            GameService.getInstance().addEffect(new GainAsset(choosen.get(0), GameService.getInstance().getEncounteringInvestigator()));
-                            close();
-                        }else{
-                            try {
-                                List<Asset> bought = GameService.getInstance().getReserve().buy(choosen, choice.getSuccess());
-                                GameService.getInstance().addEffect(new GainAsset(bought.get(0),GameService.getInstance().getEncounteringInvestigator()));
-                                close();
-                            }catch (ReserveException ex){
-                                GameService.getInstance().addChoice(new InformationChoice("",ex.getMessage(),new ArrayList<>()));
-                            }
-                        }
-                    }else{
-                        button.switchSelected();
-                    }
+                    button.switchSelected();
+
                 }
             });
             scrollPane.getScrollableChildren().addAll(button);
         }
         scrollPane.disableBackground(true);
         main.getChildren().add(scrollPane);
-        if(choice.getSuccess()>0) {
+        if (choice.getSuccess() > 0) {
             Label success = new Label("Success: " + choice.getSuccess());
             success.styleProperty().bind(Fonts.getFont(0.4, Fonts.DARK, Fonts.FontTyp.BOLD));
             success.setAlignment(Pos.CENTER);
             success.setTextAlignment(TextAlignment.CENTER);
             getTexts().getChildren().add(success);
         }
-        if(!choice.isSingleSelect() ) {
 
             YesNoButton okButton = new YesNoButton(YesNo.YES);
             okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
                     try {
-                        List<Asset> bought = GameService.getInstance().getReserve().buy(choosen, choice.getSuccess());
-                        for (Asset asset: bought){
-                            GameService.getInstance().addEffect(new GainAsset(asset,GameService.getInstance().getEncounteringInvestigator()));
+                        List<Asset> bought = GameService.getInstance().getReserve().buy(choosen, choice.getSuccess(),choice.getNum());
+                        for (Asset asset : bought) {
+                            GameService.getInstance().addEffect(new GainAsset(asset, GameService.getInstance().getEncounteringInvestigator()));
                         }
                         close();
-                    }catch (ReserveException ex){
-                        GameService.getInstance().addChoice(new InformationChoice("",ex.getMessage(),new ArrayList<>()));
+                    } catch (ReserveException ex) {
+                        GameService.getInstance().addChoice(new InformationChoice("", ex.getMessage(), new ArrayList<>()));
                     }
                 }
             });
             StackPane.setAlignment(okButton, Pos.BOTTOM_RIGHT);
             main.getChildren().add(okButton);
-        }
+
     }
 
 

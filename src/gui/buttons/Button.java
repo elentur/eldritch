@@ -25,7 +25,7 @@ public class Button extends StackPane {
     final ImageView imageView;
 
     protected Node actualNode;
-
+    private boolean isSelected;
 
     public Button(Image image) {
         disabledEffect = Effects.disabled;
@@ -121,5 +121,13 @@ public class Button extends StackPane {
         armed.setValue(v);
     }
 
+    public void switchSelected() {
+        isSelected=!isSelected;
+        if(isSelected){
+            this.setEffect(Effects.disabled);
+        }else{
+            this.setEffect(Effects.dropShadow);
+        }
+    }
 
 }

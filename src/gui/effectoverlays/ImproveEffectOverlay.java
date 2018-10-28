@@ -18,6 +18,10 @@ public class ImproveEffectOverlay extends Overlay {
 
     public ImproveEffectOverlay(Improve effect) {
         super(effect);
+        if(effect.getTestType()==null){
+            effect.init();
+            return;
+        }
         ImagePattern img = null ;
         int startX=97;
         int startY=5;

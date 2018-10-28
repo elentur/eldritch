@@ -68,7 +68,7 @@ public class GainAsset extends Effect {
             StringBuilder s = new StringBuilder(itemType.get(0).getText());
 
                 for(int i =1; i< itemType.size();i++){
-                    s.append("or " +itemType.get(i));
+                    s.append(" or " +itemType.get(i));
                 }
 
             return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${random_asset}", "effect", s.toString() ));

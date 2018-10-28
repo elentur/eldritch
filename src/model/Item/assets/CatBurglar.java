@@ -55,7 +55,7 @@ public class CatBurglar extends Asset {
 
             return new Action(inv,
                     "cat_burglar",
-                    new AssetFromReserve(GameService.getInstance().getEncounteringInvestigator(),ItemType.ITEM,ItemType.TRINKET),
+                    new AssetFromReserve(1,GameService.getInstance().getEncounteringInvestigator(),ItemType.ITEM,ItemType.TRINKET),
                     SituationType.ACTION
             );
         }

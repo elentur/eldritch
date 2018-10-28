@@ -5,6 +5,7 @@ import Service.GameService;
 import enums.ChoiceType;
 import enums.ItemType;
 import lombok.Getter;
+import lombok.Setter;
 import model.Effect;
 import model.Item.Asset;
 import utils.ResourceUtil;
@@ -13,20 +14,21 @@ import java.util.List;
 
 public class ReserveChoice extends Choice {
     @Getter
-    private final boolean singleSelect;
+    @Setter
+    private  int num;//0 bedeutet ohne Einschränkungen
 
     private final List<ItemType> itemType;
     @Getter
     private int success;
 
     public ReserveChoice(int success) {
-        this(false,null);
+        this(0,null);
         this.success =success;
     }
 
-    public ReserveChoice(boolean singleSelect,List<ItemType> itemType) {
+    public ReserveChoice(int num ,List<ItemType> itemType) {
         super(ChoiceType.RESERVE_CHOICE, ResourceUtil.get("${reserve_choice}", "ui"), "");
-        this.singleSelect = singleSelect;
+        this.num = num;
         this.itemType=itemType;
     }
 

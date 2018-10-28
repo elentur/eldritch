@@ -52,12 +52,16 @@ public class Reserve {
             reserve.add(assets.draw());
         }
     }
-    public List<Asset> buy(List<Asset> choosen, int success) throws ReserveException{
+    public List<Asset> buy(List<Asset> choosen, int success,int num) throws ReserveException{
         List<Asset> bought = new ArrayList<>();
         int priceSum=choosen.stream().mapToInt(Asset::getPrice).sum();
-        if(priceSum>success){
+        if(num > 0 && choosen.size()>num){
+            throw new ReserveException(ResourceUtil.get("${reserve_too_much_items}","exception",choosen.size()+"",num+""));
+        }
+        if(success > 0 && priceSum>success){
             throw new ReserveException(ResourceUtil.get("${reserve_success_to_low}","exception",success+"",priceSum+""));
         }
+
         for( Asset asset : choosen ) {
             bought.add(asset);
             reserve.remove(asset);
