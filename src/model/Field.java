@@ -6,6 +6,7 @@ import enums.FieldID;
 import enums.FieldType;
 import enums.SpaceType;
 import gamemechanics.encounter.Encounter;
+import gamemechanics.encounter.americaencounter.AmericaEncounter0;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
@@ -64,7 +65,8 @@ public class Field {
             encounters.add(GameService.getInstance().getStandardEncounters().showFirst());
         }
         if(fieldID.equals(FieldID.ARKHAM) || fieldID.equals(FieldID.SAN_FRANCISCO) || fieldID.equals(FieldID.BUENOS_AIRES) ){
-            encounters.add(GameService.getInstance().getAmericaEncounter().showFirst());
+       //     encounters.add(GameService.getInstance().getAmericaEncounter().showFirst());
+            encounters.add(new AmericaEncounter0());
         }
         if(fieldID.equals(FieldID.TOKYO) || fieldID.equals(FieldID.SHANGHAI) || fieldID.equals(FieldID.SYDNEY) ){
             encounters.add(GameService.getInstance().getAsiaEncounter().showFirst());

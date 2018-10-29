@@ -98,7 +98,7 @@ public class Clairvoyance extends Spell {
             }
         };
         SpellConsequence con0 = new SpellConsequence(this.getNameId(), 0, new int[]{0, 1, 3}, Arrays.asList(
-                new Or(new GainCondition(ConditionType.PARANOIA_CONDITION, GameService.getInstance().getEncounteringInvestigator()),
+                new Or(new GainCondition(ConditionType.PARANOIA, GameService.getInstance().getEncounteringInvestigator()),
                         new Discard(this)),
                 new NullEffect(),
                 effect));

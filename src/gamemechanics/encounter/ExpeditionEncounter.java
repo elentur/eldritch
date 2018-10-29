@@ -42,7 +42,7 @@ public class ExpeditionEncounter extends StandardEncounter {
 
     @Override
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + getEncounterID() + "_" + STEP[getEncounterPart()] + "_start}", getNameId().replaceAll("[{}\\$]", ""));
+        return ResourceUtil.get("${" + getEncounterID() + "_" + STEP[getEncounterPart()] + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
 
     @Override

@@ -91,7 +91,7 @@ public class InstillBravery extends Spell {
 
         SpellConsequence con1 = new SpellConsequence(this.getNameId(), 1, new int[]{0, 1, 3}, Arrays.asList(
                 new Or(new LooseOrGainHealthSanity(SpendType.SANITY, -1, inv),
-                        new GainCondition(ConditionType.HALLUCINATIONS_CONDITION, inv)),
+                        new GainCondition(ConditionType.HALLUCINATIONS, inv)),
                 new NullEffect(),
                 customEffect
         ));

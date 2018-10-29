@@ -81,6 +81,7 @@ public class Spend extends Effect {
         if(spendType==null ||value ==0){
             return ResourceUtil.get("${spend}","effect",investigator.getName() , ResourceUtil.get("${nothing}","effect"  ));
         }
-        return ResourceUtil.get("${spend}","effect",investigator.getName(), value + " " + spendType.getText()) ;
+        String name = investigator!=null?investigator.getName():"";
+        return ResourceUtil.get("${spend}","effect",name, value + " " + spendType.getText()) ;
     }
 }

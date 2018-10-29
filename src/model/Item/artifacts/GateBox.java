@@ -2,24 +2,16 @@ package model.Item.artifacts;
 
 import Service.GameService;
 import enums.*;
-import gamemechanics.Action;
-import gamemechanics.encounter.Encounter;
 import gamemechanics.encounter.OtherWorldEncounter;
 import javafx.beans.value.ChangeListener;
 import model.Effect;
 import model.Item.Artifact;
-import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_AdditionalDice;
-import model.effects.And;
-import model.effects.DiscardMonster;
 import model.effects.GainClue;
-import model.effects.LooseOrGainHealthSanity;
-import oldVersion.elements.OtherWorld;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 
 public class GateBox extends Artifact {

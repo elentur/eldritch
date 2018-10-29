@@ -79,7 +79,7 @@ public class Test extends Encounter {
     }
 
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + encounterID + "_start}", getNameId().replaceAll("[{}\\$]", ""));
+        return ResourceUtil.get("${" + encounterID + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
 
     public String getEncounterEffectText() {

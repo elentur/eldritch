@@ -105,7 +105,7 @@ public class EncounterGui extends DialogGui {
         encounterPane.getChildren().addAll(startText);
     }
     private void populateCenterForTest(Test encounter) {
-        TextField startText = new TextField(encounter.getEncounterStartText() + "\n" + encounter.getEncounterEffectText());
+        TextField startText = new TextField(encounter.getEncounterStartText());
         startText.setWrapText(true);
         startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
         startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
@@ -113,7 +113,7 @@ public class EncounterGui extends DialogGui {
         encounterPane.getChildren().addAll(startText);
     }
     private void populateCenterForStandardEncounter(StandardEncounter encounter) {
-        TextField startText = new TextField(encounter.getEncounterStartText() + "\n" + encounter.getEncounterEffectText());
+        TextField startText = new TextField(encounter.getEncounterStartText() );
         startText.setWrapText(true);
         startText.styleProperty().bind(Fonts.getFont(0.2, Fonts.DARK, Fonts.FontTyp.NORMAL));
         startText.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.MEDIUM)));

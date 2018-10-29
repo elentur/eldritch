@@ -118,7 +118,7 @@ public class MistsOfReleh extends Spell {
             }
         };
         SpellConsequence con1 = new SpellConsequence(this.getNameId(),1,new int[]{0,1},Arrays.asList(
-                new Or(new GainCondition(ConditionType.HALLUCINATIONS_CONDITION,GameService.getInstance().getEncounteringInvestigator()), new Discard(this)),
+                new Or(new GainCondition(ConditionType.HALLUCINATIONS,GameService.getInstance().getEncounteringInvestigator()), new Discard(this)),
                 new LooseOrGainHealthSanity(SpendType.SANITY,-1,GameService.getInstance().getEncounteringInvestigator())
 
         ));

@@ -3,7 +3,6 @@ package gamemechanics.encounter;
 import enums.EncounterType;
 import lombok.Getter;
 import lombok.Setter;
-import model.Item.Investigator;
 import utils.ResourceUtil;
 
 @Getter
@@ -18,7 +17,7 @@ public class RumorEncounter extends StandardEncounter{
 
     @Override
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + getEncounterID()  + "_start}", getNameId().replaceAll("[{}\\$]", ""));
+        return ResourceUtil.get("${" + getEncounterID()  + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
     @Override
     public String getEncounterFailText() {

@@ -57,7 +57,7 @@ public class StandardEncounter extends Encounter {
     }
 
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + encounterID + "_" + getField().getType().getText().toLowerCase() + "_start}", getNameId().replaceAll("[{}\\$]", ""));
+        return ResourceUtil.get("${" + encounterID + "_" + getField().getType().getText().toLowerCase() + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
     public String getEncounterEffectText() {
         return getEffect()[getEncounterPart()][START].getText();

@@ -1,7 +1,6 @@
 package gamemechanics.encounter;
 
 import enums.EncounterType;
-import enums.FieldID;
 import enums.OldOnes;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +34,7 @@ public class MysteryEncounter extends StandardEncounter {
 
     @Override
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + getEncounterID()  + "_start}", getNameId().replaceAll("[{}\\$]", ""));
+        return ResourceUtil.get("${" + getEncounterID()  + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
     @Override
     public String getEncounterFailText() {
