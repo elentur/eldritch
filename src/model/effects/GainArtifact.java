@@ -66,7 +66,7 @@ public class GainArtifact extends Effect {
             StringBuilder s = new StringBuilder(itemType.get(0).getText());
 
             for(int i =1; i< itemType.size();i++){
-                s.append(" or " +itemType.get(i));
+                s.append(" or " +itemType.get(i).getText());
             }
 
             return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${random_artifact}", "effect", s.toString() ));

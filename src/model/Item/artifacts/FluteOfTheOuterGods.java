@@ -3,43 +3,44 @@ package model.Item.artifacts;
 import Service.GameService;
 import enums.*;
 import gamemechanics.Action;
-import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
 import model.Item.Artifact;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.boni.ItemBonus_DiceResult;
-import model.effects.And;
-import model.effects.GainClue;
-import model.effects.LooseOrGainHealthSanity;
-import model.effects.NullEffect;
+import model.effects.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CultesDesGoules extends Artifact {
+public class FluteOfTheOuterGods extends Artifact {
 
-    public CultesDesGoules() {
-        super(ItemType.ITEM_TOME);
+    public FluteOfTheOuterGods() {
+        super(ItemType.ITEM_MAGICAL);
+    }
+
+    @Override
+    public String getId() {
+        return "&fluteOfTheOuterGods";
+    }
+
+    @Override
+    public String getNameId() {
+        return "${flute_of_the_outer_gods}";
     }
 
     @Override
     public Encounter getEncounter() {
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY,-1, inv),
-                new GainClue(EffectSelector.RANDOM,2,inv));
+        Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY,-2, inv),
+                new LooseOrGainHealthSanity(SpendType.HEALTH,-2, inv),
+               new DiscardMonster(GameService.getInstance().getFieldOfInvestigator(inv).getMonster()));
 
         Action encounter = new Action(inv,
-                "cultesDesGoules",
-                new NullEffect(),
+                "fluteOfTheOuterGods",
                 effect,
-                new NullEffect(),
-                TestType.LORE,
-                0,
-                1,
                 SituationType.ACTION
         );
 
@@ -47,16 +48,6 @@ public class CultesDesGoules extends Artifact {
             return encounter;
         }
         return null;
-    }
-
-    @Override
-    public String getId() {
-        return "&cultesDesGoules";
-    }
-
-    @Override
-    public String getNameId() {
-        return "${cultes_des_goules}";
     }
 
     @Override

@@ -43,7 +43,7 @@ public class GainSpell extends Effect {
         super.execute();
         if (!isAccepted()) return;
         if (spell == null) {
-            if (itemType == null) {
+            if (itemType !=null && itemType.isEmpty()) {
                 spell = GameService.getInstance().getSpells().draw();
             } else {
                 spell = GameService.getInstance().getSpells().getByItemType(itemType);
@@ -66,7 +66,7 @@ public class GainSpell extends Effect {
             StringBuilder s = new StringBuilder(itemType.get(0).getText());
 
             for(int i =1; i< itemType.size();i++){
-                s.append(" or " +itemType.get(i));
+                s.append(" or " +itemType.get(i).getText());
             }
 
             return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${random_spell}", "effect", s.toString() ));

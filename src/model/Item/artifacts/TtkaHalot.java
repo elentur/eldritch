@@ -9,9 +9,8 @@ import model.Effect;
 import model.Item.Artifact;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.boni.ItemBonus_DiceResult;
 import model.effects.And;
-import model.effects.GainClue;
+import model.effects.GainSpell;
 import model.effects.LooseOrGainHealthSanity;
 import model.effects.NullEffect;
 
@@ -19,21 +18,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CultesDesGoules extends Artifact {
+public class TtkaHalot extends Artifact {
 
-    public CultesDesGoules() {
+    public TtkaHalot() {
         super(ItemType.ITEM_TOME);
     }
 
     @Override
+    public String getId() {
+        return "&ttkaHalot";
+    }
+
+    @Override
+    public String getNameId() {
+        return "${ttka_halot}";
+    }
+    @Override
     public Encounter getEncounter() {
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY,-1, inv),
-                new GainClue(EffectSelector.RANDOM,2,inv));
+        Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY,-1,inv),
+                new LooseOrGainHealthSanity(SpendType.HEALTH,-3,
+                        new MonsterChoice(GameService.getInstance().getFieldOfInvestigator(inv))));
 
         Action encounter = new Action(inv,
-                "cultesDesGoules",
+                "necronomicon",
                 new NullEffect(),
                 effect,
                 new NullEffect(),
@@ -48,17 +57,6 @@ public class CultesDesGoules extends Artifact {
         }
         return null;
     }
-
-    @Override
-    public String getId() {
-        return "&cultesDesGoules";
-    }
-
-    @Override
-    public String getNameId() {
-        return "${cultes_des_goules}";
-    }
-
     @Override
     public List<ItemBonus> createBonus() {
         List<ItemBonus> boni = new ArrayList<>();

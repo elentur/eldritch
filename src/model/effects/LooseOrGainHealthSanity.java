@@ -126,6 +126,10 @@ public class LooseOrGainHealthSanity extends Effect {
                 bonus.setInvestigator(investigator);
                 bonus.setDamage(value);
                 bonus.execute(GameService.getInstance().getEncounterProperty().getValue());
+                if(bonus.getPreventedValue()<0){
+                    value=0;
+                    break;
+                }
                 value = Math.min(value + bonus.getPreventedValue(), 0);
                 bonus.setPreventedValue(0);
                 if(value==0){
