@@ -42,12 +42,12 @@ public class ExpeditionEncounter extends StandardEncounter {
 
     @Override
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + getEncounterID() + "_" + STEP[getEncounterPart()] + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
+        return ResourceUtil.get("${" + getEncounterID()+ "_"+getFieldID().toString().toLowerCase() + "_" + STEP[getEncounterPart()] + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
 
     @Override
     public String getEncounterFailText() {
-        String key = "${" + getEncounterID() + "_" + STEP[getEncounterPart()] + "_fail}";
+        String key = "${" + getEncounterID()+ "_"+getFieldID().toString().toLowerCase() + "_" + STEP[getEncounterPart()] + "_fail}";
         String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
         if (value.equals(key)) {
             return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));
@@ -57,7 +57,7 @@ public class ExpeditionEncounter extends StandardEncounter {
 
     @Override
     public String getEncounterSuccessText() {
-        String key = "${" + getEncounterID() + "_" + STEP[getEncounterPart()] + "_success}";
+        String key = "${" + getEncounterID()+ "_"+getFieldID().toString().toLowerCase() + "_" + STEP[getEncounterPart()] + "_success}";
         String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
         if (value.equals(key)) {
             return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));

@@ -1,14 +1,17 @@
 package gamemechanics.encounter.expeditionencounter;
 
-import enums.*;
+import enums.ConditionType;
+import enums.FieldID;
+import enums.SpendType;
+import enums.TestType;
 import gamemechanics.encounter.ExpeditionEncounter;
 import model.effects.*;
 
-public class ExpeditionEncounter0 extends ExpeditionEncounter {
+public class ExpeditionEncounterAmazon0 extends ExpeditionEncounter {
 
-    public ExpeditionEncounter0() {
+    public ExpeditionEncounterAmazon0() {
         super("exe_0");
-        setFieldID(FieldID.PYRAMIDS);
+        setFieldID(FieldID.AMAZON);
 
 
     }
@@ -29,7 +32,7 @@ public class ExpeditionEncounter0 extends ExpeditionEncounter {
         getTestType()[1] = TestType.LORE;
 
 
-        getEffect()[2][START] = new And(new LooseOrGainHealthSanity(SpendType.HEALTH, 1, getInvestigator()), new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
+        getEffect()[2][START] = new And(new LooseOrGainHealthSanity(SpendType.HEALTH, -1, getInvestigator()), new GainCondition(ConditionType.INTERNAL_INJURY, getInvestigator()));
         getEffect()[2][PASS] = new RetreatDoom(1);
         getEffect()[2][FAIL] = new NullEffect();
         getTestType()[2] = TestType.OBSERVATION;

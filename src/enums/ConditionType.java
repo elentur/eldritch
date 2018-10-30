@@ -14,7 +14,8 @@ public enum ConditionType {
     HALLUCINATIONS("${hallucinations}"),
     PARANOIA("${paranoia}"),
     LEG_INJURY("${leg_injury}"),
-    MADNESS("${madness}");
+    MADNESS("${madness}"),
+    BACK_INJURY("${back_injury}");
 
     private String key;
 
