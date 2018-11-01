@@ -122,8 +122,7 @@ public class FieldButton extends Group {
         omen.setTranslateX(50);
         omen.setTranslateY(50);
         gateGroup = new Group(gate, omen);
-
-
+        
         expedition = new ImageView(expeditionImage);
         expedition.setFitHeight(200);
         expedition.setFitWidth(200);

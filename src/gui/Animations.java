@@ -350,7 +350,7 @@ public class Animations {
             private Glow glow = new Glow(0);
             private double speed = 0.1;
 
-
+            javafx.scene.effect.Effect oldEffect= node.getEffect();
             @Override
             public void handle(long time) {
                 if (lastUpdate > 0) {
@@ -359,7 +359,7 @@ public class Animations {
                     if (glow.getLevel() >= 1.5) {
                         speed = -0.05;
                     } else if (glow.getLevel() <= 0) {
-                        node.setEffect(null);
+                        node.setEffect(oldEffect);
                         stop();
                     }
 
