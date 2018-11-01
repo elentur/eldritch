@@ -6,11 +6,11 @@ import model.effects.*;
 
 import java.util.ArrayList;
 
-public class ExpeditionEncounterHimalaya1 extends ExpeditionEncounter {
+public class ExpeditionEncounterPyramids1 extends ExpeditionEncounter {
 
-    public ExpeditionEncounterHimalaya1() {
+    public ExpeditionEncounterPyramids1() {
         super("exe_1");
-        setFieldID(FieldID.HIMALAYA);
+        setFieldID(FieldID.PYRAMIDS);
 
 
     }
@@ -23,18 +23,18 @@ public class ExpeditionEncounterHimalaya1 extends ExpeditionEncounter {
         getEffect()[0][START] = new NullEffect();
         getEffect()[0][PASS] = new NullEffect();
         getEffect()[0][FAIL] = new NullEffect();
-        getTestType()[0] = TestType.STRENGTH;
+        getTestType()[0] = TestType.OBSERVATION;
 
-        getEffect()[1][START] = new GainArtifact(new ArrayList<>(),getInvestigator());
-        getEffect()[1][PASS] = new NullEffect();
+        getEffect()[1][START] = new NullEffect();
+        getEffect()[1][PASS] = new GainArtifact(new ArrayList<>(),getInvestigator());
         getEffect()[1][FAIL] = new LooseOrGainHealthSanity(SpendType.SANITY,-2,getInvestigator());
         getTestType()[1] = TestType.LORE;
-        getMod()[1] = -1;
 
 
         getEffect()[2][START] = new NullEffect();
-        getEffect()[2][PASS] =  new GainArtifact(new ArrayList<>(),getInvestigator());
-        getEffect()[2][FAIL] = new GainCondition(ConditionType.PARANOIA,getInvestigator());
-        getTestType()[2] = TestType.INFLUENCE;
+        getEffect()[2][PASS] = new GainClue(EffectSelector.RANDOM,2,getInvestigator());
+        getEffect()[2][FAIL] = new GainCondition(ConditionType.INTERNAL_INJURY,getInvestigator());
+        getTestType()[2] = TestType.STRENGTH;
+        getMod()[2] = -1;
     }
 }
