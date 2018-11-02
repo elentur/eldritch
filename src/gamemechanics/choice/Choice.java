@@ -3,6 +3,7 @@ package gamemechanics.choice;
 import enums.ChoiceType;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
+import model.Item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,4 +54,5 @@ public abstract class Choice {
     public void addCondition(Function<Void, Boolean> condition) {
         conditions.add(condition);
     }
+
 }

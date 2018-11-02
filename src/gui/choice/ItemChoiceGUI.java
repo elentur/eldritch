@@ -2,6 +2,7 @@ package gui.choice;
 
 import Service.GameService;
 import enums.YesNo;
+import expetions.ItemChoiceException;
 import expetions.ReserveException;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.choice.ItemChoice;
@@ -29,7 +30,7 @@ public class ItemChoiceGUI extends ChoiceDialog {
         super(0.6, 0.6, choice);
 
         List<Item> items = choice.get();
-        List<Item> choosen = new ArrayList<>();
+        List<Item> chosen = new ArrayList<>();
 
         ItemScrollPane scrollPane = new ItemScrollPane();
         for(Item item : items) {
@@ -38,34 +39,37 @@ public class ItemChoiceGUI extends ChoiceDialog {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
 
 
-                    if(choice.isSingleSelect()) {
-                       choice.addItem(item);
-                        close();
-                    }else{
-                        if(choosen.contains(item)){
-                            choosen.remove(item);
+
+                        if(chosen.contains(item)){
+                            chosen.remove(item);
                         }else{
-                            choosen.add(item);
+                            chosen.add(item);
                         }
                         button.switchSelected();
-                    }
+
                 }
             });
             scrollPane.getScrollableChildren().addAll(button);
         }
         scrollPane.disableBackground(true);
         main.getChildren().add(scrollPane);
-        if(!choice.isSingleSelect()) {
+
 
             YesNoButton okButton = new YesNoButton(YesNo.YES);
             okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-                  //TODO
+
+                }
+                try {
+                    choice.choose(chosen);
+                    close();
+                } catch (ItemChoiceException ex) {
+                    GameService.getInstance().addChoice(new InformationChoice("", ex.getMessage(), new ArrayList<>()));
                 }
             });
             StackPane.setAlignment(okButton, Pos.BOTTOM_RIGHT);
             main.getChildren().add(okButton);
-        }
+
     }
 
 

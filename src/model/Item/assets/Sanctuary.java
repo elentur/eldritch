@@ -38,7 +38,7 @@ public class Sanctuary extends Asset {
     @Override
     public List<Effect> getDrawEffects() {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        Effect discardCondition = new Discard( new ItemChoice(true, Collections.singletonList(ItemType.CONDITION),inv.getInventory()));
+        Effect discardCondition = new Discard( new ItemChoice(1, Collections.singletonList(ItemType.CONDITION),inv.getInventory()));
 
         Effect discard = new Discard(this);
 

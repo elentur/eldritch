@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
+import utils.RNG;
 import utils.ResourceUtil;
 
 import java.util.*;
@@ -105,7 +106,7 @@ public abstract class Spell implements Item {
 
     public void executeConsequences(Result result) {
         List<SpellConsequence> consequences = getConsequence(result);
-        int i = new Random().nextInt(consequences.size());
+        int i = RNG.getInt(consequences.size());
         SpellConsequence consequence = consequences.get(i);
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${spell_consequence}","ui"),consequence.getText(result.getNumberOfSuccess()), Collections.singletonList(consequence.getEffect(result.getNumberOfSuccess())));
        GameService.getInstance().addChoice(choice);

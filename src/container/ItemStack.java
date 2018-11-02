@@ -99,6 +99,10 @@ public abstract class ItemStack<T extends Item> {
     public T getByItemType(List<ItemType> itemType) {
         return drawStack.stream().filter(item -> itemType.contains(item.getItemType())).findFirst().orElse(null);
     }
+    public T getBySubType(List<ItemType> itemType) {
+        return drawStack.stream().filter(item -> itemType.contains(item.getSubType())).findFirst().orElse(null);
+    }
+
 
     public  void removeItem(T item){
 

@@ -58,7 +58,7 @@ public class Trade extends Effect {
             TradeChoice tradeChoice = new TradeChoice(investigator, investigators.get(0), false,tradeMode,itemType);
             GameService.getInstance().addChoice(tradeChoice);
         } else if (investigators.size() > 1) {
-            InvestigatorChoice choice = new InvestigatorChoice(investigators, true);
+            InvestigatorChoice choice = new InvestigatorChoice(investigators, 1);
             GameService.getInstance().addChoice(choice);
             if (!choice.getSelectedInvs().isEmpty()) {
                 TradeChoice tradeChoice = new TradeChoice(investigator, choice.getSelectedInvs().get(0), false,tradeMode,itemType);

@@ -2,6 +2,7 @@ package gui.choice;
 
 import Service.GameService;
 import enums.YesNo;
+import expetions.InvestigatorChoiceException;
 import expetions.ReserveException;
 import gamemechanics.choice.InformationChoice;
 import gamemechanics.choice.InvestigatorChoice;
@@ -23,46 +24,38 @@ public class InvestigatorChoiceGUI extends ChoiceDialog {
         super(0.6, 0.6, choice);
 
         List<Investigator> investigators = choice.getInvestigators();
-        List<Investigator> choosen = new ArrayList<>();
+        List<Investigator> chosen = new ArrayList<>();
 
         ItemScrollPane scrollPane = new ItemScrollPane();
         for(Investigator investigator : investigators) {
             InventoryItemButton button= new InventoryItemButton(investigator,true);
             button. addEventHandler(MouseEvent.MOUSE_CLICKED, e->{
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    if(choosen.contains(investigator)){
-                        choosen.remove(investigator);
-                    }else{
-                        choosen.add(investigator);
-                    }
 
-                    if(choice.isSingleSelect()) {
-                        choice.addSelection(investigator);
+                    if(chosen.contains(investigator)){
+                        chosen.remove(investigator);
                     }else{
-                        button.switchSelected();
+                        chosen.add(investigator);
                     }
+                    button.switchSelected();
                 }
             });
             scrollPane.getScrollableChildren().addAll(button);
         }
         scrollPane.disableBackground(true);
         main.getChildren().add(scrollPane);
-        if(!choice.isSingleSelect()) {
+        YesNoButton okButton = new YesNoButton(YesNo.YES);
+        okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY)) {
 
-            YesNoButton okButton = new YesNoButton(YesNo.YES);
-            okButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    try {
-                       //TODO
-                       choice.getChoiceTakenProperty().setValue(true);
-                    }catch (ReserveException ex){
-                        GameService.getInstance().addChoice(new InformationChoice("",ex.getMessage(),new ArrayList<>()));
-                    }
-                }
-            });
-            StackPane.setAlignment(okButton, Pos.BOTTOM_RIGHT);
-            main.getChildren().add(okButton);
-        }
+            }
+            try {
+                choice.choose(chosen);
+                close();
+            } catch (InvestigatorChoiceException ex) {
+                GameService.getInstance().addChoice(new InformationChoice("", ex.getMessage(), new ArrayList<>()));
+            }
+        });
     }
 
 

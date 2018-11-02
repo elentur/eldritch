@@ -14,6 +14,8 @@ import oldVersion.elements.Card;
 import oldVersion.exceptions.CardNotFoundException;
 import oldVersion.gui.ItemGraphic;
 import javafx.scene.Node;
+import utils.RNG;
+
 /**
  * 
  * @author Marcus B�tz
@@ -56,9 +58,9 @@ public class Stack<T extends Element> implements Serializable {
 	public void shuffle(){
 		List<T> tmpStack = new ArrayList<T>(drawStack);
 		drawStack.clear();
-		Random rnd = new Random();
+
 		while(tmpStack.size()>0){
-			drawStack.add(tmpStack.remove(rnd.nextInt(tmpStack.size())));
+			drawStack.add(tmpStack.remove(RNG.getInt(tmpStack.size())));
 		}
 		
 	}

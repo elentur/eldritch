@@ -13,6 +13,7 @@ import model.Item.ItemBonus;
 import model.effects.AssetFromReserve;
 import model.effects.ChoiceEffect;
 import model.effects.Discard;
+import utils.RNG;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -41,8 +42,7 @@ public class CatBurglar extends Asset {
     public Encounter getEncounter() {
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        Random r = new Random();
-        int i =4;//r.nextInt(6);
+        int i = RNG.getInt(6);
         if(i ==0){
             Effect effect =  new Discard(CatBurglar.this);
             effect.setCondition(new InformationChoice( this.getName(),effect.getText(),null));

@@ -3,6 +3,7 @@ package model.effects;
 
 import Service.GameService;
 import enums.EffectTyps;
+import enums.ItemType;
 import gamemechanics.choice.Choice;
 import gamemechanics.choice.InvestigatorChoice;
 import gamemechanics.choice.ItemChoice;
@@ -12,6 +13,8 @@ import model.Effect;
 import model.Item.Item;
 import model.Item.token.GateToken;
 import utils.ResourceUtil;
+
+import java.util.List;
 
 @Getter
 public class Discard extends Effect {

@@ -53,7 +53,7 @@ public class HolyWater extends Asset {
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect effect1 = new Discard(this);
-        Effect effect2 = new GainCondition(ConditionType.BLESSED,new InvestigatorChoice(GameService.getInstance().getFieldOfInvestigator(inv).getFieldID(),true));
+        Effect effect2 = new GainCondition(ConditionType.BLESSED,new InvestigatorChoice(GameService.getInstance().getFieldOfInvestigator(inv).getFieldID(),1));
         Effect effect = new And(effect1,effect2);
 
         ActionEncounter encounter =  new ActionEncounter(inv,

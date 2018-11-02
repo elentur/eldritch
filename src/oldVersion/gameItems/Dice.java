@@ -20,6 +20,7 @@ import oldVersion.gameMechanics.TextAppearsTransition;
 import oldVersion.gui.Effects;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import utils.RNG;
 
 public class Dice implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +28,6 @@ public class Dice implements Serializable {
 	private Investigator investigator;
 	private int number=0;
 	private ArrayList<Integer> allDice;
-	private Random rnd;
 	private Map<String,String> names=null;
 	private IntegerProperty succsess;
 	
@@ -36,7 +36,6 @@ public class Dice implements Serializable {
 	public Dice(Skills skill,Investigator investigator){
 		this.names=IO.readText(Global.language+"/GameScreen.txt");
 		this.skill= skill;
-		this.rnd = new Random();
 		this.allDice = new ArrayList<Integer>();
 		this.succsess=new SimpleIntegerProperty(0);
 		this.investigator=investigator;
@@ -69,7 +68,7 @@ public class Dice implements Serializable {
 		allDice.clear();
 		for(int i= 0 ; i < number;i++){
 			if(Global.debug)allDice.add(6);
-			else allDice.add(rnd.nextInt(6)+1);
+			else allDice.add(RNG.getInt(6)+1);
 			
 			
 		}
@@ -92,7 +91,7 @@ public class Dice implements Serializable {
 	public int reroll(int i) {
 		if(!investigator.getClues().isEmpty()){
 			investigator.removeClues();
-			allDice.set(i, rnd.nextInt(6)+1);
+			allDice.set(i, RNG.getInt(6)+1);
 
 			Global.textAppearsTransitionList.add(new TextAppearsTransition(names.get("rerollDice")+ allDice.get(i), Effects.fontColor));
 			

@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.TextAlignment;
 import lombok.Getter;
+import utils.RNG;
 import utils.ResourceUtil;
 
 import java.util.Random;
@@ -24,7 +25,7 @@ public class MysteryGUI extends Group {
 
     private final static Image clipShape = new Image("images/ItemBack.png", 260, 165, false, true, true);
     private final static Image eldritch = new Image("images/gameBoard/Eldritch.png", 40, 40, true, true, true);
-    private Random random;
+
 
     @Getter
     private final UpdateListener listener;
@@ -34,7 +35,6 @@ public class MysteryGUI extends Group {
     private   Label numberOfTokens;
 
     public MysteryGUI() {
-        random= new Random();
         mystery = new ImageView();
         String oldeOne = GameService.getInstance().getAncientOne().getNameId().replaceAll("[{}\\$]", "");
         mystery.setImage(new Image("images/encounter/&mystery_" + oldeOne + ".png", 260, 165, false, true, true));
@@ -69,8 +69,8 @@ public class MysteryGUI extends Group {
         if (mystery.getTokens().size() > tokens.getChildren().size()) {
              ImageView eldritchToken = new ImageView(eldritch);
              tokens.getChildren().add(eldritchToken);
-             double x =random.nextDouble()*220;
-             double y = random.nextDouble()*125;
+             double x =RNG.getDouble()*220;
+             double y = RNG.getDouble()*125;
             eldritchToken.setX(x);
             eldritchToken.setY(y);
             numberOfTokens.setText(tokens.getChildren().size()+"");

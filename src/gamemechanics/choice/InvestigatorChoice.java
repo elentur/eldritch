@@ -4,10 +4,15 @@ package gamemechanics.choice;
 import Service.GameService;
 import enums.ChoiceType;
 import enums.FieldID;
+import expetions.InvestigatorChoiceException;
+import expetions.ItemChoiceException;
 import lombok.Getter;
+import lombok.Setter;
 import model.Effect;
 import model.Field;
 import model.Item.Investigator;
+import model.Item.Item;
+import model.effects.Discard;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -17,18 +22,20 @@ public class InvestigatorChoice extends Choice{
     private final List<Investigator> investigators;
     @Getter
     private final List<Investigator> selectedInvs;
-private final boolean singleSelect;
-    public InvestigatorChoice(FieldID fieldID, boolean singleSelect){
+    @Setter
+    @Getter
+    private  int number;
+    public InvestigatorChoice(FieldID fieldID, int number){
         super(ChoiceType.INVESTIGATOR_CHOICE, ResourceUtil.get("${investigator_choice}","ui"),"");
         Field field = GameService.getInstance().getGameBoard().getField(fieldID);
         this.investigators = field.getInvestigators();
-        this.singleSelect = singleSelect;
+        this.number = number;
         this.selectedInvs = new ArrayList<>();
     }
-    public InvestigatorChoice(List<Investigator> investigators,boolean singleSelect){
+    public InvestigatorChoice(List<Investigator> investigators,int number){
         super(ChoiceType.INVESTIGATOR_CHOICE, ResourceUtil.get("${investigator_choice}","ui"),"");
         this.investigators = investigators;
-        this.singleSelect = singleSelect;
+        this.number = number;
         this.selectedInvs = new ArrayList<>();
     }
 
@@ -47,15 +54,21 @@ private final boolean singleSelect;
         return investigators;
     }
 
-    public boolean isSingleSelect() {
-        return singleSelect;
-    }
+
 
     public void addSelection(Investigator investigator) {
         this.selectedInvs.add(investigator);
-       if(singleSelect) {
-           getChoiceTakenProperty().setValue(true);
-       }
+
     }
 
+    public void choose(List<Investigator> chosen) {
+        if(number >0 && chosen.size()>number){
+            throw new InvestigatorChoiceException(ResourceUtil.get("${Investigator_number_to_low}","exception",number+"",chosen.size()+""));
+
+        }else{
+            for(Item item:chosen){
+                GameService.getInstance().addEffect(new Discard(item));
+            }
+        }
+    }
 }

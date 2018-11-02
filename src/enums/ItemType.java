@@ -43,7 +43,9 @@ public enum ItemType {
     SERVICE("${service}", Collections.singletonList("Service")  ),
     SERVICE_TEAMWORK("${service_teamwork}",Arrays.asList("Service","Teamwork")  ),
     CURSED_CONDITION("${cursed_condition}", Collections.singletonList("Cursed Condition") ),
-    ITEM_MAGICAL_TEAMWORK("${item_magical_teamwork}", Arrays.asList("Item","Magical","Teamwork") );
+    ITEM_MAGICAL_TEAMWORK("${item_magical_teamwork}", Arrays.asList("Item","Magical","Teamwork") ),
+    DEPT_CONDITION("${dept_condition}", Collections.singletonList("Dept Condition") ),
+    DARK_PACT("${dark_pact_condition}", Collections.singletonList("Dark Pact Condition") );
 
     private String key;
     private List<String> parts;

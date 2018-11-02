@@ -21,6 +21,7 @@ import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
+import model.effects.Reckoning;
 
 import java.util.Arrays;
 
@@ -77,6 +78,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
+        GameService.getInstance().addEffect(new Reckoning());
        // GameService.getInstance().addEffect(new GainAsset(
       //          (Asset) GameService.getInstance().getAssets().get("&bandages"),
        //         GameService.getInstance().getEncounteringInvestigator()));

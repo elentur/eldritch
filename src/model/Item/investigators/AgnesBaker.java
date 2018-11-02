@@ -12,6 +12,7 @@ import model.effects.Spend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AgnesBaker extends Investigator {
@@ -29,7 +30,7 @@ public class AgnesBaker extends Investigator {
                 FieldID.LONDON,
                 GameService.getInstance().getAssets().get("&profaneTome"),
                 GameService.getInstance().getSpells().get("&stormOfSpirits"),
-                GameService.getInstance().getSpells().get("&mistsOfReleh")
+                GameService.getInstance().getConditions().getBySubType(Collections.singletonList(ItemType.DEPT_CONDITION))
         );
 
 

@@ -4,6 +4,7 @@ import Service.GameService;
 import enums.EncounterType;
 import enums.SituationType;
 import enums.TestType;
+import gamemechanics.choice.InformationChoice;
 import gamemechanics.encounter.Encounter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import model.effects.ExecuteEndEvents;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 @Getter
@@ -21,23 +24,31 @@ import java.util.function.Function;
 public class Test extends Encounter {
 
     private final String encounterID;
+    private String startText;
+    private String failText;
+    private String successText;
 
 
     public Test(SituationType situationType) {
-        this(  TestType.NONE, 0, 0, situationType);
+        this(TestType.NONE, 0, 0, situationType);
     }
-    public Test(Effect effect,SituationType situationType) {
-        this( effect, EncounterType.TEST,TestType.NONE, 0, 0, situationType);
+
+    public Test(Effect effect, SituationType situationType) {
+        this(effect, EncounterType.TEST, TestType.NONE, 0, 0, situationType);
     }
+
     public Test(TestType testType, int mod, int minNumberOfSuccesses, SituationType situationType) {
-        this(null,EncounterType.TEST, testType, mod, minNumberOfSuccesses, situationType);
+        this(null, EncounterType.TEST, testType, mod, minNumberOfSuccesses, situationType);
 
     }
 
-    protected Test(Effect effect,EncounterType encounterType, TestType testType, int mod, int minNumberOfSuccesses, SituationType situationType) {
+    public Test(Effect effect, EncounterType encounterType, TestType testType, int mod, int minNumberOfSuccesses, SituationType situationType) {
         super(encounterType);
 
         this.encounterID = "test";
+        this.setFailText("");
+        this.setStartText("");
+        this.setSuccessText("");
         setTestType(new TestType[1]);
         setMinNumberOfSuccesses(new int[]{1});
         setMod(new int[]{0});
@@ -46,8 +57,7 @@ public class Test extends Encounter {
         setSituationType(situationType);
         setGame(GameService.getInstance());
         setEncounterPart(0);
-        getEffect()[getEncounterPart()][START]=effect;
-
+        getEffect()[getEncounterPart()][START] = effect;
 
 
         getTestType()[getEncounterPart()] = testType;
@@ -79,7 +89,7 @@ public class Test extends Encounter {
     }
 
     public String getEncounterStartText() {
-        return ResourceUtil.get("${" + encounterID + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
+        return getStartText();
     }
 
     public String getEncounterEffectText() {
@@ -88,28 +98,34 @@ public class Test extends Encounter {
     }
 
     public String getEncounterFailText() {
-        String key = "${" + encounterID + "_fail}";
-        String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
-        if (value.equals(key)) {
-            return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));
-        }
-        return value;
+
+        return getFailText();
     }
 
     public String getEncounterSuccessText() {
-        String key = "${" + encounterID + "_success}";
-        String value = ResourceUtil.get(key, getNameId().replaceAll("[{}\\$]", ""));
-        if (value.equals(key)) {
-            return ResourceUtil.get("${standard}", getNameId().replaceAll("[{}\\$]", ""));
-        }
-        return value;
+        return getSuccessText();
     }
 
 
     public int completeEncounterPart() {
         checkForSpellConsequences();
-        if(getEffect()[getEncounterPart()][START]!=null){
+        String header;
+        String text;
+
+        List<Effect> effects = new ArrayList<>();
+        if (getEffect()[getEncounterPart()][START] != null) {
             GameService.getInstance().addEffect(getEffect()[getEncounterPart()][START]);
+        }else{
+            if (result.isSuccess()) {
+                header = ResourceUtil.get("${success}", "ui");
+                text = getEncounterSuccessText() + "\n" + getEffect()[getEncounterPart()][PASS].getText();
+                effects.add(getEffect()[getEncounterPart()][PASS]);
+            } else {
+                header = ResourceUtil.get("${fail}", "ui");
+                text = getEncounterFailText() + "\n" + getEffect()[getEncounterPart()][FAIL].getText();
+                effects.add(getEffect()[getEncounterPart()][FAIL]);
+            }
+            getGame().addChoice(new InformationChoice(header, text, effects));
         }
         setEncounterPart(3);
 

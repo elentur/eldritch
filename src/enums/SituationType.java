@@ -17,7 +17,8 @@ public enum SituationType {
     TRADE("${trade}"),
     MOVE("${move}"),
     TEST("${test}"),
-    OTHER_WORLD_ENCOUNTER("${other_world_encounter}");
+    OTHER_WORLD_ENCOUNTER("${other_world_encounter}"),
+    RECKONING("${reckoning}");
 
     private String key;
 

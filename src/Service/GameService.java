@@ -29,6 +29,7 @@ import model.*;
 import model.Item.*;
 import model.Item.token.*;
 import model.effects.*;
+import utils.RNG;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -447,8 +448,7 @@ public class GameService {
         while (true) {
             safetyCount++;
             int i = FieldID.values().length;
-            Random r = new Random();
-            FieldID fieldID = FieldID.values()[r.nextInt(i)];
+            FieldID fieldID = FieldID.values()[RNG.getInt(i)];
             if (!fieldID.getType().equals(FieldType.NONE)) {
                 return fieldID;
             }

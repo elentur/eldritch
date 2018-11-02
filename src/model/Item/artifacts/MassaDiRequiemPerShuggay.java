@@ -14,6 +14,7 @@ import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.Monster;
 import model.effects.*;
+import utils.RNG;
 import utils.ResourceUtil;
 
 import java.util.*;
@@ -75,8 +76,8 @@ public class MassaDiRequiemPerShuggay extends Artifact {
 
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
-        Random r = new Random();
-        int i = r.nextInt(6);
+
+        int i = RNG.getInt(6);
         if (i == 0) {
             Effect effect = new AdvanceDoom(1);
             InformationChoice choice = new InformationChoice(getName(),

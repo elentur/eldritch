@@ -6,10 +6,11 @@ import java.util.Random;
 
 import oldVersion.gameItems.Round;
 import org.junit.Test;
+import utils.RNG;
 
 public class RoundTest {
 	Round lap = new Round(3);
-	Random rnd = new Random(1234);
+
 	@Test
 	public void testNext() {
 		for(int i= 0; i< 10;i++){
@@ -23,7 +24,7 @@ public class RoundTest {
 					lap.next();
 				}
 			}
-			lap.setLeadInvestigator(rnd.nextInt(3)+1);
+			lap.setLeadInvestigator(RNG.getInt(3)+1);
 		}
 		
 	}

@@ -17,6 +17,7 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
+import utils.RNG;
 
 import java.util.Random;
 
@@ -210,11 +211,11 @@ class DiceGui extends Group {
     }
 
     private void startAnimation(Rotate rotate, double value, boolean shift) {
-        final Random r = new Random();
+
         final double rotationSpeed = 500;
         AnimationTimer timer = new AnimationTimer() {
 
-            double pos = shift?value:r.nextInt(360);
+            double pos = shift?value: RNG.getInt(360);
             int step = shift?2:0;
 
             private long lastUpdate = 0;
@@ -235,7 +236,7 @@ class DiceGui extends Group {
                     if (rotate.getAngle() == pos) {
                         step++;
                         if (step == 1) {
-                            pos = r.nextInt(360);
+                            pos = RNG.getInt(360);
                         } else if (step == 2) {
                             pos = value;
 

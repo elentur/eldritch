@@ -44,7 +44,7 @@ public class BlessingOfIsis extends Spell {
     public Encounter getEncounter() {
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-         effect = new GainCondition(ConditionType.BLESSED, new InvestigatorChoice(GameService.getInstance().getFieldOfInvestigator(inv).getFieldID(),true));
+         effect = new GainCondition(ConditionType.BLESSED, new InvestigatorChoice(GameService.getInstance().getFieldOfInvestigator(inv).getFieldID(),1));
 
         Action encounter = new Action(inv,
                 "blessingOfIsis",
