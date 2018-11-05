@@ -36,7 +36,7 @@ public class Inventory extends ItemContainer<Item> {
                     || showCondition && item.getItemType().equals(ItemType.CONDITION);
             return containing;
         };
-        return getItemsWidthTypeFilter(filter);
+        return getItemsWithTypeFilter(filter);
     }
 
     @Override

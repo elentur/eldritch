@@ -48,16 +48,16 @@ public class WitchDoctor extends Asset {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect effect = new NullEffect();
         if(inv.getHealth() -inv.getActualHealth()>=2){
-            if(!inv.getInventory().getItemsWidthTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).isEmpty()){
+            if(!inv.getInventory().getItemsWithTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).isEmpty()){
                 effect = new Or(
                         new LooseOrGainHealthSanity(SpendType.HEALTH,1,inv),
-                        new Discard(inv.getInventory().getItemsWidthTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).get(0)));
+                        new Discard(inv.getInventory().getItemsWithTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).get(0)));
             }else {
                 effect =  new LooseOrGainHealthSanity(SpendType.HEALTH,1,inv);
             }
         }else {
-            if(!inv.getInventory().getItemsWidthTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).isEmpty()){
-                new Discard(inv.getInventory().getItemsWidthTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).get(0));
+            if(!inv.getInventory().getItemsWithTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).isEmpty()){
+                new Discard(inv.getInventory().getItemsWithTypeFilter(item->item.getSubType().equals(ItemType.CURSED_CONDITION)).get(0));
             }else{
                 return boni;
             }

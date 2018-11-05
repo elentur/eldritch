@@ -1,15 +1,17 @@
 package model.Item.conditions;
 
 import Service.GameService;
+import enums.EffectSelector;
 import enums.ItemType;
 import enums.SpendType;
 import gamemechanics.choice.InformationChoice;
 import model.Item.Condition;
 import model.Item.Investigator;
-import model.Item.Item;
 import model.Item.ItemBonus;
-import model.effects.*;
-import oldVersion.gameBuild.Game;
+import model.effects.And;
+import model.effects.Discard;
+import model.effects.GainClue;
+import model.effects.LooseOrGainHealthSanity;
 import utils.RNG;
 import utils.ResourceUtil;
 
@@ -18,9 +20,9 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class Blessed0 extends Condition {
+public class Blessed1 extends Condition {
 
-    public Blessed0() {
+    public Blessed1() {
         super(ItemType.BLESSED_CONDITION);
     }
 
@@ -56,9 +58,8 @@ public class Blessed0 extends Condition {
     @Override
     public void doubleEffect() {
         super.doubleEffect();
-        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,2, GameService.getInstance().getEncounteringInvestigator()),
-                        new LooseOrGainHealthSanity(SpendType.SANITY,2, GameService.getInstance().getEncounteringInvestigator()))));
+        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),
+                Collections.singletonList(new GainClue(EffectSelector.RANDOM,2, GameService.getInstance().getEncounteringInvestigator())));
         GameService.getInstance().addChoice(choice);
 
     }

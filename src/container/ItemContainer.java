@@ -50,7 +50,7 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
                 .collect(Collectors.toCollection(ItemContainer::new));
     }
 
-    public ItemContainer<Item> getItemsWidthTypeFilter(Function<Item,Boolean> filter) {
+    public ItemContainer<Item> getItemsWithTypeFilter(Function<Item,Boolean> filter) {
         return this.stream().filter(filter::apply)
                 .collect(Collectors.toCollection(ItemContainer::new));
     }

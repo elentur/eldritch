@@ -6,13 +6,10 @@ import container.ItemContainer;
 import enums.ChoiceType;
 import enums.ItemType;
 import expetions.ItemChoiceException;
-import expetions.SkillChoiceException;
 import lombok.Getter;
 import model.Effect;
-import model.Item.Asset;
 import model.Item.Item;
 import model.effects.Discard;
-import model.effects.DiscardMonster;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ public class ItemChoice extends Choice {
             return itemContainer;
         }else{
             Function<Item, Boolean> filter = item ->itemType.contains(item.getItemType());
-            return itemContainer.getItemsWidthTypeFilter(filter);
+            return itemContainer.getItemsWithTypeFilter(filter);
         }
     }
 
@@ -62,8 +59,8 @@ public class ItemChoice extends Choice {
     }
 
     public void choose(List<Item> chosen) {
-        if(number >0 && chosen.size()>number){
-            throw new ItemChoiceException(ResourceUtil.get("${item_number_to_low}","exception",number+"",chosen.size()+""));
+        if(number >0 && chosen.size()!=number){
+            throw new ItemChoiceException(ResourceUtil.get("${item_number_wrong}","exception",number+"",chosen.size()+""));
 
         }else{
             for(Item item:chosen){

@@ -1,15 +1,18 @@
 package model.Item.conditions;
 
 import Service.GameService;
+import enums.EffectSelector;
+import enums.FieldID;
 import enums.ItemType;
-import enums.SpendType;
 import gamemechanics.choice.InformationChoice;
+import gamemechanics.choice.MonsterChoice;
 import model.Item.Condition;
 import model.Item.Investigator;
-import model.Item.Item;
 import model.Item.ItemBonus;
-import model.effects.*;
-import oldVersion.gameBuild.Game;
+import model.effects.ChooseSpace;
+import model.effects.Discard;
+import model.effects.DiscardMonster;
+import model.effects.GainClue;
 import utils.RNG;
 import utils.ResourceUtil;
 
@@ -18,9 +21,9 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class Blessed0 extends Condition {
+public class Blessed2 extends Condition {
 
-    public Blessed0() {
+    public Blessed2() {
         super(ItemType.BLESSED_CONDITION);
     }
 
@@ -56,9 +59,8 @@ public class Blessed0 extends Condition {
     @Override
     public void doubleEffect() {
         super.doubleEffect();
-        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,2, GameService.getInstance().getEncounteringInvestigator()),
-                        new LooseOrGainHealthSanity(SpendType.SANITY,2, GameService.getInstance().getEncounteringInvestigator()))));
+        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
+                Collections.singletonList(new ChooseSpace(new DiscardMonster(new MonsterChoice(FieldID.CHOSEN_FIELD)))));
         GameService.getInstance().addChoice(choice);
 
     }

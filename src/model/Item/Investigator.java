@@ -4,7 +4,6 @@ import container.FiniteItemStack;
 import container.Inventory;
 import container.ItemContainer;
 import container.ItemStack;
-import enums.ConditionType;
 import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
@@ -106,8 +105,8 @@ public abstract class Investigator implements Item {
         return skillSet.getSkill(typ);
     }
 
-    public List<ConditionType> getConditions() {
-        return new ArrayList<>();
+    public ItemContainer getConditions() {
+        return inventory.getItemsWithTypeFilter(item-> item.getItemType().equals(ItemType.CONDITION));
     }
 
     @Override

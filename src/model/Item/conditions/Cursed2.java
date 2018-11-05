@@ -2,14 +2,13 @@ package model.Item.conditions;
 
 import Service.GameService;
 import enums.ItemType;
-import enums.SpendType;
 import gamemechanics.choice.InformationChoice;
+import gamemechanics.encounter.CombatEncounter;
 import model.Item.Condition;
 import model.Item.Investigator;
-import model.Item.Item;
 import model.Item.ItemBonus;
-import model.effects.*;
-import oldVersion.gameBuild.Game;
+import model.Item.Monster;
+import model.effects.Discard;
 import utils.RNG;
 import utils.ResourceUtil;
 
@@ -18,21 +17,21 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class Blessed0 extends Condition {
+public class Cursed2 extends Condition {
 
-    public Blessed0() {
-        super(ItemType.BLESSED_CONDITION);
+    public Cursed2() {
+        super(ItemType.CURSED_CONDITION);
     }
 
     @Override
     public String getId() {
-        return "&blessedCondition";
+        return "&cursedCondition";
     }
 
 
     @Override
     public String getNameId() {
-        return "${blessed_condition}";
+        return "${cursed_condition}";
     }
 
     @Override
@@ -46,7 +45,7 @@ public class Blessed0 extends Condition {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
-       if(RNG.getInt(6)<=1) {
+       if(RNG.getInt(6)<=2) {
            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_info}"), "condition"), Collections.singletonList(new Discard(this)));
            GameService.getInstance().addChoice(choice);
 
@@ -56,10 +55,12 @@ public class Blessed0 extends Condition {
     @Override
     public void doubleEffect() {
         super.doubleEffect();
-        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,2, GameService.getInstance().getEncounteringInvestigator()),
-                        new LooseOrGainHealthSanity(SpendType.SANITY,2, GameService.getInstance().getEncounteringInvestigator()))));
+             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
+                     Collections.singletonList(new Discard(this)));
+
         GameService.getInstance().addChoice(choice);
+
+
 
     }
 }

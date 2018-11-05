@@ -5,7 +5,6 @@ import container.Result;
 import enums.*;
 import gamemechanics.Action;
 import gamemechanics.choice.InvestigatorChoice;
-import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
 import model.Item.*;
@@ -77,7 +76,7 @@ public class BlessingOfIsis extends Spell {
         ));
         List<Effect> blessedEffect = new ArrayList<>();
         for(Investigator investigator : GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getEncounteringInvestigator()).getInvestigators()){
-            boolean hasNotBlessedCondition = investigator.getInventory().getItems().getItemsWidthTypeFilter(
+            boolean hasNotBlessedCondition = investigator.getInventory().getItems().getItemsWithTypeFilter(
                     item->
                         item.getItemType().equals(ItemType.CONDITION) &&
                                 item.getSubType().equals(ItemType.BLESSED_CONDITION)

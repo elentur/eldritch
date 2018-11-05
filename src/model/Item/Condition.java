@@ -76,4 +76,6 @@ public abstract class Condition implements Item {
     public Action getEncounter() {
         return null;
     }
+
+    public void doubleEffect(){};
 }

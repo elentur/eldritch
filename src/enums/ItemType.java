@@ -33,19 +33,33 @@ public enum ItemType {
     ELDRITCH_TOKEN("${eldritch_token}", Collections.singletonList("Eldritch")  ),
     EXPEDITION_TOKEN("${expedition_token}", Collections.singletonList("Expedition")  ),
     ANY("${any}",null ),
-    CONDITION("${condition}", Collections.singletonList("Condition")  ),
-    BLESSED_CONDITION("${blessed_condition}", Collections.singletonList("Blessed Condition")  ),
     MYTHOS("${mythos}", Collections.singletonList("Mythos")  ),
     ANCIENT_ONE("${ancient_one}", Collections.singletonList("Ancient One") ),
-    AMNESIA_CONDITION("${amnesia_condition}", Collections.singletonList("Amnesia Condition")  ),
     MYSTERY("${mystery}", Collections.singletonList("Mystery")  ),
     FOCUS_TOKEN("${focus}", Collections.singletonList("Focus")   ),
     SERVICE("${service}", Collections.singletonList("Service")  ),
     SERVICE_TEAMWORK("${service_teamwork}",Arrays.asList("Service","Teamwork")  ),
-    CURSED_CONDITION("${cursed_condition}", Collections.singletonList("Cursed Condition") ),
     ITEM_MAGICAL_TEAMWORK("${item_magical_teamwork}", Arrays.asList("Item","Magical","Teamwork") ),
-    DEPT_CONDITION("${dept_condition}", Collections.singletonList("Dept Condition") ),
-    DARK_PACT("${dark_pact_condition}", Collections.singletonList("Dark Pact Condition") );
+
+    //Conditions
+    CONDITION("${condition}", Collections.singletonList("Condition")  ),
+    BANE_CONDITION("${bane_condition}", Arrays.asList("Blessed", "Condition")  ),
+    CURSED_CONDITION("${cursed_condition}", Arrays.asList("Cursed ", "Condition","Bane") ),
+    BOON_CONDITIONS("${boon_condition}", Arrays.asList("Boon", "Condition")  ),
+    BLESSED_CONDITION("${blessed_condition}",Arrays.asList("Blessed", "Condition", "Boon")  ),
+    DEAL_CONDITION("${deal_condition}", Arrays.asList("Deal", "Condition")  ),
+    DEPT_CONDITION("${dept_condition}", Arrays.asList("Dept", "Condition","Deal") ),
+    DARK_PACT("${dark_pact_condition}", Arrays.asList("Dark Pact", "Condition","Deal") ),
+    MADNESS_CONDITION("${madness_condition}",Arrays.asList("Madness", "Condition") ),
+    AMNESIA_CONDITION("${amnesia_condition}", Arrays.asList("Amnesia", "Condition","Madness")  ),
+    HALLUCINATIONS_CONDITION("${hallucinations_condition}",Arrays.asList("Hallucinations", "Condition","Madness") ),
+    PARANOIA_CONDITION("${paranoia_condition}",Arrays.asList("Paranoia", "Condition","Madness") ),
+    INJURY_CONDITION("${injury_condition}",Arrays.asList("Injury", "Condition") ),
+    INTERNAL_INJURY_CONDITION("${internal_condition}",Arrays.asList("Internal Injury", "Condition","Injury") ),
+    LEG_INJURY_CONDITION("${leg_injury_condition}", Arrays.asList("Leg Injury", "Condition","Injury")),
+    BACK_INJURY_CONDITION("${back_injury_condition}",Arrays.asList("Back Injury", "Condition","Injury") ),
+    RESTRICTION_CONDITION("${restriction_condition}", Arrays.asList("Restriction", "Condition")  ),
+    DETAINED_CONDITION("${detained_condition}",Arrays.asList("Detained", "Condition","Restriction") );
 
     private String key;
     private List<String> parts;

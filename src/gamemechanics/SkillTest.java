@@ -1,9 +1,12 @@
 package gamemechanics;
 
 import Service.DiceRollerService;
+import container.ItemContainer;
 import container.Result;
 import enums.ConditionType;
+import enums.ItemType;
 import enums.TestType;
+import model.Item.Condition;
 import model.Item.Investigator;
 
 import java.util.List;
@@ -23,27 +26,34 @@ public class SkillTest {
 
     public Result execute(Investigator inv) {
         int skill;
-        ConditionType conditionTyp = ConditionType.NONE;
+
         DiceRollerService service = new DiceRollerService();
-        if(typ.equals(TestType.NONE)){
-            return service.rollDice(0, conditionTyp);
+        if (typ.equals(TestType.NONE)) {
+            return service.rollDice(0,  ConditionType.NONE);
         }
         if (inv == null) {
-           skill = 1;
-        }else {
+            return service.rollDice(1,  ConditionType.NONE);
+        } else {
             skill = inv.getSkill(typ);
-            List<ConditionType> conditons = inv.getConditions();
-            if (conditons.contains(ConditionType.BLESSED)) {
-                conditionTyp = ConditionType.BLESSED;
-            } else if (conditons.contains(ConditionType.CURSED)) {
-                conditionTyp = ConditionType.CURSED;
-            }
+            int value = skill + mod < 1 ? 1 : skill + mod;
+            ItemContainer<Condition> conditions = inv.getConditions();
+            Condition condition = conditions.stream().filter(item->item.getSubType().equals(ItemType.BLESSED_CONDITION)
+            ||item.getSubType().equals(ItemType.CURSED_CONDITION) ).findFirst().orElse(null);
+            ConditionType conditionType;
+           if(condition == null || condition.getSubType()==null){
+               conditionType=ConditionType.NONE;
+           }else if(condition.getSubType().equals(ItemType.BLESSED_CONDITION)){
+               conditionType=ConditionType.BLESSED;
+           }else if(condition.getSubType().equals(ItemType.CURSED_CONDITION)){
+               conditionType=ConditionType.CURSED;
+           }else{
+               conditionType=ConditionType.NONE;
+           }
+
+            return service.rollDice(value, conditionType);
+
+
         }
 
-        int value = skill + mod<1?1:skill+mod;
-
-        return service.rollDice(value, conditionTyp);
-
     }
-
 }
