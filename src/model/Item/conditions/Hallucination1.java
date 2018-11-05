@@ -10,7 +10,6 @@ import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_Rest;
 import model.effects.And;
-import model.effects.BecomeDelayed;
 import model.effects.Discard;
 import model.effects.LooseOrGainHealthSanity;
 import utils.RNG;
@@ -21,21 +20,20 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class InternalInjury2 extends Condition {
+public class Hallucination1 extends Condition {
 
-    public InternalInjury2() {
-        super(ItemType.INTERNAL_INJURY_CONDITION);
+    public Hallucination1() {
+        super(ItemType.HALLUCINATIONS_CONDITION);
     }
 
     @Override
     public String getId() {
-        return "&internalInjuryCondition";
+        return "&hallucinationCondition";
     }
-
 
     @Override
     public String getNameId() {
-        return "${internal_injury_condition}";
+        return "${hallucination_condition}";
     }
 
     @Override
@@ -68,15 +66,16 @@ public class InternalInjury2 extends Condition {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
-        Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
+        Test test = new Test(TestType.WILL, 0, 1, SituationType.RECKONING);
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
-                    Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv),
-                           new BecomeDelayed(inv),
+            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),
+                    Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.SANITY,-1,inv),
                             new Discard(this))));
+
             GameService.getInstance().addChoice(choice);
         }
 
     }
+
 }

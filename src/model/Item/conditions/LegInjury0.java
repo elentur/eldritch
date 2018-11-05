@@ -4,6 +4,7 @@ import Service.GameService;
 import enums.*;
 import gamemechanics.Test;
 import gamemechanics.choice.InformationChoice;
+import gamemechanics.choice.YesNoChoice;
 import model.Effect;
 import model.Item.Condition;
 import model.Item.Investigator;
@@ -21,21 +22,21 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class InternalInjury2 extends Condition {
+public class LegInjury0 extends Condition {
 
-    public InternalInjury2() {
-        super(ItemType.INTERNAL_INJURY_CONDITION);
+    public LegInjury0() {
+        super(ItemType.LEG_INJURY_CONDITION);
     }
 
     @Override
     public String getId() {
-        return "&internalInjuryCondition";
+        return "&legInjuryCondition";
     }
 
 
     @Override
     public String getNameId() {
-        return "${internal_injury_condition}";
+        return "${leg_injury_condition}";
     }
 
     @Override
@@ -71,10 +72,12 @@ public class InternalInjury2 extends Condition {
         Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
+            Effect effect = new And(new BecomeDelayed(inv),new Discard(this));
+            YesNoChoice condition = new YesNoChoice(getName(),effect.getText(),Collections.singletonList(effect),null);
+           effect.setCondition(condition);
+            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
                     Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv),
-                           new BecomeDelayed(inv),
-                            new Discard(this))));
+                            effect)));
             GameService.getInstance().addChoice(choice);
         }
 

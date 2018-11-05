@@ -43,7 +43,7 @@ public class Shriveling extends Spell {
     public Encounter getEncounter() {
 
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
-        Effect effect = new LooseOrGainHealthSanity(SpendType.HEALTH,-2, new MonsterChoice(GameService.getInstance().getFieldOfInvestigator(inv),true));
+        Effect effect = new LooseOrGainHealthSanity(SpendType.HEALTH,-2, new MonsterChoice(GameService.getInstance().getFieldOfInvestigator(inv).getFieldID(),true));
 
         Action encounter = new Action(inv,
                 "shriveling",

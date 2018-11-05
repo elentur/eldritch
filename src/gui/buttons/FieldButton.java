@@ -243,7 +243,7 @@ public class FieldButton extends Group {
         } else if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.ENCOUNTER) &&
                 GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getActiveInvestigator()).equals(field)) {
             if (!field.getMonster().isEmpty()) {
-                GameService.getInstance().addChoice(new MonsterChoice(field));
+                GameService.getInstance().addChoice(new MonsterChoice(field.getFieldID()));
             } else {
                 GameService.getInstance().addChoice(new EncounterChoice(field));
             }

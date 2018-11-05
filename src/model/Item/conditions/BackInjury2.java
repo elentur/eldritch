@@ -72,7 +72,7 @@ public class BackInjury2 extends Condition {
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
-                    Collections.singletonList(new Discard(new ItemChoice(1, Collections.singletonList(ItemType.ITEM),GameService.getInstance().getEncounteringInvestigator().getInventory())) ));
+                    Collections.singletonList(new Discard(new ItemChoice(1, Collections.singletonList(ItemType.ITEM),inv.getInventory())) ));
             GameService.getInstance().addChoice(choice);
         }
 

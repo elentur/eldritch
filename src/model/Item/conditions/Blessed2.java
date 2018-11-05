@@ -57,8 +57,8 @@ public class Blessed2 extends Condition {
     }
 
     @Override
-    public void doubleEffect() {
-        super.doubleEffect();
+    public void doubleEffect(Investigator inv) {
+        super.doubleEffect(inv);
         InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
                 Collections.singletonList(new ChooseSpace(new DiscardMonster(new MonsterChoice(FieldID.CHOSEN_FIELD)))));
         GameService.getInstance().addChoice(choice);

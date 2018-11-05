@@ -70,8 +70,8 @@ public class BackInjury0 extends Condition {
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                    Collections.singletonList(new And(new Discard(new ItemChoice(1, Collections.singletonList(ItemType.ITEM),GameService.getInstance().getEncounteringInvestigator().getInventory())),
-                            new BecomeDelayed( GameService.getInstance().getEncounteringInvestigator()),
+                    Collections.singletonList(new And(new Discard(new ItemChoice(1, Collections.singletonList(ItemType.ITEM),inv.getInventory())),
+                            new BecomeDelayed( inv),
                             new Discard(this))));
             GameService.getInstance().addChoice(choice);
         }

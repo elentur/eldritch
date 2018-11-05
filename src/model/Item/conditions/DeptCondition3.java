@@ -46,7 +46,7 @@ public class DeptCondition3 extends Condition {
 
     @Override
     public Action getEncounter() {
-        return new Action(GameService.getInstance().getEncounteringInvestigator(),
+        return new Action(inv,
                 "dept",
                 new NullEffect(),
                 new Discard(this),

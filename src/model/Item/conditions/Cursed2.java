@@ -53,8 +53,8 @@ public class Cursed2 extends Condition {
     }
 
     @Override
-    public void doubleEffect() {
-        super.doubleEffect();
+    public void doubleEffect(Investigator inv) {
+        super.doubleEffect(inv);
              InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
                      Collections.singletonList(new Discard(this)));
 

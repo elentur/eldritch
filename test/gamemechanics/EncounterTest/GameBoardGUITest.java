@@ -50,7 +50,7 @@ public class GameBoardGUITest extends Application {
         inv.getInventory().add(new CultesDesGoules());
         inv.getInventory().add(new AighteenthDerringer());
         inv.getInventory().add(new Wither());
-        inv.getInventory().add(new AmnesiaCondition0());
+        inv.getInventory().add(new Amnesia0());
         inv.getInventory().add(new ArcaneManuscript());
         inv.getInventory().add(new BullWhip());
         inv.getInventory().add(new CultistJournal());

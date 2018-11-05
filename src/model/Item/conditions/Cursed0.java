@@ -56,17 +56,17 @@ public class Cursed0 extends Condition {
     }
 
     @Override
-    public void doubleEffect() {
-        super.doubleEffect();
-        if(GameService.getInstance().getFieldOfInvestigator(GameService.getInstance().getEncounteringInvestigator()).getType().equals(FieldType.SEA)){
+    public void doubleEffect(Investigator inv) {
+        super.doubleEffect(inv);
+        if(GameService.getInstance().getFieldOfInvestigator(inv).getType().equals(FieldType.SEA)){
             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition") +"\n" +
                     ResourceUtil.get(getNameId().replace("}", "_0a}"), "condition"),
-                    Collections.singletonList(new And(new Discard(this), new Devoured(GameService.getInstance().getEncounteringInvestigator()))));
+                    Collections.singletonList(new And(new Discard(this), new Devoured(inv))));
             GameService.getInstance().addChoice(choice);
         }else{
             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition")+"\n" +
                     ResourceUtil.get(getNameId().replace("}", "_0b}"), "condition"),
-                    Collections.singletonList(new LooseOrGainHealthSanity(SpendType.HEALTH,3, GameService.getInstance().getEncounteringInvestigator())));
+                    Collections.singletonList(new LooseOrGainHealthSanity(SpendType.HEALTH,3, inv)));
             GameService.getInstance().addChoice(choice);
         }
 

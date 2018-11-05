@@ -58,12 +58,12 @@ public class Cursed1 extends Condition {
     }
 
     @Override
-    public void doubleEffect() {
-        super.doubleEffect();
+    public void doubleEffect(Investigator inv) {
+        super.doubleEffect(inv);
              InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"), null);
         GameService.getInstance().addChoice(choice);
         Monster monster = GameService.getInstance().getMonsterPool().draw();
-        CombatEncounter encounter = new CombatEncounter(monster,new ArrayList<>(),GameService.getInstance().getEncounteringInvestigator());
+        CombatEncounter encounter = new CombatEncounter(monster,new ArrayList<>(),inv);
         encounter.setEndEvents(Collections.singletonList(encounter1 ->{
         GameService.getInstance().addEffect(new Discard(monster));
         return null;

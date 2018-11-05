@@ -58,7 +58,7 @@ public class DeptCondition5 extends Condition {
         super.executeReckoning(inv, autoFail);
         InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_info}"), "condition"), null);
         GameService.getInstance().addChoice(choice);
-        Effect effect = new And(new Or(new GainCondition(ConditionType.DARK_PACT,GameService.getInstance().getEncounteringInvestigator()),
+        Effect effect = new And(new Or(new GainCondition(ConditionType.DARK_PACT,inv),
                 new AdvanceDoom(1)),
                 new Discard(this));
         Test test = new Test(

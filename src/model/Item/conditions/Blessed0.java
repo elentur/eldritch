@@ -54,11 +54,11 @@ public class Blessed0 extends Condition {
     }
 
     @Override
-    public void doubleEffect() {
-        super.doubleEffect();
+    public void doubleEffect(Investigator inv) {
+        super.doubleEffect(inv);
         InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,2, GameService.getInstance().getEncounteringInvestigator()),
-                        new LooseOrGainHealthSanity(SpendType.SANITY,2, GameService.getInstance().getEncounteringInvestigator()))));
+                Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,2, inv),
+                        new LooseOrGainHealthSanity(SpendType.SANITY,2, inv))));
         GameService.getInstance().addChoice(choice);
 
     }

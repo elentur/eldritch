@@ -9,10 +9,10 @@ import model.Item.Condition;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_Rest;
-import model.effects.And;
 import model.effects.BecomeDelayed;
 import model.effects.Discard;
 import model.effects.LooseOrGainHealthSanity;
+import model.effects.Or;
 import utils.RNG;
 import utils.ResourceUtil;
 
@@ -21,21 +21,21 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class InternalInjury2 extends Condition {
+public class LegInjury2 extends Condition {
 
-    public InternalInjury2() {
-        super(ItemType.INTERNAL_INJURY_CONDITION);
+    public LegInjury2() {
+        super(ItemType.LEG_INJURY_CONDITION);
     }
 
     @Override
     public String getId() {
-        return "&internalInjuryCondition";
+        return "&legInjuryCondition";
     }
 
 
     @Override
     public String getNameId() {
-        return "${internal_injury_condition}";
+        return "${leg_injury_condition}";
     }
 
     @Override
@@ -71,10 +71,9 @@ public class InternalInjury2 extends Condition {
         Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
+
             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
-                    Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv),
-                           new BecomeDelayed(inv),
-                            new Discard(this))));
+                    Collections.singletonList(new BecomeDelayed(inv)));
             GameService.getInstance().addChoice(choice);
         }
 

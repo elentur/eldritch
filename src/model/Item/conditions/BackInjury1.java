@@ -71,10 +71,10 @@ public class BackInjury1 extends Condition {
         Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-           int num = GameService.getInstance().getEncounteringInvestigator().getInventory().getItemsWithTypeFilter(item->item.getItemType().equalsWithParts(ItemType.ITEM)).size();
+           int num = inv.getInventory().getItemsWithTypeFilter(item->item.getItemType().equalsWithParts(ItemType.ITEM)).size();
          if(num>0) {
              InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),
-                     Collections.singletonList(new And(new Discard(new ItemChoice(num-1, Collections.singletonList(ItemType.ITEM), GameService.getInstance().getEncounteringInvestigator().getInventory())),
+                     Collections.singletonList(new And(new Discard(new ItemChoice(num-1, Collections.singletonList(ItemType.ITEM), inv.getInventory())),
                              new Discard(this))));
              GameService.getInstance().addChoice(choice);
          }

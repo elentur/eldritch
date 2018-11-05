@@ -71,7 +71,7 @@ public class InternalInjury1 extends Condition {
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
             InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),
-                    Collections.singletonList(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,GameService.getInstance().getEncounteringInvestigator())));
+                    Collections.singletonList(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv)));
             GameService.getInstance().addChoice(choice);
         }
 

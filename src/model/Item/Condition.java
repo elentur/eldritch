@@ -77,5 +77,5 @@ public abstract class Condition implements Item {
         return null;
     }
 
-    public void doubleEffect(){};
+    public void doubleEffect(Investigator inv){};
 }

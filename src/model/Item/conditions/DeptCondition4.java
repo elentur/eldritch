@@ -64,7 +64,7 @@ public class DeptCondition4 extends Condition {
         super.executeReckoning(inv, autoFail);
         InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_info}"), "condition"), null);
         GameService.getInstance().addChoice(choice);
-        Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY, -3, GameService.getInstance().getEncounteringInvestigator()),
+        Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY, -3, inv),
                 new Discard(this));
         Test test = new Test(
                 TestType.WILL,

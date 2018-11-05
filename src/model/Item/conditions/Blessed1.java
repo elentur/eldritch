@@ -56,10 +56,10 @@ public class Blessed1 extends Condition {
     }
 
     @Override
-    public void doubleEffect() {
-        super.doubleEffect();
+    public void doubleEffect(Investigator inv) {
+        super.doubleEffect(inv);
         InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),
-                Collections.singletonList(new GainClue(EffectSelector.RANDOM,2, GameService.getInstance().getEncounteringInvestigator())));
+                Collections.singletonList(new GainClue(EffectSelector.RANDOM,2, inv)));
         GameService.getInstance().addChoice(choice);
 
     }

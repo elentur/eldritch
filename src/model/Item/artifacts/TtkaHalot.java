@@ -39,7 +39,7 @@ public class TtkaHalot extends Artifact {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect effect = new And(new LooseOrGainHealthSanity(SpendType.SANITY,-1,inv),
                 new LooseOrGainHealthSanity(SpendType.HEALTH,-3,
-                        new MonsterChoice(GameService.getInstance().getFieldOfInvestigator(inv))));
+                        new MonsterChoice(GameService.getInstance().getFieldOfInvestigator(inv).getFieldID())));
 
         Action encounter = new Action(inv,
                 "necronomicon",

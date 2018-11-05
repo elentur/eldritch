@@ -10,8 +10,8 @@ import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_Rest;
 import model.effects.And;
-import model.effects.BecomeDelayed;
 import model.effects.Discard;
+import model.effects.GainCondition;
 import model.effects.LooseOrGainHealthSanity;
 import utils.RNG;
 import utils.ResourceUtil;
@@ -21,21 +21,20 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class InternalInjury2 extends Condition {
+public class Hallucination0 extends Condition {
 
-    public InternalInjury2() {
-        super(ItemType.INTERNAL_INJURY_CONDITION);
+    public Hallucination0() {
+        super(ItemType.HALLUCINATIONS_CONDITION);
     }
 
     @Override
     public String getId() {
-        return "&internalInjuryCondition";
+        return "&hallucinationCondition";
     }
-
 
     @Override
     public String getNameId() {
-        return "${internal_injury_condition}";
+        return "${hallucination_condition}";
     }
 
     @Override
@@ -68,15 +67,14 @@ public class InternalInjury2 extends Condition {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
-        Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
+        Test test = new Test(TestType.WILL, 0, 1, SituationType.RECKONING);
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
-                    Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv),
-                           new BecomeDelayed(inv),
-                            new Discard(this))));
+            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
+                    Collections.singletonList(new LooseOrGainHealthSanity(SpendType.SANITY,-1,inv)));
             GameService.getInstance().addChoice(choice);
         }
 
     }
+
 }
