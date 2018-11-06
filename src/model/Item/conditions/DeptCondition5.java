@@ -56,7 +56,8 @@ public class DeptCondition5 extends Condition {
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
-        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_info}"), "condition"), null);
+        InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_info}"), "condition") +"\n" +
+                ResourceUtil.get(getNameId().replace("}", "_5}"), "condition"), null);
         GameService.getInstance().addChoice(choice);
         Effect effect = new And(new Or(new GainCondition(ConditionType.DARK_PACT,inv),
                 new AdvanceDoom(1)),
@@ -65,7 +66,6 @@ public class DeptCondition5 extends Condition {
                 effect,
                 SituationType.RECKONING
         );
-        test.setStartText(ResourceUtil.get(getNameId().replace("}", "_5}"), "condition"));
         GameService.getInstance().addTest(test);
     }
 

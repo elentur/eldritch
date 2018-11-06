@@ -67,13 +67,15 @@ public class Paranoia1 extends Condition {
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
         Test test = new Test(TestType.WILL, 0, 1, SituationType.RECKONING);
+        test.setStartText(ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"));
         GameService.getInstance().addTest(test);
-            if (!test.getResult().isSuccess()) {
+            if (test.getResult().isSuccess()) {
                 InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),null);
                 GameService.getInstance().addChoice(choice);
                 Asset asset = GameService.getInstance().getAssets().showFirst();
-                GameService.getInstance().addTest(test);
                 test = new Test(TestType.OBSERVATION, 0, asset.getPrice(), SituationType.RECKONING);
+                test.setStartText(ResourceUtil.get(getNameId().replace("}", "_1a}"), "condition"));
+                GameService.getInstance().addTest(test);
                 if(test.getResult().isSuccess()){
                     GameService.getInstance().addEffect(new GainAsset(GameService.getInstance().getAssets().draw(), inv));
                 }else{

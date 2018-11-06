@@ -70,15 +70,19 @@ public class LegInjury0 extends Condition {
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
         Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
+        test.setStartText( ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"));
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
+            Effect effect0 = new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv);
+            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition") + "\n" +effect0.getText(),
+                    Collections.singletonList(
+                            effect0));
+            GameService.getInstance().addChoice(choice);
+
             Effect effect = new And(new BecomeDelayed(inv),new Discard(this));
             YesNoChoice condition = new YesNoChoice(getName(),effect.getText(),Collections.singletonList(effect),null);
-           effect.setCondition(condition);
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                    Collections.singletonList(new And(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv),
-                            effect)));
-            GameService.getInstance().addChoice(choice);
+            effect.setCondition(condition);
+            GameService.getInstance().addEffect(effect);
         }
 
     }

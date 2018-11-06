@@ -13,7 +13,7 @@ import java.util.List;
 public class Lantern extends Asset {
 
     public Lantern() {
-        super(ItemType.TRINKET_WEAPON, 1);
+        super(ItemType.ITEM, 1);
     }
 
     @Override

@@ -56,12 +56,7 @@ public abstract class Asset implements Item {
     }
     @Override
     public void discard(){
-        for(Investigator inv : GameService.getInstance().getInvestigators()){
-            if(inv.getInventory().contains(this)){
-                inv.removeFromInventory(this);
-            }
-        }
-        stack.discard(this);
+               stack.discard(this);
     }
     @Override
     public Asset draw(){

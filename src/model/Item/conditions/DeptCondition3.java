@@ -46,7 +46,7 @@ public class DeptCondition3 extends Condition {
 
     @Override
     public Action getEncounter() {
-        return new Action(inv,
+        return new Action(GameService.getInstance().getEncounteringInvestigator(),
                 "dept",
                 new NullEffect(),
                 new Discard(this),
@@ -71,7 +71,7 @@ public class DeptCondition3 extends Condition {
                 1,
                 SituationType.RECKONING
         );
-        test.getEffect()[0][1] = effect;
+        test.getEffect()[0][2] = effect;
         test.setStartText(ResourceUtil.get(getNameId().replace("}", "_3}"), "condition"));
         GameService.getInstance().addTest(test);
     }

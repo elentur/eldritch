@@ -66,7 +66,7 @@ public class DeptCondition1 extends Condition {
                 1,
                 SituationType.RECKONING
         );
-        test.getEffect()[0][1] = effect;
+        test.getEffect()[0][2] = effect;
         test.setStartText(ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"));
         GameService.getInstance().addTest(test);
     }

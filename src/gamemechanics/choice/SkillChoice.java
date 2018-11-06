@@ -4,6 +4,7 @@ package gamemechanics.choice;
 import Service.GameService;
 import enums.ChoiceType;
 import enums.TestType;
+import expetions.ItemChoiceException;
 import expetions.SkillChoiceException;
 import lombok.Getter;
 import model.Effect;
@@ -58,7 +59,10 @@ public class SkillChoice extends Choice {
 
 
     public List<TestType> get() {
-       return testTypes;
+        if(testTypes.isEmpty()){
+            throw new ItemChoiceException(ResourceUtil.get("${no_skill_for_choice}","exception"));
+        }
+        return testTypes;
     }
 
     private void executeEffects(List<Effect> effects) {
@@ -80,7 +84,7 @@ public class SkillChoice extends Choice {
                 GameService.getInstance().addEffect(new Improve(type,1,investigator));
             }
         }else {
-            throw new SkillChoiceException(ResourceUtil.get("${skill_number_to_low}","exception",number+"",chosen.size()+""));
+            throw new SkillChoiceException(ResourceUtil.get("${skill_number_to_low}","exception",chosen.size()+"",number+""));
         }
     }
 }

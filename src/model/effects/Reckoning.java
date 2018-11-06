@@ -12,6 +12,7 @@ import model.Item.Item;
 import model.Item.Monster;
 import utils.ResourceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -62,8 +63,16 @@ public class Reckoning extends Effect {
         }
         for(Investigator inv: GameService.getInstance().getInvestigators()){
             inv.executeReckoning(inv, autoFail);
-            for(Item item : inv.getInventory()){
-                item.executeReckoning(inv,autoFail );
+            List<Item> done = new ArrayList<>();
+            List<Item> todo =new ArrayList<>(inv.getInventory().getItems());
+            //Notwendig um zu verhindern das beim Iterieren über das Inventar durch den Reckoning Effect Gegenstände
+            //verloren gehen die noch erwartet werden
+           while(!todo.isEmpty()){
+                todo.get(0).executeReckoning(inv,autoFail );
+                done.add(todo.get(0));
+                todo.clear();
+                todo.addAll(inv.getInventory().getItems());
+                todo.removeAll(done);
             }
         }
 

@@ -42,7 +42,7 @@ public class Devoured extends Effect {
     @Override
     public void init() {
         super.init();
-        if (condition != null && condition.getChoiceType().equals(ChoiceType.MONSTER_CHOICE)) {
+        if (condition != null && condition.getChoiceType().equals(ChoiceType.INVESTIGATOR_CHOICE)) {
             investigators = ((InvestigatorChoice) condition).getSelectedInvs();
         }
     }
@@ -52,8 +52,10 @@ public class Devoured extends Effect {
         if(isExecuted()){
             return;
         }
+        init();
         super.execute();
         if (!isAccepted()) return;
+        log.info(investigators.get(0).getName() + " is  devoured");
        //TODO
     }
 

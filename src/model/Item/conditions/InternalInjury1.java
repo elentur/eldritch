@@ -68,10 +68,12 @@ public class InternalInjury1 extends Condition {
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
         Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
+        test.setStartText( ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"));
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),
-                    Collections.singletonList(new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv)));
+            Effect effect = new LooseOrGainHealthSanity(SpendType.HEALTH,-1,inv);
+            InformationChoice choice = new InformationChoice(getName(),effect.getText(),
+                    Collections.singletonList(effect));
             GameService.getInstance().addChoice(choice);
         }
 

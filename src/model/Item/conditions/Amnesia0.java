@@ -69,11 +69,13 @@ public class Amnesia0 extends Condition {
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
         Test test = new Test(TestType.WILL, 0, 1, SituationType.RECKONING);
+        test.setStartText( ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"));
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_0}"), "condition"),
-                    Collections.singletonList(new And(new GainCondition(ConditionType.DETAINED,inv),
-                            new Discard(this))));
+            Effect effect = new And(new GainCondition(ConditionType.DETAINED,inv),
+                    new Discard(this));
+            InformationChoice choice = new InformationChoice(getName(),effect.getText(),
+                    Collections.singletonList(effect));
             GameService.getInstance().addChoice(choice);
         }
 

@@ -220,10 +220,10 @@ public class GameService {
         addExpedition();
     }
     public void startGame() {
-        addActiveMystery();
-       addEffect(new SpawnGate());
-        addEffect(new SpawnClue(1));
-        addEffect(new SpawnMonster(FieldID.LONDON));
+     //   addActiveMystery();
+     //   addEffect(new SpawnGate());
+     //   addEffect(new SpawnClue(1));
+
         reserve.init();
        addEffect(new ZoomTo(getActiveInvestigator()));
     }

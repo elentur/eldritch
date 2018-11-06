@@ -51,6 +51,9 @@ public class InvestigatorChoice extends Choice{
 
 
     public List<Investigator> getInvestigators() {
+        if(investigators.isEmpty()){
+            throw new InvestigatorChoiceException(ResourceUtil.get("${no_investigator_for_choice}","exception"));
+        }
         return investigators;
     }
 
@@ -63,12 +66,11 @@ public class InvestigatorChoice extends Choice{
 
     public void choose(List<Investigator> chosen) {
         if(number >0 && chosen.size()>number){
-            throw new InvestigatorChoiceException(ResourceUtil.get("${Investigator_number_to_low}","exception",number+"",chosen.size()+""));
+            throw new InvestigatorChoiceException(ResourceUtil.get("${investigator_number_to_low}","exception",chosen.size()+"",number+""));
 
-        }else{
-            for(Item item:chosen){
-                GameService.getInstance().addEffect(new Discard(item));
-            }
         }
+        selectedInvs.clear();
+        selectedInvs.addAll(chosen);
+        accepted=true;
     }
 }

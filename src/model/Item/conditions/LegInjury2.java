@@ -46,7 +46,7 @@ public class LegInjury2 extends Condition {
             @Override
             public void execute() {
                 super.execute();
-                if(RNG.getInt(6)<=1) {
+                if (RNG.getInt(6) <= 1) {
                     GameService.getInstance().addChoice(new InformationChoice(getName(),
                             ResourceUtil.get(getNameId().replace("}", "_info}"), "condition"),
                             Collections.singletonList(new Discard(that))));
@@ -58,22 +58,22 @@ public class LegInjury2 extends Condition {
                 return "";
             }
         };
-        ItemBonus_Rest bonus1 = new ItemBonus_Rest(effect, RangeType.SELF,this);
+        ItemBonus_Rest bonus1 = new ItemBonus_Rest(effect, RangeType.SELF, this);
         boni.add(bonus1);
         return boni;
     }
-
 
 
     @Override
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
         Test test = new Test(TestType.STRENGTH, 0, 1, SituationType.RECKONING);
+        test.setStartText(ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"));
         GameService.getInstance().addTest(test);
         if (!test.getResult().isSuccess()) {
-
-            InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
-                    Collections.singletonList(new BecomeDelayed(inv)));
+            Effect effect = new BecomeDelayed(inv);
+            InformationChoice choice = new InformationChoice(getName(), effect.getText(),
+                    Collections.singletonList(effect));
             GameService.getInstance().addChoice(choice);
         }
 

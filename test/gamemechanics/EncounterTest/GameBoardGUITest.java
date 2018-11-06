@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.ancientOnes.Azathoth;
+import model.Item.assets.ProfaneTome;
+import model.Item.conditions.*;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
@@ -78,6 +80,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.show();
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
+        GameService.getInstance().getEncounteringInvestigator().addToInventory(new Paranoia1());
         GameService.getInstance().addEffect(new Reckoning());
        // GameService.getInstance().addEffect(new GainAsset(
       //          (Asset) GameService.getInstance().getAssets().get("&bandages"),

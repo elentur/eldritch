@@ -1,6 +1,7 @@
 package gamemechanics;
 
 import Service.GameService;
+import com.sun.net.httpserver.Authenticator;
 import enums.EncounterType;
 import enums.SituationType;
 import enums.TestType;
@@ -11,6 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
 import model.effects.ExecuteEndEvents;
+import model.effects.NullEffect;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import preparation.Preparation;
 import utils.ResourceUtil;
 
@@ -54,11 +57,13 @@ public class Test extends Encounter {
         setMod(new int[]{0});
         getMod()[0] = mod;
         setEffect(new Effect[1][3]);
+
         setSituationType(situationType);
         setGame(GameService.getInstance());
         setEncounterPart(0);
         getEffect()[getEncounterPart()][START] = effect;
-
+        getEffect()[getEncounterPart()][PASS] =new NullEffect();
+        getEffect()[getEncounterPart()][FAIL] =new NullEffect();
 
         getTestType()[getEncounterPart()] = testType;
         getMinNumberOfSuccesses()[getEncounterPart()] = minNumberOfSuccesses;
@@ -134,6 +139,7 @@ public class Test extends Encounter {
 
     @Override
     public void discard() {
+        GameService.getInstance().getTestProperty().setValue(null);
         getGame().addEffect(new ExecuteEndEvents(this::executeEndEvents));
     }
 

@@ -28,8 +28,15 @@ public class ItemChoiceGUI extends ChoiceDialog {
 
     public ItemChoiceGUI(ItemChoice choice) {
         super(0.6, 0.6, choice);
+        List<Item> items;
+        try {
+             items = choice.get();
 
-        List<Item> items = choice.get();
+        }catch (ItemChoiceException ex){
+            GameService.getInstance().addChoice(new InformationChoice("", ex.getMessage(), new ArrayList<>()));
+            close();
+            return;
+        }
         List<Item> chosen = new ArrayList<>();
 
         ItemScrollPane scrollPane = new ItemScrollPane();

@@ -19,12 +19,15 @@ import java.util.function.Function;
 public class ItemChoice extends Choice {
 
 
+    @Getter
     private final List<ItemType> itemType;
     private final ItemContainer itemContainer;
     @Getter
     private final int number;
     @Getter
     private  List<Item> chosenItems;
+
+    private ItemContainer returnContainer;
 
 
     public ItemChoice(int number, List<ItemType> itemType, ItemContainer itemContainer) {
@@ -33,16 +36,27 @@ public class ItemChoice extends Choice {
         this.itemType=itemType;
         this.itemContainer = itemContainer;
         chosenItems= new ArrayList<>();
+
     }
 
 
     public List<Item> get() {
         if(itemType==null) {
-            return itemContainer;
+            returnContainer= itemContainer;
         }else{
-            Function<Item, Boolean> filter = item ->itemType.contains(item.getItemType());
-            return itemContainer.getItemsWithTypeFilter(filter);
+            Function<Item, Boolean> filter = item ->{
+                boolean contains=true;
+                for(ItemType type:itemType){
+                    contains &=item.getSubType().equalsWithParts(type);
+                }
+                return contains;
+            };
+            returnContainer= itemContainer.getItemsWithTypeFilter(filter);
         }
+        if(returnContainer.isEmpty()){
+            throw new ItemChoiceException(ResourceUtil.get("${no_item_for_choice}","exception"));
+        }
+        return returnContainer;
     }
 
     private void executeEffects(List<Effect> effects) {
@@ -59,8 +73,8 @@ public class ItemChoice extends Choice {
     }
 
     public void choose(List<Item> chosen) {
-        if(number >0 && chosen.size()!=number){
-            throw new ItemChoiceException(ResourceUtil.get("${item_number_wrong}","exception",number+"",chosen.size()+""));
+        if(number >0 && chosen.size()!=number && returnContainer!=null && returnContainer.size()>=number){
+            throw new ItemChoiceException(ResourceUtil.get("${item_number_wrong}","exception",chosen.size()+"",number+""));
 
         }else{
             for(Item item:chosen){

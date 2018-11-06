@@ -32,7 +32,7 @@ public class BecomeDelayed extends Effect {
     @Override
     public String getText() {
 
-        return ResourceUtil.get("${become}","effect" ,ResourceUtil.get("${delayed}","effect"  ));
+        return ResourceUtil.get("${become}","effect" ,investigator.getName(),ResourceUtil.get("${delayed}","effect"  ));
 
     }
 }

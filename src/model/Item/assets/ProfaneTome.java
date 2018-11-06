@@ -14,7 +14,7 @@ import java.util.List;
 public class ProfaneTome extends Asset {
 
     public ProfaneTome() {
-        super(ItemType.TRINKET_WEAPON, 1);
+        super(ItemType.ITEM_TOME, 1);
     }
 
     @Override

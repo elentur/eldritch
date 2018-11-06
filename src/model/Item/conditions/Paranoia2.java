@@ -69,6 +69,7 @@ public class Paranoia2 extends Condition {
     public void executeReckoning(Investigator inv, boolean autoFail) {
         super.executeReckoning(inv, autoFail);
         Test test = new Test(TestType.WILL, 0, 1, SituationType.RECKONING);
+        test.setStartText(ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"));
         GameService.getInstance().addTest(test);
             if (!test.getResult().isSuccess()) {
                 List<Effect> effects = new ArrayList<>();
