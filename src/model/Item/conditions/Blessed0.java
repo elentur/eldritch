@@ -6,10 +6,10 @@ import enums.SpendType;
 import gamemechanics.choice.InformationChoice;
 import model.Item.Condition;
 import model.Item.Investigator;
-import model.Item.Item;
 import model.Item.ItemBonus;
-import model.effects.*;
-import oldVersion.gameBuild.Game;
+import model.effects.And;
+import model.effects.Discard;
+import model.effects.LooseOrGainHealthSanity;
 import utils.RNG;
 import utils.ResourceUtil;
 

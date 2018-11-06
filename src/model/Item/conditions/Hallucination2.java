@@ -8,13 +8,10 @@ import model.Effect;
 import model.Item.Condition;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.Token;
 import model.Item.boni.ItemBonus_Rest;
 import model.effects.And;
 import model.effects.Discard;
-import model.effects.LooseOrGainHealthSanity;
 import model.effects.Spend;
-import oldVersion.elements.ClueToken;
 import utils.RNG;
 import utils.ResourceUtil;
 

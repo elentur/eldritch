@@ -76,12 +76,14 @@ public class Paranoia2 extends Condition {
                 for(Investigator investigator : GameService.getInstance().getFieldOfInvestigator(inv).getInvestigators()){
                     effects.add(new LooseOrGainHealthSanity(SpendType.HEALTH,-2,investigator));
                 }
-               ItemContainer<Item> container = inv.getInventory().getItemsWithTypeFilter(i->i.getItemType().equalsWithParts(ItemType.ALLEY));
+               ItemContainer<Item> container = inv.getInventory().getItemsWithTypeFilter(i->i.getSubType().equalsWithParts(ItemType.ALLEY));
                 if(!container.isEmpty()){
                     effects.add(new Discard(container.get(0)));
                 }
-                InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition"),
-                        Collections.singletonList(new And(effects.toArray(new Effect[]{}))));
+                Effect effect1 =new And(effects.toArray(new Effect[]{}));
+                InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_2}"), "condition") +"\n"+
+                        effect1.getText(),
+                        Collections.singletonList(effect1));
                 GameService.getInstance().addChoice(choice);
             }
 

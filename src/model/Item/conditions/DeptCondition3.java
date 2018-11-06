@@ -1,7 +1,9 @@
 package model.Item.conditions;
 
 import Service.GameService;
-import enums.*;
+import enums.ItemType;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.Action;
 import gamemechanics.Test;
 import gamemechanics.choice.InformationChoice;
@@ -10,12 +12,12 @@ import model.Effect;
 import model.Item.Condition;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.effects.*;
-import oldVersion.elements.Item;
+import model.effects.And;
+import model.effects.Discard;
+import model.effects.NullEffect;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

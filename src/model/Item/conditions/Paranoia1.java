@@ -10,8 +10,6 @@ import model.Item.boni.ItemBonus_Rest;
 import model.effects.Discard;
 import model.effects.GainAsset;
 import model.effects.GainCondition;
-import model.effects.LooseOrGainHealthSanity;
-import oldVersion.gameBuild.Game;
 import utils.RNG;
 import utils.ResourceUtil;
 
@@ -69,12 +67,11 @@ public class Paranoia1 extends Condition {
         Test test = new Test(TestType.WILL, 0, 1, SituationType.RECKONING);
         test.setStartText(ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"));
         GameService.getInstance().addTest(test);
-            if (test.getResult().isSuccess()) {
-                InformationChoice choice = new InformationChoice(getName(), ResourceUtil.get(getNameId().replace("}", "_1}"), "condition"),null);
-                GameService.getInstance().addChoice(choice);
+            if (!test.getResult().isSuccess()) {
                 Asset asset = GameService.getInstance().getAssets().showFirst();
                 test = new Test(TestType.OBSERVATION, 0, asset.getPrice(), SituationType.RECKONING);
-                test.setStartText(ResourceUtil.get(getNameId().replace("}", "_1a}"), "condition"));
+                test.setStartText(ResourceUtil.get(getNameId().replace("}", "_1a}"), "condition") +"\n"+
+                        ResourceUtil.get("${you_need_success}", "ui",asset.getPrice()+"") );
                 GameService.getInstance().addTest(test);
                 if(test.getResult().isSuccess()){
                     GameService.getInstance().addEffect(new GainAsset(GameService.getInstance().getAssets().draw(), inv));
