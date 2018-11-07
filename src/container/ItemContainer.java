@@ -67,7 +67,7 @@ public class ItemContainer<T extends Item> extends ArrayList<T>{
 
 
 
-    public ItemContainer<Item> getItemsWidthSituationTyp(SituationType situationTyp) {
+    public ItemContainer<Item> getItemsWithSituationTyp(SituationType situationTyp) {
 
         return this.stream().filter(item -> item.getBonus().stream().anyMatch(bonus -> bonus.getSituation().equalsWithAll(situationTyp)))
                     .collect(Collectors.toCollection(ItemContainer::new));

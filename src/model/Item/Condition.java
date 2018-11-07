@@ -1,5 +1,6 @@
 package model.Item;
 
+import Service.DiceRollerService;
 import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
@@ -51,7 +52,8 @@ public abstract class Condition implements Item {
     }
     @Override
     public void discard(){
-        stack = GameService.getInstance().getConditions();
+        //TODO only for testing
+       if(DiceRollerService.debug) stack = GameService.getInstance().getConditions();
         stack.discard(this);
     }
     @Override

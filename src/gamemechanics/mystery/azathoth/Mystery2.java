@@ -26,7 +26,7 @@ import java.util.function.Function;
 
 
 public class Mystery2 extends Mystery {
-    private Function<Encounter,Void> listener;
+    private Function<Encounter,Encounter> listener;
 
 
     public Mystery2() {
@@ -50,7 +50,7 @@ public class Mystery2 extends Mystery {
                 });
             }
 
-            return null;
+            return encounter;
         };
         game.addEncounterListener(listener);
     }

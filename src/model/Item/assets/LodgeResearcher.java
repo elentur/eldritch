@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 public class LodgeResearcher extends Asset {
 
-    private Function<Encounter,Void> listener;
+    private Function<Encounter,Encounter> listener;
     public LodgeResearcher() {
         super(ItemType.ALLEY, 3);
     }
@@ -63,7 +63,7 @@ public class LodgeResearcher extends Asset {
                 });
             }
 
-            return null;
+            return encounter;
         };
         game.addEncounterListener(listener);
     }

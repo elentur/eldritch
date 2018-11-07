@@ -1,15 +1,10 @@
 package Service;
 
-import container.FiniteItemStack;
-import container.InvestigatorContainer;
-import container.ItemContainer;
-import container.ItemStack;
-import enums.FieldID;
-import enums.FieldType;
-import enums.OmenStates;
-import enums.SituationType;
+import container.*;
+import enums.*;
 import factory.ItemFactory;
 import factory.MonsterFactory;
+import gamemechanics.Action;
 import gamemechanics.Mystery;
 import gamemechanics.Phases;
 import gamemechanics.Test;
@@ -27,20 +22,21 @@ import lombok.Getter;
 import lombok.Setter;
 import model.*;
 import model.Item.*;
+import model.Item.boni.ItemBonus_Delayed;
 import model.Item.token.*;
 import model.effects.*;
+import org.omg.IOP.ENCODING_CDR_ENCAPS;
 import utils.RNG;
 import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Function;
 
 public class GameService {
     private static GameService ourInstance = new GameService();
 
-    private  ObservableList<Effect> insertions;
+    private ObservableList<Effect> insertions;
     private SimpleObjectProperty<Encounter> encounter = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Choice> choice = new SimpleObjectProperty<>();
     private SimpleObjectProperty<Test> test = new SimpleObjectProperty<>();
@@ -102,7 +98,6 @@ public class GameService {
     private List<Spell> usedSpells;
 
 
-
     @Getter
     @Setter
     private Monster lastChosenMonster;
@@ -117,8 +112,8 @@ public class GameService {
     private Reserve reserve;
 
     @Getter
-    private  Phases phases;
-    private List<Function<Encounter,Void> > encounterListener;
+    private Phases phases;
+    private List<Function<Encounter, Encounter>> encounterListener;
     @Getter
     @Setter
     private Effect chooseFieldEffect;
@@ -137,6 +132,7 @@ public class GameService {
 
 
     }
+
     public void addInvestigators(InvestigatorContainer investigators) {
         this.investigators = investigators;
         for (Investigator inv : investigators) {
@@ -147,6 +143,7 @@ public class GameService {
         encounteringInvestigator = activeInvestigator.getValue();
 
     }
+
     public void setActiveInvestigator() {
         if (count >= investigators.size()) {
             count = 0;
@@ -189,7 +186,7 @@ public class GameService {
     }
 
 
-    private void init(){
+    private void init() {
         encounterListener = new ArrayList<>();
         insertions = FXCollections.observableArrayList();
         activeInvestigator = new SimpleObjectProperty<>(null);
@@ -213,19 +210,20 @@ public class GameService {
         omenTrack = new OmenTrack(OmenStates.GREEN_COMET);
         phases = new Phases();
         monsterPool = MonsterFactory.getMonster();
-       mythos = new FiniteItemStack<>(new ItemContainer<>());
+        mythos = new FiniteItemStack<>(new ItemContainer<>());
 
         usedSpells = new ArrayList<>();
         ancientOne.init();
         addExpedition();
     }
+
     public void startGame() {
-     //   addActiveMystery();
-     //   addEffect(new SpawnGate());
-     //   addEffect(new SpawnClue(1));
+        //   addActiveMystery();
+        //   addEffect(new SpawnGate());
+        //   addEffect(new SpawnClue(1));
 
         reserve.init();
-       addEffect(new ZoomTo(getActiveInvestigator()));
+        addEffect(new ZoomTo(getActiveInvestigator()));
     }
 
     public void zoomTo(Investigator inv) {
@@ -236,31 +234,34 @@ public class GameService {
         }
 
     }
-    private void addActiveMystery(){
+
+    private void addActiveMystery() {
         activeMystery = mysteries.draw();
-       activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
+        activeMystery.getUpdate().addListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
         InformationChoice choice = new InformationChoice(ResourceUtil.get("${mystery}", "ui"),
-                activeMystery.getName() +"\n" +activeMystery.getText(),null);
+                activeMystery.getName() + "\n" + activeMystery.getText(), null);
         addChoice(choice);
         activeMystery.init();
         InterfaceLinking.interfaceGui.getMysteryGUI().update();
 
     }
+
     public void handleMystery() {
-        if(activeMystery.isFinished()){
+        if (activeMystery.isFinished()) {
             activeMystery.getUpdate().removeListener(InterfaceLinking.interfaceGui.getMysteryGUI().getListener());
             activeMystery.discard();
-            if(mysteries.getTraystack().size()>=ancientOne.getMinNumberOfSolvedMysteries()){
+            if (mysteries.getTraystack().size() >= ancientOne.getMinNumberOfSolvedMysteries()) {
                 //TODO
                 InformationChoice choice = new InformationChoice("Gewonnen",
-                        "Du hast gewonnen",null);
+                        "Du hast gewonnen", null);
                 addChoice(choice);
                 System.exit(1);
-            }else{
+            } else {
                 addActiveMystery();
             }
         }
     }
+
     public Field getFieldOfInvestigator(Investigator inv) {
         return gameBoard.fieldOfInvestigator(inv);
     }
@@ -284,7 +285,7 @@ public class GameService {
         ItemContainer<Item> items = new ItemContainer<>();
         Field f = getFieldOfInvestigator(investigator);
         for (Investigator inv : f.getInvestigators()) {
-            items.addAll(inv.getInventory().getItemsWidthSituationTyp(SituationType.ALL));
+            items.addAll(inv.getInventory().getItemsWithSituationTyp(SituationType.ALL));
         }
         items.add(investigator);
         items.addAll(investigator.getFocus());
@@ -313,6 +314,7 @@ public class GameService {
         insertions.addAll(list);
 
     }
+
     public void addEffectAfter(Effect effect) {
         insertions.add(0, effect);
 
@@ -321,20 +323,25 @@ public class GameService {
     public SimpleObjectProperty<Encounter> getEncounterProperty() {
         return encounter;
     }
+
     public SimpleObjectProperty<Test> getTestProperty() {
         return test;
     }
 
     public void addEncounter(Encounter encounter) {
-        if(encounter!=null) {
-            for (Function<Encounter, Void> listner : encounterListener) {
-                listner.apply(encounter);
-            }
+        if (encounter == null) {
+            return;
         }
+
+        for (Function<Encounter, Encounter> listner : encounterListener) {
+           encounter =  listner.apply(encounter);
+        }
+
         this.encounter.set(encounter);
     }
+
     public void addTest(Test test) {
-        if(test!=null) {
+        if (test != null) {
 
         }
         this.test.set(test);
@@ -405,7 +412,7 @@ public class GameService {
     }
 
     public void addUsedSpell(Spell spell) {
-        if(!usedSpells.contains(spell)){
+        if (!usedSpells.contains(spell)) {
             usedSpells.add(spell);
         }
     }
@@ -414,7 +421,6 @@ public class GameService {
     public ObjectProperty<Investigator> getActiveInvestigatorProperty() {
         return activeInvestigator;
     }
-
 
 
     public Reserve getReserve() {
@@ -434,17 +440,18 @@ public class GameService {
     }
 
 
-    public void addEncounterListener(Function<Encounter,Void>  listener) {
+    public void addEncounterListener(Function<Encounter, Encounter> listener) {
         encounterListener.add(listener);
 
     }
-    public void removeEncounterListener(Function<Encounter,Void> listener) {
+
+    public void removeEncounterListener(Function<Encounter, Encounter> listener) {
         encounterListener.remove(listener);
 
     }
 
-    public FieldID getRandomField(){
-        int safetyCount=0;
+    public FieldID getRandomField() {
+        int safetyCount = 0;
         while (true) {
             safetyCount++;
             int i = FieldID.values().length;
@@ -452,12 +459,13 @@ public class GameService {
             if (!fieldID.getType().equals(FieldType.NONE)) {
                 return fieldID;
             }
-            if(safetyCount>1000){
+            if (safetyCount > 1000) {
                 break;
             }
         }
         return FieldID.LONDON;
     }
+
     public boolean isChooseFieldMode() {
         return chooseMode;
     }
@@ -468,8 +476,8 @@ public class GameService {
 
 
     public Investigator getInvestigatorForItem(Item item) {
-        for(Investigator inv :  getInvestigators()){
-            if(inv.getInventory().contains(item)){
+        for (Investigator inv : getInvestigators()) {
+            if (inv.getInventory().contains(item)) {
                 return inv;
             }
         }
