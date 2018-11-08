@@ -1,22 +1,16 @@
 package model.Item.assets;
 
-import Service.GameService;
 import enums.*;
 import gamemechanics.Test;
-import gamemechanics.choice.Choice;
-import gamemechanics.choice.YesNoChoice;
 import model.Effect;
 import model.Item.Asset;
+import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.boni.ItemBonus_GainDice;
 import model.Item.boni.ItemBonus_PreventLossOfHealthOrSanity;
-import model.Item.boni.ItemBonus_RepeatRoll;
 import model.effects.Discard;
 import model.effects.LooseOrGainHealthSanity;
-import model.effects.Spend;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -45,9 +39,9 @@ public class Bandages extends Asset {
         return new ArrayList<>();
     }
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         LooseOrGainHealthSanity.listener.add(bonus);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
 
     @Override

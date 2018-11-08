@@ -4,7 +4,6 @@ import Service.GameService;
 import container.Result;
 import enums.*;
 import gamemechanics.Test;
-import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
 import model.Item.Investigator;
@@ -12,7 +11,6 @@ import model.Item.ItemBonus;
 import model.Item.Spell;
 import model.Item.SpellConsequence;
 import model.Item.boni.ItemBonus_PreventLossOfHealthOrSanity;
-import model.Item.boni.ItemBonus_SwitchSkill;
 import model.effects.*;
 
 import java.util.ArrayList;
@@ -57,9 +55,9 @@ public class FleshWard extends Spell {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         LooseOrGainHealthSanity.listener.add(bonus);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
 
     @Override

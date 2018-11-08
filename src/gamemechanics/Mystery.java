@@ -111,7 +111,7 @@ public abstract class Mystery implements Item {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 

@@ -1,21 +1,16 @@
 package model.Item.assets;
 
-import Service.GameService;
 import enums.*;
 import model.Effect;
-import model.Field;
 import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.Monster;
 import model.effects.ChooseSpace;
 import model.effects.Discard;
 import model.effects.LooseOrGainHealthSanity;
-import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -36,7 +31,7 @@ public class AgencyQuarantine extends Asset {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
 
       Effect chooseSpace = new ChooseSpace(new LooseOrGainHealthSanity(SpendType.HEALTH,-4, EffectSelector.ALL, FieldID.CHOSEN_FIELD,ItemType.MONSTER));
 

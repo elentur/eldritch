@@ -38,6 +38,9 @@ public class Or extends Effect {
         }
         StringBuilder value = new StringBuilder( effects.get(0).getText().substring(0, effects.get(0).getText().length()-1)) ;
         for(int i =1; i < effects.size();i++){
+            if(effects.get(i).getText()==null || effects.get(i).getText().equals("") ){
+                continue;
+            }
             value.append(" ").append(ResourceUtil.get("${or}", "effect" )).append(" ").append(effects.get(i).getText(), 0, effects.get(i).getText().length()-1);
         }
         return value.toString()+".";

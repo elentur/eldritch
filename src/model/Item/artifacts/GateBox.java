@@ -6,6 +6,7 @@ import gamemechanics.encounter.OtherWorldEncounter;
 import javafx.beans.value.ChangeListener;
 import model.Effect;
 import model.Item.Artifact;
+import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_AdditionalDice;
 import model.effects.GainClue;
@@ -39,7 +40,7 @@ public class GateBox extends Artifact {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         listener = (a, oldValue, newValue) -> {
             if (oldValue instanceof OtherWorldEncounter) {
                 OtherWorldEncounter encounter = (OtherWorldEncounter) oldValue;
@@ -49,7 +50,7 @@ public class GateBox extends Artifact {
             }
         };
         GameService.getInstance().getEncounterProperty().addListener(listener);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
 
     @Override

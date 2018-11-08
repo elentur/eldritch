@@ -51,7 +51,7 @@ public class GainAsset extends Effect {
             log.info(itemType.toString());
         }
         investigator.addToInventory(asset);
-        for (Effect effect : asset.getDrawEffects()) {
+        for (Effect effect : asset.getDrawEffects(investigator)) {
             GameService.getInstance().addEffect(effect);
         }
 

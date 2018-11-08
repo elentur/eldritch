@@ -23,11 +23,11 @@ public class StartTest extends Effect {
 
     @Override
     public void execute() {
-        if(isExecuted()){
+        if (isExecuted()) {
             return;
         }
         init();
-        if(!isAccepted()) return;
+        if (!isAccepted()) return;
         GameService.getInstance().addTest(test);
 
 

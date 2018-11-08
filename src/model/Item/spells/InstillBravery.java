@@ -55,9 +55,9 @@ public class InstillBravery extends Spell {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         LooseOrGainHealthSanity.listener.add(bonus);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
 
     @Override

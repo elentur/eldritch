@@ -1,13 +1,9 @@
 package model.Item.assets;
 
 import Service.GameService;
-import enums.EffectSelector;
 import enums.FieldID;
 import enums.ItemType;
-import enums.SpendType;
-import gamemechanics.choice.InvestigatorChoice;
 import model.Effect;
-import model.Field;
 import model.Item.Asset;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
@@ -15,7 +11,6 @@ import model.effects.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -36,7 +31,7 @@ public class CharterFlight extends Asset {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect chooseSpace = new ChooseSpace(2, new Move(FieldID.CHOSEN_FIELD, inv));
         Effect discard = new Discard(this);

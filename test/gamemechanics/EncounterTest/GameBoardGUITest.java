@@ -18,12 +18,10 @@ import model.GameBoard;
 import model.Item.Investigator;
 import model.Item.ancientOnes.Azathoth;
 import model.Item.conditions.DetainedCondition0;
-import model.Item.conditions.Paranoia2;
 import model.Item.investigators.AgnesBaker;
 import model.Item.investigators.AkachiOnyele;
 import model.Item.investigators.CharlieKane;
 import model.Item.investigators.DianaStanley;
-import model.effects.Reckoning;
 
 import java.util.Arrays;
 
@@ -81,7 +79,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
         DetainedCondition0 c = new DetainedCondition0();
-        c.getDrawEffects();
+        c.getDrawEffects(null);
         GameService.getInstance().getEncounteringInvestigator().addToInventory(c);
      //   GameService.getInstance().addEffect(new Reckoning());
        // GameService.getInstance().addEffect(new GainAsset(

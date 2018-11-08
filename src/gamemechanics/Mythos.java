@@ -15,7 +15,6 @@ import model.Item.Investigator;
 import model.Item.Item;
 import model.Item.ItemBonus;
 import model.effects.SwitchPhase;
-import utils.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +100,7 @@ public abstract class Mythos implements Item {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 }

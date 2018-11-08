@@ -49,7 +49,7 @@ public class GainSpell extends Effect {
                 spell = GameService.getInstance().getSpells().getByItemType(itemType);
             }
         }
-        for(Effect effect : spell.getDrawEffects()){
+        for(Effect effect : spell.getDrawEffects(investigator)){
             GameService.getInstance().addEffect(effect);
         }
             investigator.addToInventory(spell);

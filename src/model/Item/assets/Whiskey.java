@@ -7,6 +7,7 @@ import enums.SpendType;
 import gamemechanics.Test;
 import model.Effect;
 import model.Item.Asset;
+import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_PreventLossOfHealthOrSanity;
 import model.effects.Discard;
@@ -41,9 +42,9 @@ public class Whiskey extends Asset {
         return new ArrayList<>();
     }
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         LooseOrGainHealthSanity.listener.add(bonus);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
 
     @Override

@@ -65,7 +65,7 @@ public abstract class Token implements Item {
     public void executeReckoning(Investigator inv, boolean autoFail){}
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 

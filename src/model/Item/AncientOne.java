@@ -1,8 +1,5 @@
 package model.Item;
 
-import Service.GameService;
-import container.FiniteItemStack;
-import container.ItemContainer;
 import container.ItemStack;
 import enums.ItemType;
 import enums.OldOnes;
@@ -100,7 +97,7 @@ public abstract class AncientOne implements Item {
     public void executeReckoning(Investigator inv, boolean autoFail){}
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 

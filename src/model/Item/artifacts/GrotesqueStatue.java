@@ -5,6 +5,7 @@ import enums.*;
 import gamemechanics.choice.YesNoChoice;
 import model.Effect;
 import model.Item.Artifact;
+import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_PreventLossOfHealthOrSanity;
 import model.effects.GainClue;
@@ -38,9 +39,9 @@ public class GrotesqueStatue extends Artifact {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         GameService.getInstance().addEffect(new GainClue(EffectSelector.RANDOM, 5, GameService.getInstance().getEncounteringInvestigator()));
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
 
     @Override

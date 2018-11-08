@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import model.Effect;
-import model.Field;
 import model.effects.DiscardMonster;
 import model.effects.NullEffect;
 import utils.ResourceUtil;
@@ -127,7 +126,7 @@ public abstract class Monster implements Item, IMonster {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 

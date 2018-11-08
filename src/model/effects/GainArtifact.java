@@ -49,7 +49,7 @@ public class GainArtifact extends Effect {
                 artifact = GameService.getInstance().getArtifacts().getByItemType(itemType);
             }
         }
-        for(Effect effect : artifact.getDrawEffects()){
+        for(Effect effect : artifact.getDrawEffects(investigator)){
             GameService.getInstance().addEffect(effect);
         }
             investigator.addToInventory(artifact);

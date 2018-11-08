@@ -32,7 +32,7 @@ public class PrivateCare extends Asset {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         Investigator inv = GameService.getInstance().getEncounteringInvestigator();
         Effect effect1  = new LooseOrGainHealthSanity(SpendType.HEALTH,inv.getHealth()-inv.getActualHealth(),inv);
         Effect effect2  = new LooseOrGainHealthSanity(SpendType.SANITY,inv.getSanity()-inv.getActualSanity(),inv);

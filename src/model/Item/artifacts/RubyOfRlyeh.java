@@ -4,16 +4,12 @@ import Service.GameService;
 import enums.*;
 import gamemechanics.Action;
 import gamemechanics.encounter.Encounter;
-import gamemechanics.encounter.OtherWorldEncounter;
 import javafx.beans.value.ChangeListener;
 import model.Effect;
 import model.Item.Artifact;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.boni.ItemBonus_AdditionalDice;
 import model.effects.And;
-import model.effects.DiscardMonster;
-import model.effects.GainClue;
 import model.effects.LooseOrGainHealthSanity;
 
 import java.util.ArrayList;
@@ -45,15 +41,14 @@ public class RubyOfRlyeh extends Artifact {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         listener = (a, oldValue, newValue) -> {
             if (GameService.getInstance().getPhases().getActualPhase().equals(PhaseTypes.MYTHOS)) {
-                Investigator inv = GameService.getInstance().getInvestigatorForItem(RubyOfRlyeh.this);
-                inv.setMaxActions(2);
+                investigator.setMaxActions(2);
             }
         };
         GameService.getInstance().getPhases().getUpdate().addListener(listener);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
     @Override
     public Encounter getEncounter() {

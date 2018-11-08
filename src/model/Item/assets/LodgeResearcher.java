@@ -9,6 +9,7 @@ import gamemechanics.encounter.CombatEncounter;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
 import model.Item.Asset;
+import model.Item.Investigator;
 import model.Item.ItemBonus;
 import model.effects.And;
 import model.effects.GainClue;
@@ -42,20 +43,20 @@ public class LodgeResearcher extends Asset {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
-        init();
-        return super.getDrawEffects();
+    public List<Effect> getDrawEffects(Investigator investigator) {
+        init(investigator);
+        return super.getDrawEffects(investigator);
     }
 
-    private void init() {
+    private void init(Investigator investigator) {
         GameService game = GameService.getInstance();
         listener =(encounter) -> {
             if (encounter!=null && encounter.getEncounterType().equals(EncounterType.COMBAT_ENCOUNTER) &&
-                game.getEncounteringInvestigator().getInventory().contains(LodgeResearcher.this)) {
+                    investigator.getInventory().contains(LodgeResearcher.this)) {
                 encounter.addEndEvent(e -> {
                     if (((CombatEncounter)encounter).getActiveMonster().getActualToughness()<=0) {
-                        Effect effect1 = new GainClue(EffectSelector.RANDOM,1,GameService.getInstance().getEncounteringInvestigator());
-                        Effect effect2 = new LooseOrGainHealthSanity(SpendType.SANITY,1,GameService.getInstance().getEncounteringInvestigator());
+                        Effect effect1 = new GainClue(EffectSelector.RANDOM,1,investigator);
+                        Effect effect2 = new LooseOrGainHealthSanity(SpendType.SANITY,1,investigator);
                         Effect effect = new And(effect1,effect2);
                         game.addEffect(effect);
                     }

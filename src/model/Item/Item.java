@@ -21,7 +21,7 @@ public interface Item {
 
     List<ItemBonus> getBonus();
 
-    List<Effect> getDrawEffects();
+    List<Effect> getDrawEffects(Investigator investigator);
 
     Encounter getEncounter();
 

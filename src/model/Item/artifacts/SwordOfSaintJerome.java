@@ -2,19 +2,13 @@ package model.Item.artifacts;
 
 import Service.GameService;
 import enums.*;
-import gamemechanics.Action;
 import gamemechanics.encounter.CombatEncounter;
-import gamemechanics.encounter.Encounter;
-import gamemechanics.encounter.OtherWorldEncounter;
 import javafx.beans.value.ChangeListener;
 import model.Effect;
 import model.Item.Artifact;
 import model.Item.Investigator;
 import model.Item.ItemBonus;
-import model.Item.Monster;
 import model.Item.boni.ItemBonus_GainDice;
-import model.effects.And;
-import model.effects.GainClue;
 import model.effects.LooseOrGainHealthSanity;
 
 import java.util.ArrayList;
@@ -45,17 +39,17 @@ public class SwordOfSaintJerome extends Artifact {
     }
 
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         listener = (a, oldValue, newValue) -> {
             if (oldValue instanceof CombatEncounter) {
                 CombatEncounter encounter = (CombatEncounter) oldValue;
                 if (encounter.getActiveMonster().getActualToughness()<=0) {
-                    GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY, 1, GameService.getInstance().getEncounteringInvestigator()));
+                    GameService.getInstance().addEffect(new LooseOrGainHealthSanity(SpendType.SANITY, 1, investigator));
                 }
             }
         };
         GameService.getInstance().getEncounterProperty().addListener(listener);
-        return super.getDrawEffects();
+        return super.getDrawEffects(investigator);
     }
     @Override
     public List<ItemBonus> createBonus() {

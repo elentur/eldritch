@@ -1,6 +1,5 @@
 package model.Item;
 
-import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
 import gamemechanics.encounter.Encounter;
@@ -73,7 +72,7 @@ public abstract class Asset implements Item {
         return infoText.toString();
     }
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 

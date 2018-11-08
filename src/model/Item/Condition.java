@@ -71,7 +71,7 @@ public abstract class Condition implements Item {
         return infoText.toString();
     }
     @Override
-    public List<Effect> getDrawEffects() {
+    public List<Effect> getDrawEffects(Investigator investigator) {
         return new ArrayList<>();
     }
 
