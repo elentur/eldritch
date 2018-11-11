@@ -10,6 +10,7 @@ public enum ItemType {
     NONE("", Collections.singletonList("")),
     TRINKET("${trinket}", Collections.singletonList("Trinket")),
     TRINKET_WEAPON("${trinket_weapon}", Arrays.asList("Trinket","Weapon")),
+    WEAPON("${weapon}", Collections.singletonList("Weapon")),
     ITEM("${item}", Collections.singletonList("Item")),
     ITEM_WEAPON("${item_weapon}", Arrays.asList("Item","Weapon")),
     ITEM_WEAPON_MAGICAL("${item_weapon_magical}", Arrays.asList("Item","Weapon","Magical")),
@@ -60,6 +61,7 @@ public enum ItemType {
     BACK_INJURY_CONDITION("${back_injury_condition}",Arrays.asList("Back Injury", "Condition","Injury") ),
     RESTRICTION_CONDITION("${restriction_condition}", Arrays.asList("Restriction", "Condition")  ),
     DETAINED_CONDITION("${detained_condition}",Arrays.asList("Detained", "Condition","Restriction") );
+
 
     private String key;
     private List<String> parts;
