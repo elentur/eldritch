@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Item.Item;
-import oldVersion.gameBuild.Global;
 
 public class InventoryDialog extends DialogGui {
     private final static Image assetImage = new Image("images/effect/Asset.png", 100,100,true,true);
