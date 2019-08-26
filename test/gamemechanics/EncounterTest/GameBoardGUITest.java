@@ -79,7 +79,7 @@ public class GameBoardGUITest extends Application {
         primaryStage.setMaximized(true);
         GameService.getInstance().startGame();
         DetainedCondition0 c = new DetainedCondition0();
-        c.getDrawEffects(null);
+        c.getDrawEffects( GameService.getInstance().getEncounteringInvestigator());
         GameService.getInstance().getEncounteringInvestigator().addToInventory(c);
      //   GameService.getInstance().addEffect(new Reckoning());
        // GameService.getInstance().addEffect(new GainAsset(

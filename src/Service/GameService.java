@@ -1,10 +1,15 @@
 package Service;
 
-import container.*;
-import enums.*;
+import container.FiniteItemStack;
+import container.InvestigatorContainer;
+import container.ItemContainer;
+import container.ItemStack;
+import enums.FieldID;
+import enums.FieldType;
+import enums.OmenStates;
+import enums.SituationType;
 import factory.ItemFactory;
 import factory.MonsterFactory;
-import gamemechanics.Action;
 import gamemechanics.Mystery;
 import gamemechanics.Phases;
 import gamemechanics.Test;
@@ -22,10 +27,11 @@ import lombok.Getter;
 import lombok.Setter;
 import model.*;
 import model.Item.*;
-import model.Item.boni.ItemBonus_Delayed;
 import model.Item.token.*;
-import model.effects.*;
-import org.omg.IOP.ENCODING_CDR_ENCAPS;
+import model.effects.SpawnClue;
+import model.effects.SpawnGate;
+import model.effects.SwitchPhase;
+import model.effects.ZoomTo;
 import utils.RNG;
 import utils.ResourceUtil;
 
@@ -218,9 +224,9 @@ public class GameService {
     }
 
     public void startGame() {
-        //   addActiveMystery();
-        //   addEffect(new SpawnGate());
-        //   addEffect(new SpawnClue(1));
+        addActiveMystery();
+        addEffect(new SpawnGate());
+        addEffect(new SpawnClue(1));
 
         reserve.init();
         addEffect(new ZoomTo(getActiveInvestigator()));
@@ -334,9 +340,8 @@ public class GameService {
         }
 
         for (Function<Encounter, Encounter> listner : encounterListener) {
-           encounter =  listner.apply(encounter);
+            encounter = listner.apply(encounter);
         }
-
         this.encounter.set(encounter);
     }
 

@@ -1,5 +1,6 @@
 package model.Item;
 
+import Service.GameService;
 import container.ItemStack;
 import enums.ItemType;
 import enums.OldOnes;
@@ -102,7 +103,17 @@ public abstract class AncientOne implements Item {
     }
 
 
-    public abstract void init();
+    public  void init(){
+        GameService.getInstance().getMythos().addAllItem(getFirst());
+        GameService.getInstance().getMythos().addAllItem(getSecond());
+        GameService.getInstance().getMythos().addAllItem(getThird());
+
+        GameService.getInstance().getDoomTrack().updateProperty().addListener(e -> {
+            if (GameService.getInstance().getDoomTrack().getDoom() <= 0) {
+                startEndGame();
+            }
+        });
+    }
 
     protected abstract void startEndGame();
 }

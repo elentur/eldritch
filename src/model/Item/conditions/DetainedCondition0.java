@@ -23,16 +23,11 @@ public class DetainedCondition0 extends Condition {
 
     private  Action action;
     private ItemBonus_Delayed delayed;
-    private final Function<Encounter,Encounter> encounterListener;
+    private  Function<Encounter,Encounter> encounterListener;
     public DetainedCondition0() {
         super(ItemType.DETAINED_CONDITION);
 
-        encounterListener = (encounter -> {
-            if(encounter!= null && !encounter.getEncounterType().equals(EncounterType.ACTION)){
-                return  getEncounter();
-            }
-            return encounter;
-        });
+
     }
 
     @Override
@@ -82,19 +77,32 @@ public class DetainedCondition0 extends Condition {
         super.executeReckoning(inv, autoFail);
     }
 
+    private void createListener(){
+        encounterListener = (encounter -> {
+            if(encounter!= null && encounter.getInvestigator().getConditions().contains(this) && !encounter.getEncounterType().equals(EncounterType.ACTION) ){
+                return  getEncounter();
+            }
+            return encounter;
+        });
+    }
     @Override
     public List<Effect> getDrawEffects(Investigator investigator) {
+        createListener();
         action=  new Action(investigator,
 
                 "detained_action",
                 new NullEffect(),
-                new Discard(this),
+               new Discard(this),
                 new NullEffect(),
                 TestType.INFLUENCE,
                 0,
                 1,
                 SituationType.ACTION
         );
+        action.addEndEvent(encounter -> {
+                    GameService.getInstance().addEffect(new NextInvestigator());
+                    return null;
+                });
         delayed = new ItemBonus_Delayed(-1, Collections.singletonList(action),this);
         getBonus().add(delayed);
         delayed.create();

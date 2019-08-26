@@ -36,6 +36,7 @@ public class Azathoth extends AncientOne {
 
     @Override
     public void init() {
+
         Cultist cultist = new Cultist();
         for (int i = 1; i < cultist.getCount(); i++) {
             GameService.getInstance().getMonsterPool().addItem(new Cultist());
@@ -73,15 +74,9 @@ public class Azathoth extends AncientOne {
         getThird().add(getGreen().draw());
         Collections.shuffle(getThird());
 
-        GameService.getInstance().getMythos().addAllItem(getFirst());
-        GameService.getInstance().getMythos().addAllItem(getSecond());
-        GameService.getInstance().getMythos().addAllItem(getThird());
+        super.init();
 
-        GameService.getInstance().getDoomTrack().updateProperty().addListener(e -> {
-            if (GameService.getInstance().getDoomTrack().getDoom() <= 0) {
-                startEndGame();
-            }
-        });
+
 
     }
 

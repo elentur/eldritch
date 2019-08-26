@@ -38,7 +38,9 @@ public class ItemBonus_Delayed extends ItemBonus {
     }
 
     private Encounter checkAction(Encounter encounter) {
-        if(encounter != null && encounter.getEncounterType().equals(EncounterType.ACTION)){
+        if(encounter == null){return null;}
+       boolean isOwner= encounter.getInvestigator().getInventory().contains( this.getParentItem());
+        if(isOwner && encounter.getEncounterType().equals(EncounterType.ACTION)){
             if(!allowedActions.contains(encounter)){
               return null;
             }
