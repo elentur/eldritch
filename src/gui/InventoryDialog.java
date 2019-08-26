@@ -10,9 +10,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Item.Item;
+import oldVersion.gameBuild.Global;
 
 public class InventoryDialog extends DialogGui {
     private final static Image assetImage = new Image("images/effect/Asset.png", 100,100,true,true);
@@ -84,7 +86,9 @@ public class InventoryDialog extends DialogGui {
     private void update() {
         items.getScrollableChildren().clear();
         for(Item item : inventory.getItems()){
-            items.getScrollableChildren().add(new InventoryItemButton(item,false));
+            InventoryItemButton button = new InventoryItemButton(item,false);
+            button.addEventHandler(MouseEvent.MOUSE_CLICKED, a-> close());
+            items.getScrollableChildren().add(button);
         }
         inventory.getUpdate().setValue(false);
     }
