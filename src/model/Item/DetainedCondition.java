@@ -1,22 +1,20 @@
 package model.Item;
 
 import Service.GameService;
-import enums.*;
+import enums.ItemType;
+import enums.SituationType;
+import enums.TestType;
 import gamemechanics.Action;
-import gamemechanics.ActionEncounter;
-import gamemechanics.Test;
 import gamemechanics.encounter.Encounter;
 import model.Effect;
-import model.Item.Condition;
-import model.Item.Investigator;
-import model.Item.ItemBonus;
 import model.Item.boni.ItemBonus_Delayed;
-import model.effects.*;
+import model.effects.Discard;
+import model.effects.NextInvestigator;
+import model.effects.NullEffect;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 
 public abstract class DetainedCondition extends Condition {
@@ -73,18 +71,22 @@ public abstract class DetainedCondition extends Condition {
         delayed = new ItemBonus_Delayed(-1, Collections.singletonList(action),this);
         getBonus().add(delayed);
         delayed.create();
-        investigator.addSpecialEncounter(getEncounter());
+        investigator.addSpecialEncounter(getSpecialEncounter());
         return super.getDrawEffects(investigator);
     }
 
     @Override
     public void discard() {
-        Investigator investigator = GameService.getInstance().getOwner(this);
-        investigator.removeSpecialEncounter(getEncounter());
+
+        if(getOwner()!=null) {
+            getOwner().removeSpecialEncounter(getSpecialEncounter());
+        }
         delayed.destroy();
         super.discard();
 
     }
+
+    protected abstract Encounter getSpecialEncounter();
 
 
 }

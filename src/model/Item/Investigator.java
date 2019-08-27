@@ -320,6 +320,6 @@ specialEncounters= new ArrayList<>();
         if(item instanceof ClueToken){
             isOwner =clues.contains(item);
         }
-        return isOwner || inventory.contains(item);
+        return isOwner || inventory.contains(item) ;
     }
 }

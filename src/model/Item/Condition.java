@@ -24,6 +24,8 @@ public abstract class Condition implements Item {
     private final List<ItemBonus> bonus;
     private ItemStack stack;
 
+    private Investigator owner;
+
     public Condition(ItemType itemType) {
         type = itemType;
         bonus=createBonus();
@@ -54,6 +56,7 @@ public abstract class Condition implements Item {
     public void discard(){
         //TODO only for testing
        if(DiceRollerService.debug) stack = GameService.getInstance().getConditions();
+       owner=null;
         stack.discard(this);
     }
     @Override
@@ -72,6 +75,7 @@ public abstract class Condition implements Item {
     }
     @Override
     public List<Effect> getDrawEffects(Investigator investigator) {
+        owner = investigator;
         return new ArrayList<>();
     }
 
