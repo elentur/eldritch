@@ -33,7 +33,7 @@ public class ReserveChoice extends Choice {
     }
 
     public List<Asset> get() {
-        if(itemType==null) {
+        if(itemType==null || itemType.isEmpty()) {
             return GameService.getInstance().getReserve().getReserve();
         }else{
             return GameService.getInstance().getReserve().getReserve(itemType);

@@ -44,7 +44,7 @@ public class AssetFromReserve extends Effect {
         }
         super.execute();
         if(!isAccepted()) return;
-        if(itemType==null){
+        if(itemType.isEmpty()){
             gamemechanics.encounter.Encounter obj = GameService.getInstance().getEncounterProperty().get();
             if(  obj instanceof Action) {
                 Action action = (Action) obj;
@@ -69,8 +69,8 @@ public class AssetFromReserve extends Effect {
 
     @Override
     public String getText() {
-        if(itemType==null){
-            return"";
+        if(itemType.isEmpty()){
+            return ResourceUtil.get("${gain}","effect" , investigator.getName(), ResourceUtil.get("${reserve}","effect", ResourceUtil.get("${item}","itemtype" ))) ;
         }
         StringBuilder s = new StringBuilder("");
         itemType.stream().map(e->e.getText()).forEach(e->{

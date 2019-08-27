@@ -269,6 +269,7 @@ public class InterfaceLinking {
                 dlg = new EncounterGui(encounter);
                 break;
         }
+
         if (dlg == null) {
             return;
         }

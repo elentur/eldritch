@@ -8,8 +8,10 @@ import enums.FieldID;
 import enums.ItemType;
 import enums.TestType;
 import gamemechanics.Action;
+import gamemechanics.encounter.Encounter;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -60,6 +62,10 @@ public abstract class Investigator implements Item {
     private ItemStack stack;
     private List<Action> doneActions;
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private List<Encounter> specialEncounters;
+
     public Investigator(String id, SkillSet skillSet, int health, int sanity, FieldID startField, Item... startItems) {
         this.setId(id);
         update = new SimpleBooleanProperty(false);
@@ -92,7 +98,7 @@ public abstract class Investigator implements Item {
         }
         doneActions = new ArrayList<>();
         maxActions = 2;
-
+specialEncounters= new ArrayList<>();
     }
 
 
@@ -293,5 +299,27 @@ public abstract class Investigator implements Item {
     public void addToInventory(Item item) {
         inventory.add(item);
       //  update.setValue(true);
+    }
+
+    public Encounter getSpecialEncounter() {
+        if(specialEncounters.isEmpty()){
+            return null;
+        }
+        return specialEncounters.get(0);
+    }
+
+    public void addSpecialEncounter(Encounter encounter){
+        specialEncounters.add(encounter);
+    }
+    public  void removeSpecialEncounter(Encounter encounter){
+        specialEncounters.remove(encounter);
+    }
+
+    public boolean isOwner(Item item) {
+        boolean isOwner = false;
+        if(item instanceof ClueToken){
+            isOwner =clues.contains(item);
+        }
+        return isOwner || inventory.contains(item);
     }
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Effect;
 import model.Item.Investigator;
+import model.effects.ExecuteEndEvents;
 
 @Getter
 @Setter
@@ -36,7 +37,6 @@ public class ActionEncounter extends Action {
 
     @Override
     public void discard(){
-
-
+        executeEndEvents();
     }
 }

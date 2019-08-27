@@ -14,7 +14,9 @@ import gamemechanics.Mystery;
 import gamemechanics.Phases;
 import gamemechanics.Test;
 import gamemechanics.choice.Choice;
+import gamemechanics.choice.EncounterChoice;
 import gamemechanics.choice.InformationChoice;
+import gamemechanics.choice.MonsterChoice;
 import gamemechanics.encounter.*;
 import gui.Animations;
 import gui.InterfaceLinking;
@@ -483,6 +485,36 @@ public class GameService {
     public Investigator getInvestigatorForItem(Item item) {
         for (Investigator inv : getInvestigators()) {
             if (inv.getInventory().contains(item)) {
+                return inv;
+            }
+        }
+        return null;
+    }
+
+    public void clearEncounter() {
+        this.encounter.set(null);
+    }
+
+    public void creatEncounter(Field field) {
+       Encounter specialEncounter = getEncounteringInvestigator().getSpecialEncounter();
+       if(specialEncounter != null){
+           addEncounter(specialEncounter);
+       }else {
+
+           if (field.getMonster().isEmpty()) {
+               addChoice(new EncounterChoice(field));
+           } else {
+               addChoice(new MonsterChoice(field.getFieldID()));
+           }
+       }
+    }
+
+    public Investigator getOwner(Item item) {
+        if(item instanceof Investigator){
+            return null;
+        }
+        for(Investigator inv : getInvestigators()){
+            if(inv.isOwner(item)){
                 return inv;
             }
         }
