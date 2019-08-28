@@ -2,6 +2,7 @@ package model.effects;
 
 
 import Service.GameService;
+import Service.StringUtils;
 import enums.EffectTyps;
 import lombok.Getter;
 import model.Effect;
@@ -41,7 +42,11 @@ public class And extends Effect {
         }
         StringBuilder value = new StringBuilder(effects.get(0).getText().substring(0, effects.get(0).getText().length() - 1));
         for (int i = 1; i < effects.size(); i++) {
-            value.append(" ").append(ResourceUtil.get("${and}", "effect")).append(" ").append(effects.get(i).getText(), 0, effects.get(i).getText().length() - 1);
+            String text = effects.get(i).getText();
+            if(StringUtils.isEmpty(text)){
+                continue;
+            }
+            value.append(" ").append(ResourceUtil.get("${and}", "effect")).append(" ").append(text, 0, text.length() - 1);
         }
         return value.toString() + ".";
     }

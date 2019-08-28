@@ -25,24 +25,25 @@ public class DetainedCondition0 extends DetainedCondition {
     @Override
     protected Encounter getSpecialEncounter() {
         Test test = new Test(TestType.INFLUENCE, -1, 1, SituationType.TEST);
-        //  test.getEffect()[0][1]= new And(new Discard(this), new NextInvestigator());
+          test.getEffect()[0][1]= new And(new Discard(this), new NextInvestigator());
         test.getEffect()[0][2] = new And(
                 new LooseOrGainHealthSanity(SpendType.HEALTH, -2, GameService.getInstance().getEncounteringInvestigator()),
-                new LooseOrGainHealthSanity(SpendType.SANITY, -2, GameService.getInstance().getEncounteringInvestigator())
+                new LooseOrGainHealthSanity(SpendType.SANITY, -2, GameService.getInstance().getEncounteringInvestigator()),
+                new Discard(this),
+                new NextInvestigator()
         );
 
         Effect effect = new Or(
-                new Spend(SpendType.CLUE, 1, GameService.getInstance().getEncounteringInvestigator()),
+                new And(
+                        new Spend(SpendType.CLUE, 1, GameService.getInstance().getEncounteringInvestigator()),
+                        new Discard(this),
+                        new NextInvestigator()),
                 new StartTest(test));
         ActionEncounter action = new ActionEncounter(GameService.getInstance().getEncounteringInvestigator(),
                 "detained_encounter",
                 effect,
                 SituationType.ACTION
         );
-        action.addEndEvent(encounter -> {
-            new Discard(this);
-            return null;
-        });
         return action;
     }
 }

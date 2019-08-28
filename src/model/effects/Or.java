@@ -2,6 +2,7 @@ package model.effects;
 
 
 import Service.GameService;
+import Service.StringUtils;
 import enums.EffectTyps;
 import gamemechanics.choice.EffectChoice;
 import lombok.Getter;
@@ -38,10 +39,12 @@ public class Or extends Effect {
         }
         StringBuilder value = new StringBuilder( effects.get(0).getText().substring(0, effects.get(0).getText().length()-1)) ;
         for(int i =1; i < effects.size();i++){
-            if(effects.get(i).getText()==null || effects.get(i).getText().equals("") ){
+
+            String text = effects.get(i).getText();
+            if(StringUtils.isEmpty(text)){
                 continue;
             }
-            value.append(" ").append(ResourceUtil.get("${or}", "effect" )).append(" ").append(effects.get(i).getText(), 0, effects.get(i).getText().length()-1);
+            value.append(" ").append(ResourceUtil.get("${or}", "effect" )).append(" ").append(text, 0, text.length() - 1);
         }
         return value.toString()+".";
     }
