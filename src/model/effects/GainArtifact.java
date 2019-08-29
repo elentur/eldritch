@@ -60,7 +60,7 @@ public class GainArtifact extends Effect {
 
     @Override
     public String getText() {
-        if (itemType == null && artifact == null) {
+        if ((itemType == null || itemType.isEmpty()) && artifact == null) {
             return ResourceUtil.get("${gain}", "effect", investigator.getName(), ResourceUtil.get("${nothing}", "effect"));
         } else if (artifact == null) {
             StringBuilder s = new StringBuilder(itemType.get(0).getText());

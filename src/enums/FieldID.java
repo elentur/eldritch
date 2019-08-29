@@ -35,7 +35,7 @@ public enum FieldID {
     TOKYO("${tokyo}",FieldType.CITY,SpaceType.CITY,FIELD_2,FIELD_19,FIELD_20),
     SHANGHAI("${shanghai}",FieldType.CITY,SpaceType.CITY,FIELD_17,FIELD_19,FIELD_20,TOKYO),
     SYDNEY("${sydney}",FieldType.CITY,SpaceType.CITY,FIELD_3,FIELD_18,FIELD_20,FIELD_21),
-    AMAZON("${amzon}",FieldType.WILDERNESS,SpaceType.EXPEDITION,FIELD_7,BUENOS_AIRES),
+    AMAZON("${amazon}",FieldType.WILDERNESS,SpaceType.EXPEDITION,FIELD_7,BUENOS_AIRES),
     PYRAMIDS("${pyramids}",FieldType.WILDERNESS,SpaceType.EXPEDITION,FIELD_10,ROME,ISTANBUL),
     HEART_OF_AFRICA("${heart_of_africa}",FieldType.WILDERNESS,SpaceType.EXPEDITION,FIELD_15,PYRAMIDS),
     TUNGUSKA("${tunguska}",FieldType.WILDERNESS,SpaceType.EXPEDITION,FIELD_16,FIELD_19),

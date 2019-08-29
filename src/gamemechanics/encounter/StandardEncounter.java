@@ -1,6 +1,7 @@
 package gamemechanics.encounter;
 
 import Service.GameService;
+import Service.StringUtils;
 import enums.EncounterType;
 import enums.SituationType;
 import enums.TestType;
@@ -60,6 +61,9 @@ public class StandardEncounter extends Encounter {
         return ResourceUtil.get("${" + encounterID + "_" + getField().getType().getText().toLowerCase() + "_start}", getNameId().replaceAll("[{}\\$]", ""),getEncounterEffectText());
     }
     public String getEncounterEffectText() {
+        if(getEffect()[getEncounterPart()][START]==null){
+            return StringUtils.EMPTY;
+        }
         return getEffect()[getEncounterPart()][START].getText();
     }
     public String getEncounterFailText() {

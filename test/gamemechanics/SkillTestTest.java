@@ -1,6 +1,7 @@
 package gamemechanics;
 
 import container.Result;
+import enums.FieldID;
 import enums.TestType;
 import model.Item.Investigator;
 import model.Item.investigators.AgnesBaker;
@@ -15,13 +16,12 @@ public class SkillTestTest {
     @BeforeMethod
     public void setUp() {
         skillSet = new SkillSet(3,3,4,2,1);
-        investigator = new AgnesBaker();
-        investigator.setSkillSet(skillSet);
+      //  investigator = new AgnesBaker();
+       // investigator.setSkillSet(skillSet);
     }
 
     @Test
     public void testExecute_Strength_NoMod() {
-
         SkillTest test = new SkillTest(TestType.STRENGTH, 0);
         Result result = test.execute(investigator);
         Assert.assertNotNull(result);
